@@ -22,7 +22,7 @@ class Item {
     }
     std::string getType() { return "blocks/"; };
     json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.19.20";
+        j["format_version"] = "1.19.30";
         j["minecraft:block"]["components"]["block_light_filter"] =
             block_light_filter;
         j["minecraft:block"]["components"]["minecraft:unit_cube"] =

@@ -20,4 +20,5 @@ add_executable(adk
   include/Item.h
   include/json.hpp
   include/Registry.h
+  include/BlockProperty.h
 )
