@@ -34,4 +34,4 @@ class Item {
     // std::string group, int destroy, int explode, std::string colour,
     // std::string texture);
 };
-#endif  // !ITEM_H
+#endif
