@@ -18,8 +18,29 @@ void simpleBlock(std::string block) {
     nlohmann::json j = nlohmann::json::parse(temp_text);
     j["minecraft:block"]["components"]["material_instances"]["*"]["texture"] =
         block;
-    j["minecraft:block"]["components"]["minecraft:unit_cube"] =
-        nlohmann::json::object();
+
+    MyFile << j.dump(4);
+    MyFile.close();
+}
+
+void axisBlock(std::string block, std::string sides, std::string ends) {
+    std::string my_text, temp_text;
+    std::ifstream TempFile("./packs/BP/blocks/" + block + ".json");
+    std::ofstream MyFile("./packs/BP/blocks/" + block + ".json");
+
+    while (getline(TempFile, my_text)) temp_text = temp_text + my_text;
+
+    TempFile.close();
+
+    nlohmann::json j = nlohmann::json::parse(temp_text);
+    j["minecraft:block"]["components"]["material_instances"]["*"]["texture"] =
+        sides;
+    j["minecraft:block"]["components"]["material_instances"]["ends"]
+     ["texture"] = ends;
+    j["minecraft:block"]["components"]["material_instances"]["up"]["texture"] =
+        "ends";
+    j["minecraft:block"]["components"]["material_instances"]["down"]
+     ["texture"] = "ends";
 
     MyFile << j.dump(4);
     MyFile.close();

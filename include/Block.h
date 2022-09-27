@@ -31,6 +31,8 @@ class Block {
     json output(std::string mod_id, std::string id) {
         j["format_version"] = "1.19.30";
         j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
+        j["minecraft:block"]["components"]["minecraft:unit_cube"] =
+            nlohmann::json::object();
 
         if (block_light_filter != 15)
             j["minecraft:block"]["components"]["minecraft:block_light_filter"] =
