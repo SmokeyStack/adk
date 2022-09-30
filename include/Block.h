@@ -7,10 +7,7 @@
 #include "json.hpp"
 
 class Block {
-    using json = nlohmann::json;
-    json j;
-
-   private:
+   protected:
     int block_light_filter;
     std::string breathability;
     double friction;
@@ -18,8 +15,11 @@ class Block {
     std::vector<int> rotation;
 
    public:
+    using json = nlohmann::json;
+    json j;
     std::string getType() { return "blocks/"; };
 
+    Block(){};
     Block(BlockProperty::Property property) {
         block_light_filter = property.block_light_filter;
         breathability = property.breathability;
@@ -28,11 +28,11 @@ class Block {
         rotation = property.rotation;
     }
 
-    json output(std::string mod_id, std::string id) {
+    virtual json output(std::string mod_id, std::string id) {
         j["format_version"] = "1.19.30";
         j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
         j["minecraft:block"]["components"]["minecraft:unit_cube"] =
-            nlohmann::json::object();
+            json::object();
 
         if (block_light_filter != 15)
             j["minecraft:block"]["components"]["minecraft:block_light_filter"] =
