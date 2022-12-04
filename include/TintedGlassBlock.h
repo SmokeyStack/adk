@@ -1,14 +1,14 @@
-#ifndef GLASSBLOCK_H
-#define GLASSBLOCK_H
+#ifndef TINTEDGLASSBLOCK_H
+#define TINTEDGLASSBLOCK_H
 
 #include "Block.h"
 #include "BlockProperty.h"
 #include "json.hpp"
 
-class GlassBlock : public Block {
+class TintedGlassBlock : public Block {
    public:
-    GlassBlock(BlockProperty::Property property) {
-        block_light_filter = 0;
+    TintedGlassBlock(BlockProperty::Property property) {
+        block_light_filter = 15;
         friction = property.friction;
         light_emission = property.light_emission;
         rotation = property.rotation;
