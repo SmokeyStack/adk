@@ -11,18 +11,14 @@ class Item {
 
    private:
     int block_light_filter;
-    std::string breathability;
     std::string category;
     std::string group;
 
    public:
-    Item(std::string breath, int light = 15) {
-        block_light_filter = light;
-        breathability = breath;
-    }
+    Item(std::string breath, int light = 15) { block_light_filter = light; }
     std::string getType() { return "blocks/"; };
     json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.19.30";
+        j["format_version"] = "1.19.50";
         j["minecraft:block"]["components"]["block_light_filter"] =
             block_light_filter;
         j["minecraft:block"]["components"]["minecraft:unit_cube"] =

@@ -11,7 +11,6 @@ class AxisBlock : public Block {
    public:
     AxisBlock(BlockProperty::Property property) {
         block_light_filter = property.block_light_filter;
-        breathability = property.breathability;
         friction = property.friction;
         light_emission = property.light_emission;
         rotation = property.rotation;

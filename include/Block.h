@@ -9,7 +9,6 @@
 class Block {
    protected:
     int block_light_filter;
-    std::string breathability;
     double friction;
     int light_emission;
     std::vector<int> rotation;
@@ -22,25 +21,20 @@ class Block {
     Block(){};
     Block(BlockProperty::Property property) {
         block_light_filter = property.block_light_filter;
-        breathability = property.breathability;
         friction = property.friction;
         light_emission = property.light_emission;
         rotation = property.rotation;
     }
 
     virtual json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.19.30";
+        j["format_version"] = "1.19.50";
         j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
         j["minecraft:block"]["components"]["minecraft:unit_cube"] =
             json::object();
 
         if (block_light_filter != 15)
-            j["minecraft:block"]["components"]["minecraft:block_light_filter"] =
+            j["minecraft:block"]["components"]["minecraft:light_dampening"] =
                 block_light_filter;
-
-        if (breathability != "solid")
-            j["minecraft:block"]["components"]["minecraft:breathability"] =
-                breathability;
 
         if (friction != 0.4)
             j["minecraft:block"]["components"]["minecraft:friction"] = friction;
