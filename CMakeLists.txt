@@ -18,10 +18,12 @@ add_executable(adk
     Main.cpp
     include/AxisBlock.h
     include/Block.h
+    include/BlockProperty.h
+    include/GlassBlock.h
     include/Item.h
     include/json.hpp
     include/Registry.h
-    include/BlockProperty.h
+    include/TintedGlassBlock.h
 )
 
 include_directories(include/generator)
