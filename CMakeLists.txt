@@ -19,6 +19,7 @@ add_executable(adk
     include/AxisBlock.h
     include/Block.h
     include/BlockProperty.h
+    include/BushBlock.h
     include/GlassBlock.h
     include/Item.h
     include/json.hpp
