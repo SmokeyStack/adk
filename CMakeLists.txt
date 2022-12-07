@@ -24,6 +24,7 @@ add_executable(adk
     include/Item.h
     include/json.hpp
     include/Registry.h
+    include/SaplingBlock.h
     include/TintedGlassBlock.h
 )
 

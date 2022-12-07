@@ -9,6 +9,7 @@
 
 class BushBlock : public Block {
    public:
+    BushBlock(){};
     BushBlock(BlockProperty::Property property) {
         block_light_filter = property.block_light_filter;
         friction = property.friction;
