@@ -11,14 +11,17 @@
 class SaplingBlock : public BushBlock {
    protected:
     int _number_of_properties;
+    std::string _structure;
 
    public:
-    SaplingBlock(BlockProperty::Property property, int number_of_properties) {
+    SaplingBlock(BlockProperty::Property property, int number_of_properties,
+                 std::string structure) {
         block_light_filter = property.block_light_filter;
         friction = property.friction;
         light_emission = property.light_emission;
         rotation = property.rotation;
         _number_of_properties = number_of_properties;
+        _structure = structure;
     }
 
     json output(std::string mod_id, std::string id) {
@@ -43,6 +46,17 @@ class SaplingBlock : public BushBlock {
              "q.block_property('" +
              mod_id + ":growth_stage') + 1 : " +
              std::to_string(_number_of_properties - 1);
+
+        j["minecraft:block"]["events"][mod_id + ":final_growth"]["run_command"]
+         ["command"] = {"structure load " + _structure + " ~-2~~-2"};
+
+        j["minecraft:block"]["permutations"] = {
+            {{"components",
+              {{"minecraft:random_ticking",
+                {{"on_tick", {{"event", mod_id + ":final_growth"}}}}}}},
+             {"condition", "q.block_property('" + mod_id + ":cardinal') == " +
+                               std::to_string(_number_of_properties - 1)}},
+        };
 
         return j;
     }
