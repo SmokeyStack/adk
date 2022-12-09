@@ -2,6 +2,8 @@
 #define BLOCKSTATE_H
 
 #include <fstream>
+#include <iostream>
+#include <sstream>
 #include <string>
 
 #include "json.hpp"
@@ -60,6 +62,22 @@ void customBlock(std::string block, std::string model, std::string texture) {
     j["minecraft:block"]["components"]["material_instances"]["*"]["texture"] =
         texture;
 
+    MyFile << j.dump(4);
+    MyFile.close();
+}
+
+void tintedGlass(std::string block, std::string texture) {
+    std::string my_text, temp_text;
+    std::ifstream TempFile("./packs/BP/blocks/" + block + ".json");
+    nlohmann::json j = nlohmann::json::parse(TempFile);
+
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = texture;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["render_method"] = "blend";
+
+    TempFile.close();
+    std::ofstream MyFile("./packs/BP/blocks/" + block + ".json");
     MyFile << j.dump(4);
     MyFile.close();
 }
