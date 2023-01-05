@@ -12,6 +12,7 @@ class SaplingBlock : public BushBlock {
    protected:
     int _number_of_properties;
     std::string _structure;
+    std::string _particle = "minecraft:crop_growth_emitter";
 
    public:
     SaplingBlock(BlockProperty::Property property, int number_of_properties,
@@ -22,6 +23,17 @@ class SaplingBlock : public BushBlock {
         rotation = property.rotation;
         _number_of_properties = number_of_properties;
         _structure = structure;
+    }
+
+    SaplingBlock(BlockProperty::Property property, int number_of_properties,
+                 std::string structure, std::string particle) {
+        block_light_filter = property.block_light_filter;
+        friction = property.friction;
+        light_emission = property.light_emission;
+        rotation = property.rotation;
+        _number_of_properties = number_of_properties;
+        _structure = structure;
+        _particle = particle;
     }
 
     json output(std::string mod_id, std::string id) {
@@ -54,7 +66,8 @@ class SaplingBlock : public BushBlock {
             {{"components",
               {{"minecraft:random_ticking",
                 {{"on_tick", {{"event", mod_id + ":final_growth"}}}}}}},
-             {"condition", "q.block_property('" + mod_id + ":cardinal') == " +
+             {"condition", "q.block_property('" + mod_id +
+                               ":growth_stage') == " +
                                std::to_string(_number_of_properties - 1)}},
         };
 
