@@ -6,8 +6,8 @@ This Add-on Development Kit is essentially just me messing around with ways to c
 Download it from the latest release
 
 ## Creating Add-ons
-- Install Regolith
-- Install Visual Studio Build Tools
+- Install [Regolith](https://bedrock-oss.github.io/regolith/guide/installing)
+- Install [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2019)
 - Run `regolith init` in your directory of choice
 - Extract the zip file downloaded from the latest release
 - Open the directory in your choice of IDE
