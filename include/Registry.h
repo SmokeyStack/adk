@@ -7,6 +7,8 @@
 
 namespace fs = std::filesystem;
 
+/// @brief
+/// @tparam T
 template <typename T>
 class Registry {
    private:
@@ -14,6 +16,9 @@ class Registry {
 
    public:
     Registry(std::string id) { mod_id = id; };
+    /// @brief Generates the json file
+    /// @param id The name of the identifier, omit the namespace
+    /// @param object Class Objects such as Blocks, items, etc
     void subscribe(std::string id, T* object) {
         if (!fs::exists("./packs/BP/" + object->getType()))
             fs::create_directory("./packs/BP/" + object->getType());

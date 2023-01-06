@@ -9,6 +9,8 @@
 
 class AxisBlock : public Block {
    public:
+    /// @brief Represents a rotatable block
+    /// @param property A BlockProperty object
     AxisBlock(BlockProperty::Property property) {
         block_light_filter = property.block_light_filter;
         friction = property.friction;
@@ -16,6 +18,10 @@ class AxisBlock : public Block {
         rotation = property.rotation;
     }
 
+    /// @brief Generates the json object
+    /// @param mod_id Namespace identifier
+    /// @param id Identifier for the block
+    /// @return json object
     json output(std::string mod_id, std::string id) {
         j = Block::output(mod_id, id);
         j["minecraft:block"]["description"]["properties"]

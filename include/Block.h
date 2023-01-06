@@ -26,6 +26,8 @@ class Block {
     std::string getType() { return "blocks/"; };
 
     Block(){};
+    /// @brief Represents a block
+    /// @param property A BlockProperty object
     Block(BlockProperty::Property property) {
         block_light_filter = property.block_light_filter;
         crafting = property.crafting;
@@ -40,6 +42,10 @@ class Block {
         rotation = property.rotation;
     }
 
+    /// @brief Generates the json object
+    /// @param mod_id Namespace identifier
+    /// @param id Identifier for the block
+    /// @return json object
     virtual json output(std::string mod_id, std::string id) {
         j["format_version"] = "1.19.50";
         j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;

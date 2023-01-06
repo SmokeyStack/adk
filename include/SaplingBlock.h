@@ -15,6 +15,11 @@ class SaplingBlock : public BushBlock {
     std::string _particle = "minecraft:crop_growth_emitter";
 
    public:
+    /// @brief Represents a sapling block
+    /// @param property A BlockProperty object
+    /// @param number_of_properties How many stages the sapling has
+    /// @param structure The "tree" to load. Temporary solution until Bedrock
+    /// has place feature command
     SaplingBlock(BlockProperty::Property property, int number_of_properties,
                  std::string structure) {
         block_light_filter = property.block_light_filter;
@@ -25,6 +30,12 @@ class SaplingBlock : public BushBlock {
         _structure = structure;
     }
 
+    /// @brief Represents a sapling block
+    /// @param property A BlockProperty object
+    /// @param number_of_properties How many stages the sapling has
+    /// @param structure The "tree" to load. Temporary solution until Bedrock
+    /// has place feature command
+    /// @param particle The particle to play after being bonemealed
     SaplingBlock(BlockProperty::Property property, int number_of_properties,
                  std::string structure, std::string particle) {
         block_light_filter = property.block_light_filter;
@@ -36,6 +47,10 @@ class SaplingBlock : public BushBlock {
         _particle = particle;
     }
 
+    /// @brief Generates the json object
+    /// @param mod_id Namespace identifier
+    /// @param id Identifier for the block
+    /// @return json object
     json output(std::string mod_id, std::string id) {
         j = Block::output(mod_id, id);
         j["minecraft:block"]["components"]["minecraft:random_ticking"]
