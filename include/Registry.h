@@ -14,7 +14,7 @@ class Registry {
 
    public:
     Registry(std::string id) { mod_id = id; };
-    void reg(std::string id, T* object) {
+    void subscribe(std::string id, T* object) {
         if (!fs::exists("./packs/BP/" + object->getType()))
             fs::create_directory("./packs/BP/" + object->getType());
 
