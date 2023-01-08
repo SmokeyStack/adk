@@ -1,8 +1,14 @@
 header:
-    base_game_version: '' # Optional
-    description: '' # Optional
-    lock_template_options: '' # Optional, used for world templates
-    min_engine_version: ''  # Mandatory
-    name: ''  # Mandatory
-    uuid: ''  # Mandatory
-    version: '' # Mandatory
+    base_game_version:  # Optional, used for world templates
+    description:  # Mandatory
+    lock_template_options:  # Optional, used for world templates
+    min_engine_version: # Mandatory
+    name: # Mandatory
+    uuid: # Mandatory
+    version:  # Mandatory
+dependencies:
+    scripting:  # Optional
+metadata:
+    authors: # Optional
+    license: # Optional
+    url:  # Optional
