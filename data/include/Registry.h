@@ -20,10 +20,10 @@ class Registry {
     /// @param id The name of the identifier, omit the namespace
     /// @param object Class Objects such as Blocks, items, etc
     void subscribe(std::string id, T* object) {
-        if (!fs::exists("./packs/BP/" + object->getType()))
-            fs::create_directory("./packs/BP/" + object->getType());
+        if (!fs::exists("./BP/" + object->getType()))
+            fs::create_directory("./BP/" + object->getType());
 
-        std::ofstream MyJson("./packs/BP/" + object->getType() + id + ".json");
+        std::ofstream MyJson("./BP/" + object->getType() + id + ".json");
         MyJson << object->output(mod_id, id).dump(4);
         MyJson.close();
     };

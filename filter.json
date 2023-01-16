@@ -1,0 +1,10 @@
+{
+    "description": "Create add-ons for Minecraft without touching JSON",
+    "filters": [
+        {
+            "command": "./compile.bat",
+            "name": "adk",
+            "runWith": "shell"
+        }
+    ]
+}
