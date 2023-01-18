@@ -28,8 +28,8 @@ class Item {
         j["format_version"] = "1.19.50";
         j["minecraft:item"]["components"]["minecraft:display_name"]["value"] =
             display_name;
-        j["minecraft:block"]["components"]["minecraft:max_stack_size"] = stack;
-        j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
+        j["minecraft:item"]["components"]["minecraft:max_stack_size"] = stack;
+        j["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 
         return j;
     }
