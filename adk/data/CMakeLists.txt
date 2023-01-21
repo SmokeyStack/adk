@@ -32,4 +32,5 @@ include_directories(include/generator)
 add_executable(datagen
     DataGen.cpp
     include/generator/BlockState.h
+    include/generator/ItemState.h
 )

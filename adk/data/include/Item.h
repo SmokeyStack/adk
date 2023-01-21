@@ -9,7 +9,6 @@
 class Item {
    protected:
     std::string display_name;
-    std::string icon;
     int stack;
 
    public:
@@ -20,7 +19,6 @@ class Item {
     Item(){};
     Item(ItemProperty::Property property) {
         display_name = property.display_name;
-        icon = property.icon;
         stack = property.stack;
     }
 
