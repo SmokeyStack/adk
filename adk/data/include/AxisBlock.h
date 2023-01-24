@@ -1,8 +1,6 @@
 #ifndef AXISBLOCK_h
 #define AXISBLOCK_H
 
-#include <iostream>
-
 #include "Block.h"
 #include "BlockProperty.h"
 #include "json.hpp"

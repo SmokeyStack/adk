@@ -3,7 +3,6 @@
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -67,7 +66,7 @@ void simpleItem(std::string item, std::string icon) {
 
     TempFile.close();
     std::ofstream MyFile("./BP/items/" + item + ".json");
-    MyFile << j.dump(4);
+    MyFile << j.dump();
     MyFile.close();
 }
 
@@ -99,7 +98,7 @@ void armorModel(std::string id, std::string item, std::string texture,
     j["minecraft:attachable"]["description"]["render_controllers"] = {
         "controller.render.armor"};
 
-    MyJson << j.dump(4);
+    MyJson << j.dump();
     MyJson.close();
 }
 

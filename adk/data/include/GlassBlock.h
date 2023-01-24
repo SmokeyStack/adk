@@ -9,7 +9,9 @@ class GlassBlock : public Block {
    public:
     /// @brief Represents a glass block
     /// @param property A BlockProperty object
-    GlassBlock(BlockProperty::Property property) {
+    /// @param is_tinted Whether the block blocks out light or not
+    GlassBlock(BlockProperty::Property property, bool is_tinted) {
+        if (is_tinted) block_light_filter = 0;
         block_light_filter = 0;
         friction = property.friction;
         light_emission = property.light_emission;

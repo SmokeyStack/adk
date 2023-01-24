@@ -3,7 +3,6 @@
 
 #include <filesystem>
 #include <fstream>
-#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -21,7 +20,7 @@ void simpleBlock(std::string block) {
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
-    MyFile << j.dump(4);
+    MyFile << j.dump();
     MyFile.close();
 }
 
@@ -41,7 +40,7 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
-    MyFile << j.dump(4);
+    MyFile << j.dump();
     MyFile.close();
 }
 
@@ -56,7 +55,7 @@ void customBlock(std::string block, std::string model, std::string texture) {
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
-    MyFile << j.dump(4);
+    MyFile << j.dump();
     MyFile.close();
 }
 
@@ -72,7 +71,7 @@ void tintedGlass(std::string block, std::string texture) {
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
-    MyFile << j.dump(4);
+    MyFile << j.dump();
     MyFile.close();
 }
 
@@ -98,7 +97,7 @@ void head(std::string block, std::string north, std::string east,
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
-    MyFile << j.dump(4);
+    MyFile << j.dump();
     MyFile.close();
 
     if (!fs::exists("./RP/models/entity/head.geo.json")) {

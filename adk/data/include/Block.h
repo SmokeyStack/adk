@@ -56,10 +56,11 @@ class Block {
             j["minecraft:block"]["components"]["minecraft:light_dampening"] =
                 block_light_filter;
 
-        if (crafting != json::object_t({{"crafting_table", {"crafting_table"}},
-                                        {"table_name", "Foo Bar"}}))
-            j["minecraft:block"]["components"]["minecraft:crafting_table"] =
-                crafting;
+        // if (crafting != json::object_t({{"crafting_table",
+        // {"crafting_table"}},
+        //                                 {"table_name", "Foo Bar"}}))
+        //     j["minecraft:block"]["components"]["minecraft:crafting_table"] =
+        //         crafting;
         if (explosion != json::object_t({{"explosion_resistance", 0}}))
             j["minecraft:block"]["components"]
              ["minecraft:destructible_by_explosion"] = explosion;

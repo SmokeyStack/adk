@@ -1,7 +1,6 @@
 #ifndef SAPLINGBLOCK_H
 #define SAPLINGBLOCK_H
 
-#include <iostream>
 #include <vector>
 
 #include "BlockProperty.h"

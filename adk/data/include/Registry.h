@@ -24,7 +24,7 @@ class Registry {
             fs::create_directory("./BP/" + object->getType());
 
         std::ofstream MyJson("./BP/" + object->getType() + id + ".json");
-        MyJson << object->output(mod_id, id).dump(4);
+        MyJson << object->output(mod_id, id).dump();
         MyJson.close();
     };
 };

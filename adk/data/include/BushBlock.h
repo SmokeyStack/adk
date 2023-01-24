@@ -1,8 +1,6 @@
 #ifndef BUSHBLOCK_H
 #define BUSHBLOCK_H
 
-#include <iostream>
-
 #include "Block.h"
 #include "BlockProperty.h"
 #include "json.hpp"

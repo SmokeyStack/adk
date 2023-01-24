@@ -1,8 +1,6 @@
-#ifndef ARMOR_H
-#define ARMOR_H
+#ifndef ARMORITEM_H
+#define ARMORITEM_H
 
-#include <iostream>
-#include <map>
 #include <string>
 
 #include "Item.h"

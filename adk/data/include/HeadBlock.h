@@ -1,7 +1,9 @@
-#ifndef HEAD_H
-#define HEAD_H
+#ifndef HEADBLOCK_H
+#define HEADBLOCK_H
 
 #include "Block.h"
+#include "BlockProperty.h"
+#include "json.hpp"
 
 class Head : public Block {
    public:
