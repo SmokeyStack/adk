@@ -75,6 +75,56 @@ void tintedGlass(std::string block, std::string texture) {
     MyFile.close();
 }
 
+void head(std::string block, std::string texture) {
+    std::string my_text, temp_text;
+    std::ifstream TempFile("./BP/blocks/" + block + ".json");
+    nlohmann::json j = nlohmann::json::parse(TempFile);
+
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = texture;
+
+    TempFile.close();
+    std::ofstream MyFile("./BP/blocks/" + block + ".json");
+    MyFile << j.dump();
+    MyFile.close();
+
+    if (!fs::exists("./RP/models/entity/head.geo.json")) {
+        if (!fs::exists("./RP/models/entity")) {
+            fs::create_directory("./RP/models/");
+            fs::create_directory("./RP/models/entity/");
+        }
+
+        fs::copy("./data/adk/assets/head.geo.json", "./RP/models/entity");
+    }
+}
+
+void head(std::string block, std::string sides, std::string ends) {
+    std::string my_text, temp_text;
+    std::ifstream TempFile("./BP/blocks/" + block + ".json");
+    nlohmann::json j = nlohmann::json::parse(TempFile);
+
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = sides;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
+     ["texture"] = ends;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
+     ["texture"] = ends;
+
+    TempFile.close();
+    std::ofstream MyFile("./BP/blocks/" + block + ".json");
+    MyFile << j.dump();
+    MyFile.close();
+
+    if (!fs::exists("./RP/models/entity/head.geo.json")) {
+        if (!fs::exists("./RP/models/entity")) {
+            fs::create_directory("./RP/models/");
+            fs::create_directory("./RP/models/entity/");
+        }
+
+        fs::copy("./data/adk/assets/head.geo.json", "./RP/models/entity");
+    }
+}
+
 void head(std::string block, std::string north, std::string east,
           std::string south, std::string west, std::string up,
           std::string down) {
