@@ -36,4 +36,5 @@ jobs:
       run: mkdir BP RP
 
     - name: Run Tests
+      working-directory: ${{github.workspace}}/adk-build
       run: ctest -C ${{env.BUILD_TYPE}}
