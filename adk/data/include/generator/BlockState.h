@@ -82,6 +82,8 @@ void head(std::string block, std::string texture) {
 
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
      ["texture"] = texture;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["render_method"] = "blend";
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
@@ -109,6 +111,12 @@ void head(std::string block, std::string sides, std::string ends) {
      ["texture"] = ends;
     j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
      ["texture"] = ends;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
+     ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
+     ["render_method"] = "blend";
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
@@ -144,6 +152,18 @@ void head(std::string block, std::string north, std::string east,
      ["texture"] = up;
     j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
      ["texture"] = down;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["north"]
+     ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["east"]
+     ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["south"]
+     ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["west"]
+     ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
+     ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
+     ["render_method"] = "blend";
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");

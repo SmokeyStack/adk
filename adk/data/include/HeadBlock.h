@@ -19,6 +19,14 @@ class Head : public Block {
         j["minecraft:block"]["description"]["properties"][mod_id +
                                                           ":rotation"] =
             json::array({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
+        j["minecraft:block"]["components"]["minecraft:collision_box"]
+         ["origin"] = {-4, 0, -4};
+        j["minecraft:block"]["components"]["minecraft:collision_box"]["size"] =
+            {8, 8, 8};
+        j["minecraft:block"]["components"]["minecraft:selection_box"]
+         ["origin"] = {-4, 0, -4};
+        j["minecraft:block"]["components"]["minecraft:selection_box"]["size"] =
+            {8, 8, 8};
         j["minecraft:block"]["components"]["minecraft:on_player_placing"]
          ["event"] = mod_id + ":set_rotation";
         j["minecraft:block"]["events"][mod_id + ":set_rotation"]
