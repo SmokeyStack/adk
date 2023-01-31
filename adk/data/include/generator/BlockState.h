@@ -10,6 +10,8 @@
 
 namespace fs = std::filesystem;
 
+/// @brief Creates a one texture block
+/// @param block Identifier of the block, omit namespace
 void simpleBlock(std::string block) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
@@ -24,6 +26,10 @@ void simpleBlock(std::string block) {
     MyFile.close();
 }
 
+/// @brief Creates a log like block, sides are one texture, ends are one texture
+/// @param block Identifier of the block, omit namespace
+/// @param sides Texture name for the sides of the block
+/// @param ends Texture name for the ends of the block
 void axisBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
@@ -44,6 +50,10 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
     MyFile.close();
 }
 
+/// @brief Creates a custom geometry block
+/// @param block Identifier of the block, omit namespace
+/// @param model Identifier of the geometry
+/// @param texture Texture name for the block
 void customBlock(std::string block, std::string model, std::string texture) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
@@ -75,6 +85,9 @@ void tintedGlass(std::string block, std::string texture) {
     MyFile.close();
 }
 
+/// @brief Creates a one texture block
+/// @param block Identifier of the block, omit namespace
+/// @param texture Texture for the block
 void head(std::string block, std::string texture) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
@@ -100,6 +113,10 @@ void head(std::string block, std::string texture) {
     }
 }
 
+/// @brief Creates a log like block, sides are one texture, ends are one texture
+/// @param block Identifier of the block, omit namespace
+/// @param sides Texture name for the sides of the block
+/// @param ends Texture name for the ends of the block
 void head(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
@@ -133,6 +150,14 @@ void head(std::string block, std::string sides, std::string ends) {
     }
 }
 
+/// @brief Sides can have different textures
+/// @param block Identifier of the block, omit namespace
+/// @param north Texture for the north face
+/// @param east Texture for the east face
+/// @param south Texture for the south face
+/// @param west Texture for the west face
+/// @param up Texture for the up face
+/// @param down Texture for the down face
 void head(std::string block, std::string north, std::string east,
           std::string south, std::string west, std::string up,
           std::string down) {

@@ -9,6 +9,9 @@
 
 enum ArmorSlot { HEAD, CHEST, LEGS, FEET };
 
+/// @brief Turns enum ArmorSlot into string
+/// @param slot enum ArmorSlot
+/// @return String equivalent
 std::string getArmorSlot(ArmorSlot slot) {
     switch (slot) {
         case HEAD:
@@ -34,19 +37,31 @@ class Armor : public Item {
     int _damage_chance_max;
 
    public:
-    Armor(ItemProperty::Property property, int protection, ArmorSlot test,
+    /// @brief Represents an Armor Item
+    /// @param property An ItemProperty object
+    /// @param protection How much protection point should this armor give
+    /// @param slot Which slot should the armor go in
+    /// @param durability How much durability point should this armor have
+    /// @param dispensable Can this armor be equipped by a dispenser
+    /// @param damage_chance_min Minimum chance the armor takes damage
+    /// @param damage_chance_max Maximum chance the armor takes damage
+    Armor(ItemProperty::Property property, int protection, ArmorSlot slot,
           int durability, bool dispensable, int damage_chance_min,
           int damage_chance_max) {
-        display_name = property.display_name;
-        stack = property.stack;
+        _display_name = property.display_name;
+        _stack = property.stack;
         _protection = protection;
-        _slot = getArmorSlot(test);
+        _slot = getArmorSlot(slot);
         _durability = durability;
         _dispensable = dispensable;
         _damage_chance_min = damage_chance_min;
         _damage_chance_max = damage_chance_max;
     }
 
+    /// @brief Generates the json object
+    /// @param mod_id Namespace identifier
+    /// @param id Identifier for the item
+    /// @return json object
     json output(std::string mod_id, std::string id) {
         j = Item::output(mod_id, id);
         j["minecraft:item"]["components"]["minecraft:armor"]["protection"] =

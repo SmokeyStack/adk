@@ -8,17 +8,17 @@
 
 class Block {
    protected:
-    int block_light_filter;
-    nlohmann::json::object_t crafting;
-    nlohmann::json::object_t explosion;
-    nlohmann::json::object_t mining;
-    std::string display_name;
-    nlohmann::json::object_t flammable;
-    double friction;
-    int light_emission;
-    std::string loot;
-    std::string colour;
-    std::vector<int> rotation;
+    int _block_light_filter;
+    nlohmann::json::object_t _crafting;
+    nlohmann::json::object_t _explosion;
+    nlohmann::json::object_t _mining;
+    std::string _display_name;
+    nlohmann::json::object_t _flammable;
+    double _friction;
+    int _light_emission;
+    std::string _loot;
+    std::string _color;
+    std::vector<int> _rotation;
 
    public:
     using json = nlohmann::json;
@@ -29,17 +29,17 @@ class Block {
     /// @brief Represents a block
     /// @param property A BlockProperty object
     Block(BlockProperty::Property property) {
-        block_light_filter = property.block_light_filter;
-        crafting = property.crafting;
-        explosion = property.explosion;
-        mining = property.mining;
-        display_name = property.display_name;
-        flammable = property.flammable;
-        friction = property.friction;
-        light_emission = property.light_emission;
-        loot = property.loot;
-        colour = property.colour;
-        rotation = property.rotation;
+        _block_light_filter = property.block_light_filter;
+        _crafting = property.crafting;
+        _explosion = property.explosion;
+        _mining = property.mining;
+        _display_name = property.display_name;
+        _flammable = property.flammable;
+        _friction = property.friction;
+        _light_emission = property.light_emission;
+        _loot = property.loot;
+        _color = property.colour;
+        _rotation = property.rotation;
     }
 
     /// @brief Generates the json object
@@ -52,47 +52,48 @@ class Block {
         j["minecraft:block"]["components"]["minecraft:unit_cube"] =
             json::object();
 
-        if (block_light_filter != 15)
+        if (_block_light_filter != 15)
             j["minecraft:block"]["components"]["minecraft:light_dampening"] =
-                block_light_filter;
+                _block_light_filter;
 
-        // if (crafting != json::object_t({{"crafting_table",
-        // {"crafting_table"}},
-        //                                 {"table_name", "Foo Bar"}}))
-        //     j["minecraft:block"]["components"]["minecraft:crafting_table"] =
-        //         crafting;
-        if (explosion != json::object_t({{"explosion_resistance", 0}}))
+        if (_crafting != json::object_t({{"crafting_table", {"crafting_table"}},
+                                         {"table_name", "Foo Bar"}}))
+            j["minecraft:block"]["components"]["minecraft:crafting_table"] =
+                _crafting;
+        if (_explosion != json::object_t({{"explosion_resistance", 0}}))
             j["minecraft:block"]["components"]
-             ["minecraft:destructible_by_explosion"] = explosion;
+             ["minecraft:destructible_by_explosion"] = _explosion;
 
-        if (mining != json::object_t({{"seconds_to_destory", 0.0}}))
+        if (_mining != json::object_t({{"seconds_to_destory", 0.0}}))
             j["minecraft:block"]["components"]
-             ["minecraft:destructible_by_mining"] = mining;
+             ["minecraft:destructible_by_mining"] = _mining;
 
-        if (display_name != "")
+        if (_display_name != "")
             j["minecraft:block"]["components"]["minecraft:display_name"] =
-                display_name;
+                _display_name;
 
-        if (flammable != json::object_t({{"catch_chance_modifier", 5},
-                                         {"destroy_chance_modifier", 20}}))
+        if (_flammable != json::object_t({{"catch_chance_modifier", 5},
+                                          {"destroy_chance_modifier", 20}}))
             j["minecraft:block"]["components"]["minecraft:flammable"] =
-                flammable;
+                _flammable;
 
-        if (friction != 0.4)
-            j["minecraft:block"]["components"]["minecraft:friction"] = friction;
+        if (_friction != 0.4)
+            j["minecraft:block"]["components"]["minecraft:friction"] =
+                _friction;
 
-        if (light_emission != 0)
+        if (_light_emission != 0)
             j["minecraft:block"]["components"]["minecraft:light_emission"] =
-                light_emission;
+                _light_emission;
 
-        if (loot != "")
-            j["minecraft:block"]["components"]["minecraft:loot"] = loot;
+        if (_loot != "")
+            j["minecraft:block"]["components"]["minecraft:loot"] = _loot;
 
-        if (colour != "")
-            j["minecraft:block"]["components"]["minecraft:map_color"] = colour;
+        if (_color != "")
+            j["minecraft:block"]["components"]["minecraft:map_color"] = _color;
 
-        if (rotation != std::vector<int>{0, 0, 0})
-            j["minecraft:block"]["components"]["minecraft:rotation"] = rotation;
+        if (_rotation != std::vector<int>{0, 0, 0})
+            j["minecraft:block"]["components"]["minecraft:rotation"] =
+                _rotation;
 
         return j;
     }

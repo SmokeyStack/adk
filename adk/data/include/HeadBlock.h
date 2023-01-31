@@ -7,13 +7,26 @@
 
 class Head : public Block {
    public:
+    /// @brief Represents a skull block
+    /// @param property A BlockProperty object
     Head(BlockProperty::Property property) {
-        block_light_filter = property.block_light_filter;
-        friction = property.friction;
-        light_emission = property.light_emission;
-        rotation = property.rotation;
+        _block_light_filter = property.block_light_filter;
+        _crafting = property.crafting;
+        _explosion = property.explosion;
+        _mining = property.mining;
+        _display_name = property.display_name;
+        _flammable = property.flammable;
+        _friction = property.friction;
+        _light_emission = property.light_emission;
+        _loot = property.loot;
+        _color = property.colour;
+        _rotation = property.rotation;
     }
 
+    /// @brief Generates the json object
+    /// @param mod_id Namespace identifier
+    /// @param id Identifier for the block
+    /// @return json object
     json output(std::string mod_id, std::string id) {
         j = Block::output(mod_id, id);
 
