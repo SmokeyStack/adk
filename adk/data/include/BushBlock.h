@@ -1,8 +1,6 @@
 #ifndef BUSHBLOCK_H
 #define BUSHBLOCK_H
 
-#include <iostream>
-
 #include "Block.h"
 #include "BlockProperty.h"
 #include "json.hpp"
@@ -13,10 +11,17 @@ class BushBlock : public Block {
     /// @brief Represents a bush block
     /// @param property A BlockProperty object
     BushBlock(BlockProperty::Property property) {
-        block_light_filter = property.block_light_filter;
-        friction = property.friction;
-        light_emission = property.light_emission;
-        rotation = property.rotation;
+        _block_light_filter = property.block_light_filter;
+        _crafting = property.crafting;
+        _explosion = property.explosion;
+        _mining = property.mining;
+        _display_name = property.display_name;
+        _flammable = property.flammable;
+        _friction = property.friction;
+        _light_emission = property.light_emission;
+        _loot = property.loot;
+        _color = property.colour;
+        _rotation = property.rotation;
     }
 
     /// @brief Generates the json object

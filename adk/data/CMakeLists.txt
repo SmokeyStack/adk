@@ -16,20 +16,23 @@ project(adk VERSION 0.1 LANGUAGES CXX)
 include_directories(include)
 add_executable(adk
     Main.cpp
-    include/AxisBlock.h
-    include/Block.h
-    include/BlockProperty.h
-    include/BushBlock.h
-    include/GlassBlock.h
-    include/Item.h
-    include/json.hpp
-    include/Registry.h
-    include/SaplingBlock.h
-    include/TintedGlassBlock.h
 )
 
 include_directories(include/generator)
 add_executable(datagen
     DataGen.cpp
     include/generator/BlockState.h
+    include/generator/ItemState.h
+)
+
+enable_testing()
+
+include_directories(include)
+add_executable(BlockTest
+    test/BlockTest.cpp
+)
+
+add_test(
+    NAME BlockTest
+    COMMAND BlockTest
 )

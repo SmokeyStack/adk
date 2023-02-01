@@ -1,7 +1,6 @@
 #ifndef SAPLINGBLOCK_H
 #define SAPLINGBLOCK_H
 
-#include <iostream>
 #include <vector>
 
 #include "BlockProperty.h"
@@ -22,10 +21,17 @@ class SaplingBlock : public BushBlock {
     /// has place feature command
     SaplingBlock(BlockProperty::Property property, int number_of_properties,
                  std::string structure) {
-        block_light_filter = property.block_light_filter;
-        friction = property.friction;
-        light_emission = property.light_emission;
-        rotation = property.rotation;
+        _block_light_filter = property.block_light_filter;
+        _crafting = property.crafting;
+        _explosion = property.explosion;
+        _mining = property.mining;
+        _display_name = property.display_name;
+        _flammable = property.flammable;
+        _friction = property.friction;
+        _light_emission = property.light_emission;
+        _loot = property.loot;
+        _color = property.colour;
+        _rotation = property.rotation;
         _number_of_properties = number_of_properties;
         _structure = structure;
     }
@@ -38,10 +44,17 @@ class SaplingBlock : public BushBlock {
     /// @param particle The particle to play after being bonemealed
     SaplingBlock(BlockProperty::Property property, int number_of_properties,
                  std::string structure, std::string particle) {
-        block_light_filter = property.block_light_filter;
-        friction = property.friction;
-        light_emission = property.light_emission;
-        rotation = property.rotation;
+        _block_light_filter = property.block_light_filter;
+        _crafting = property.crafting;
+        _explosion = property.explosion;
+        _mining = property.mining;
+        _display_name = property.display_name;
+        _flammable = property.flammable;
+        _friction = property.friction;
+        _light_emission = property.light_emission;
+        _loot = property.loot;
+        _color = property.colour;
+        _rotation = property.rotation;
         _number_of_properties = number_of_properties;
         _structure = structure;
         _particle = particle;
