@@ -10,11 +10,5 @@ int main() {
 
     mod.subscribe("basic_block", new Block(BlockProperty::Property()));
 
-    try {
-        mod.subscribe("error");
-    } catch (const std::exception& e) {
-        std::cerr << e.what() << '\n';
-    }
-
     return 0;
 }
