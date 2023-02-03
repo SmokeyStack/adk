@@ -5,11 +5,11 @@
 #include "BlockProperty.h"
 #include "json.hpp"
 
-class Head : public Block {
+class HeadBlock : public Block {
    public:
     /// @brief Represents a skull block
     /// @param property A BlockProperty object
-    Head(BlockProperty::Property property) {
+    HeadBlock(BlockProperty::Property property) {
         _block_light_filter = property.block_light_filter;
         _crafting = property.crafting;
         _explosion = property.explosion;
@@ -61,36 +61,29 @@ class Head : public Block {
          ["set_block_property"][mod_id + ":placement"] = "q.block_face";
         j["minecraft:block"]["events"][mod_id + ":set_rotation"]
          ["set_block_property"][mod_id + ":rotation"] =
-             "(q.body_y_rotation > -11.25 && q.body_y_rotation < 11.25) ? 0 "
+             "(q.body_y_rotation > -11.25 && q.body_y_rotation < 11.25) ? 0 : "
+             "(q.body_y_rotation > 11.25 && q.body_y_rotation < 33.75) ? 1 : "
+             "(q.body_y_rotation > 33.75 && q.body_y_rotation < 56.25) ? 2 : "
+             "(q.body_y_rotation > 56.25 && q.body_y_rotation < 78.25) ? 3 : "
+             "(q.body_y_rotation > 78.25 && q.body_y_rotation < 101.25) ? 4 : "
+             "(q.body_y_rotation > 101.25 && q.body_y_rotation < 123.75) ? 5 : "
+             "(q.body_y_rotation > 123.75 && q.body_y_rotation < 146.25) ? 6 : "
+             "(q.body_y_rotation > 146.25 && q.body_y_rotation < 168.75) ? 7 : "
+             "(q.body_y_rotation > 168.75 || q.body_y_rotation < -168.75) ? 8 "
              ": "
-             "(q.body_y_rotation > 11.25 && q.body_y_rotation < 33.75) ? 1 "
+             "(q.body_y_rotation > -168.75 && q.body_y_rotation < -146.25) ? 9 "
              ": "
-             "(q.body_y_rotation > 33.75 && q.body_y_rotation < 56.25) ? 2 "
+             "(q.body_y_rotation > -146.25 && q.body_y_rotation < -123.75) ? "
+             "10 : "
+             "(q.body_y_rotation > -123.75 && q.body_y_rotation < -101.25) ? "
+             "11 : "
+             "(q.body_y_rotation > -101.25 && q.body_y_rotation < -78.25) ? 12 "
              ": "
-             "(q.body_y_rotation > 56.25 && q.body_y_rotation < 78.25) ? 3 "
+             "(q.body_y_rotation > -78.25 && q.body_y_rotation < -56.25) ? 13 "
              ": "
-             "(q.body_y_rotation > 78.25 && q.body_y_rotation < 101.25) ? 4 "
+             "(q.body_y_rotation > -56.25 && q.body_y_rotation < -33.75) ? 14 "
              ": "
-             "(q.body_y_rotation > 101.25 && q.body_y_rotation < 123.75) ? "
-             "5 : "
-             "(q.body_y_rotation > 123.75 && q.body_y_rotation < 146.25) ? "
-             "6 : "
-             "(q.body_y_rotation > 146.25 && q.body_y_rotation < 168.75) ? "
-             "7 : "
-             "(q.body_y_rotation > 168.75 || q.body_y_rotation < -168.75) ? "
-             "8 "
-             ": (q.body_y_rotation > -168.75 && q.body_y_rotation < "
-             "-146.25) ? "
-             "9 : (q.body_y_rotation > -146.25 && q.body_y_rotation < "
-             "-123.75) "
-             "? 10 : (q.body_y_rotation > -123.75 && q.body_y_rotation < "
-             "-101.25) ? 11 : (q.body_y_rotation > -101.25 && "
-             "q.body_y_rotation < -78.25) ? 12 : (q.body_y_rotation > "
-             "-78.25 "
-             "&& q.body_y_rotation < -56.25) ? 13 : (q.body_y_rotation > "
-             "-56.25 && q.body_y_rotation < -33.75) ? 14 : "
-             "(q.body_y_rotation "
-             "> -33.75 && q.body_y_rotation < -11.25) ? 15";
+             "(q.body_y_rotation > -33.75 && q.body_y_rotation < -11.25) ? 15";
 
         // Permutations
         j["minecraft:block"]["permutations"].push_back(
