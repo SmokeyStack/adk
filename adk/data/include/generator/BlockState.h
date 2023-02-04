@@ -205,4 +205,27 @@ void headBlock(std::string block, std::string north, std::string east,
     }
 }
 
+void candleBlock(std::string block, std::string texture) {
+    std::string my_text, temp_text;
+    std::ifstream TempFile("./BP/blocks/" + block + ".json");
+    nlohmann::json j = nlohmann::json::parse(TempFile);
+
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = texture;
+
+    TempFile.close();
+    std::ofstream MyFile("./BP/blocks/" + block + ".json");
+    MyFile << j.dump();
+    MyFile.close();
+
+    if (!fs::exists("./RP/models/entity/candle.geo.json")) {
+        if (!fs::exists("./RP/models/entity")) {
+            fs::create_directory("./RP/models/");
+            fs::create_directory("./RP/models/entity/");
+        }
+
+        fs::copy("./data/adk/assets/candle.geo.json", "./RP/models/entity");
+    }
+}
+
 #endif
