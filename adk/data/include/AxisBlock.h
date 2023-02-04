@@ -7,6 +7,7 @@
 
 class AxisBlock : public Block {
    public:
+    AxisBlock() {}
     /// @brief Represents a rotatable block
     /// @param property A BlockProperty object
     AxisBlock(BlockProperty::Property property) {

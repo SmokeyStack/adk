@@ -7,7 +7,8 @@
 
 class CandleBlock : public Block {
    public:
-    /// @brief Represents a skull block
+    CandleBlock() {}
+    /// @brief Represents a candle block
     /// @param property A BlockProperty object
     CandleBlock(BlockProperty::Property property) {
         _block_light_filter = property.block_light_filter;

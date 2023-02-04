@@ -88,7 +88,7 @@ void tintedGlass(std::string block, std::string texture) {
 /// @brief Creates a one texture block
 /// @param block Identifier of the block, omit namespace
 /// @param texture Texture for the block
-void head(std::string block, std::string texture) {
+void headBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
@@ -117,7 +117,7 @@ void head(std::string block, std::string texture) {
 /// @param block Identifier of the block, omit namespace
 /// @param sides Texture name for the sides of the block
 /// @param ends Texture name for the ends of the block
-void head(std::string block, std::string sides, std::string ends) {
+void headBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
@@ -158,9 +158,9 @@ void head(std::string block, std::string sides, std::string ends) {
 /// @param west Texture for the west face
 /// @param up Texture for the up face
 /// @param down Texture for the down face
-void head(std::string block, std::string north, std::string east,
-          std::string south, std::string west, std::string up,
-          std::string down) {
+void headBlock(std::string block, std::string north, std::string east,
+               std::string south, std::string west, std::string up,
+               std::string down) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);

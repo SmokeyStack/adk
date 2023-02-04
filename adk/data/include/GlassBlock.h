@@ -7,6 +7,7 @@
 
 class GlassBlock : public Block {
    public:
+    GlassBlock() {}
     /// @brief Represents a glass block
     /// @param property A BlockProperty object
     /// @param is_tinted Whether the block blocks out light or not

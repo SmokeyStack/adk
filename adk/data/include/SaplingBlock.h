@@ -14,6 +14,7 @@ class SaplingBlock : public BushBlock {
     std::string _particle = "minecraft:crop_growth_emitter";
 
    public:
+    SaplingBlock() {}
     /// @brief Represents a sapling block
     /// @param property A BlockProperty object
     /// @param number_of_properties How many stages the sapling has

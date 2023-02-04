@@ -7,6 +7,7 @@
 
 class HeadBlock : public Block {
    public:
+    HeadBlock() {}
     /// @brief Represents a skull block
     /// @param property A BlockProperty object
     HeadBlock(BlockProperty::Property property) {

@@ -27,7 +27,7 @@ std::string getArmorSlot(ArmorSlot slot) {
     }
 }
 
-class Armor : public Item {
+class ArmorItem : public Item {
    protected:
     int _protection;
     std::string _slot;
@@ -37,6 +37,7 @@ class Armor : public Item {
     int _damage_chance_max;
 
    public:
+    ArmorItem() {}
     /// @brief Represents an Armor Item
     /// @param property An ItemProperty object
     /// @param protection How much protection point should this armor give
@@ -45,9 +46,9 @@ class Armor : public Item {
     /// @param dispensable Can this armor be equipped by a dispenser
     /// @param damage_chance_min Minimum chance the armor takes damage
     /// @param damage_chance_max Maximum chance the armor takes damage
-    Armor(ItemProperty::Property property, int protection, ArmorSlot slot,
-          int durability, bool dispensable, int damage_chance_min,
-          int damage_chance_max) {
+    ArmorItem(ItemProperty::Property property, int protection, ArmorSlot slot,
+              int durability, bool dispensable, int damage_chance_min,
+              int damage_chance_max) {
         _display_name = property.display_name;
         _stack = property.stack;
         _protection = protection;
