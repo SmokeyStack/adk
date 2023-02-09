@@ -38,7 +38,7 @@ class Block {
         _friction = property.friction;
         _light_emission = property.light_emission;
         _loot = property.loot;
-        _color = property.colour;
+        _color = property.color;
         _rotation = property.rotation;
     }
 
@@ -64,7 +64,7 @@ class Block {
             j["minecraft:block"]["components"]
              ["minecraft:destructible_by_explosion"] = _explosion;
 
-        if (_mining != json::object_t({{"seconds_to_destory", 0.0}}))
+        if (_mining != json::object_t({{"seconds_to_destroy", 0.0}}))
             j["minecraft:block"]["components"]
              ["minecraft:destructible_by_mining"] = _mining;
 

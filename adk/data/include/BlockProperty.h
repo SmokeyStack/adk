@@ -15,7 +15,7 @@ class BlockProperty {
         nlohmann::json::object_t crafting = {
             {"crafting_table", {"crafting_table"}}, {"table_name", "Foo Bar"}};
         nlohmann::json::object_t explosion = {{"explosion_resistance", 0}};
-        nlohmann::json::object_t mining = {{"seconds_to_destory", 0.0}};
+        nlohmann::json::object_t mining = {{"seconds_to_destroy", 0.0}};
         std::string display_name = "";
         nlohmann::json::object_t flammable = {{"catch_chance_modifier", 5},
                                               {"destroy_chance_modifier", 20}};
@@ -23,7 +23,7 @@ class BlockProperty {
         std::string geometry = "";
         int light_emission = 0;
         std::string loot = "";
-        std::string colour = "";
+        std::string color = "";
         std::vector<int> rotation = {0, 0, 0};
 
         /// @brief Sets "light_dampening" component
@@ -66,7 +66,7 @@ class BlockProperty {
         /// @param m Sets the number of seconds it takes to destroy the block
         /// with base equipment. Greater numbers result in greater mining times.
         Property setMining(float m) {
-            this->mining = {{"seconds_to_destory", m}};
+            this->mining = {{"seconds_to_destroy", m}};
             return *this;
         }
 
@@ -144,8 +144,8 @@ class BlockProperty {
         /// @param c Sets the color of the block when rendered to a map. The
         /// color is represented as a hex value in the format "#RRGGBB". If this
         /// component is omitted, the block will not show up on the map.
-        Property setColour(std::string c) {
-            this->colour = c;
+        Property setColor(std::string c) {
+            this->color = c;
             return *this;
         }
 

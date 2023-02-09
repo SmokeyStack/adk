@@ -17,8 +17,8 @@ void simpleBlock(std::string block) {
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
-    j["minecraft:block"]["components"]["material_instances"]["*"]["texture"] =
-        block;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = block;
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
@@ -35,13 +35,13 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
-    j["minecraft:block"]["components"]["material_instances"]["*"]["texture"] =
-        sides;
-    j["minecraft:block"]["components"]["material_instances"]["ends"]
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = sides;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["ends"]
      ["texture"] = ends;
-    j["minecraft:block"]["components"]["material_instances"]["up"]["texture"] =
-        "ends";
-    j["minecraft:block"]["components"]["material_instances"]["down"]
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
+     ["texture"] = "ends";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
      ["texture"] = "ends";
 
     TempFile.close();
@@ -60,8 +60,8 @@ void customBlock(std::string block, std::string model, std::string texture) {
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
     j["minecraft:block"]["components"]["minecraft:geometry"] = model;
-    j["minecraft:block"]["components"]["material_instances"]["*"]["texture"] =
-        texture;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = texture;
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");

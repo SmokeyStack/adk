@@ -31,7 +31,7 @@ class SaplingBlock : public BushBlock {
         _friction = property.friction;
         _light_emission = property.light_emission;
         _loot = property.loot;
-        _color = property.colour;
+        _color = property.color;
         _rotation = property.rotation;
         _number_of_properties = number_of_properties;
         _structure = structure;
@@ -54,7 +54,7 @@ class SaplingBlock : public BushBlock {
         _friction = property.friction;
         _light_emission = property.light_emission;
         _loot = property.loot;
-        _color = property.colour;
+        _color = property.color;
         _rotation = property.rotation;
         _number_of_properties = number_of_properties;
         _structure = structure;

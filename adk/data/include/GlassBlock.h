@@ -24,7 +24,7 @@ class GlassBlock : public Block {
         _friction = property.friction;
         _light_emission = property.light_emission;
         _loot = property.loot;
-        _color = property.colour;
+        _color = property.color;
         _rotation = property.rotation;
     };
 
