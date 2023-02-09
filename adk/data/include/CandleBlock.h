@@ -20,7 +20,7 @@ class CandleBlock : public Block {
         _friction = property.friction;
         _light_emission = property.light_emission;
         _loot = property.loot;
-        _color = property.colour;
+        _color = property.color;
         _rotation = property.rotation;
     }
 
@@ -56,6 +56,8 @@ class CandleBlock : public Block {
          ["set_block_property"][mod_id + ":count"] =
              "(q.block_property('" + mod_id +
              ":count') < 4) ? q.block_property('" + mod_id + ":count') + 1 : 4";
+        j["minecraft"]["events"][mod_id + ":add_candle"]["decrement_stack"] =
+            json::object();
 
         // Permutations
         j["minecraft:block"]["permutations"].push_back(
