@@ -12,13 +12,13 @@ namespace fs = std::filesystem;
 
 /// @brief Creates a one texture block
 /// @param block Identifier of the block, omit namespace
-void simpleBlock(std::string block) {
+void simpleBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-     ["texture"] = block;
+     ["texture"] = texture;
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
@@ -225,6 +225,29 @@ void candleBlock(std::string block, std::string texture) {
         }
 
         fs::copy("./data/adk/assets/candle.geo.json", "./RP/models/entity");
+    }
+}
+
+void slabBlock(std::string block, std::string texture) {
+    std::string my_text, temp_text;
+    std::ifstream TempFile("./BP/blocks/" + block + ".json");
+    nlohmann::json j = nlohmann::json::parse(TempFile);
+
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["texture"] = texture;
+
+    TempFile.close();
+    std::ofstream MyFile("./BP/blocks/" + block + ".json");
+    MyFile << j.dump();
+    MyFile.close();
+
+    if (!fs::exists("./RP/models/entity/slab.geo.json")) {
+        if (!fs::exists("./RP/models/entity")) {
+            fs::create_directory("./RP/models/");
+            fs::create_directory("./RP/models/entity/");
+        }
+
+        fs::copy("./data/adk/assets/slab.geo.json", "./RP/models/entity");
     }
 }
 

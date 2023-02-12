@@ -47,7 +47,8 @@ class CandleBlock : public Block {
         j["minecraft:block"]["components"]["minecraft:geometry"] =
             "geometry.candle_one";
         j["minecraft:block"]["components"]["minecraft:on_interact"]
-         ["condition"] = "query.get_equipped_item_name == '" + id + "'";
+         ["condition"] = "q.get_equipped_item_name == '" + id +
+                         "' && q.block_property('" + mod_id + ":count') != 4";
         j["minecraft:block"]["components"]["minecraft:on_interact"]["event"] =
             mod_id + ":add_candle";
 
@@ -56,8 +57,8 @@ class CandleBlock : public Block {
          ["set_block_property"][mod_id + ":count"] =
              "(q.block_property('" + mod_id +
              ":count') < 4) ? q.block_property('" + mod_id + ":count') + 1 : 4";
-        j["minecraft"]["events"][mod_id + ":add_candle"]["decrement_stack"] =
-            json::object();
+        j["minecraft:block"]["events"][mod_id + ":add_candle"]
+         ["decrement_stack"] = json::object();
 
         // Permutations
         j["minecraft:block"]["permutations"].push_back(

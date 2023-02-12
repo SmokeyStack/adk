@@ -94,7 +94,7 @@ class HeadBlock : public Block {
                {"minecraft:selection_box",
                 {{"origin", {-4, 4, 0}}, {"size", {8, 8, 8}}}},
                {"minecraft:geometry", "geometry.head_wall"}}},
-             {"condition", "q.block_property('smokey_bedrock:is_wall')"}});
+             {"condition", "q.block_property('" + mod_id + ":is_wall')"}});
 
         j["minecraft:block"]["permutations"].push_back(
             {{"components", {{"minecraft:rotation", {0, 0, 0}}}},
