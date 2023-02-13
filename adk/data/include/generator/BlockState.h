@@ -3,6 +3,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <iostream>
 #include <sstream>
 #include <string>
 
@@ -14,6 +15,13 @@ namespace fs = std::filesystem;
 /// @param block Identifier of the block, omit namespace
 void simpleBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -32,6 +40,13 @@ void simpleBlock(std::string block, std::string texture) {
 /// @param ends Texture name for the ends of the block
 void axisBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -56,6 +71,13 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
 /// @param texture Texture name for the block
 void customBlock(std::string block, std::string model, std::string texture) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -71,6 +93,13 @@ void customBlock(std::string block, std::string model, std::string texture) {
 
 void tintedGlass(std::string block, std::string texture) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -90,6 +119,13 @@ void tintedGlass(std::string block, std::string texture) {
 /// @param texture Texture for the block
 void headBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -119,6 +155,13 @@ void headBlock(std::string block, std::string texture) {
 /// @param ends Texture name for the ends of the block
 void headBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -162,6 +205,13 @@ void headBlock(std::string block, std::string north, std::string east,
                std::string south, std::string west, std::string up,
                std::string down) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -207,6 +257,13 @@ void headBlock(std::string block, std::string north, std::string east,
 
 void candleBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
@@ -230,6 +287,13 @@ void candleBlock(std::string block, std::string texture) {
 
 void slabBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
+
+    if (!fs::exists("./BP/blocks/" + block + ".json")) {
+        std::cerr << "No block found: " + block +
+                         ".json - Please check if this block exists";
+        exit(EXIT_FAILURE);
+    }
+
     std::ifstream TempFile("./BP/blocks/" + block + ".json");
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
