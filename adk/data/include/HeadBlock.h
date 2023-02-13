@@ -96,26 +96,10 @@ class HeadBlock : public Block {
                {"minecraft:geometry", "geometry.head_wall"}}},
              {"condition", "q.block_property('" + mod_id + ":is_wall')"}});
 
-        j["minecraft:block"]["permutations"].push_back(
-            {{"components", {{"minecraft:rotation", {0, 0, 0}}}},
-             {"condition", "q.block_property('" + mod_id +
-                               ":placement') == " + std::to_string(2)}});
-        j["minecraft:block"]["permutations"].push_back(
-            {{"components", {{"minecraft:rotation", {0, 180, 0}}}},
-             {"condition", "q.block_property('" + mod_id +
-                               ":placement') == " + std::to_string(3)}});
-        j["minecraft:block"]["permutations"].push_back(
-            {{"components", {{"minecraft:rotation", {0, 90, 0}}}},
-             {"condition", "q.block_property('" + mod_id +
-                               ":placement') == " + std::to_string(4)}});
-        j["minecraft:block"]["permutations"].push_back(
-            {{"components", {{"minecraft:rotation", {0, 270, 0}}}},
-             {"condition", "q.block_property('" + mod_id +
-                               ":placement') == " + std::to_string(5)}});
-
         for (int a = 0; a < 16; a += 4) {
             j["minecraft:block"]["permutations"].push_back(
-                {{"components", {{"minecraft:rotation", {0, (a / 4) * 90, 0}}}},
+                {{"components",
+                  {{"minecraft:rotation", {0, (a / 4) * -90, 0}}}},
                  {"condition", "q.block_property('" + mod_id +
                                    ":rotation') == " + std::to_string(a) +
                                    " && (q.block_property('" + mod_id +
@@ -127,7 +111,7 @@ class HeadBlock : public Block {
             j["minecraft:block"]["permutations"].push_back(
                 {{"components",
                   {{"minecraft:geometry", "geometry.head_22_5"},
-                   {"minecraft:rotation", {0, (a / 4) * 90, 0}}}},
+                   {"minecraft:rotation", {0, (a / 4) * -90, 0}}}},
                  {"condition", "q.block_property('" + mod_id +
                                    ":rotation') == " + std::to_string(a + 1) +
                                    " && (q.block_property('" + mod_id +
@@ -139,7 +123,7 @@ class HeadBlock : public Block {
             j["minecraft:block"]["permutations"].push_back(
                 {{"components",
                   {{"minecraft:geometry", "geometry.head_45"},
-                   {"minecraft:rotation", {0, (a / 4) * 90, 0}}}},
+                   {"minecraft:rotation", {0, (a / 4) * -90, 0}}}},
                  {"condition", "q.block_property('" + mod_id +
                                    ":rotation') == " + std::to_string(a + 2) +
                                    " && (q.block_property('" + mod_id +
@@ -151,7 +135,7 @@ class HeadBlock : public Block {
             j["minecraft:block"]["permutations"].push_back(
                 {{"components",
                   {{"minecraft:geometry", "geometry.head_67_5"},
-                   {"minecraft:rotation", {0, (a / 4) * 90, 0}}}},
+                   {"minecraft:rotation", {0, (a / 4) * -90, 0}}}},
                  {"condition", "q.block_property('" + mod_id +
                                    ":rotation') == " + std::to_string(a + 3) +
                                    " && (q.block_property('" + mod_id +
