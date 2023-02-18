@@ -339,7 +339,7 @@ void slabBlock(std::string block, std::string texture) {
     nlohmann::json j = nlohmann::json::parse(TempFile);
 
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-     ["render_method"] = "alpha_test";
+     ["texture"] = texture;
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
