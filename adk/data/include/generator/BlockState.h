@@ -371,7 +371,7 @@ void crossBlock(std::string block, std::string texture) {
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
      ["texture"] = texture;
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-     ["texture"] = texture;
+     ["render_method"] = "alpha_test";
     j["minecraft:block"]["components"]["minecraft:geometry"] = "geometry.cross";
     j["minecraft:block"]["components"].erase("minecraft:unit_cube");
 
