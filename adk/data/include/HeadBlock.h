@@ -22,6 +22,8 @@ class HeadBlock : public Block {
         _loot = property.loot;
         _color = property.color;
         _rotation = property.rotation;
+        _does_collide = property.does_collide;
+        _collision = property.collision;
     }
 
     /// @brief Generates the json object
@@ -41,6 +43,8 @@ class HeadBlock : public Block {
             json::array({0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15});
 
         // Components
+        j["minecraft:block"]["components"].erase("minecraft:collision_box");
+
         j["minecraft:block"]["components"]["minecraft:collision_box"]
          ["origin"] = {-4, 0, -4};
         j["minecraft:block"]["components"]["minecraft:collision_box"]["size"] =

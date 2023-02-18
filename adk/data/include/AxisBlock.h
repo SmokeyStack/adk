@@ -22,6 +22,8 @@ class AxisBlock : public Block {
         _loot = property.loot;
         _color = property.color;
         _rotation = property.rotation;
+        _does_collide = property.does_collide;
+        _collision = property.collision;
     }
 
     /// @brief Generates the json object

@@ -2,6 +2,7 @@
 #define BLOCK_H
 
 #include <string>
+#include <variant>
 
 #include "BlockProperty.h"
 #include "json.hpp"
@@ -19,6 +20,7 @@ class Block {
     std::string _loot;
     std::string _color;
     std::vector<int> _rotation;
+    std::variant<bool, nlohmann::json::object_t> _does_collide, _collision;
 
    public:
     using json = nlohmann::json;
@@ -40,6 +42,8 @@ class Block {
         _loot = property.loot;
         _color = property.color;
         _rotation = property.rotation;
+        _does_collide = property.does_collide;
+        _collision = property.collision;
     }
 
     /// @brief Generates the json object
@@ -94,6 +98,18 @@ class Block {
         if (_rotation != std::vector<int>{0, 0, 0})
             j["minecraft:block"]["components"]["minecraft:rotation"] =
                 _rotation;
+
+        if (std::get<bool>(_does_collide)) {
+            try {
+                j["minecraft:block"]["components"]["minecraft:collision_box"] =
+                    std::get<nlohmann::json::object_t>(_collision);
+            } catch (const std::exception& e) {
+                e;
+            }
+        } else {
+            j["minecraft:block"]["components"]["minecraft:collision_box"] =
+                false;
+        }
 
         return j;
     }
