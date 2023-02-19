@@ -24,6 +24,8 @@ class HeadBlock : public Block {
         _rotation = property.rotation;
         _does_collide = property.does_collide;
         _collision = property.collision;
+        _is_selectable = property.is_selectable;
+        _selection = property.selection;
     }
 
     /// @brief Generates the json object

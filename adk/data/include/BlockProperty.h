@@ -28,6 +28,8 @@ class BlockProperty {
         std::vector<int> rotation = {0, 0, 0};
         std::variant<bool, nlohmann::json::object_t> does_collide{true},
             collision;
+        std::variant<bool, nlohmann::json::object_t> is_selectable{true},
+            selection;
 
         /// @brief Sets "light_dampening" component
         /// @param blf The amount that light will be dampened when it
@@ -169,6 +171,17 @@ class BlockProperty {
         Property setCollision(std::vector<int> b, std::vector<int> c) {
             nlohmann::json::object_t temp = {{"origin", b}, {"size", c}};
             this->collision = temp;
+            return *this;
+        }
+
+        Property setSelection(bool origin) {
+            this->is_selectable = origin;
+            return *this;
+        }
+
+        Property setSelection(std::vector<int> b, std::vector<int> c) {
+            nlohmann::json::object_t temp = {{"origin", b}, {"size", c}};
+            this->selection = temp;
             return *this;
         }
     };
