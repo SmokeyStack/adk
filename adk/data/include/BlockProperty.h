@@ -2,6 +2,7 @@
 #define BLOCKPROPERTY_h
 
 #include <string>
+#include <variant>
 #include <vector>
 
 #include "json.hpp"
@@ -25,11 +26,15 @@ class BlockProperty {
         std::string loot = "";
         std::string color = "";
         std::vector<int> rotation = {0, 0, 0};
+        std::variant<bool, nlohmann::json::object_t> does_collide{true},
+            collision;
+        std::variant<bool, nlohmann::json::object_t> is_selectable{true},
+            selection;
 
         /// @brief Sets "light_dampening" component
         /// @param blf The amount that light will be dampened when it
-        /// passes through the block, in a range (0-15). Higher value means the
-        /// light will be dampened more.
+        /// passes through the block, in a range (0-15). Higher value
+        /// means the light will be dampened more.
         Property setBlockLightFilter(int blf) {
             this->block_light_filter = blf;
             return *this;
@@ -155,6 +160,28 @@ class BlockProperty {
         /// in factors of 90.
         Property setRotation(std::vector<int> r) {
             this->rotation = r;
+            return *this;
+        }
+
+        Property setCollision(bool origin) {
+            this->does_collide = origin;
+            return *this;
+        }
+
+        Property setCollision(std::vector<int> b, std::vector<int> c) {
+            nlohmann::json::object_t temp = {{"origin", b}, {"size", c}};
+            this->collision = temp;
+            return *this;
+        }
+
+        Property setSelection(bool origin) {
+            this->is_selectable = origin;
+            return *this;
+        }
+
+        Property setSelection(std::vector<int> b, std::vector<int> c) {
+            nlohmann::json::object_t temp = {{"origin", b}, {"size", c}};
+            this->selection = temp;
             return *this;
         }
     };

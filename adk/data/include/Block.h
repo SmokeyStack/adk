@@ -1,6 +1,7 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <iostream>
 #include <string>
 
 #include "BlockProperty.h"
@@ -19,6 +20,8 @@ class Block {
     std::string _loot;
     std::string _color;
     std::vector<int> _rotation;
+    std::variant<bool, nlohmann::json::object_t> _does_collide, _collision;
+    std::variant<bool, nlohmann::json::object_t> _is_selectable, _selection;
 
    public:
     using json = nlohmann::json;
@@ -40,6 +43,10 @@ class Block {
         _loot = property.loot;
         _color = property.color;
         _rotation = property.rotation;
+        _does_collide = property.does_collide;
+        _collision = property.collision;
+        _is_selectable = property.is_selectable;
+        _selection = property.selection;
     }
 
     /// @brief Generates the json object
@@ -94,6 +101,150 @@ class Block {
         if (_rotation != std::vector<int>{0, 0, 0})
             j["minecraft:block"]["components"]["minecraft:rotation"] =
                 _rotation;
+
+        if (std::get<bool>(_does_collide)) {
+            try {
+                if (std::get<nlohmann::json::object_t>(
+                        _collision)["origin"][0] < -8 ||
+                    std::get<nlohmann::json::object_t>(
+                        _collision)["origin"][0] > 8 ||
+                    std::get<nlohmann::json::object_t>(
+                        _collision)["origin"][1] < 0 ||
+                    std::get<nlohmann::json::object_t>(
+                        _collision)["origin"][1] > 16 ||
+                    std::get<nlohmann::json::object_t>(
+                        _collision)["origin"][2] < -8 ||
+                    std::get<nlohmann::json::object_t>(
+                        _collision)["origin"][2] > 8) {
+                    std::cerr << id
+                              << " - Minimal position of the bounds of the "
+                                 "collision box. origin is specified as [x, y, "
+                                 "z] and must be in the range (-8, 0, -8) to "
+                                 "(8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                int origin_1 =
+                    std::get<nlohmann::json::object_t>(_collision)["origin"][0];
+                int size_1 =
+                    std::get<nlohmann::json::object_t>(_collision)["size"][0];
+                int origin_2 =
+                    std::get<nlohmann::json::object_t>(_collision)["origin"][1];
+                int size_2 =
+                    std::get<nlohmann::json::object_t>(_collision)["size"][1];
+                int origin_3 =
+                    std::get<nlohmann::json::object_t>(_collision)["origin"][2];
+                int size_3 =
+                    std::get<nlohmann::json::object_t>(_collision)["size"][2];
+
+                if ((origin_1 + size_1) < -8 || (origin_1 + size_1) > 8) {
+                    std::cerr
+                        << id
+                        << " - Size of each side of the collision box. Size is "
+                           "specified as [x, y, z]. origin + size must be in "
+                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                if ((origin_2 + size_2) < 0 || (origin_2 + size_2) > 16) {
+                    std::cerr
+                        << id
+                        << " - Size of each side of the collision box. Size is "
+                           "specified as [x, y, z]. origin + size must be in "
+                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                if ((origin_3 + size_3) < -8 || (origin_3 + size_3) > 8) {
+                    std::cerr
+                        << id
+                        << " - Size of each side of the collision box. Size is "
+                           "specified as [x, y, z]. origin + size must be in "
+                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                j["minecraft:block"]["components"]["minecraft:collision_box"] =
+                    std::get<nlohmann::json::object_t>(_collision);
+            } catch (const std::exception& e) {
+                e;
+            }
+        } else {
+            j["minecraft:block"]["components"]["minecraft:collision_box"] =
+                false;
+        }
+
+        if (std::get<bool>(_is_selectable)) {
+            try {
+                if (std::get<nlohmann::json::object_t>(
+                        _selection)["origin"][0] < -8 ||
+                    std::get<nlohmann::json::object_t>(
+                        _selection)["origin"][0] > 8 ||
+                    std::get<nlohmann::json::object_t>(
+                        _selection)["origin"][1] < 0 ||
+                    std::get<nlohmann::json::object_t>(
+                        _selection)["origin"][1] > 16 ||
+                    std::get<nlohmann::json::object_t>(
+                        _selection)["origin"][2] < -8 ||
+                    std::get<nlohmann::json::object_t>(
+                        _selection)["origin"][2] > 8) {
+                    std::cerr << id
+                              << " - Minimal position of the bounds of the "
+                                 "collision box. origin is specified as [x, y, "
+                                 "z] and must be in the range (-8, 0, -8) to "
+                                 "(8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                int origin_1 =
+                    std::get<nlohmann::json::object_t>(_selection)["origin"][0];
+                int size_1 =
+                    std::get<nlohmann::json::object_t>(_selection)["size"][0];
+                int origin_2 =
+                    std::get<nlohmann::json::object_t>(_selection)["origin"][1];
+                int size_2 =
+                    std::get<nlohmann::json::object_t>(_selection)["size"][1];
+                int origin_3 =
+                    std::get<nlohmann::json::object_t>(_selection)["origin"][2];
+                int size_3 =
+                    std::get<nlohmann::json::object_t>(_selection)["size"][2];
+
+                if ((origin_1 + size_1) < -8 || (origin_1 + size_1) > 8) {
+                    std::cerr
+                        << id
+                        << " - Size of each side of the selection box. Size is "
+                           "specified as [x, y, z]. origin + size must be in "
+                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                if ((origin_2 + size_2) < 0 || (origin_2 + size_2) > 16) {
+                    std::cerr
+                        << id
+                        << " - Size of each side of the selection box. Size is "
+                           "specified as [x, y, z]. origin + size must be in "
+                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                if ((origin_3 + size_3) < -8 || (origin_3 + size_3) > 8) {
+                    std::cerr
+                        << id
+                        << " - Size of each side of the selection box. Size is "
+                           "specified as [x, y, z]. origin + size must be in "
+                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    exit(EXIT_FAILURE);
+                }
+
+                j["minecraft:block"]["components"]["minecraft:selection_box"] =
+                    std::get<nlohmann::json::object_t>(_selection);
+            } catch (const std::exception& e) {
+                e;
+            }
+        } else {
+            j["minecraft:block"]["components"]["minecraft:selection_box"] =
+                false;
+        }
 
         return j;
     }
