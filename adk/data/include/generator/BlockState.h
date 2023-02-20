@@ -372,6 +372,10 @@ void crossBlock(std::string block, std::string texture) {
      ["texture"] = texture;
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
      ["render_method"] = "alpha_test";
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["ambient_occlusion"] = false;
+    j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
+     ["face_dimming"] = false;
     j["minecraft:block"]["components"]["minecraft:geometry"] = "geometry.cross";
     j["minecraft:block"]["components"].erase("minecraft:unit_cube");
 
