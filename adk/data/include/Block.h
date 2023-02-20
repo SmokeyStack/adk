@@ -22,6 +22,8 @@ class Block {
     std::vector<int> _rotation;
     std::variant<bool, nlohmann::json::object_t> _does_collide, _collision;
     std::variant<bool, nlohmann::json::object_t> _is_selectable, _selection;
+    std::string _tab;
+    std::string _category;
 
    public:
     using json = nlohmann::json;
@@ -47,6 +49,8 @@ class Block {
         _collision = property.collision;
         _is_selectable = property.is_selectable;
         _selection = property.selection;
+        _tab = property.tab;
+        _category = property.category;
     }
 
     /// @brief Generates the json object
@@ -245,6 +249,14 @@ class Block {
             j["minecraft:block"]["components"]["minecraft:selection_box"] =
                 false;
         }
+
+        if (_tab != "")
+            j["minecraft:block"]["description"]["menu_category"]["category"] =
+                _tab;
+
+        if (_category != "")
+            j["minecraft:block"]["description"]["menu_category"]["group"] =
+                _category;
 
         return j;
     }

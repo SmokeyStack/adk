@@ -295,6 +295,8 @@ class BlockProperty {
             collision;
         std::variant<bool, nlohmann::json::object_t> is_selectable{true},
             selection;
+        std::string tab = "";
+        std::string category = "";
 
         /// @brief Sets "light_dampening" component
         /// @param blf The amount that light will be dampened when it
@@ -447,6 +449,16 @@ class BlockProperty {
         Property setSelection(std::vector<int> b, std::vector<int> c) {
             nlohmann::json::object_t temp = {{"origin", b}, {"size", c}};
             this->selection = temp;
+            return *this;
+        }
+
+        Property setTab(CreativeTab tab) {
+            this->tab = getCreativeTab(tab);
+            return *this;
+        }
+
+        Property setCategory(CreativeCategory category) {
+            this->category = getCreativeCategory(category);
             return *this;
         }
     };

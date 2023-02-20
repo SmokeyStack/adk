@@ -26,6 +26,8 @@ class BushBlock : public Block {
         _collision = property.collision;
         _is_selectable = property.is_selectable;
         _selection = property.selection;
+        _tab = property.tab;
+        _category = property.category;
     }
 
     /// @brief Generates the json object
