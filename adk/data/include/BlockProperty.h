@@ -7,6 +7,271 @@
 
 #include "json.hpp"
 
+enum CreativeTab { COMMANDS, CONSTRUCTION, EQUIPMENT, ITEMS, NATURE, NONE };
+
+/// @brief Turns enum CreativeTab into string
+/// @param tab enum CreativeTab
+/// @return String equivalent
+std::string getCreativeTab(CreativeTab tab) {
+    switch (tab) {
+        case COMMANDS:
+            return "commands";
+        case CONSTRUCTION:
+            return "construction";
+        case EQUIPMENT:
+            return "equipment";
+        case ITEMS:
+            return "items";
+        case NATURE:
+            return "nature";
+        case NONE:
+            return "none";
+        default:
+            return "Error";
+    }
+}
+
+enum CreativeCategory {
+    ANVIL,
+    ARROW,
+    AXE,
+    BANNER,
+    BANNERPATTERN,
+    BED,
+    BOAT,
+    BOOTS,
+    BUTTONS,
+    CANDLES,
+    CHALKBOARD,
+    CHEST,
+    CHESTBOAT,
+    CHESTPLATE,
+    CONCRETE,
+    CONCRETEPOWDER,
+    COOKEDFOOD,
+    COPPER,
+    CORAL,
+    CORALDECORATIONS,
+    CROP,
+    DOOR,
+    DYE,
+    ENCHANTEDBOOK,
+    FENCE,
+    FENCEGATE,
+    FIREWORK,
+    FIREWORKSTARS,
+    FLOWER,
+    GLASS,
+    GLASSPANE,
+    GLAZEDTERRACOTTA,
+    GOATHORN,
+    GRASS,
+    HELMET,
+    HOE,
+    HORSEARMOR,
+    LEAVES,
+    LEGGINGS,
+    LINGERINGPOTION,
+    LOG,
+    MINECART,
+    MISCFOOD,
+    MOBEGG,
+    MONSTERSTONEEGG,
+    MUSHROOM,
+    NETHERWARTBLOCK,
+    ORE,
+    PERMISSION,
+    PICKAXE,
+    PLANKS,
+    POTION,
+    PRESSUREPLATE,
+    RAIL,
+    RAWFOOD,
+    RECORD,
+    SANDSTONE,
+    SAPLING,
+    SCULK,
+    SEED,
+    SHOVEL,
+    SHULKERBOX,
+    SIGN,
+    SKULL,
+    SLAB,
+    SPLASHPOTION,
+    STAINEDCLAY,
+    STAIRS,
+    STONE,
+    STONEBRICK,
+    SWORD,
+    TRAPDOOR,
+    WALLS,
+    WOOD,
+    WOOL,
+    WOOLCARPET
+};
+
+/// @brief Turns enum CreativeCategory into string
+/// @param tab enum CreativeCategory
+/// @return String equivalent
+std::string getCreativeCategory(CreativeCategory category) {
+    switch (category) {
+        case ANVIL:
+            return "itemGroup.name.anvil";
+        case ARROW:
+            return "itemGroup.name.arrow";
+        case AXE:
+            return "itemGroup.name.axe";
+        case BANNER:
+            return "itemGroup.name.banner";
+        case BANNERPATTERN:
+            return "itemGroup.name.banner_pattern";
+        case BED:
+            return "itemGroup.name.bed";
+        case BOAT:
+            return "itemGroup.name.boat";
+        case BOOTS:
+            return "itemGroup.name.boots";
+        case BUTTONS:
+            return "itemGroup.name.buttons";
+        case CANDLES:
+            return "itemGroup.name.candles";
+        case CHALKBOARD:
+            return "itemGroup.name.chalkboard";
+        case CHEST:
+            return "itemGroup.name.chest";
+        case CHESTBOAT:
+            return "itemGroup.name.chestboat";
+        case CHESTPLATE:
+            return "itemGroup.name.chestplate";
+        case CONCRETE:
+            return "itemGroup.name.concrete";
+        case CONCRETEPOWDER:
+            return "itemGroup.name.concretePowder";
+        case COOKEDFOOD:
+            return "itemGroup.name.cookedFood";
+        case COPPER:
+            return "itemGroup.name.copper";
+        case CORAL:
+            return "itemGroup.name.coral";
+        case CORALDECORATIONS:
+            return "itemGroup.name.coralDecorations";
+        case CROP:
+            return "itemGroup.name.crop";
+        case DOOR:
+            return "itemGroup.name.door";
+        case DYE:
+            return "itemGroup.name.dye";
+        case ENCHANTEDBOOK:
+            return "itemGroup.name.enchantedBook";
+        case FENCE:
+            return "itemGroup.name.fence";
+        case FENCEGATE:
+            return "itemGroup.name.fenceGate";
+        case FIREWORK:
+            return "itemGroup.name.firework";
+        case FIREWORKSTARS:
+            return "itemGroup.name.fireworkStars";
+        case FLOWER:
+            return "itemGroup.name.flower";
+        case GLASS:
+            return "itemGroup.name.glass";
+        case GLASSPANE:
+            return "itemGroup.name.glassPane";
+        case GLAZEDTERRACOTTA:
+            return "itemGroup.name.glazedTerracotta";
+        case GOATHORN:
+            return "itemGroup.name.goatHorn";
+        case GRASS:
+            return "itemGroup.name.grass";
+        case HELMET:
+            return "itemGroup.name.helmet";
+        case HOE:
+            return "itemGroup.name.hoe";
+        case HORSEARMOR:
+            return "itemGroup.name.horseArmor";
+        case LEAVES:
+            return "itemGroup.name.leaves";
+        case LEGGINGS:
+            return "itemGroup.name.leggings";
+        case LINGERINGPOTION:
+            return "itemGroup.name.lingeringPotion";
+        case LOG:
+            return "itemGroup.name.log";
+        case MINECART:
+            return "itemGroup.name.minecart";
+        case MISCFOOD:
+            return "itemGroup.name.miscFood";
+        case MOBEGG:
+            return "itemGroup.name.mobEgg";
+        case MONSTERSTONEEGG:
+            return "itemGroup.name.monsterStoneEgg";
+        case MUSHROOM:
+            return "itemGroup.name.mushroom";
+        case NETHERWARTBLOCK:
+            return "itemGroup.name.netherWartBlock";
+        case ORE:
+            return "itemGroup.name.ore";
+        case PERMISSION:
+            return "itemGroup.name.permission";
+        case PICKAXE:
+            return "itemGroup.name.pickaxe";
+        case PLANKS:
+            return "itemGroup.name.planks";
+        case POTION:
+            return "itemGroup.name.potion";
+        case PRESSUREPLATE:
+            return "itemGroup.name.pressurePlate";
+        case RAIL:
+            return "itemGroup.name.rail";
+        case RAWFOOD:
+            return "itemGroup.name.rawFood";
+        case RECORD:
+            return "itemGroup.name.record";
+        case SANDSTONE:
+            return "itemGroup.name.sandstone";
+        case SAPLING:
+            return "itemGroup.name.sapling";
+        case SCULK:
+            return "itemGroup.name.sculk";
+        case SEED:
+            return "itemGroup.name.seed";
+        case SHOVEL:
+            return "itemGroup.name.shovel";
+        case SHULKERBOX:
+            return "itemGroup.name.shulkerBox";
+        case SIGN:
+            return "itemGroup.name.sign";
+        case SKULL:
+            return "itemGroup.name.skull";
+        case SLAB:
+            return "itemGroup.name.slab";
+        case SPLASHPOTION:
+            return "itemGroup.name.splashPotion";
+        case STAINEDCLAY:
+            return "itemGroup.name.stainedClat";
+        case STAIRS:
+            return "itemGroup.name.stairs";
+        case STONE:
+            return "itemGroup.name.stone";
+        case STONEBRICK:
+            return "itemGroup.name.stoneBrick";
+        case SWORD:
+            return "itemGroup.name.sword";
+        case TRAPDOOR:
+            return "itemGroup.name.trapdoor";
+        case WALLS:
+            return "itemGroup.name.walls";
+        case WOOD:
+            return "itemGroup.name.wood";
+        case WOOL:
+            return "itemGroup.name.wool";
+        case WOOLCARPET:
+            return "itemGroup.name.woolCarpet";
+        default:
+            return "Error";
+    }
+}
+
 /// @brief Class that represents properties such as destroy speed, loot, etc
 class BlockProperty {
    public:
