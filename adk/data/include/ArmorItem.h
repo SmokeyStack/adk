@@ -3,24 +3,23 @@
 
 #include <string>
 
+#include "ArmorType.h"
 #include "Item.h"
 #include "ItemProperty.h"
 #include "json.hpp"
 
-enum ArmorSlot { HEAD, CHEST, LEGS, FEET };
-
 /// @brief Turns enum ArmorSlot into string
 /// @param slot enum ArmorSlot
 /// @return String equivalent
-std::string getArmorSlot(ArmorSlot slot) {
+std::string getArmorSlot(adk::ArmorSlot slot) {
     switch (slot) {
-        case HEAD:
+        case adk::ArmorSlot::HEAD:
             return "slot.armor.head";
-        case CHEST:
+        case adk::ArmorSlot::CHEST:
             return "slot.armor.chest";
-        case LEGS:
+        case adk::ArmorSlot::LEGS:
             return "slot.armor.legs";
-        case FEET:
+        case adk::ArmorSlot::FEET:
             return "slot.armor.feet";
         default:
             return "Error";
@@ -46,9 +45,9 @@ class ArmorItem : public Item {
     /// @param dispensable Can this armor be equipped by a dispenser
     /// @param damage_chance_min Minimum chance the armor takes damage
     /// @param damage_chance_max Maximum chance the armor takes damage
-    ArmorItem(ItemProperty::Property property, int protection, ArmorSlot slot,
-              int durability, bool dispensable, int damage_chance_min,
-              int damage_chance_max) {
+    ArmorItem(ItemProperty::Property property, int protection,
+              adk::ArmorSlot slot, int durability, bool dispensable,
+              int damage_chance_min, int damage_chance_max) {
         _display_name = property.display_name;
         _stack = property.stack;
         _protection = protection;

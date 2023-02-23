@@ -5,267 +5,187 @@
 #include <variant>
 #include <vector>
 
+#include "BlockCategory.h"
 #include "json.hpp"
-
-enum CreativeTab { COMMANDS, CONSTRUCTION, EQUIPMENT, ITEMS, NATURE, NONE };
 
 /// @brief Turns enum CreativeTab into string
 /// @param tab enum CreativeTab
 /// @return String equivalent
-std::string getCreativeTab(CreativeTab tab) {
+std::string getCreativeTab(adk::CreativeTab tab) {
     switch (tab) {
-        case COMMANDS:
+        case adk::CreativeTab::COMMANDS:
             return "commands";
-        case CONSTRUCTION:
+        case adk::CreativeTab::CONSTRUCTION:
             return "construction";
-        case EQUIPMENT:
+        case adk::CreativeTab::EQUIPMENT:
             return "equipment";
-        case ITEMS:
+        case adk::CreativeTab::ITEMS:
             return "items";
-        case NATURE:
+        case adk::CreativeTab::NATURE:
             return "nature";
-        case NONE:
+        case adk::CreativeTab::NONE:
             return "none";
         default:
             return "Error";
     }
 }
 
-enum CreativeCategory {
-    ANVIL,
-    ARROW,
-    AXE,
-    BANNER,
-    BANNERPATTERN,
-    BED,
-    BOAT,
-    BOOTS,
-    BUTTONS,
-    CANDLES,
-    CHALKBOARD,
-    CHEST,
-    CHESTBOAT,
-    CHESTPLATE,
-    CONCRETE,
-    CONCRETEPOWDER,
-    COOKEDFOOD,
-    COPPER,
-    CORAL,
-    CORALDECORATIONS,
-    CROP,
-    DOOR,
-    DYE,
-    ENCHANTEDBOOK,
-    FENCE,
-    FENCEGATE,
-    FIREWORK,
-    FIREWORKSTARS,
-    FLOWER,
-    GLASS,
-    GLASSPANE,
-    GLAZEDTERRACOTTA,
-    GOATHORN,
-    GRASS,
-    HELMET,
-    HOE,
-    HORSEARMOR,
-    LEAVES,
-    LEGGINGS,
-    LINGERINGPOTION,
-    LOG,
-    MINECART,
-    MISCFOOD,
-    MOBEGG,
-    MONSTERSTONEEGG,
-    MUSHROOM,
-    NETHERWARTBLOCK,
-    ORE,
-    PERMISSION,
-    PICKAXE,
-    PLANKS,
-    POTION,
-    PRESSUREPLATE,
-    RAIL,
-    RAWFOOD,
-    RECORD,
-    SANDSTONE,
-    SAPLING,
-    SCULK,
-    SEED,
-    SHOVEL,
-    SHULKERBOX,
-    SIGN,
-    SKULL,
-    SLAB,
-    SPLASHPOTION,
-    STAINEDCLAY,
-    STAIRS,
-    STONE,
-    STONEBRICK,
-    SWORD,
-    TRAPDOOR,
-    WALLS,
-    WOOD,
-    WOOL,
-    WOOLCARPET
-};
-
 /// @brief Turns enum CreativeCategory into string
 /// @param tab enum CreativeCategory
 /// @return String equivalent
-std::string getCreativeCategory(CreativeCategory category) {
+std::string getCreativeCategory(adk::CreativeCategory category) {
     switch (category) {
-        case ANVIL:
+        case adk::CreativeCategory::ANVIL:
             return "itemGroup.name.anvil";
-        case ARROW:
+        case adk::CreativeCategory::ARROW:
             return "itemGroup.name.arrow";
-        case AXE:
+        case adk::CreativeCategory::AXE:
             return "itemGroup.name.axe";
-        case BANNER:
+        case adk::CreativeCategory::BANNER:
             return "itemGroup.name.banner";
-        case BANNERPATTERN:
+        case adk::CreativeCategory::BANNERPATTERN:
             return "itemGroup.name.banner_pattern";
-        case BED:
+        case adk::CreativeCategory::BED:
             return "itemGroup.name.bed";
-        case BOAT:
+        case adk::CreativeCategory::BOAT:
             return "itemGroup.name.boat";
-        case BOOTS:
+        case adk::CreativeCategory::BOOTS:
             return "itemGroup.name.boots";
-        case BUTTONS:
+        case adk::CreativeCategory::BUTTONS:
             return "itemGroup.name.buttons";
-        case CANDLES:
+        case adk::CreativeCategory::CANDLES:
             return "itemGroup.name.candles";
-        case CHALKBOARD:
+        case adk::CreativeCategory::CHALKBOARD:
             return "itemGroup.name.chalkboard";
-        case CHEST:
+        case adk::CreativeCategory::CHEST:
             return "itemGroup.name.chest";
-        case CHESTBOAT:
+        case adk::CreativeCategory::CHESTBOAT:
             return "itemGroup.name.chestboat";
-        case CHESTPLATE:
+        case adk::CreativeCategory::CHESTPLATE:
             return "itemGroup.name.chestplate";
-        case CONCRETE:
+        case adk::CreativeCategory::CONCRETE:
             return "itemGroup.name.concrete";
-        case CONCRETEPOWDER:
+        case adk::CreativeCategory::CONCRETEPOWDER:
             return "itemGroup.name.concretePowder";
-        case COOKEDFOOD:
+        case adk::CreativeCategory::COOKEDFOOD:
             return "itemGroup.name.cookedFood";
-        case COPPER:
+        case adk::CreativeCategory::COPPER:
             return "itemGroup.name.copper";
-        case CORAL:
+        case adk::CreativeCategory::CORAL:
             return "itemGroup.name.coral";
-        case CORALDECORATIONS:
+        case adk::CreativeCategory::CORALDECORATIONS:
             return "itemGroup.name.coralDecorations";
-        case CROP:
+        case adk::CreativeCategory::CROP:
             return "itemGroup.name.crop";
-        case DOOR:
+        case adk::CreativeCategory::DOOR:
             return "itemGroup.name.door";
-        case DYE:
+        case adk::CreativeCategory::DYE:
             return "itemGroup.name.dye";
-        case ENCHANTEDBOOK:
+        case adk::CreativeCategory::ENCHANTEDBOOK:
             return "itemGroup.name.enchantedBook";
-        case FENCE:
+        case adk::CreativeCategory::FENCE:
             return "itemGroup.name.fence";
-        case FENCEGATE:
+        case adk::CreativeCategory::FENCEGATE:
             return "itemGroup.name.fenceGate";
-        case FIREWORK:
+        case adk::CreativeCategory::FIREWORK:
             return "itemGroup.name.firework";
-        case FIREWORKSTARS:
+        case adk::CreativeCategory::FIREWORKSTARS:
             return "itemGroup.name.fireworkStars";
-        case FLOWER:
+        case adk::CreativeCategory::FLOWER:
             return "itemGroup.name.flower";
-        case GLASS:
+        case adk::CreativeCategory::GLASS:
             return "itemGroup.name.glass";
-        case GLASSPANE:
+        case adk::CreativeCategory::GLASSPANE:
             return "itemGroup.name.glassPane";
-        case GLAZEDTERRACOTTA:
+        case adk::CreativeCategory::GLAZEDTERRACOTTA:
             return "itemGroup.name.glazedTerracotta";
-        case GOATHORN:
+        case adk::CreativeCategory::GOATHORN:
             return "itemGroup.name.goatHorn";
-        case GRASS:
+        case adk::CreativeCategory::GRASS:
             return "itemGroup.name.grass";
-        case HELMET:
+        case adk::CreativeCategory::HELMET:
             return "itemGroup.name.helmet";
-        case HOE:
+        case adk::CreativeCategory::HOE:
             return "itemGroup.name.hoe";
-        case HORSEARMOR:
+        case adk::CreativeCategory::HORSEARMOR:
             return "itemGroup.name.horseArmor";
-        case LEAVES:
+        case adk::CreativeCategory::LEAVES:
             return "itemGroup.name.leaves";
-        case LEGGINGS:
+        case adk::CreativeCategory::LEGGINGS:
             return "itemGroup.name.leggings";
-        case LINGERINGPOTION:
+        case adk::CreativeCategory::LINGERINGPOTION:
             return "itemGroup.name.lingeringPotion";
-        case LOG:
+        case adk::CreativeCategory::LOG:
             return "itemGroup.name.log";
-        case MINECART:
+        case adk::CreativeCategory::MINECART:
             return "itemGroup.name.minecart";
-        case MISCFOOD:
+        case adk::CreativeCategory::MISCFOOD:
             return "itemGroup.name.miscFood";
-        case MOBEGG:
+        case adk::CreativeCategory::MOBEGG:
             return "itemGroup.name.mobEgg";
-        case MONSTERSTONEEGG:
+        case adk::CreativeCategory::MONSTERSTONEEGG:
             return "itemGroup.name.monsterStoneEgg";
-        case MUSHROOM:
+        case adk::CreativeCategory::MUSHROOM:
             return "itemGroup.name.mushroom";
-        case NETHERWARTBLOCK:
+        case adk::CreativeCategory::NETHERWARTBLOCK:
             return "itemGroup.name.netherWartBlock";
-        case ORE:
+        case adk::CreativeCategory::ORE:
             return "itemGroup.name.ore";
-        case PERMISSION:
+        case adk::CreativeCategory::PERMISSION:
             return "itemGroup.name.permission";
-        case PICKAXE:
+        case adk::CreativeCategory::PICKAXE:
             return "itemGroup.name.pickaxe";
-        case PLANKS:
+        case adk::CreativeCategory::PLANKS:
             return "itemGroup.name.planks";
-        case POTION:
+        case adk::CreativeCategory::POTION:
             return "itemGroup.name.potion";
-        case PRESSUREPLATE:
+        case adk::CreativeCategory::PRESSUREPLATE:
             return "itemGroup.name.pressurePlate";
-        case RAIL:
+        case adk::CreativeCategory::RAIL:
             return "itemGroup.name.rail";
-        case RAWFOOD:
+        case adk::CreativeCategory::RAWFOOD:
             return "itemGroup.name.rawFood";
-        case RECORD:
+        case adk::CreativeCategory::RECORD:
             return "itemGroup.name.record";
-        case SANDSTONE:
+        case adk::CreativeCategory::SANDSTONE:
             return "itemGroup.name.sandstone";
-        case SAPLING:
+        case adk::CreativeCategory::SAPLING:
             return "itemGroup.name.sapling";
-        case SCULK:
+        case adk::CreativeCategory::SCULK:
             return "itemGroup.name.sculk";
-        case SEED:
+        case adk::CreativeCategory::SEED:
             return "itemGroup.name.seed";
-        case SHOVEL:
+        case adk::CreativeCategory::SHOVEL:
             return "itemGroup.name.shovel";
-        case SHULKERBOX:
+        case adk::CreativeCategory::SHULKERBOX:
             return "itemGroup.name.shulkerBox";
-        case SIGN:
+        case adk::CreativeCategory::SIGN:
             return "itemGroup.name.sign";
-        case SKULL:
+        case adk::CreativeCategory::SKULL:
             return "itemGroup.name.skull";
-        case SLAB:
+        case adk::CreativeCategory::SLAB:
             return "itemGroup.name.slab";
-        case SPLASHPOTION:
+        case adk::CreativeCategory::SPLASHPOTION:
             return "itemGroup.name.splashPotion";
-        case STAINEDCLAY:
+        case adk::CreativeCategory::STAINEDCLAY:
             return "itemGroup.name.stainedClat";
-        case STAIRS:
+        case adk::CreativeCategory::STAIRS:
             return "itemGroup.name.stairs";
-        case STONE:
+        case adk::CreativeCategory::STONE:
             return "itemGroup.name.stone";
-        case STONEBRICK:
+        case adk::CreativeCategory::STONEBRICK:
             return "itemGroup.name.stoneBrick";
-        case SWORD:
+        case adk::CreativeCategory::SWORD:
             return "itemGroup.name.sword";
-        case TRAPDOOR:
+        case adk::CreativeCategory::TRAPDOOR:
             return "itemGroup.name.trapdoor";
-        case WALLS:
+        case adk::CreativeCategory::WALLS:
             return "itemGroup.name.walls";
-        case WOOD:
+        case adk::CreativeCategory::WOOD:
             return "itemGroup.name.wood";
-        case WOOL:
+        case adk::CreativeCategory::WOOL:
             return "itemGroup.name.wool";
-        case WOOLCARPET:
+        case adk::CreativeCategory::WOOLCARPET:
             return "itemGroup.name.woolCarpet";
         default:
             return "Error";
@@ -452,12 +372,12 @@ class BlockProperty {
             return *this;
         }
 
-        Property setTab(CreativeTab tab) {
+        Property setTab(adk::CreativeTab tab) {
             this->tab = getCreativeTab(tab);
             return *this;
         }
 
-        Property setCategory(CreativeCategory category) {
+        Property setCategory(adk::CreativeCategory category) {
             this->category = getCreativeCategory(category);
             return *this;
         }
