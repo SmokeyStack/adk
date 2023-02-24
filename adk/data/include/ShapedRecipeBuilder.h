@@ -1,7 +1,8 @@
 #ifndef SHAPEDRECIPEBUILDER_H
 #define SHAPEDRECIPEBUILDER_H
 
-#include <algorithm>
+#include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <map>
 #include <set>
@@ -9,6 +10,8 @@
 #include <vector>
 
 #include "json.hpp"
+
+namespace fs = std::filesystem;
 
 class ShapedRecipeBuilder {
    private:
@@ -89,7 +92,11 @@ class ShapedRecipeBuilder {
         j["minecraft:recipe_shaped"]["result"] = {{"item", _result},
                                                   {"count", _count}};
 
-        std::cout << j.dump(4);
+        if (!fs::exists("./BP/recipes/")) fs::create_directory("./BP/recipes/");
+
+        std::ofstream MyJson("./BP/recipes" + id + ".json");
+        MyJson << j.dump();
+        MyJson.close();
 
         return j;
     }
