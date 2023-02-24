@@ -1,9 +1,10 @@
 #ifndef SHAPEDRECIPEBUILDER_H
 #define SHAPEDRECIPEBUILDER_H
 
+#include <algorithm>
 #include <iostream>
-#include <list>
 #include <map>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -51,6 +52,22 @@ class ShapedRecipeBuilder {
         if (_rows.empty()) {
             std::cerr << "No pattern is defined for shaped recipe " + id + '\n';
             exit(EXIT_FAILURE);
+        } else {
+            std::set<char> set;
+            for (const auto& [key, value] : _key) set.insert(key);
+
+            for (std::string s : _rows) {
+                for (int a = 0; a < s.length(); a++) {
+                    char c0 = s.at(a);
+                    if (!_key.count(c0) && c0 != ' ') {
+                        std::cout << "Keyval\n";
+                    }
+
+                    set.erase(c0);
+                }
+            }
+
+            if (!set.empty()) std::cout << "Why extra?\n";
         }
     }
 
