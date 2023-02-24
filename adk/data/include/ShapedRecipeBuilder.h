@@ -8,6 +8,8 @@
 #include <string>
 #include <vector>
 
+#include "json.hpp"
+
 class ShapedRecipeBuilder {
    private:
     std::string _result;
@@ -71,7 +73,26 @@ class ShapedRecipeBuilder {
         }
     }
 
-    void save(std::string id) {}
+    nlohmann::json save(std::string id) {
+        ensureValidity(id);
+        nlohmann::json j;
+
+        j["format_version"] = "1.17";
+        j["minecraft:recipe_shaped"]["description"]["identifier"] = id;
+        j["minecraft:recipe_shaped"]["pattern"] = _rows;
+
+        for (auto const& [key, value] : _key) {
+            const char* test = &key;
+            std::string str(test);
+            j["minecraft:recipe_shaped"]["key"][test]["item"] = value;
+        }
+        j["minecraft:recipe_shaped"]["result"] = {{"item", _result},
+                                                  {"count", _count}};
+
+        std::cout << j.dump(4);
+
+        return j;
+    }
 };
 
 #endif
