@@ -18,6 +18,11 @@ add_executable(adk
     Main.cpp
 )
 
+include_directories(include)
+add_executable(recipe
+    RecipeGen.cpp
+)
+
 include_directories(include/generator)
 add_executable(datagen
     DataGen.cpp
