@@ -40,6 +40,7 @@ jobs:
 
     - name: Run Tests
       working-directory: ${{github.workspace}}/build
-      run: |
-        ctest -C ${{env.BUILD_TYPE}}
-        cat /home/runner/work/adk/adk/build/Testing/Temporary/LastTest.log
+      run: ctest -C ${{env.BUILD_TYPE}}
+
+    - name: Check log
+      run: cat /home/runner/work/adk/adk/build/Testing/Temporary/LastTest.log
