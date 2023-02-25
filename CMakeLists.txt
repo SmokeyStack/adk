@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.12)
 
 set(This adkhead)
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 project(${This} C CXX)
 
