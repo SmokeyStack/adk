@@ -1,5 +1,5 @@
-#ifndef FUELITEM_H
-#define FUELITEM_H
+#ifndef PROJECTILEITEM_H
+#define PROJECTILEITEM_H
 
 #include <string>
 
@@ -13,15 +13,14 @@ class FuelItem : public Item {
     float _charge_time;
 
    public:
-    FuelItem() {}
-    /// @brief Represents a Tool Item
-    /// @param property
-    /// @param durability
-    /// @param damage_chance_min
-    /// @param damage_chance_max
-    /// @param blocks
-    FuelItem(ItemProperty::Property property, std::string entity,
-             float charge_time = 0) {
+    ProjectileItem() {}
+    /// @brief Represents a Projectile Item
+    /// @param property An ItemProperty object
+    /// @param entity The entity to be fired as a projectile
+    /// @param charge_time How long you must charge a projectile for it to
+    /// critically hit
+    ProjectileItem(ItemProperty::Property property, std::string entity,
+                   float charge_time = 0) {
         _display_name = property.display_name;
         _icon = property.icon;
         _stack = property.stack;

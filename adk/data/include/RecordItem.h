@@ -15,12 +15,11 @@ class RecordItem : public Item {
 
    public:
     RecordItem() {}
-    /// @brief Represents a Tool Item
-    /// @param property
-    /// @param durability
-    /// @param damage_chance_min
-    /// @param damage_chance_max
-    /// @param blocks
+    /// @brief Represents a Record Item
+    /// @param property An ItemProperty object
+    /// @param sound Sound event type
+    /// @param duration Duration of sound event in seconds
+    /// @param signal Signal strength for comparator blocks to use
     RecordItem(ItemProperty::Property property, std::string sound,
                float duration, int signal = 0) {
         _display_name = property.display_name;

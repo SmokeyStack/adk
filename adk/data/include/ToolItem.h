@@ -14,11 +14,11 @@ class ToolItem : public DurabilityItem {
    public:
     ToolItem() {}
     /// @brief Represents a Tool Item
-    /// @param property
-    /// @param durability
-    /// @param damage_chance_min
-    /// @param damage_chance_max
-    /// @param blocks
+    /// @param property An ItemProperty object
+    /// @param durability How much durability point should this item have
+    /// @param damage_chance_min Minimum chance the item takes damage
+    /// @param damage_chance_max Maximum chance the item takes damage
+    /// @param blocks Key/Value pair of seconds and blocks
     ToolItem(ItemProperty::Property property, int durability,
              int damage_chance_min, int damage_chance_max,
              std::multimap<int, std::string> blocks) {

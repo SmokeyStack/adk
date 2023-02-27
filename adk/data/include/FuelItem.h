@@ -13,12 +13,9 @@ class FuelItem : public Item {
 
    public:
     FuelItem() {}
-    /// @brief Represents a Tool Item
-    /// @param property
-    /// @param durability
-    /// @param damage_chance_min
-    /// @param damage_chance_max
-    /// @param blocks
+    /// @brief Represents a Fuel Item
+    /// @param property An ItemProperty object
+    /// @param burn_time How long in seconds will this fuel cook items for
     FuelItem(ItemProperty::Property property, float burn_time) {
         _display_name = property.display_name;
         _icon = property.icon;

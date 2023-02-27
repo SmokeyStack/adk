@@ -21,12 +21,12 @@ class ArmorItem : public DurabilityItem {
     /// @param protection How much protection point should this armor give
     /// @param slot Which slot should the armor go in
     /// @param durability How much durability point should this armor have
-    /// @param dispensable Can this armor be equipped by a dispenser
     /// @param damage_chance_min Minimum chance the armor takes damage
     /// @param damage_chance_max Maximum chance the armor takes damage
+    /// @param dispensable Can this armor be equipped by a dispenser
     ArmorItem(ItemProperty::Property property, int protection,
-              adk::ArmorSlot slot, int durability, bool dispensable,
-              int damage_chance_min, int damage_chance_max) {
+              adk::ArmorSlot slot, int durability, int damage_chance_min,
+              int damage_chance_max, bool dispensable = true) {
         _display_name = property.display_name;
         _icon = property.icon;
         _stack = property.stack;

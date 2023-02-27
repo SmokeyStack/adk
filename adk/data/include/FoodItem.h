@@ -16,12 +16,16 @@ class FoodItem : public Item {
 
    public:
     FoodItem() {}
-    /// @brief Represents a Tool Item
-    /// @param property
-    /// @param durability
-    /// @param damage_chance_min
-    /// @param damage_chance_max
-    /// @param blocks
+    /// @brief Represents a Food Item
+    /// @param property An ItemProperty object
+    /// @param nutrition The value that is added to the actor's nutrition when
+    /// the item is used
+    /// @param saturation Saturation Modifier is used in this formula:
+    /// (nutrition * saturation_modifier * 2) when applying the saturation buff
+    /// @param always_eat If true you can always eat this item (even when not
+    /// hungry). Default is set to false
+    /// @param convert When used, converts to the item specified by the string
+    /// in this field. Default does not convert item
     FoodItem(ItemProperty::Property property, int nutrition, float saturation,
              bool always_eat = false, std::string convert = "") {
         _display_name = property.display_name;

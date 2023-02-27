@@ -15,14 +15,11 @@ class DurabilityItem : public Item {
 
    public:
     DurabilityItem() {}
-    /// @brief Represents an Armor Item
+    /// @brief Represents a Durability Item
     /// @param property An ItemProperty object
-    /// @param protection How much protection point should this armor give
-    /// @param slot Which slot should the armor go in
-    /// @param durability How much durability point should this armor have
-    /// @param dispensable Can this armor be equipped by a dispenser
-    /// @param damage_chance_min Minimum chance the armor takes damage
-    /// @param damage_chance_max Maximum chance the armor takes damage
+    /// @param durability How much durability point should this item have
+    /// @param damage_chance_min Minimum chance the item takes damage
+    /// @param damage_chance_max Maximum chance the item takes damage
     DurabilityItem(ItemProperty::Property property, int durability,
                    int damage_chance_min, int damage_chance_max) {
         _display_name = property.display_name;
@@ -56,6 +53,9 @@ class DurabilityItem : public Item {
          ["damage_chance"]["min"] = _damage_chance_min;
         j["minecraft:item"]["components"]["minecraft:durability"]
          ["damage_chance"]["max"] = _damage_chance_max;
+
+        j["minecraft:item"]["events"][mod_id + ":damage_item"]["damage"] = {
+            {"type", "durability"}, {"amount", 1}, {"target", "self"}};
 
         return j;
     }

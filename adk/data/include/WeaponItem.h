@@ -13,12 +13,12 @@ class WeaponItem : public DurabilityItem {
 
    public:
     WeaponItem() {}
-    /// @brief Represents a Tool Item
-    /// @param property
-    /// @param durability
-    /// @param damage_chance_min
-    /// @param damage_chance_max
-    /// @param blocks
+    /// @brief Represents a Weapon Item
+    /// @param property An ItemProperty object
+    /// @param damage How much damage this item does
+    /// @param durability How much durability point should this item have
+    /// @param damage_chance_min Minimum chance the item takes damage
+    /// @param damage_chance_max Maximum chance the item takes damage
     WeaponItem(ItemProperty::Property property, int damage, int durability,
                int damage_chance_min, int damage_chance_max) {
         _display_name = property.display_name;
@@ -51,8 +51,6 @@ class WeaponItem : public DurabilityItem {
 
         j["minecraft:item"]["components"]["minecraft:weapon"]
          ["on_hurt_entity"] = mod_id + ":damage_item";
-        j["minecraft:item"]["events"][mod_id + ":damage_item"]["damage"] = {
-            {"type", "durability"}, {"amount", 1}, {"target", "self"}};
 
         return j;
     }
