@@ -50,7 +50,7 @@ class FoodItem : public Item {
     json output(std::string mod_id, std::string id) {
         j = Item::output(mod_id, id);
 
-        j["minecraft:item"]["components"]["food"] = {
+        j["minecraft:item"]["components"]["minecraft:food"] = {
             {"nutrition", _nutrition},
             {"saturation", _saturation},
             {"can_always_eat", _always_eat},
