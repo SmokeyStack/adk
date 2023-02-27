@@ -1,21 +1,20 @@
-#ifndef ARMORITEM_H
-#define ARMORITEM_H
+#ifndef DURABILITYITEM_H
+#define DURABILITYITEM_H
 
 #include <string>
 
-#include "ArmorType.h"
-#include "DurabilityItem.h"
+#include "Item.h"
 #include "ItemProperty.h"
 #include "json.hpp"
 
-class ArmorItem : public DurabilityItem {
+class DurabilityItem : public Item {
    protected:
-    int _protection;
-    std::string _slot;
-    bool _dispensable;
+    int _durability;
+    int _damage_chance_min;
+    int _damage_chance_max;
 
    public:
-    ArmorItem() {}
+    DurabilityItem() {}
     /// @brief Represents an Armor Item
     /// @param property An ItemProperty object
     /// @param protection How much protection point should this armor give
@@ -24,9 +23,8 @@ class ArmorItem : public DurabilityItem {
     /// @param dispensable Can this armor be equipped by a dispenser
     /// @param damage_chance_min Minimum chance the armor takes damage
     /// @param damage_chance_max Maximum chance the armor takes damage
-    ArmorItem(ItemProperty::Property property, int protection,
-              adk::ArmorSlot slot, int durability, bool dispensable,
-              int damage_chance_min, int damage_chance_max) {
+    DurabilityItem(ItemProperty::Property property, int durability,
+                   int damage_chance_min, int damage_chance_max) {
         _display_name = property.display_name;
         _icon = property.icon;
         _stack = property.stack;
@@ -40,10 +38,7 @@ class ArmorItem : public DurabilityItem {
         _entity_placer_dispense = property.entity_placer_dispense;
         _offset_main = property.offset_main;
         _offset_offhand = property.offset_offhand;
-        _protection = protection;
-        _slot = adk::getArmorSlot(slot);
         _durability = durability;
-        _dispensable = dispensable;
         _damage_chance_min = damage_chance_min;
         _damage_chance_max = damage_chance_max;
     }
@@ -53,13 +48,14 @@ class ArmorItem : public DurabilityItem {
     /// @param id Identifier for the item
     /// @return json object
     json output(std::string mod_id, std::string id) {
-        j = DurabilityItem::output(mod_id, id);
+        j = Item::output(mod_id, id);
 
-        j["minecraft:item"]["components"]["minecraft:armor"]["protection"] =
-            _protection;
-        j["minecraft:item"]["components"]["minecraft:wearable"]["slot"] = _slot;
-        j["minecraft:item"]["components"]["minecraft:wearable"]["dispensable"] =
-            _dispensable;
+        j["minecraft:item"]["components"]["minecraft:durability"]
+         ["max_durability"] = _durability;
+        j["minecraft:item"]["components"]["minecraft:durability"]
+         ["damage_chance"]["min"] = _damage_chance_min;
+        j["minecraft:item"]["components"]["minecraft:durability"]
+         ["damage_chance"]["max"] = _damage_chance_max;
 
         return j;
     }
