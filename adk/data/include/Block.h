@@ -1,6 +1,8 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 #include <string>
 
@@ -120,11 +122,11 @@ class Block {
                         _collision)["origin"][2] < -8 ||
                     std::get<nlohmann::json::object_t>(
                         _collision)["origin"][2] > 8) {
-                    std::cerr << id
-                              << " - Minimal position of the bounds of the "
-                                 "collision box. origin is specified as [x, y, "
-                                 "z] and must be in the range (-8, 0, -8) to "
-                                 "(8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Minimal position of the bounds of the collision "
+                        "box. origin is specified as [x, y, z] and must be in "
+                        "the range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 
@@ -142,29 +144,29 @@ class Block {
                     std::get<nlohmann::json::object_t>(_collision)["size"][2];
 
                 if ((origin_1 + size_1) < -8 || (origin_1 + size_1) > 8) {
-                    std::cerr
-                        << id
-                        << " - Size of each side of the collision box. Size is "
-                           "specified as [x, y, z]. origin + size must be in "
-                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Size of each side of the collision box. Size is "
+                        "specified as [x, y, z]. origin + size must be in the "
+                        "range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 
                 if ((origin_2 + size_2) < 0 || (origin_2 + size_2) > 16) {
-                    std::cerr
-                        << id
-                        << " - Size of each side of the collision box. Size is "
-                           "specified as [x, y, z]. origin + size must be in "
-                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Size of each side of the collision box. Size is "
+                        "specified as [x, y, z]. origin + size must be in the "
+                        "range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 
                 if ((origin_3 + size_3) < -8 || (origin_3 + size_3) > 8) {
-                    std::cerr
-                        << id
-                        << " - Size of each side of the collision box. Size is "
-                           "specified as [x, y, z]. origin + size must be in "
-                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Size of each side of the collision box. Size is "
+                        "specified as [x, y, z]. origin + size must be in the "
+                        "range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 
@@ -192,11 +194,11 @@ class Block {
                         _selection)["origin"][2] < -8 ||
                     std::get<nlohmann::json::object_t>(
                         _selection)["origin"][2] > 8) {
-                    std::cerr << id
-                              << " - Minimal position of the bounds of the "
-                                 "collision box. origin is specified as [x, y, "
-                                 "z] and must be in the range (-8, 0, -8) to "
-                                 "(8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Minimal position of the bounds of the selection "
+                        "box. origin is specified as [x, y, z] and must be in "
+                        "the range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 
@@ -214,29 +216,29 @@ class Block {
                     std::get<nlohmann::json::object_t>(_selection)["size"][2];
 
                 if ((origin_1 + size_1) < -8 || (origin_1 + size_1) > 8) {
-                    std::cerr
-                        << id
-                        << " - Size of each side of the selection box. Size is "
-                           "specified as [x, y, z]. origin + size must be in "
-                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Size of each side of the selection box. Size is "
+                        "specified as [x, y, z]. origin + size must be in the "
+                        "range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 
                 if ((origin_2 + size_2) < 0 || (origin_2 + size_2) > 16) {
-                    std::cerr
-                        << id
-                        << " - Size of each side of the selection box. Size is "
-                           "specified as [x, y, z]. origin + size must be in "
-                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Size of each side of the selection box. Size is "
+                        "specified as [x, y, z]. origin + size must be in the "
+                        "range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 
                 if ((origin_3 + size_3) < -8 || (origin_3 + size_3) > 8) {
-                    std::cerr
-                        << id
-                        << " - Size of each side of the selection box. Size is "
-                           "specified as [x, y, z]. origin + size must be in "
-                           "the range (-8, 0, -8) to (8, 16, 8), inclusive.";
+                    spdlog::error(
+                        "{} - Size of each side of the selection box. Size is "
+                        "specified as [x, y, z]. origin + size must be in the "
+                        "range (-8, 0, -8) to (8, 16, 8), inclusive",
+                        id);
                     exit(EXIT_FAILURE);
                 }
 

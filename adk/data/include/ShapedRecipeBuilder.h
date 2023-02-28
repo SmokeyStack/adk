@@ -1,6 +1,8 @@
 #ifndef SHAPEDRECIPEBUILDER_H
 #define SHAPEDRECIPEBUILDER_H
 
+#include <spdlog/spdlog.h>
+
 #include <iostream>
 #include <map>
 #include <set>
@@ -37,10 +39,10 @@ class ShapedRecipeBuilder : public RecipeBuilder {
 
     ShapedRecipeBuilder define(char symbol, std::string item) {
         if (_key.count(symbol)) {
-            std::cerr << symbol << " is already defined\n";
+            spdlog::error("{} is already defined", symbol);
             exit(EXIT_FAILURE);
         } else if (symbol == ' ') {
-            std::cerr << "Whitespace(' ') is reserved and cannot be defined\n";
+            spdlog::error("White space(' ') is reserved and cannot be defined");
             exit(EXIT_FAILURE);
         } else {
             _key[symbol] = item;
@@ -50,7 +52,7 @@ class ShapedRecipeBuilder : public RecipeBuilder {
 
     void ensureValidity(std::string id) {
         if (_rows.empty()) {
-            std::cerr << "No pattern is defined for shaped recipe " + id + '\n';
+            spdlog::error("No pattern is defined for shaped recipe - {}", id);
             exit(EXIT_FAILURE);
         } else {
             std::set<char> set;
@@ -60,14 +62,14 @@ class ShapedRecipeBuilder : public RecipeBuilder {
                 for (int a = 0; a < s.length(); a++) {
                     char c0 = s.at(a);
                     if (!_key.count(c0) && c0 != ' ') {
-                        std::cout << "Keyval\n";
+                        spdlog::info(
+                            " Pattern in recipe {} uses undefined symbol '{}' ",
+                            id, c0);
                     }
 
                     set.erase(c0);
                 }
             }
-
-            if (!set.empty()) std::cout << "Why extra?\n";
         }
     }
 
