@@ -1,14 +1,12 @@
 #ifndef SHAPELESSRECIPEBUILDER_H
 #define SHAPELESSRECIPEBUILDER_H
 
-#include <filesystem>
 #include <string>
 
+#include "RecipeBuilder.h"
 #include "json.hpp"
 
-namespace fs = std::filesystem;
-
-class ShapelessRecipeBuilder {
+class ShapelessRecipeBuilder : public RecipeBuilder {
    private:
     std::string _result;
     int _count;
@@ -41,6 +39,8 @@ class ShapelessRecipeBuilder {
 
         j["minecraft:recipe_shapeless"]["result"] = {{"item", _result},
                                                      {"count", _count}};
+
+        createRecipe(_result, j);
 
         return j;
     }

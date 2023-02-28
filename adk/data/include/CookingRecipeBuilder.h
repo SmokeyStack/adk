@@ -1,14 +1,12 @@
-#ifndef COOKINGRECIPEBUILDER_HPP
-#define COOKINGRECIPEBUILDER_HPP
+#ifndef COOKINGRECIPEBUILDER_H
+#define COOKINGRECIPEBUILDER_H
 
-#include <filesystem>
 #include <string>
 
+#include "RecipeBuilder.h"
 #include "json.hpp"
 
-namespace fs = std::filesystem;
-
-class CookingRecipeBuilder {
+class CookingRecipeBuilder : public RecipeBuilder {
    private:
     std::string _result;
     std::string _ingredient;
@@ -40,6 +38,8 @@ class CookingRecipeBuilder {
 
         j["minecraft:recipe_furnace"]["input"]["item"] = _ingredient;
         j["minecraft:recipe_furnace"]["output"]["item"] = _result;
+
+        createRecipe(_result, j);
 
         return j;
     }
