@@ -1,6 +1,8 @@
 #ifndef ARMORTYPE_H
 #define ARMORTYPE_H
 
+#include <spdlog/spdlog.h>
+
 #include <string>
 
 namespace adk {
@@ -20,6 +22,8 @@ std::string getArmorSlot(adk::ArmorSlot slot) {
         case adk::ArmorSlot::FEET:
             return "slot.armor.feet";
         default:
+            spdlog::error("{} is not a valid ArmorSlot", slot);
+            exit(EXIT_FAILURE);
             return "Error";
     }
 }
