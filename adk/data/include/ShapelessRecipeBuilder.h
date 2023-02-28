@@ -35,12 +35,14 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
 
         for (auto const& entry : _ingredients)
             j["minecraft:recipe_shapeless"]["ingredients"].push_back(
-                {"item", entry});
+                {{"item", entry}});
+
+        j["minecraft:recipe_shapeless"]["tags"] = {"crafting_table"};
 
         j["minecraft:recipe_shapeless"]["result"] = {{"item", _result},
                                                      {"count", _count}};
 
-        createRecipe(_result, j);
+        createRecipe(id, j);
 
         return j;
     }

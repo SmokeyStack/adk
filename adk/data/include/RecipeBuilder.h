@@ -16,7 +16,7 @@ class RecipeBuilder {
     void createRecipe(std::string id, nlohmann::json result) {
         if (!fs::exists("./BP/recipes/")) fs::create_directory("./BP/recipes/");
 
-        std::ofstream MyJson("./BP/recipes" + id + ".json");
+        std::ofstream MyJson("./BP/recipes/" + id + ".json");
         MyJson << result.dump();
         MyJson.close();
     }

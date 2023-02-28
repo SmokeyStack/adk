@@ -84,10 +84,13 @@ class ShapedRecipeBuilder : public RecipeBuilder {
             std::string str(test);
             j["minecraft:recipe_shaped"]["key"][test]["item"] = value;
         }
+
+        j["minecraft:recipe_shaped"]["tags"] = {"crafting_table"};
+
         j["minecraft:recipe_shaped"]["result"] = {{"item", _result},
                                                   {"count", _count}};
 
-        createRecipe(_result, j);
+        createRecipe(id, j);
 
         return j;
     }
