@@ -31,6 +31,8 @@ set(Headers
     ../adk/data/include/generator/ItemState.h
 )
 
+add_subdirectory(include/spdlog)
+include_directories(include/spdlog/include)
 add_executable(BlockTest BlockTest.cpp ${Headers})
 target_link_libraries(BlockTest PUBLIC
     gtest_main

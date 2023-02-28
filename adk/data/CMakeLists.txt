@@ -19,14 +19,10 @@ add_executable(adk
     Main.cpp
 )
 
-add_subdirectory(include/spdlog)
-include_directories(include include/spdlog/include)
 add_executable(recipegenerator
     RecipeGen.cpp
 )
 
-add_subdirectory(include/spdlog)
-include_directories(include include/spdlog/include)
 add_executable(datagenerator
     DataGen.cpp
     include/generator/BlockState.h
