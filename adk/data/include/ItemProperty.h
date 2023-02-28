@@ -2,6 +2,7 @@
 #define ITEMPROPERTY_H
 
 #include <string>
+#include <vector>
 
 enum class Dye {
     BLACK,
