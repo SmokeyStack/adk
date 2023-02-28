@@ -12,8 +12,6 @@
 namespace fs = std::filesystem;
 
 TEST(BlockTest, BasicBlock) {
-    if (!fs::exists("../../test/files/basic_block.json")) std::cout << "Whaaa";
-
     const std::string MODID = "custom_namespace";
     Registry<Block> mod(MODID);
 
