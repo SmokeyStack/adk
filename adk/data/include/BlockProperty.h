@@ -14,20 +14,22 @@
  */
 class BlockProperty {
    private:
-    int block_light_filter;
+    int block_light_filter = 15;
     nlohmann::json::object_t crafting;
-    nlohmann::json::object_t explosion;
-    nlohmann::json::object_t mining;
+    std::variant<bool, double> explosion = true;
+    std::variant<bool, double> mining = true;
     std::string display_name;
     nlohmann::json::object_t flammable;
-    double friction;
+    double friction = 0.4;
     std::string geometry;
     int light_emission;
     std::string loot;
     std::string color;
-    std::vector<int> rotation;
-    std::variant<bool, nlohmann::json::object_t> collision;
-    std::variant<bool, nlohmann::json::object_t> selection;
+    std::vector<int> rotation{0, 0, 0};
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+        collision = true;
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+        selection = true;
     std::pair<std::string, std::string> creative;
 
    public:
@@ -74,31 +76,43 @@ class BlockProperty {
      * increase level of resistance
      * @return BlockProperty
      */
-    BlockProperty setExplosion(float explosion_resistance) {
-        this->explosion = {{"explosion_resistance", explosion_resistance}};
-        return *this;
+    BlockProperty setExplosion(
+        std::variant<bool, double> explosion_resistance) {
+        if (std::get_if<bool>(&explosion_resistance)) {
+            this->explosion = std::get<bool>(explosion_resistance);
+            return *this;
+        } else {
+            this->explosion = std::get<double>(explosion_resistance);
+            return *this;
+        }
     }
 
     /**
      * @brief Set the "destructible_by_mining" component
      *
-     * @param mining_speed Sets the number of seconds it takes to destroy the
-     * block with base equipment. Greater numbers result in greater mining times
+     * @param mining_speed Sets the number of seconds it takes to destroy
+     * the block with base equipment. Greater numbers result in greater
+     * mining times
      * @return BlockProperty
      */
-    BlockProperty setMining(float mining_speed) {
-        this->mining = {{"seconds_to_destroy", mining_speed}};
-        return *this;
+    BlockProperty setMining(std::variant<bool, double> mining_speed) {
+        if (std::get_if<bool>(&mining_speed)) {
+            this->mining = std::get<bool>(mining_speed);
+            return *this;
+        } else {
+            this->mining = std::get<double>(mining_speed);
+            return *this;
+        }
     }
 
     /**
      * @brief Set the "display_name" component
      *
-     * @param name Specifies the language file key that maps to what text will
-     * be displayed when you hover over the block in your inventory and hotbar
-     * If the string given can not be resolved as a loc string, the raw string
-     * given will be displayed. If this component is omitted, the name of the
-     * block will be used as the display name
+     * @param name Specifies the language file key that maps to what text
+     * will be displayed when you hover over the block in your inventory and
+     * hotbar If the string given can not be resolved as a loc string, the
+     * raw string given will be displayed. If this component is omitted, the
+     * name of the block will be used as the display name
      * @return BlockProperty
      */
     BlockProperty setName(std::string name) {
@@ -109,22 +123,23 @@ class BlockProperty {
     /**
      * @brief Set the "flammable" component
      *
-     * @param catch_chance A modifier affecting the chance that this block will
-     * catch flame when next to a fire. Values are greater than or equal to 0,
-     * with a higher number meaning more likely to catch on fire. For a
-     * "catch_chance_modifier" greater than 0, the fire will continue to burn
-     * until the block is destroyed (or it will burn forever if the
-     * "destroy_chance_modifier" is 0). If the "catch_chance_modifier" is 0, and
-     * the block is directly ignited, the fire will eventually burn out without
-     * destroying the block (or it will have a chance to be destroyed if
-     * "destroy_chance_modifier" is greater than 0). The default value of 5 is
+     * @param catch_chance A modifier affecting the chance that this block
+     * will catch flame when next to a fire. Values are greater than or
+     * equal to 0, with a higher number meaning more likely to catch on
+     * fire. For a "catch_chance_modifier" greater than 0, the fire will
+     * continue to burn until the block is destroyed (or it will burn
+     * forever if the "destroy_chance_modifier" is 0). If the
+     * "catch_chance_modifier" is 0, and the block is directly ignited, the
+     * fire will eventually burn out without destroying the block (or it
+     * will have a chance to be destroyed if "destroy_chance_modifier" is
+     * greater than 0). The default value of 5 is the same as that of Planks
+     * @param destroy A modifier affecting the chance that this block will
+     * be destroyed by flames when on fire. Values are greater than or equal
+     * to 0, with a higher number meaning more likely to be destroyed by
+     * fire. For a "destroy_chance_modifier" of 0, the block will never be
+     * destroyed by fire, and the fire will burn forever if the
+     * "catch_chance_modifier" is greater than 0. The default value of 20 is
      * the same as that of Planks
-     * @param destroy A modifier affecting the chance that this block will be
-     * destroyed by flames when on fire. Values are greater than or equal to 0,
-     * with a higher number meaning more likely to be destroyed by fire. For a
-     * "destroy_chance_modifier" of 0, the block will never be destroyed by
-     * fire, and the fire will burn forever if the "catch_chance_modifier" is
-     * greater than 0. The default value of 20 is the same as that of Planks
      * @return BlockProperty
      */
     BlockProperty setFlammable(int catch_chance, int destroy) {
@@ -137,8 +152,8 @@ class BlockProperty {
      * @brief Set the "friction" component
      *
      * @param friction Describes the friction for this block in a range of
-     (0.0-0.9). Friction affects an entity's movement speed when it travels on
-     the block. Greater value results in more friction
+     (0.0-0.9). Friction affects an entity's movement speed when it travels
+     on the block. Greater value results in more friction
      * @return BlockProperty
      */
     BlockProperty setFriction(double friction) {
@@ -149,9 +164,9 @@ class BlockProperty {
     /**
      * @brief Set the "geometry" component
      *
-     * @param geometry The description identifier of the geometry file to use to
-     * render this block. This identifier must match an existing geometry
-     * identifier in any of the currently loaded resource packs
+     * @param geometry The description identifier of the geometry file to
+     * use to render this block. This identifier must match an existing
+     * geometry identifier in any of the currently loaded resource packs
      * @return BlockProperty
      */
     BlockProperty setGeometry(std::string geometry) {
@@ -174,8 +189,8 @@ class BlockProperty {
     /**
      * @brief Set the "loot" component
      *
-     * @param loot_table The path to the loot table, relative to the behavior
-     * pack. Path string is limited to 256 characters
+     * @param loot_table The path to the loot table, relative to the
+     * behavior pack. Path string is limited to 256 characters
      * @return BlockProperty
      */
     BlockProperty setLoot(std::string loot_table) {
@@ -186,10 +201,10 @@ class BlockProperty {
     /**
      * @brief Set the "map_color" component
      *
-     * @param map_color Sets the color of the block when rendered to a map. The
-     * color is represented as a hex value in the format "#RRGGBB". May also be
-     * expressed as an array of [R, G, B] from 0 to 255. If this component is
-     * omitted, the block will not show up on the map
+     * @param map_color Sets the color of the block when rendered to a map.
+     * The color is represented as a hex value in the format "#RRGGBB". May
+     * also be expressed as an array of [R, G, B] from 0 to 255. If this
+     * component is omitted, the block will not show up on the map
      * @return BlockProperty
      */
     BlockProperty setColor(std::string map_color) {
@@ -220,11 +235,13 @@ class BlockProperty {
     BlockProperty setCollision(
         std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
             collision_box) {
-        if (bool val = std::get_if<bool>(&collision_box)) {
-            this->collision = val;
+        if (std::get_if<bool>(&collision_box)) {
+            this->collision = std::get<bool>(collision_box);
             return *this;
         } else {
-            this->collision = val;
+            this->collision =
+                std::get<std::pair<std::vector<int>, std::vector<int>>>(
+                    collision_box);
             return *this;
         }
     }
@@ -238,11 +255,13 @@ class BlockProperty {
     BlockProperty setSelection(
         std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
             selection_box) {
-        if (bool val = std::get_if<bool>(&selection_box)) {
-            this->collision = val;
+        if (std::get_if<bool>(&selection_box)) {
+            this->selection = std::get<bool>(selection_box);
             return *this;
         } else {
-            this->collision = val;
+            this->selection =
+                std::get<std::pair<std::vector<int>, std::vector<int>>>(
+                    selection_box);
             return *this;
         }
     }
@@ -250,15 +269,16 @@ class BlockProperty {
     /**
      * @brief Set the Creative Category component
      *
-     * @param tab Determines which category this block will be placed under in
-     the inventory and crafting table container screens. Options are
-     "construction", "nature", "equipment", "items", and "none". If omitted or
-     "none" is specified, the block will not appear in the inventory or crafting
-     table container screens
+     * @param tab Determines which category this block will be placed under
+     in the inventory and crafting table container screens. Options are
+     "construction", "nature", "equipment", "items", and "none". If omitted
+     or "none" is specified, the block will not appear in the inventory or
+     crafting table container screens
      * @param category Specifies the language file key that maps to which
      expandable/collapsible group this block will be a part of within a
-     category. If this field is omitted, or there is no group whose name matches
-     the loc string, this block will be placed standalone in the given category
+     category. If this field is omitted, or there is no group whose name
+     matches the loc string, this block will be placed standalone in the
+     given category
      * @return BlockProperty
      */
     BlockProperty setCreativeCategory(
@@ -286,16 +306,16 @@ class BlockProperty {
     /**
      * @brief Get the "destructible_by_explosion" component
      *
-     * @return nlohmann::json::object_t
+     * @return std::variant<bool, double>
      */
-    nlohmann::json::object_t getExplosion() { return explosion; }
+    std::variant<bool, double> getExplosion() { return explosion; }
 
     /**
      * @brief Get the "destructible_by_mining" component
      *
-     * @return nlohmann::json::object_t
+     * @return std::variant<bool, double>
      */
-    nlohmann::json::object_t getMining() { return mining; }
+    std::variant<bool, double> getMining() { return mining; }
 
     /**
      * @brief Get the "display_name" component
@@ -348,6 +368,7 @@ class BlockProperty {
 
     /**
      * @brief Get the "rotation" object
+     * @warning Will be deprecated in 1.19.80 according to kayla
      *
      * @return std::vector<int>
      */
@@ -356,18 +377,22 @@ class BlockProperty {
     /**
      * @brief Get the "collision_box" object
      *
-     * @return std::variant<bool, nlohmann::json::object_t>
+     * @return std::variant<bool, std::pair<std::vector<int>,
+     * std::vector<int>>>
      */
-    std::variant<bool, nlohmann::json::object_t> getCollision() {
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+    getCollision() {
         return collision;
     }
 
     /**
      * @brief Get the "selection_box" object
      *
-     * @return std::variant<bool, nlohmann::json::object_t>
+     * @return std::variant<bool, std::pair<std::vector<int>,
+     * std::vector<int>>>
      */
-    std::variant<bool, nlohmann::json::object_t> getSelection() {
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+    getSelection() {
         return selection;
     }
 
