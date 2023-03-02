@@ -7,11 +7,16 @@
 #include "BushBlock.h"
 #include "json.hpp"
 
+/**
+ * @brief Represents a Sapling Block
+ * @warning Unfinish
+ *
+ */
 class SaplingBlock : public BushBlock {
    protected:
     int _number_of_properties;
     std::string _structure;
-    std::string _particle = "minecraft:crop_growth_emitter";
+    std::string _particle;
 
    public:
     SaplingBlock() {}
@@ -20,51 +25,35 @@ class SaplingBlock : public BushBlock {
     /// @param number_of_properties How many stages the sapling has
     /// @param structure The "tree" to load. Temporary solution until Bedrock
     /// has place feature command
-    SaplingBlock(BlockProperty::Property property, int number_of_properties,
-                 std::string structure) {
-        _block_light_filter = property.block_light_filter;
-        _crafting = property.crafting;
-        _explosion = property.explosion;
-        _mining = property.mining;
-        _display_name = property.display_name;
-        _flammable = property.flammable;
-        _friction = property.friction;
-        _light_emission = property.light_emission;
-        _loot = property.loot;
-        _color = property.color;
-        _rotation = property.rotation;
-        _number_of_properties = number_of_properties;
-        _structure = structure;
-    }
-
-    /// @brief Represents a sapling block
-    /// @param property A BlockProperty object
-    /// @param number_of_properties How many stages the sapling has
-    /// @param structure The "tree" to load. Temporary solution until Bedrock
-    /// has place feature command
-    /// @param particle The particle to play after being bonemealed
-    SaplingBlock(BlockProperty::Property property, int number_of_properties,
-                 std::string structure, std::string particle) {
-        _block_light_filter = property.block_light_filter;
-        _crafting = property.crafting;
-        _explosion = property.explosion;
-        _mining = property.mining;
-        _display_name = property.display_name;
-        _flammable = property.flammable;
-        _friction = property.friction;
-        _light_emission = property.light_emission;
-        _loot = property.loot;
-        _color = property.color;
-        _rotation = property.rotation;
+    SaplingBlock(BlockProperty property, int number_of_properties,
+                 std::string structure,
+                 std::string particle = "minecraft:crop_growth_emitter") {
+        _block_light_filter = property.getBlockLightFilter();
+        _crafting = property.getCrafting();
+        _explosion = property.getExplosion();
+        _mining = property.getMining();
+        _display_name = property.getName();
+        _flammable = property.getFlamamble();
+        _friction = property.getFriction();
+        _light_emission = property.getLightEmission();
+        _loot = property.getLoot();
+        _color = property.getColor();
+        _rotation = property.getRotation();
+        _collision = property.getCollision();
+        _selection = property.getSelection();
+        _creative = property.getCreative();
         _number_of_properties = number_of_properties;
         _structure = structure;
         _particle = particle;
     }
 
-    /// @brief Generates the json object
-    /// @param mod_id Namespace identifier
-    /// @param id Identifier for the block
-    /// @return json object
+    /**
+     * @brief Generates the json object
+     *
+     * @param mod_id Namespace identifier
+     * @param id Identifier for the item
+     * @return json
+     */
     json output(std::string mod_id, std::string id) {
         j = Block::output(mod_id, id);
         j["minecraft:block"]["components"]["minecraft:random_ticking"]

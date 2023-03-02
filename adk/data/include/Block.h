@@ -100,7 +100,7 @@ class Block {
     /**
      * @brief Construct a new Block object
      *
-     * @param property
+     * @param property BlockProperty
      */
     Block(BlockProperty property) {
         _block_light_filter = property.getBlockLightFilter();
@@ -264,7 +264,7 @@ class Block {
             }
         }
 
-                // if (_tab != "")
+        // if (_tab != "")
         //     j["minecraft:block"]["description"]["menu_category"]["category"]
         //     =
         //         _tab;

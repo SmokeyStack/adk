@@ -5,35 +5,42 @@
 #include "BlockProperty.h"
 #include "json.hpp"
 
+/**
+ * @brief Represents a Rotatable Block
+ *
+ */
 class AxisBlock : public Block {
    public:
     AxisBlock() {}
-    /// @brief Represents a rotatable block
-    /// @param property A BlockProperty object
-    AxisBlock(BlockProperty::Property property) {
-        _block_light_filter = property.block_light_filter;
-        _crafting = property.crafting;
-        _explosion = property.explosion;
-        _mining = property.mining;
-        _display_name = property.display_name;
-        _flammable = property.flammable;
-        _friction = property.friction;
-        _light_emission = property.light_emission;
-        _loot = property.loot;
-        _color = property.color;
-        _rotation = property.rotation;
-        _does_collide = property.does_collide;
-        _collision = property.collision;
-        _is_selectable = property.is_selectable;
-        _selection = property.selection;
-        _tab = property.tab;
-        _category = property.category;
+    /**
+     * @brief Construct a new Axis Block object
+     *
+     * @param property BlockProperty
+     */
+    AxisBlock(BlockProperty property) {
+        _block_light_filter = property.getBlockLightFilter();
+        _crafting = property.getCrafting();
+        _explosion = property.getExplosion();
+        _mining = property.getMining();
+        _display_name = property.getName();
+        _flammable = property.getFlamamble();
+        _friction = property.getFriction();
+        _light_emission = property.getLightEmission();
+        _loot = property.getLoot();
+        _color = property.getColor();
+        _rotation = property.getRotation();
+        _collision = property.getCollision();
+        _selection = property.getSelection();
+        _creative = property.getCreative();
     }
 
-    /// @brief Generates the json object
-    /// @param mod_id Namespace identifier
-    /// @param id Identifier for the block
-    /// @return json object
+    /**
+     * @brief Generates the json object
+     *
+     * @param mod_id Namespace identifier
+     * @param id Identifier for the item
+     * @return json
+     */
     json output(std::string mod_id, std::string id) {
         j = Block::output(mod_id, id);
         j["minecraft:block"]["description"]["properties"]
