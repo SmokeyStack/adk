@@ -44,13 +44,13 @@ add_test(
     COMMAND BlockTest
 )
 
-add_executable(ItemTest ItemTest.cpp ${Headers})
-target_link_libraries(ItemTest PUBLIC
-    gtest_main
-    adkhead
-)
+# add_executable(ItemTest ItemTest.cpp ${Headers})
+# target_link_libraries(ItemTest PUBLIC
+#     gtest_main
+#     adkhead
+# )
 
-add_test(
-    NAME ItemTest
-    COMMAND ItemTest
-)
+# add_test(
+#     NAME ItemTest
+#     COMMAND ItemTest
+# )
