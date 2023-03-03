@@ -13,8 +13,8 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(adk VERSION 0.1 LANGUAGES CXX)
 
-add_subdirectory(include/spdlog)
-include_directories(include include/spdlog/include)
+add_subdirectory(spdlog)
+include_directories(include spdlog/include)
 add_executable(adk
     Main.cpp
 )
