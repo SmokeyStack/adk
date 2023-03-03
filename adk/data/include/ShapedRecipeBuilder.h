@@ -3,7 +3,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include <iostream>
 #include <map>
 #include <set>
 #include <string>
@@ -20,13 +19,16 @@ class ShapedRecipeBuilder : public RecipeBuilder {
     std::map<char, std::string> _key;
 
    public:
-    ShapedRecipeBuilder shaped(std::string result, int count) {
+    ShapedRecipeBuilder shaped(std::string result, int count = 1) {
+        if (!registry_check.count(result)) {
+            spdlog::error("{} is an invalid item", result);
+            exit(EXIT_FAILURE);
+        }
+
         this->_result = result;
         this->_count = count;
         return *this;
     }
-
-    ShapedRecipeBuilder shaped(std::string result) { return shaped(result, 1); }
 
     ShapedRecipeBuilder pattern(std::string pattern) {
         if (!_rows.empty() && pattern.length() != _rows.at(0).length()) {
@@ -38,6 +40,11 @@ class ShapedRecipeBuilder : public RecipeBuilder {
     }
 
     ShapedRecipeBuilder define(char symbol, std::string item) {
+        if (!registry_check.count(item)) {
+            spdlog::error("{} is an invalid item", item);
+            exit(EXIT_FAILURE);
+        }
+
         if (_key.count(symbol)) {
             spdlog::error("{} is already defined", symbol);
             exit(EXIT_FAILURE);

@@ -7,6 +7,8 @@
 #include "../adk/data/include/Item.h"
 #include "../adk/data/include/ItemProperty.h"
 #include "../adk/data/include/Registry.h"
+#include "../adk/data/include/ShapedRecipeBuilder.h"
+#include "../adk/data/include/ShapelessRecipeBuilder.h"
 #include "../adk/data/include/ToolItem.h"
 #include "CheckFile.h"
 
@@ -21,7 +23,18 @@ TEST(ItemTest, BasicItem) {
     bool basic = compareFiles("../../test/files/basic_item.json",
                               "./BP/items/basic_item.json");
 
-    EXPECT_EQ(true, basic) << "Item is not working as expected";
+    ShapelessRecipeBuilder()
+        .shapeless("honeycomb_bricks", 4)
+        .requires("solidified_honey")
+        .save("honeycomb_bricks_recipe");
+
+    ShapedRecipeBuilder()
+        .shaped(mod, "basic_item")
+        .pattern("ppp")
+        .define('p', "uwu")
+        .save("test");
+
+    EXPECT_EQ(true, false) << "Item is not working as expected";
 }
 
 TEST(ItemTest, ToolItem) {

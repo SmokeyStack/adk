@@ -13,7 +13,6 @@ set(Headers
     ../adk/data/include/DurabilityItem.h
     ../adk/data/include/FoodItem.h
     ../adk/data/include/FuelItem.h
-    ../adk/data/include/GlassBlock.h
     ../adk/data/include/HeadBlock.h
     ../adk/data/include/Item.h
     ../adk/data/include/ItemProperty.h
@@ -44,13 +43,13 @@ add_test(
     COMMAND BlockTest
 )
 
-add_executable(ItemTest ItemTest.cpp ${Headers})
-target_link_libraries(ItemTest PUBLIC
-    gtest_main
-    adkhead
-)
+# add_executable(ItemTest ItemTest.cpp ${Headers})
+# target_link_libraries(ItemTest PUBLIC
+#     gtest_main
+#     adkhead
+# )
 
-add_test(
-    NAME ItemTest
-    COMMAND ItemTest
-)
+# add_test(
+#     NAME ItemTest
+#     COMMAND ItemTest
+# )

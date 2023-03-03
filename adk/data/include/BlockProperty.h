@@ -1,5 +1,5 @@
-#ifndef BLOCKPROPERTY_h
-#define BLOCKPROPERTY_h
+#ifndef BLOCKPROPERTY_H
+#define BLOCKPROPERTY_H
 
 #include <string>
 #include <variant>
@@ -8,380 +8,400 @@
 #include "BlockCategory.h"
 #include "json.hpp"
 
-/// @brief Turns enum CreativeTab into string
-/// @param tab enum CreativeTab
-/// @return String equivalent
-std::string getCreativeTab(adk::CreativeTab tab) {
-    switch (tab) {
-        case adk::CreativeTab::COMMANDS:
-            return "commands";
-        case adk::CreativeTab::CONSTRUCTION:
-            return "construction";
-        case adk::CreativeTab::EQUIPMENT:
-            return "equipment";
-        case adk::CreativeTab::ITEMS:
-            return "items";
-        case adk::CreativeTab::NATURE:
-            return "nature";
-        case adk::CreativeTab::NONE:
-            return "none";
-        default:
-            return "Error";
-    }
-}
-
-/// @brief Turns enum CreativeCategory into string
-/// @param tab enum CreativeCategory
-/// @return String equivalent
-std::string getCreativeCategory(adk::CreativeCategory category) {
-    switch (category) {
-        case adk::CreativeCategory::ANVIL:
-            return "itemGroup.name.anvil";
-        case adk::CreativeCategory::ARROW:
-            return "itemGroup.name.arrow";
-        case adk::CreativeCategory::AXE:
-            return "itemGroup.name.axe";
-        case adk::CreativeCategory::BANNER:
-            return "itemGroup.name.banner";
-        case adk::CreativeCategory::BANNERPATTERN:
-            return "itemGroup.name.banner_pattern";
-        case adk::CreativeCategory::BED:
-            return "itemGroup.name.bed";
-        case adk::CreativeCategory::BOAT:
-            return "itemGroup.name.boat";
-        case adk::CreativeCategory::BOOTS:
-            return "itemGroup.name.boots";
-        case adk::CreativeCategory::BUTTONS:
-            return "itemGroup.name.buttons";
-        case adk::CreativeCategory::CANDLES:
-            return "itemGroup.name.candles";
-        case adk::CreativeCategory::CHALKBOARD:
-            return "itemGroup.name.chalkboard";
-        case adk::CreativeCategory::CHEST:
-            return "itemGroup.name.chest";
-        case adk::CreativeCategory::CHESTBOAT:
-            return "itemGroup.name.chestboat";
-        case adk::CreativeCategory::CHESTPLATE:
-            return "itemGroup.name.chestplate";
-        case adk::CreativeCategory::CONCRETE:
-            return "itemGroup.name.concrete";
-        case adk::CreativeCategory::CONCRETEPOWDER:
-            return "itemGroup.name.concretePowder";
-        case adk::CreativeCategory::COOKEDFOOD:
-            return "itemGroup.name.cookedFood";
-        case adk::CreativeCategory::COPPER:
-            return "itemGroup.name.copper";
-        case adk::CreativeCategory::CORAL:
-            return "itemGroup.name.coral";
-        case adk::CreativeCategory::CORALDECORATIONS:
-            return "itemGroup.name.coralDecorations";
-        case adk::CreativeCategory::CROP:
-            return "itemGroup.name.crop";
-        case adk::CreativeCategory::DOOR:
-            return "itemGroup.name.door";
-        case adk::CreativeCategory::DYE:
-            return "itemGroup.name.dye";
-        case adk::CreativeCategory::ENCHANTEDBOOK:
-            return "itemGroup.name.enchantedBook";
-        case adk::CreativeCategory::FENCE:
-            return "itemGroup.name.fence";
-        case adk::CreativeCategory::FENCEGATE:
-            return "itemGroup.name.fenceGate";
-        case adk::CreativeCategory::FIREWORK:
-            return "itemGroup.name.firework";
-        case adk::CreativeCategory::FIREWORKSTARS:
-            return "itemGroup.name.fireworkStars";
-        case adk::CreativeCategory::FLOWER:
-            return "itemGroup.name.flower";
-        case adk::CreativeCategory::GLASS:
-            return "itemGroup.name.glass";
-        case adk::CreativeCategory::GLASSPANE:
-            return "itemGroup.name.glassPane";
-        case adk::CreativeCategory::GLAZEDTERRACOTTA:
-            return "itemGroup.name.glazedTerracotta";
-        case adk::CreativeCategory::GOATHORN:
-            return "itemGroup.name.goatHorn";
-        case adk::CreativeCategory::GRASS:
-            return "itemGroup.name.grass";
-        case adk::CreativeCategory::HELMET:
-            return "itemGroup.name.helmet";
-        case adk::CreativeCategory::HOE:
-            return "itemGroup.name.hoe";
-        case adk::CreativeCategory::HORSEARMOR:
-            return "itemGroup.name.horseArmor";
-        case adk::CreativeCategory::LEAVES:
-            return "itemGroup.name.leaves";
-        case adk::CreativeCategory::LEGGINGS:
-            return "itemGroup.name.leggings";
-        case adk::CreativeCategory::LINGERINGPOTION:
-            return "itemGroup.name.lingeringPotion";
-        case adk::CreativeCategory::LOG:
-            return "itemGroup.name.log";
-        case adk::CreativeCategory::MINECART:
-            return "itemGroup.name.minecart";
-        case adk::CreativeCategory::MISCFOOD:
-            return "itemGroup.name.miscFood";
-        case adk::CreativeCategory::MOBEGG:
-            return "itemGroup.name.mobEgg";
-        case adk::CreativeCategory::MONSTERSTONEEGG:
-            return "itemGroup.name.monsterStoneEgg";
-        case adk::CreativeCategory::MUSHROOM:
-            return "itemGroup.name.mushroom";
-        case adk::CreativeCategory::NETHERWARTBLOCK:
-            return "itemGroup.name.netherWartBlock";
-        case adk::CreativeCategory::ORE:
-            return "itemGroup.name.ore";
-        case adk::CreativeCategory::PERMISSION:
-            return "itemGroup.name.permission";
-        case adk::CreativeCategory::PICKAXE:
-            return "itemGroup.name.pickaxe";
-        case adk::CreativeCategory::PLANKS:
-            return "itemGroup.name.planks";
-        case adk::CreativeCategory::POTION:
-            return "itemGroup.name.potion";
-        case adk::CreativeCategory::PRESSUREPLATE:
-            return "itemGroup.name.pressurePlate";
-        case adk::CreativeCategory::RAIL:
-            return "itemGroup.name.rail";
-        case adk::CreativeCategory::RAWFOOD:
-            return "itemGroup.name.rawFood";
-        case adk::CreativeCategory::RECORD:
-            return "itemGroup.name.record";
-        case adk::CreativeCategory::SANDSTONE:
-            return "itemGroup.name.sandstone";
-        case adk::CreativeCategory::SAPLING:
-            return "itemGroup.name.sapling";
-        case adk::CreativeCategory::SCULK:
-            return "itemGroup.name.sculk";
-        case adk::CreativeCategory::SEED:
-            return "itemGroup.name.seed";
-        case adk::CreativeCategory::SHOVEL:
-            return "itemGroup.name.shovel";
-        case adk::CreativeCategory::SHULKERBOX:
-            return "itemGroup.name.shulkerBox";
-        case adk::CreativeCategory::SIGN:
-            return "itemGroup.name.sign";
-        case adk::CreativeCategory::SKULL:
-            return "itemGroup.name.skull";
-        case adk::CreativeCategory::SLAB:
-            return "itemGroup.name.slab";
-        case adk::CreativeCategory::SPLASHPOTION:
-            return "itemGroup.name.splashPotion";
-        case adk::CreativeCategory::STAINEDCLAY:
-            return "itemGroup.name.stainedClat";
-        case adk::CreativeCategory::STAIRS:
-            return "itemGroup.name.stairs";
-        case adk::CreativeCategory::STONE:
-            return "itemGroup.name.stone";
-        case adk::CreativeCategory::STONEBRICK:
-            return "itemGroup.name.stoneBrick";
-        case adk::CreativeCategory::SWORD:
-            return "itemGroup.name.sword";
-        case adk::CreativeCategory::TRAPDOOR:
-            return "itemGroup.name.trapdoor";
-        case adk::CreativeCategory::WALLS:
-            return "itemGroup.name.walls";
-        case adk::CreativeCategory::WOOD:
-            return "itemGroup.name.wood";
-        case adk::CreativeCategory::WOOL:
-            return "itemGroup.name.wool";
-        case adk::CreativeCategory::WOOLCARPET:
-            return "itemGroup.name.woolCarpet";
-        default:
-            return "Error";
-    }
-}
-
-/// @brief Class that represents properties such as destroy speed, loot, etc
+/**
+ * @brief Represents block properties such as destroy speed, loot, etc
+ *
+ */
 class BlockProperty {
+   private:
+    int block_light_filter = 15;
+    nlohmann::json::object_t crafting;
+    std::variant<bool, double> explosion = true;
+    std::variant<bool, double> mining = true;
+    std::string display_name;
+    nlohmann::json::object_t flammable;
+    double friction = 0.4;
+    std::string geometry;
+    int light_emission;
+    std::string loot;
+    std::string color;
+    std::vector<int> rotation{0, 0, 0};
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+        collision = true;
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+        selection = true;
+    std::pair<std::string, std::string> creative;
+
    public:
-    class Property {
-       public:
-        int block_light_filter = 15;
-        nlohmann::json::object_t crafting = {
-            {"crafting_table", {"crafting_table"}}, {"table_name", "Foo Bar"}};
-        nlohmann::json::object_t explosion = {{"explosion_resistance", 0}};
-        nlohmann::json::object_t mining = {{"seconds_to_destroy", 0.0}};
-        std::string display_name = "";
-        nlohmann::json::object_t flammable = {{"catch_chance_modifier", 5},
-                                              {"destroy_chance_modifier", 20}};
-        double friction = 0.4;
-        std::string geometry = "";
-        int light_emission = 0;
-        std::string loot = "";
-        std::string color = "";
-        std::vector<int> rotation = {0, 0, 0};
-        std::variant<bool, nlohmann::json::object_t> does_collide{true},
-            collision;
-        std::variant<bool, nlohmann::json::object_t> is_selectable{true},
-            selection;
-        std::string tab = "";
-        std::string category = "";
+    /**
+     * @brief Sets the "light_dampening" component
+     *
+     * @param light_filter The amount that light will be dampened when it passes
+     through the block, in a range (0-15). Higher value means the light will be
+     dampened more
+     * @return BlockProperty
+     */
+    BlockProperty setBlockLightFilter(int light_filter) {
+        this->block_light_filter = light_filter;
+        return *this;
+    }
 
-        /// @brief Sets "light_dampening" component
-        /// @param blf The amount that light will be dampened when it
-        /// passes through the block, in a range (0-15). Higher value
-        /// means the light will be dampened more.
-        Property setBlockLightFilter(int blf) {
-            this->block_light_filter = blf;
+    /**
+     * @brief Set the "crafting_table" component
+     *
+     * @param tags Defines the tags recipes should define to be crafted on this
+     * table. Limited to 64 tags. Each tag is limited to 64 characters
+     * @param name Specifies the language file key that maps to what text will
+     * be displayed in the UI of this table. If the string given can not be
+     * resolved as a loc string, the raw string given will be  displayed. If
+     * this field is omitted, the name displayed will default to the name
+     * specified in the "display_name" component. If this block has no
+     * "display_name" component, the name displayed will default to the name of
+     * the block
+     * @return BlockProperty
+     */
+    BlockProperty setCrafting(std::vector<std::string>& tags,
+                              std::string name) {
+        this->crafting = {{"crafting_table", tags}, {"table_name", name}};
+        return *this;
+    }
+
+    /**
+     * @brief Sets "destructible_by_explosion" component
+     *
+     * @param explosion_resistance Sets the explosion resistance for the
+     * block. Greater values result in greater resistance to explosions
+     * The scale will be different for different explosion power levels. A
+     * negative value or 0 means it will easily explode; larger numbers
+     * increase level of resistance
+     * @return BlockProperty
+     */
+    BlockProperty setExplosion(
+        std::variant<bool, double> explosion_resistance) {
+        if (std::get_if<bool>(&explosion_resistance)) {
+            this->explosion = std::get<bool>(explosion_resistance);
+            return *this;
+        } else {
+            this->explosion = std::get<double>(explosion_resistance);
             return *this;
         }
+    }
 
-        /// @brief Sets "crafting_table" component
-        /// @param tags Defines the tags recipes should define to be crafted on
-        /// this table. Limited to 64 tags. Each tag is limited to 64
-        /// characters.
-        /// @param name Specifies the language file key that maps to what text
-        /// will be displayed in the UI of this table. If the string given can
-        /// not be resolved as a loc string, the raw string given will be
-        /// displayed. If this field is omitted, the name displayed will default
-        /// to the name specified in the "display_name" component. If this block
-        /// has no "display_name" component, the name displayed will default to
-        /// the name of the block.
-        Property setCrafting(std::vector<std::string>& tags, std::string name) {
-            this->crafting = {{"crafting_table", tags}, {"table_name", name}};
+    /**
+     * @brief Set the "destructible_by_mining" component
+     *
+     * @param mining_speed Sets the number of seconds it takes to destroy
+     * the block with base equipment. Greater numbers result in greater
+     * mining times
+     * @return BlockProperty
+     */
+    BlockProperty setMining(std::variant<bool, double> mining_speed) {
+        if (std::get_if<bool>(&mining_speed)) {
+            this->mining = std::get<bool>(mining_speed);
+            return *this;
+        } else {
+            this->mining = std::get<double>(mining_speed);
             return *this;
         }
+    }
 
-        /// @brief Sets "destructible_by_explosion" component
-        /// @param e Sets the explosion resistance for the block.
-        /// Greater values result in greater resistance to explosions. The scale
-        /// will be different for different explosion power levels. A negative
-        /// value or 0 means it will easily explode; larger numbers increase
-        /// level of resistance.
-        Property setExplosion(float e) {
-            this->explosion = {{"explosion_resistance", e}};
+    /**
+     * @brief Set the "display_name" component
+     *
+     * @param name Specifies the language file key that maps to what text
+     * will be displayed when you hover over the block in your inventory and
+     * hotbar If the string given can not be resolved as a loc string, the
+     * raw string given will be displayed. If this component is omitted, the
+     * name of the block will be used as the display name
+     * @return BlockProperty
+     */
+    BlockProperty setName(std::string name) {
+        this->display_name = name;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "flammable" component
+     *
+     * @param catch_chance A modifier affecting the chance that this block
+     * will catch flame when next to a fire. Values are greater than or
+     * equal to 0, with a higher number meaning more likely to catch on
+     * fire. For a "catch_chance_modifier" greater than 0, the fire will
+     * continue to burn until the block is destroyed (or it will burn
+     * forever if the "destroy_chance_modifier" is 0). If the
+     * "catch_chance_modifier" is 0, and the block is directly ignited, the
+     * fire will eventually burn out without destroying the block (or it
+     * will have a chance to be destroyed if "destroy_chance_modifier" is
+     * greater than 0). The default value of 5 is the same as that of Planks
+     * @param destroy A modifier affecting the chance that this block will
+     * be destroyed by flames when on fire. Values are greater than or equal
+     * to 0, with a higher number meaning more likely to be destroyed by
+     * fire. For a "destroy_chance_modifier" of 0, the block will never be
+     * destroyed by fire, and the fire will burn forever if the
+     * "catch_chance_modifier" is greater than 0. The default value of 20 is
+     * the same as that of Planks
+     * @return BlockProperty
+     */
+    BlockProperty setFlammable(int catch_chance, int destroy) {
+        this->flammable = {{"catch_chance_modifier", catch_chance},
+                           {"destroy_chance_modifier", destroy}};
+        return *this;
+    }
+
+    /**
+     * @brief Set the "friction" component
+     *
+     * @param friction Describes the friction for this block in a range of
+     (0.0-0.9). Friction affects an entity's movement speed when it travels
+     on the block. Greater value results in more friction
+     * @return BlockProperty
+     */
+    BlockProperty setFriction(double friction) {
+        this->friction = friction;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "geometry" component
+     *
+     * @param geometry The description identifier of the geometry file to
+     * use to render this block. This identifier must match an existing
+     * geometry identifier in any of the currently loaded resource packs
+     * @return BlockProperty
+     */
+    BlockProperty setGeometry(std::string geometry) {
+        this->geometry = geometry;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "light_emission" component
+     *
+     * @param emission The amount of light this block will emit in a range
+     * (0-15). Higher value means more light will be emitted
+     * @return BlockProperty
+     */
+    BlockProperty setLightEmission(int emission) {
+        this->light_emission = emission;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "loot" component
+     *
+     * @param loot_table The path to the loot table, relative to the
+     * behavior pack. Path string is limited to 256 characters
+     * @return BlockProperty
+     */
+    BlockProperty setLoot(std::string loot_table) {
+        this->loot = loot_table;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "map_color" component
+     *
+     * @param map_color Sets the color of the block when rendered to a map.
+     * The color is represented as a hex value in the format "#RRGGBB". May
+     * also be expressed as an array of [R, G, B] from 0 to 255. If this
+     * component is omitted, the block will not show up on the map
+     * @return BlockProperty
+     */
+    BlockProperty setColor(std::string map_color) {
+        this->color = map_color;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "rotation" component
+     * @warning Will be deprecated in 1.19.80 according to kayla
+     *
+     * @param rotation The block's rotation around the center of the cube in
+     * degrees. The rotation is specified as [x, y, z]. Angles need to be in
+     * factors of 90
+     * @return BlockProperty
+     */
+    BlockProperty setRotation(std::vector<int> rotation) {
+        this->rotation = rotation;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "collision_box" component
+     *
+     * @param collision_box Accepts either bool or pair of int vectors
+     * @return BlockProperty
+     */
+    BlockProperty setCollision(
+        std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+            collision_box) {
+        if (std::get_if<bool>(&collision_box)) {
+            this->collision = std::get<bool>(collision_box);
+            return *this;
+        } else {
+            this->collision =
+                std::get<std::pair<std::vector<int>, std::vector<int>>>(
+                    collision_box);
             return *this;
         }
+    }
 
-        /// @brief Sets "destructible_by_mining" component
-        /// @param m Sets the number of seconds it takes to destroy the block
-        /// with base equipment. Greater numbers result in greater mining times.
-        Property setMining(float m) {
-            this->mining = {{"seconds_to_destroy", m}};
+    /**
+     * @brief Set the "selection_box" component
+     *
+     * @param selection_box Accepts either a bool or a pair of int vectors
+     * @return BlockProperty
+     */
+    BlockProperty setSelection(
+        std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+            selection_box) {
+        if (std::get_if<bool>(&selection_box)) {
+            this->selection = std::get<bool>(selection_box);
+            return *this;
+        } else {
+            this->selection =
+                std::get<std::pair<std::vector<int>, std::vector<int>>>(
+                    selection_box);
             return *this;
         }
+    }
 
-        /// @brief Sets "display_name" component
-        /// @param n Specifies the language file key that maps to what text will
-        /// be displayed when you hover over the block in your inventory and
-        /// hotbar. If the string given can not be resolved as a loc string, the
-        /// raw string given will be displayed. If this component is omitted,
-        /// the name of the block will be used as the display name.
-        Property setName(std::string n) {
-            this->display_name = n;
-            return *this;
-        }
+    /**
+     * @brief Set the Creative Category component
+     *
+     * @param tab Determines which category this block will be placed under
+     in the inventory and crafting table container screens. Options are
+     "construction", "nature", "equipment", "items", and "none". If omitted
+     or "none" is specified, the block will not appear in the inventory or
+     crafting table container screens
+     * @param category Specifies the language file key that maps to which
+     expandable/collapsible group this block will be a part of within a
+     category. If this field is omitted, or there is no group whose name
+     matches the loc string, this block will be placed standalone in the
+     given category
+     * @return BlockProperty
+     */
+    BlockProperty setCreativeCategory(
+        adk::CreativeTab tab,
+        adk::CreativeCategory category = adk::CreativeCategory::NONE) {
+        this->creative = std::make_pair(adk::getCreativeTab(tab),
+                                        adk::getCreativeCategory(category));
+        return *this;
+    }
 
-        /// @brief Sets "flammable" component
-        /// @param catch_chance A modifier affecting the chance that this block
-        /// will catch flame when next to a fire. Values are greater than or
-        /// equal to 0, with a higher number meaning more likely to catch on
-        /// fire. For a "catch_chance_modifier" greater than 0, the fire will
-        /// continue to burn until the block is destroyed (or it will burn
-        /// forever if the "destroy_chance_modifier" is 0). If the
-        /// "catch_chance_modifier" is 0, and the block is directly ignited, the
-        /// fire will eventually burn out without destroying the block (or it
-        /// will have a chance to be destroyed if "destroy_chance_modifier" is
-        /// greater than 0). The default value of 5 is the same as that of
-        /// Planks.
-        /// @param destroy A modifier affecting the chance that this block will
-        /// be destroyed by flames when on fire. Values are greater than or
-        /// equal to 0, with a higher number meaning more likely to be destroyed
-        /// by fire. For a "destroy_chance_modifier" of 0, the block will never
-        /// be destroyed by fire, and the fire will burn forever if the
-        /// "catch_chance_modifier" is greater than 0. The default value of 20
-        /// is the same as that of Planks.
-        Property setFlammable(int catch_chance, int destroy) {
-            this->flammable = {{"catch_chance_modifier", catch_chance},
-                               {"destroy_chance_modifier", destroy}};
-            return *this;
-        }
+    /**
+     * @brief Get the "light_dampening" component
+     *
+     * @return int
+     */
+    int getBlockLightFilter() { return block_light_filter; }
 
-        /// @brief Sets "friction" component
-        /// @param f Describes the friction for this block in a range of
-        /// (0.0-0.9). Friction affects an entity's movement speed when it
-        /// travels on the block. Greater value results in more friction.
-        Property setFriction(double f) {
-            this->friction = f;
-            return *this;
-        }
+    /**
+     * @brief Get the "crafting_table" component
+     *
+     * @return nlohmann::json::object_t
+     */
+    nlohmann::json::object_t getCrafting() { return crafting; }
 
-        /// @brief Sets "geometry" component
-        /// @param g The description identifier of the geometry file to use to
-        /// render this block. This identifier must match an existing geometry
-        /// identifier in any of the currently loaded resource packs.
-        Property setGeometry(std::string g) {
-            this->geometry = g;
-            return *this;
-        }
+    /**
+     * @brief Get the "destructible_by_explosion" component
+     *
+     * @return std::variant<bool, double>
+     */
+    std::variant<bool, double> getExplosion() { return explosion; }
 
-        /// @brief Sets "light_emission" component
-        /// @param le The amount of light this block will emit in a range
-        /// (0-15). Higher value means more light will be emitted.
-        Property setLightEmission(int le) {
-            this->light_emission = le;
-            return *this;
-        }
+    /**
+     * @brief Get the "destructible_by_mining" component
+     *
+     * @return std::variant<bool, double>
+     */
+    std::variant<bool, double> getMining() { return mining; }
 
-        /// @brief Sets "loot" component
-        /// @param l The path to the loot table, relative to the behavior pack.
-        /// Path string is limited to 256 characters.
-        Property setLoot(std::string l) {
-            this->loot = l;
-            return *this;
-        }
+    /**
+     * @brief Get the "display_name" component
+     *
+     * @return std::string
+     */
+    std::string getName() { return display_name; }
 
-        /// @brief Sets "map_color" component
-        /// @param c Sets the color of the block when rendered to a map. The
-        /// color is represented as a hex value in the format "#RRGGBB". If this
-        /// component is omitted, the block will not show up on the map.
-        Property setColor(std::string c) {
-            this->color = c;
-            return *this;
-        }
+    /**
+     * @brief Get the "flamamble" component
+     *
+     * @return nlohmann::json::object_t
+     */
+    nlohmann::json::object_t getFlamamble() { return flammable; }
 
-        /// @brief Sets "rotation" component
-        /// @param r The block's rotation around the center of the cube in
-        /// degrees. The rotation is specified as [x, y, z]. Angles need to be
-        /// in factors of 90.
-        Property setRotation(std::vector<int> r) {
-            this->rotation = r;
-            return *this;
-        }
+    /**
+     * @brief Get the "Friction" component
+     *
+     * @return double
+     */
+    double getFriction() { return friction; }
 
-        Property setCollision(bool origin) {
-            this->does_collide = origin;
-            return *this;
-        }
+    /**
+     * @brief Get the "geometry" object
+     *
+     * @return std::string
+     */
+    std::string getGeometry() { return geometry; }
 
-        Property setCollision(std::vector<int> b, std::vector<int> c) {
-            nlohmann::json::object_t temp = {{"origin", b}, {"size", c}};
-            this->collision = temp;
-            return *this;
-        }
+    /**
+     * @brief Get the "light_emission" component
+     *
+     * @return int
+     */
+    int getLightEmission() { return light_emission; }
 
-        Property setSelection(bool origin) {
-            this->is_selectable = origin;
-            return *this;
-        }
+    /**
+     * @brief Get the "loot" object
+     *
+     * @return std::string
+     */
+    std::string getLoot() { return loot; }
 
-        Property setSelection(std::vector<int> b, std::vector<int> c) {
-            nlohmann::json::object_t temp = {{"origin", b}, {"size", c}};
-            this->selection = temp;
-            return *this;
-        }
+    /**
+     * @brief Get the "map_color" object
+     *
+     * @return std::string
+     */
+    std::string getColor() { return color; }
 
-        Property setTab(adk::CreativeTab tab) {
-            this->tab = getCreativeTab(tab);
-            return *this;
-        }
+    /**
+     * @brief Get the "rotation" object
+     * @warning Will be deprecated in 1.19.80 according to kayla
+     *
+     * @return std::vector<int>
+     */
+    std::vector<int> getRotation() { return rotation; }
 
-        Property setCategory(adk::CreativeCategory category) {
-            this->category = getCreativeCategory(category);
-            return *this;
-        }
-    };
+    /**
+     * @brief Get the "collision_box" object
+     *
+     * @return std::variant<bool, std::pair<std::vector<int>,
+     * std::vector<int>>>
+     */
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+    getCollision() {
+        return collision;
+    }
+
+    /**
+     * @brief Get the "selection_box" object
+     *
+     * @return std::variant<bool, std::pair<std::vector<int>,
+     * std::vector<int>>>
+     */
+    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+    getSelection() {
+        return selection;
+    }
+
+    /**
+     * @brief Get the Creative Category component
+     *
+     * @return std::pair<std::string, std::string>
+     */
+    std::pair<std::string, std::string> getCreative() { return creative; }
 };
 
 #endif
