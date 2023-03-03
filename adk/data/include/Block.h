@@ -3,7 +3,6 @@
 
 #include <spdlog/spdlog.h>
 
-#include <iostream>
 #include <string>
 
 #include "BlockProperty.h"
@@ -169,7 +168,7 @@ class Block {
                  {"explosion_resistance", std::get<double>(_mining)}};
         }
 
-        if (_display_name != "")
+        if (!_display_name.empty())
             j["minecraft:block"]["components"]["minecraft:display_name"] =
                 _display_name;
 
@@ -199,10 +198,10 @@ class Block {
                 _light_emission;
         }
 
-        if (_loot != "")
+        if (!_loot.empty())
             j["minecraft:block"]["components"]["minecraft:loot"] = _loot;
 
-        if (_color != "")
+        if (!_color.empty())
             j["minecraft:block"]["components"]["minecraft:map_color"] = _color;
 
         if (_rotation != std::vector<int>{0, 0, 0}) {
