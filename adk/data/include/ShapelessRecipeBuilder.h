@@ -15,7 +15,7 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
    public:
     ShapelessRecipeBuilder shapeless(std::string result, int count = 1) {
         if (!registry_check.count(result)) {
-            spdlog::error("{} is an invalid item", result);
+            logger->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
@@ -28,7 +28,7 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
         requires(std::string item, int count = 1)
     {
         if (!registry_check.count(item)) {
-            spdlog::error("{} is an invalid item", item);
+            logger->error("{} is an invalid item", item);
             exit(EXIT_FAILURE);
         }
 

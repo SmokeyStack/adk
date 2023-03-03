@@ -16,12 +16,12 @@ class CookingRecipeBuilder : public RecipeBuilder {
     CookingRecipeBuilder cook(std::string result, std::string ingredient,
                               std::vector<std::string> tags) {
         if (!registry_check.count(result)) {
-            spdlog::error("{} is an invalid item", result);
+            logger->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
         if (!registry_check.count(ingredient)) {
-            spdlog::error("{} is an invalid item", ingredient);
+            logger->error("{} is an invalid item", ingredient);
             exit(EXIT_FAILURE);
         }
 

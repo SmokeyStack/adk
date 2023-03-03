@@ -29,7 +29,7 @@ std::string getArmorSlot(adk::ArmorSlot slot) {
         case adk::ArmorSlot::FEET:
             return "slot.armor.feet";
         default:
-            spdlog::error("This shouldn't happen");
+            logger->error("This shouldn't happen");
             exit(EXIT_FAILURE);
             return "Error";
     }

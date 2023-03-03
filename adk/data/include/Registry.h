@@ -29,11 +29,11 @@ class Registry {
     /// @param object Class Objects such as Blocks, items, etc
     void subscribe(std::string id, T* object) {
         if (!_registry.empty() && _registry.count(id)) {
-            spdlog::error("{} has already been defined!", id);
+            logger->error("{} has already been defined!", id);
             exit(EXIT_FAILURE);
         }
 
-        spdlog::info("Creating {} - {}:{}", object->getType(), mod_id, id);
+        logger->info("Creating {} - {}:{}", object->getType(), mod_id, id);
 
         _registry[id] = object;
 
@@ -49,7 +49,7 @@ class Registry {
         for (auto const& [key, value] : _registry) {
             std::visit(
                 [key](auto&& c) {
-                    spdlog::info("[{}] - {}", key, typeid(*c).name());
+                    logger->info("[{}] - {}", key, typeid(*c).name());
                 },
                 value);
         }

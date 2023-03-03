@@ -178,7 +178,7 @@ class Block {
 
         if (_friction != 0.4) {
             if (_friction > 0.9 || _friction < 0.0) {
-                spdlog::error("{} - Friction can only be in range (0.0-0.9)",
+                logger->error("{} - Friction can only be in range (0.0-0.9)",
                               id);
                 exit(EXIT_FAILURE);
             }
@@ -207,7 +207,7 @@ class Block {
         if (_rotation != std::vector<int>{0, 0, 0}) {
             for (auto const& entry : _rotation) {
                 if (entry % 90 != 0) {
-                    spdlog::error("{} - Rotation can only be factors of 90",
+                    logger->error("{} - Rotation can only be factors of 90",
                                   id);
                     exit(EXIT_FAILURE);
                 }

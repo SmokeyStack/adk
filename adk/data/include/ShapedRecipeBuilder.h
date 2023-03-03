@@ -21,7 +21,7 @@ class ShapedRecipeBuilder : public RecipeBuilder {
    public:
     ShapedRecipeBuilder shaped(std::string result, int count = 1) {
         if (!registry_check.count(result)) {
-            spdlog::error("{} is an invalid item", result);
+            logger->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
@@ -41,15 +41,15 @@ class ShapedRecipeBuilder : public RecipeBuilder {
 
     ShapedRecipeBuilder define(char symbol, std::string item) {
         if (!registry_check.count(item)) {
-            spdlog::error("{} is an invalid item", item);
+            logger->error("{} is an invalid item", item);
             exit(EXIT_FAILURE);
         }
 
         if (_key.count(symbol)) {
-            spdlog::error("{} is already defined", symbol);
+            logger->error("{} is already defined", symbol);
             exit(EXIT_FAILURE);
         } else if (symbol == ' ') {
-            spdlog::error("White space(' ') is reserved and cannot be defined");
+            logger->error("White space(' ') is reserved and cannot be defined");
             exit(EXIT_FAILURE);
         } else {
             _key[symbol] = item;
@@ -59,7 +59,7 @@ class ShapedRecipeBuilder : public RecipeBuilder {
 
     void ensureValidity(std::string id) {
         if (_rows.empty()) {
-            spdlog::error("No pattern is defined for shaped recipe - {}", id);
+            logger->error("No pattern is defined for shaped recipe - {}", id);
             exit(EXIT_FAILURE);
         } else {
             std::set<char> set;
