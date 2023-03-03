@@ -23,17 +23,20 @@ class Registry {
     std::map<std::string, std::variant<Block*, Item*>> _registry;
 
    public:
-    Registry(std::string id) { mod_id = id; };
+    Registry(std::string id,
+             spdlog::basic_logger_mt<spdlog::async_factory> logger) {
+        mod_id = id;
+    };
     /// @brief Generates the json file
     /// @param id The name of the identifier, omit the namespace
     /// @param object Class Objects such as Blocks, items, etc
     void subscribe(std::string id, T* object) {
         if (!_registry.empty() && _registry.count(id)) {
-            logger->error("{} has already been defined!", id);
+            spdlog::error("{} has already been defined!", id);
             exit(EXIT_FAILURE);
         }
 
-        logger->info("Creating {} - {}:{}", object->getType(), mod_id, id);
+        spdlog::info("Creating {} - {}:{}", object->getType(), mod_id, id);
 
         _registry[id] = object;
 
@@ -49,7 +52,7 @@ class Registry {
         for (auto const& [key, value] : _registry) {
             std::visit(
                 [key](auto&& c) {
-                    logger->info("[{}] - {}", key, typeid(*c).name());
+                    spdlog::info("[{}] - {}", key, typeid(*c).name());
                 },
                 value);
         }
