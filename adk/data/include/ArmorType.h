@@ -6,11 +6,18 @@
 #include <string>
 
 namespace adk {
+/**
+ * @brief Represents slots for armor
+ *
+ */
 enum class ArmorSlot { HEAD, CHEST, LEGS, FEET };
 
-/// @brief Turns enum ArmorSlot into string
-/// @param slot enum ArmorSlot
-/// @return String equivalent
+/**
+ * @brief Get the Armor Slot object
+ *
+ * @param slot ArmorSlot Enum
+ * @return std::string
+ */
 std::string getArmorSlot(adk::ArmorSlot slot) {
     switch (slot) {
         case adk::ArmorSlot::HEAD:

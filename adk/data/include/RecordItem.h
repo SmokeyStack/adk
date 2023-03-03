@@ -7,6 +7,10 @@
 #include "ItemProperty.h"
 #include "json.hpp"
 
+/**
+ * @brief Represents a Record Item
+ *
+ */
 class RecordItem : public Item {
    protected:
     std::string _sound;
@@ -15,34 +19,40 @@ class RecordItem : public Item {
 
    public:
     RecordItem() {}
-    /// @brief Represents a Record Item
-    /// @param property An ItemProperty object
-    /// @param sound Sound event type
-    /// @param duration Duration of sound event in seconds
-    /// @param signal Signal strength for comparator blocks to use
-    RecordItem(ItemProperty::Property property, std::string sound,
-               float duration, int signal = 0) {
-        _display_name = property.display_name;
-        _icon = property.icon;
-        _stack = property.stack;
-        _block_placer = property.block_placer;
-        _block_placer_placement = property.block_placer_placement;
-        _cooldown_category = property.cooldown_category;
-        _cooldown_time = property.cooldown_time;
-        _dye = property.dye;
-        _entity_placer = property.entity_placer;
-        _entity_placer_placement = property.entity_placer_placement;
-        _entity_placer_dispense = property.entity_placer_dispense;
-        _offset_main = property.offset_main;
-        _offset_offhand = property.offset_offhand;
+    /**
+     * @brief Construct a new Record Item object
+     *
+     * @param property ItemProperty
+     * @param sound Sound event type
+     * @param duration Duration of sound events in seconds
+     * @param signal Signal strength for comparator blocks to use
+     */
+    RecordItem(ItemProperty property, std::string sound, float duration,
+               int signal = 0) {
+        _display_name = property.getName();
+        _icon = property.getIcon();
+        _stack = property.getStack();
+        _block_placer = property.getBlockPlacer();
+        _block_placer_placement = property.getBlockPlacerPlacement();
+        _cooldown_category = property.getCooldownCategory();
+        _cooldown_time = property.getCooldownTime();
+        _dye = property.getDyeProperty();
+        _entity_placer = property.getEntityPlacer();
+        _entity_placer_placement = property.getEntityPlacerPlacement();
+        _entity_placer_dispense = property.getEntityPlacerDispense();
+        _offset_main = property.getOffsetMain();
+        _offset_offhand = property.getOffsetOff();
         _sound = sound;
         _duration = duration;
     }
 
-    /// @brief Generates the json object
-    /// @param mod_id Namespace identifier
-    /// @param id Identifier for the item
-    /// @return json object
+    /**
+     * @brief Generates the json object
+     *
+     * @param mod_id Namespace identifier
+     * @param id Identifier for the item
+     * @return json
+     */
     json output(std::string mod_id, std::string id) {
         j = Item::output(mod_id, id);
 

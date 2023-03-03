@@ -7,7 +7,11 @@
 #include "ItemProperty.h"
 #include "json.hpp"
 
-class FuelItem : public Item {
+/**
+ * @brief Represents a Projectile Item
+ * 
+ */
+class ProjectileItem : public Item {
    protected:
     std::string _entity;
     float _charge_time;
@@ -19,29 +23,41 @@ class FuelItem : public Item {
     /// @param entity The entity to be fired as a projectile
     /// @param charge_time How long you must charge a projectile for it to
     /// critically hit
-    ProjectileItem(ItemProperty::Property property, std::string entity,
+
+    /**
+     * @brief Construct a new Projectile Item object
+     *
+     * @param property ItemProperty
+     * @param entity The entity to be fired as a projectile
+     * @param charge_time How long you must charge a projectile for it to
+     * critically hit
+     */
+    ProjectileItem(ItemProperty property, std::string entity,
                    float charge_time = 0) {
-        _display_name = property.display_name;
-        _icon = property.icon;
-        _stack = property.stack;
-        _block_placer = property.block_placer;
-        _block_placer_placement = property.block_placer_placement;
-        _cooldown_category = property.cooldown_category;
-        _cooldown_time = property.cooldown_time;
-        _dye = property.dye;
-        _entity_placer = property.entity_placer;
-        _entity_placer_placement = property.entity_placer_placement;
-        _entity_placer_dispense = property.entity_placer_dispense;
-        _offset_main = property.offset_main;
-        _offset_offhand = property.offset_offhand;
+        _display_name = property.getName();
+        _icon = property.getIcon();
+        _stack = property.getStack();
+        _block_placer = property.getBlockPlacer();
+        _block_placer_placement = property.getBlockPlacerPlacement();
+        _cooldown_category = property.getCooldownCategory();
+        _cooldown_time = property.getCooldownTime();
+        _dye = property.getDyeProperty();
+        _entity_placer = property.getEntityPlacer();
+        _entity_placer_placement = property.getEntityPlacerPlacement();
+        _entity_placer_dispense = property.getEntityPlacerDispense();
+        _offset_main = property.getOffsetMain();
+        _offset_offhand = property.getOffsetOff();
         entity = _entity;
         _charge_time = charge_time;
     }
 
-    /// @brief Generates the json object
-    /// @param mod_id Namespace identifier
-    /// @param id Identifier for the item
-    /// @return json object
+    /**
+     * @brief Generates the json object
+     *
+     * @param mod_id Namespace identifier
+     * @param id Identifier for the item
+     * @return json
+     */
     json output(std::string mod_id, std::string id) {
         j = Item::output(mod_id, id);
 
