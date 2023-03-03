@@ -23,10 +23,7 @@ class Registry {
     std::map<std::string, std::variant<Block*, Item*>> _registry;
 
    public:
-    Registry(std::string id,
-             spdlog::basic_logger_mt<spdlog::async_factory> logger) {
-        mod_id = id;
-    };
+    Registry(std::string id) { mod_id = id; };
     /// @brief Generates the json file
     /// @param id The name of the identifier, omit the namespace
     /// @param object Class Objects such as Blocks, items, etc
