@@ -13,7 +13,6 @@ set(Headers
     ../adk/data/include/DurabilityItem.h
     ../adk/data/include/FoodItem.h
     ../adk/data/include/FuelItem.h
-    ../adk/data/include/GlassBlock.h
     ../adk/data/include/HeadBlock.h
     ../adk/data/include/Item.h
     ../adk/data/include/ItemProperty.h
