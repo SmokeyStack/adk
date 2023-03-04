@@ -33,7 +33,7 @@ enum class Dye {
  * @param dye enum Dye
  * @return std::string
  */
-std::string getDye(Dye dye) {
+inline std::string getDye(Dye dye) {
     switch (dye) {
         case Dye::BLACK:
             return "black";

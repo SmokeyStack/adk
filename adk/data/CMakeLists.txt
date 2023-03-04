@@ -17,6 +17,7 @@ add_subdirectory(include/spdlog)
 include_directories(include include/spdlog/include)
 add_executable(adk
     Main.cpp
+    GlobalRegistry.cpp
 )
 
 add_executable(recipegenerator

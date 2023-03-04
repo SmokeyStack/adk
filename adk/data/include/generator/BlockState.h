@@ -1,13 +1,12 @@
 #ifndef BLOCKSTATE_H
 #define BLOCKSTATE_H
 
-#include <include/spdlog/sdplog.h>
-
 #include <filesystem>
 #include <fstream>
 #include <sstream>
 #include <string>
 
+#include "../spdlog/include/spdlog/spdlog.h"
 #include "json.hpp"
 
 namespace fs = std::filesystem;

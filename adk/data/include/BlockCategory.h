@@ -93,7 +93,7 @@ enum class CreativeCategory {
 /// @brief Turns enum CreativeTab into string
 /// @param tab enum CreativeTab
 /// @return String equivalent
-std::string getCreativeTab(adk::CreativeTab tab) {
+inline std::string getCreativeTab(adk::CreativeTab tab) {
     switch (tab) {
         case adk::CreativeTab::COMMANDS:
             return "commands";
@@ -115,7 +115,7 @@ std::string getCreativeTab(adk::CreativeTab tab) {
 /// @brief Turns enum CreativeCategory into string
 /// @param tab enum CreativeCategory
 /// @return String equivalent
-std::string getCreativeCategory(adk::CreativeCategory category) {
+inline std::string getCreativeCategory(adk::CreativeCategory category) {
     switch (category) {
         case adk::CreativeCategory::ANVIL:
             return "itemGroup.name.anvil";
