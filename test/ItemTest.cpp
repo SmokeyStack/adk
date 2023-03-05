@@ -15,7 +15,7 @@ TEST(ItemTest, BasicItem) {
     const std::string MODID = "custom_namespace";
     Registry<Item> mod(MODID);
 
-    mod.subscribe("basic_item", new Item(ItemProperty::Property()));
+    mod.subscribe("basic_item", new Item(ItemProperty()));
 
     bool basic = compareFiles("../../test/files/basic_item.json",
                               "./BP/items/basic_item.json");
