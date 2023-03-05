@@ -20,5 +20,5 @@ TEST(ItemTest, BasicItem) {
     bool basic = compareFiles("../../test/files/basic_item.json",
                               "./BP/items/basic_item.json");
 
-    EXPECT_EQ(true, false) << "Item is not working as expected";
+    EXPECT_EQ(true, basic) << "Item is not working as expected";
 }
