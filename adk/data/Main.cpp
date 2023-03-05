@@ -1,9 +1,15 @@
-#include "Block.h"
-#include "Registry.h"
+#include "Data.h"
+#include "Object.h"
+#include "Recipe.h"
 
 int main() {
-    const std::string MODID = "custom_namespace";
-    Registry<Block> mod(MODID);
+    Object SmokeyBedrock("custom_namespace");
+    Data DataGenerator;
+    Recipe RecipeGenerator;
+
+    SmokeyBedrock.init();
+    DataGenerator.init();
+    RecipeGenerator.init();
 
     return 0;
 }
