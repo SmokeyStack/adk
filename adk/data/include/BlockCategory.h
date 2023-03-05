@@ -2,6 +2,10 @@
 #define BLOCKCATEGORY_H
 
 namespace adk {
+/**
+ * @brief Represents the tabs in Creative Menu
+ *
+ */
 enum class CreativeTab {
     COMMANDS,
     CONSTRUCTION,
@@ -10,6 +14,10 @@ enum class CreativeTab {
     NATURE,
     NONE
 };
+/**
+ * @brief Represents the groups in Creative Menu
+ *
+ */
 enum class CreativeCategory {
     ANVIL,
     ARROW,

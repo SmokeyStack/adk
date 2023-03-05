@@ -19,6 +19,29 @@ class ShapedRecipeBuilder : public RecipeBuilder {
     std::vector<std::string> _rows;
     std::map<char, std::string> _key;
 
+    void ensureValidity(std::string id) {
+        if (_rows.empty()) {
+            spdlog::error("No pattern is defined for shaped recipe - {}", id);
+            exit(EXIT_FAILURE);
+        } else {
+            std::set<char> set;
+            for (const auto& [key, value] : _key) set.insert(key);
+
+            for (std::string s : _rows) {
+                for (int a = 0; a < s.length(); a++) {
+                    char c0 = s.at(a);
+                    if (!_key.count(c0) && c0 != ' ') {
+                        spdlog::info(
+                            " Pattern in recipe {} uses undefined symbol '{}' ",
+                            id, c0);
+                    }
+
+                    set.erase(c0);
+                }
+            }
+        }
+    }
+
    public:
     ShapedRecipeBuilder shaped(std::string result, int count = 1) {
         std::vector<std::string> key;
@@ -82,29 +105,6 @@ class ShapedRecipeBuilder : public RecipeBuilder {
             _key[symbol] = item;
         }
         return *this;
-    }
-
-    void ensureValidity(std::string id) {
-        if (_rows.empty()) {
-            spdlog::error("No pattern is defined for shaped recipe - {}", id);
-            exit(EXIT_FAILURE);
-        } else {
-            std::set<char> set;
-            for (const auto& [key, value] : _key) set.insert(key);
-
-            for (std::string s : _rows) {
-                for (int a = 0; a < s.length(); a++) {
-                    char c0 = s.at(a);
-                    if (!_key.count(c0) && c0 != ' ') {
-                        spdlog::info(
-                            " Pattern in recipe {} uses undefined symbol '{}' ",
-                            id, c0);
-                    }
-
-                    set.erase(c0);
-                }
-            }
-        }
     }
 
     nlohmann::json save(std::string id) {
