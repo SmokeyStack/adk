@@ -174,7 +174,7 @@ class Block {
         } else if (std::get_if<double>(&_mining)) {
             j["minecraft:block"]["components"]
              ["minecraft:destructible_by_mining"] = {
-                 {"explosion_resistance", std::get<double>(_mining)}};
+                 {"seconds_to_destroy", std::get<double>(_mining)}};
         }
 
         if (!_display_name.empty())
