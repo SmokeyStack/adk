@@ -11,16 +11,8 @@
 namespace fs = std::filesystem;
 
 class RecipeBuilder {
-   protected:
-    std::map<std::string, std::variant<Block*, Item*>> registry_check;
-
    public:
     RecipeBuilder(){};
-
-    template <typename T>
-    RecipeBuilder checkRegistry(Registry<T> registry) {
-        registry_check = registry.getRegistrar();
-    }
 
     void createRecipe(std::string id, nlohmann::json result) {
         if (!fs::exists("./BP/recipes/")) fs::create_directory("./BP/recipes/");

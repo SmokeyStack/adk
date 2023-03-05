@@ -8,6 +8,7 @@
 #include <string>
 #include <vector>
 
+#include "GlobalRegistry.h"
 #include "RecipeBuilder.h"
 #include "json.hpp"
 
@@ -20,7 +21,20 @@ class ShapedRecipeBuilder : public RecipeBuilder {
 
    public:
     ShapedRecipeBuilder shaped(std::string result, int count = 1) {
-        if (!registry_check.count(result)) {
+        std::vector<std::string> key;
+
+        for (auto const entry : globalregistry) {
+            std::map<std::string, std::variant<Block*, Item*>> registry_check;
+            registry_check = entry->getRegistrar();
+
+            for (std::map<std::string, std::variant<Block*, Item*>>::iterator
+                     it = registry_check.begin();
+                 it != registry_check.end(); ++it) {
+                key.push_back(it->first);
+            }
+        }
+
+        if (!(std::find(key.begin(), key.end(), result) != key.end())) {
             spdlog::error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
@@ -40,7 +54,20 @@ class ShapedRecipeBuilder : public RecipeBuilder {
     }
 
     ShapedRecipeBuilder define(char symbol, std::string item) {
-        if (!registry_check.count(item)) {
+        std::vector<std::string> key;
+
+        for (auto const entry : globalregistry) {
+            std::map<std::string, std::variant<Block*, Item*>> registry_check;
+            registry_check = entry->getRegistrar();
+
+            for (std::map<std::string, std::variant<Block*, Item*>>::iterator
+                     it = registry_check.begin();
+                 it != registry_check.end(); ++it) {
+                key.push_back(it->first);
+            }
+        }
+
+        if (!(std::find(key.begin(), key.end(), item) != key.end())) {
             spdlog::error("{} is an invalid item", item);
             exit(EXIT_FAILURE);
         }

@@ -18,6 +18,10 @@ class Registrar {
    public:
     virtual void subscribe(std::string dummy,
                            std::variant<Block*, Item*> dummy_2) {}
+    virtual std::map<std::string, std::variant<Block*, Item*>> getRegistrar() {
+        std::map<std::string, std::variant<Block*, Item*>> dummy;
+        return dummy;
+    }
 };
 
 /// @brief
@@ -44,7 +48,7 @@ class Registry : public Registrar {
             [=](auto&& c) {
                 spdlog::info("Creating {} - {}:{}", c->getType(), mod_id, id);
 
-                _registry[id] = c;
+                _registry[mod_id + ":" + id] = c;
 
                 if (!fs::exists("./BP/" + c->getType() + "s/"))
                     fs::create_directory("./BP/" + c->getType() + "s/");
@@ -58,14 +62,6 @@ class Registry : public Registrar {
     };
 
     std::map<std::string, std::variant<Block*, Item*>> getRegistrar() {
-        for (auto const& [key, value] : _registry) {
-            std::visit(
-                [key](auto&& c) {
-                    spdlog::info("[{}] - {}", key, typeid(*c).name());
-                },
-                value);
-        }
-
         return _registry;
     };
 };

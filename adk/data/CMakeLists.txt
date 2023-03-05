@@ -14,18 +14,11 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 project(adk VERSION 0.1 LANGUAGES CXX)
 
 add_subdirectory(include/spdlog)
-include_directories(include include/spdlog/include)
+include_directories(include include/generator include/spdlog/include)
 add_executable(adk
     Main.cpp
+    Object.cpp
+    # DataGen.cpp
+    Recipe.cpp
     GlobalRegistry.cpp
-)
-
-add_executable(recipegenerator
-    RecipeGen.cpp
-)
-
-add_executable(datagenerator
-    DataGen.cpp
-    include/generator/BlockState.h
-    include/generator/ItemState.h
 )

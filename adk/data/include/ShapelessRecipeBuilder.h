@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "GlobalRegistry.h"
 #include "RecipeBuilder.h"
 #include "json.hpp"
 
@@ -14,7 +15,20 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
 
    public:
     ShapelessRecipeBuilder shapeless(std::string result, int count = 1) {
-        if (!registry_check.count(result)) {
+        std::vector<std::string> key;
+
+        for (auto const entry : globalregistry) {
+            std::map<std::string, std::variant<Block*, Item*>> registry_check;
+            registry_check = entry->getRegistrar();
+
+            for (std::map<std::string, std::variant<Block*, Item*>>::iterator
+                     it = registry_check.begin();
+                 it != registry_check.end(); ++it) {
+                key.push_back(it->first);
+            }
+        }
+
+        if (!(std::find(key.begin(), key.end(), result) != key.end())) {
             spdlog::error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
@@ -27,9 +41,14 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
     ShapelessRecipeBuilder
         requires(std::string item, int count = 1)
     {
-        if (!registry_check.count(item)) {
-            spdlog::error("{} is an invalid item", item);
-            exit(EXIT_FAILURE);
+        for (auto const entry : globalregistry) {
+            std::map<std::string, std::variant<Block*, Item*>> registry_check;
+            registry_check = entry->getRegistrar();
+
+            if (!registry_check.count(result)) {
+                spdlog::error("{} is an invalid item", result);
+                exit(EXIT_FAILURE);
+            }
         }
 
         for (int a = 0; a < count; a++) this->_ingredients.push_back(item);
