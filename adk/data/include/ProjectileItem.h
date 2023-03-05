@@ -9,7 +9,7 @@
 
 /**
  * @brief Represents a Projectile Item
- * 
+ *
  */
 class ProjectileItem : public Item {
    protected:
@@ -18,12 +18,6 @@ class ProjectileItem : public Item {
 
    public:
     ProjectileItem() {}
-    /// @brief Represents a Projectile Item
-    /// @param property An ItemProperty object
-    /// @param entity The entity to be fired as a projectile
-    /// @param charge_time How long you must charge a projectile for it to
-    /// critically hit
-
     /**
      * @brief Construct a new Projectile Item object
      *
