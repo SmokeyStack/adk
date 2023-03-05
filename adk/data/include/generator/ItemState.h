@@ -10,8 +10,18 @@
 
 namespace fs = std::filesystem;
 
+/**
+ * @brief Represents Armor model
+ *
+ */
 enum ArmorGeometry { HEAD, CHEST, LEGS, FEET };
 
+/**
+ * @brief Get the Armor Geometry object
+ *
+ * @param geometry enum ArmorGeometry
+ * @return std::string
+ */
 std::string getArmorGeometry(ArmorGeometry geometry) {
     switch (geometry) {
         case HEAD:
@@ -27,6 +37,12 @@ std::string getArmorGeometry(ArmorGeometry geometry) {
     }
 }
 
+/**
+ * @brief Get the Armor Setup object
+ *
+ * @param geometry enum ArmorGeometry
+ * @return std::string
+ */
 std::string getArmorSetup(ArmorGeometry geometry) {
     switch (geometry) {
         case HEAD:
@@ -42,6 +58,12 @@ std::string getArmorSetup(ArmorGeometry geometry) {
     }
 }
 
+/**
+ * @brief Get the Armor Offset object
+ *
+ * @param geometry enum ArmorGeometry
+ * @return std::string
+ */
 std::string getArmorOffset(ArmorGeometry geometry) {
     switch (geometry) {
         case HEAD:
@@ -57,6 +79,12 @@ std::string getArmorOffset(ArmorGeometry geometry) {
     }
 }
 
+/**
+ * @brief Creates a simple item
+ *
+ * @param item Identifier of the item, omit namespace
+ * @param icon Name of the texture defined in `item_texture.json`
+ */
 void simpleItem(std::string item, std::string icon) {
     std::string my_text, temp_text;
     std::ifstream TempFile("./BP/items/" + item + ".json");
@@ -70,6 +98,14 @@ void simpleItem(std::string item, std::string icon) {
     MyFile.close();
 }
 
+/**
+ * @brief Creates armor
+ *
+ * @param id Namespace
+ * @param item Identifier of the item
+ * @param texture Path of the texture
+ * @param geometry enum ArmorGeometry
+ */
 void armorModel(std::string id, std::string item, std::string texture,
                 ArmorGeometry geometry) {
     if (!fs::exists("./RP/attachables/"))

@@ -20,11 +20,15 @@ class SaplingBlock : public BushBlock {
 
    public:
     SaplingBlock() {}
-    /// @brief Represents a sapling block
-    /// @param property A BlockProperty object
-    /// @param number_of_properties How many stages the sapling has
-    /// @param structure The "tree" to load. Temporary solution until Bedrock
-    /// has place feature command
+    /**
+     * @brief Construct a new Sapling Block object
+     *
+     * @param property BlockProperty
+     * @param number_of_properties How many stages the sapling has
+     * @param structure The "tree" to load. Temporary solution until Bedrock has
+     * place feature command
+     * @param particle Particle used when bonemealed
+     */
     SaplingBlock(BlockProperty property, int number_of_properties,
                  std::string structure,
                  std::string particle = "minecraft:crop_growth_emitter") {

@@ -209,36 +209,101 @@ class ItemProperty {
         return *this;
     }
 
+    /**
+     * @brief Get the "display_name" component
+     *
+     * @return std::string
+     */
     std::string getName() { return display_name; }
 
+    /**
+     * @brief Get the "icon" component
+     *
+     * @return std::string
+     */
     std::string getIcon() { return icon; }
 
+    /**
+     * @brief Get the "max_stack_size" component
+     *
+     * @return int
+     */
     int getStack() { return stack; }
 
+    /**
+     * @brief Get the "block_placer" object
+     *
+     * @return std::string
+     */
     std::string getBlockPlacer() { return block_placer; }
 
+    /**
+     * @brief Get the array of blocks for "block_placer" component
+     *
+     * @return std::vector<std::string>
+     */
     std::vector<std::string> getBlockPlacerPlacement() {
         return block_placer_placement;
     }
 
+    /**
+     * @brief Get the category for "cooldown" component
+     *
+     * @return std::string
+     */
     std::string getCooldownCategory() { return cooldown_category; }
 
+    /**
+     * @brief Get the time for "cooldown" component
+     *
+     * @return float
+     */
     float getCooldownTime() { return cooldown_time; }
 
+    /**
+     * @brief Get the "dye_powder" component
+     *
+     * @return std::string
+     */
     std::string getDyeProperty() { return dye; }
 
+    /**
+     * @brief Get the "entity_placer" component
+     *
+     * @return std::string
+     */
     std::string getEntityPlacer() { return entity_placer; }
 
+    /**
+     * @brief Get the placement for "entity_placer" component
+     *
+     * @return std::vector<std::string>
+     */
     std::vector<std::string> getEntityPlacerPlacement() {
         return entity_placer_placement;
     }
 
+    /**
+     * @brief Get the dispense on for "entity_placer" component
+     *
+     * @return std::vector<std::string>
+     */
     std::vector<std::string> getEntityPlacerDispense() {
         return entity_placer_dispense;
     }
 
+    /**
+     * @brief Get the offset for main hand
+     *
+     * @return std::vector<double>
+     */
     std::vector<double> getOffsetMain() { return offset_main; }
 
+    /**
+     * @brief Get the offset for offhand hand
+     *
+     * @return std::vector<double>
+     */
     std::vector<double> getOffsetOff() { return offset_offhand; }
 };
 

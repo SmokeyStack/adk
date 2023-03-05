@@ -3,11 +3,11 @@
 #include "Recipe.h"
 
 int main() {
-    Object SmokeyBedrock("custom_namespace");
+    Object MyAddOn("custom_namespace");
     Data DataGenerator;
     Recipe RecipeGenerator;
 
-    SmokeyBedrock.init();
+    MyAddOn.init();
     DataGenerator.init();
     RecipeGenerator.init();
 

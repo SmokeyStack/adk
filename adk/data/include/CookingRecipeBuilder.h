@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "GlobalRegistry.h"
 #include "RecipeBuilder.h"
 #include "json.hpp"
 

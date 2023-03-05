@@ -32,6 +32,15 @@ class Block {
         _selection;
     std::pair<std::string, std::string> _creative;
 
+    /**
+     * @brief Ensure the collision_box and selection_box is valid
+     *
+     * @param component_check The vectors of origin and size
+     * @param component Used to log collision or selection
+     * @param id Identifier of block
+     * @return true
+     * @return false
+     */
     bool ensureValidity(
         std::pair<std::vector<int>, std::vector<int>> component_check,
         std::string component, std::string id) {
@@ -263,15 +272,14 @@ class Block {
             }
         }
 
-        // if (_tab != "")
-        //     j["minecraft:block"]["description"]["menu_category"]["category"]
-        //     =
-        //         _tab;
-
-        // if (_category != "")
-        //     j["minecraft:block"]["description"]["menu_category"]["group"]
-        //     =
-        //         _category;
+        if (!_creative.first.empty()) {
+            j["minecraft:block"]["description"]["menu_category"]["category"] =
+                _creative.first;
+            if (!_creative.second.empty()) {
+                j["minecraft:block"]["description"]["menu_category"]["group"] =
+                    _creative.second;
+            }
+        }
 
         return j;
     }

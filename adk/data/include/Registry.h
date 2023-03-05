@@ -14,6 +14,11 @@
 
 namespace fs = std::filesystem;
 
+/**
+ * @brief Not directly used except for putting Registry<T> into
+ * vectors
+ *
+ */
 class Registrar {
    public:
     virtual void subscribe(std::string dummy,
@@ -24,8 +29,11 @@ class Registrar {
     }
 };
 
-/// @brief
-/// @tparam T
+/**
+ * @brief Used to register objects into the game
+ *
+ * @tparam T Object type such as Block or Item
+ */
 template <typename T>
 class Registry : public Registrar {
    private:
@@ -33,11 +41,18 @@ class Registry : public Registrar {
     std::map<std::string, std::variant<Block*, Item*>> _registry;
 
    public:
+    /**
+     * @brief Construct a new Registry object
+     *
+     * @param id namespace identifier
+     */
     Registry(std::string id) { mod_id = id; };
-
-    /// @brief Generates the json file
-    /// @param id The name of the identifier, omit the namespace
-    /// @param object Class Objects such as Blocks, items, etc
+    /**
+     * @brief Generates the json file
+     *
+     * @param id The name of the identifier, omit the namespace
+     * @param object Class Objects such as Blocks, items, etc
+     */
     void subscribe(std::string id, std::variant<Block*, Item*> object) {
         if (!_registry.empty() && _registry.count(id)) {
             spdlog::error("{} has already been defined!", id);
@@ -61,6 +76,11 @@ class Registry : public Registrar {
             object);
     };
 
+    /**
+     * @brief Get the Registrar object
+     *
+     * @return std::map<std::string, std::variant<Block*, Item*>>
+     */
     std::map<std::string, std::variant<Block*, Item*>> getRegistrar() {
         return _registry;
     };

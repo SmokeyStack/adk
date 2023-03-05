@@ -2,6 +2,10 @@
 #define BLOCKCATEGORY_H
 
 namespace adk {
+/**
+ * @brief Represents the tabs in Creative Menu
+ *
+ */
 enum class CreativeTab {
     COMMANDS,
     CONSTRUCTION,
@@ -10,6 +14,10 @@ enum class CreativeTab {
     NATURE,
     NONE
 };
+/**
+ * @brief Represents the groups in Creative Menu
+ *
+ */
 enum class CreativeCategory {
     ANVIL,
     ARROW,
@@ -90,9 +98,12 @@ enum class CreativeCategory {
     NONE
 };
 
-/// @brief Turns enum CreativeTab into string
-/// @param tab enum CreativeTab
-/// @return String equivalent
+/**
+ * @brief Get the Creative Tab object
+ *
+ * @param tab enum CreativeTab
+ * @return std::string
+ */
 inline std::string getCreativeTab(adk::CreativeTab tab) {
     switch (tab) {
         case adk::CreativeTab::COMMANDS:
@@ -112,9 +123,12 @@ inline std::string getCreativeTab(adk::CreativeTab tab) {
     }
 }
 
-/// @brief Turns enum CreativeCategory into string
-/// @param tab enum CreativeCategory
-/// @return String equivalent
+/**
+ * @brief Get the Creative Category object
+ *
+ * @param category enum CreativeCategory
+ * @return std::string
+ */
 inline std::string getCreativeCategory(adk::CreativeCategory category) {
     switch (category) {
         case adk::CreativeCategory::ANVIL:

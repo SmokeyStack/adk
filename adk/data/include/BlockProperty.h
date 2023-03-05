@@ -339,7 +339,7 @@ class BlockProperty {
     double getFriction() { return friction; }
 
     /**
-     * @brief Get the "geometry" object
+     * @brief Get the "geometry" component
      *
      * @return std::string
      */
@@ -353,21 +353,21 @@ class BlockProperty {
     int getLightEmission() { return light_emission; }
 
     /**
-     * @brief Get the "loot" object
+     * @brief Get the "loot" component
      *
      * @return std::string
      */
     std::string getLoot() { return loot; }
 
     /**
-     * @brief Get the "map_color" object
+     * @brief Get the "map_color" component
      *
      * @return std::string
      */
     std::string getColor() { return color; }
 
     /**
-     * @brief Get the "rotation" object
+     * @brief Get the "rotation" component
      * @warning Will be deprecated in 1.19.80 according to kayla
      *
      * @return std::vector<int>
@@ -375,7 +375,7 @@ class BlockProperty {
     std::vector<int> getRotation() { return rotation; }
 
     /**
-     * @brief Get the "collision_box" object
+     * @brief Get the "collision_box" component
      *
      * @return std::variant<bool, std::pair<std::vector<int>,
      * std::vector<int>>>
@@ -386,7 +386,7 @@ class BlockProperty {
     }
 
     /**
-     * @brief Get the "selection_box" object
+     * @brief Get the "selection_box" component
      *
      * @return std::variant<bool, std::pair<std::vector<int>,
      * std::vector<int>>>

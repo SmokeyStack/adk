@@ -11,8 +11,12 @@
 
 namespace fs = std::filesystem;
 
-/// @brief Creates a one texture block
-/// @param block Identifier of the block, omit namespace
+/**
+ * @brief Creates a one texture block
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param texture Name of the texture defined in `terrain_texture.json`
+ */
 void simpleBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
@@ -35,14 +39,17 @@ void simpleBlock(std::string block, std::string texture) {
     MyFile.close();
 }
 
-/// @brief Sides can have different textures
-/// @param block Identifier of the block, omit namespace
-/// @param north Texture for the north face
-/// @param east Texture for the east face
-/// @param south Texture for the south face
-/// @param west Texture for the west face
-/// @param up Texture for the up face
-/// @param down Texture for the down face
+/**
+ * @brief Sides can have different textures
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param north Texture for the north face
+ * @param east Texture for the east face
+ * @param south Texture for the south face
+ * @param west Texture for the west face
+ * @param up Texture for the up face
+ * @param down Texture for the down face
+ */
 void simpleBlock(std::string block, std::string north, std::string east,
                  std::string south, std::string west, std::string up,
                  std::string down) {
@@ -77,10 +84,13 @@ void simpleBlock(std::string block, std::string north, std::string east,
     MyFile.close();
 }
 
-/// @brief Creates a log like block, sides are one texture, ends are one texture
-/// @param block Identifier of the block, omit namespace
-/// @param sides Texture name for the sides of the block
-/// @param ends Texture name for the ends of the block
+/**
+ * @brief Creates a log like block, sides are one texture, ends are one texture
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param sides Texture name for the sides of the block
+ * @param ends Texture name for the ends of the block
+ */
 void axisBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
 
@@ -109,10 +119,13 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
     MyFile.close();
 }
 
-/// @brief Creates a custom geometry block
-/// @param block Identifier of the block, omit namespace
-/// @param model Identifier of the geometry
-/// @param texture Texture name for the block
+/**
+ * @brief Creates a custom geometry block
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param model Identifier of the geometry
+ * @param texture Texture name for the block
+ */
 void customBlock(std::string block, std::string model, std::string texture) {
     std::string my_text, temp_text;
 
@@ -160,9 +173,12 @@ void tintedGlass(std::string block, std::string texture) {
     MyFile.close();
 }
 
-/// @brief Creates a one texture block
-/// @param block Identifier of the block, omit namespace
-/// @param texture Texture for the block
+/**
+ * @brief Creates a skull block
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param texture Texture for the block
+ */
 void headBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
@@ -196,10 +212,13 @@ void headBlock(std::string block, std::string texture) {
     }
 }
 
-/// @brief Creates a log like block, sides are one texture, ends are one texture
-/// @param block Identifier of the block, omit namespace
-/// @param sides Texture name for the sides of the block
-/// @param ends Texture name for the ends of the block
+/**
+ * @brief Creates a skull block, sides are one texture, ends are one texture
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param sides Texture name for the sides of the block
+ * @param ends Texture name for the ends of the block
+ */
 void headBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
 
@@ -241,14 +260,17 @@ void headBlock(std::string block, std::string sides, std::string ends) {
     }
 }
 
-/// @brief Sides can have different textures
-/// @param block Identifier of the block, omit namespace
-/// @param north Texture for the north face
-/// @param east Texture for the east face
-/// @param south Texture for the south face
-/// @param west Texture for the west face
-/// @param up Texture for the up face
-/// @param down Texture for the down face
+/**
+ * @brief Creates a skull block. Sides can have different textures
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param north Texture for the north face
+ * @param east Texture for the east face
+ * @param south Texture for the south face
+ * @param west Texture for the west face
+ * @param up Texture for the up face
+ * @param down Texture for the down face
+ */
 void headBlock(std::string block, std::string north, std::string east,
                std::string south, std::string west, std::string up,
                std::string down) {
@@ -304,6 +326,12 @@ void headBlock(std::string block, std::string north, std::string east,
     }
 }
 
+/**
+ * @brief Creates a candle block
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param texture Name of the texture defined in `terrain_texture.json`
+ */
 void candleBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
@@ -335,6 +363,12 @@ void candleBlock(std::string block, std::string texture) {
     }
 }
 
+/**
+ * @brief Creates a slab block
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param texture Name of the texture defined in `terrain_texture.json`
+ */
 void slabBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
@@ -366,6 +400,12 @@ void slabBlock(std::string block, std::string texture) {
     }
 }
 
+/**
+ * @brief Creates a cross block
+ *
+ * @param block Identifier of the block, omit namespace
+ * @param texture Name of the texture defined in `terrain_texture.json`
+ */
 void crossBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 

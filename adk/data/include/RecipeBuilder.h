@@ -10,10 +10,20 @@
 
 namespace fs = std::filesystem;
 
+/**
+ * @brief Builds the recipe
+ *
+ */
 class RecipeBuilder {
    public:
     RecipeBuilder(){};
 
+    /**
+     * @brief Create the recipe
+     *
+     * @param id Recipe Identifier
+     * @param result The resulting JSON
+     */
     void createRecipe(std::string id, nlohmann::json result) {
         if (!fs::exists("./BP/recipes/")) fs::create_directory("./BP/recipes/");
 
