@@ -14,7 +14,7 @@ enable_testing()
 add_subdirectory(googletest)
 
 set(Headers
-    Main.hpp
+    Main.h
 )
 
 set(Sources

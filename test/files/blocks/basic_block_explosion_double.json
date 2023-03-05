@@ -1,1 +1,1 @@
-{"format_version":"1.19.50","minecraft:block":{"components":{"minecraft:destructible_by_explosion":{"explosion_resistance":5.5},"minecraft:unit_cube":{}},"description":{"identifier":"custom_namespace:basic_block_explosion_double"}}}
+{"format_version":"1.19.60","minecraft:block":{"components":{"minecraft:destructible_by_explosion":{"explosion_resistance":5.5},"minecraft:unit_cube":{}},"description":{"identifier":"custom_namespace:basic_block_explosion_double"}}}
