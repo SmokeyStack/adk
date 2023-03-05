@@ -18,7 +18,7 @@ include_directories(include include/generator include/spdlog/include)
 add_executable(adk
     Main.cpp
     Object.cpp
-    # DataGen.cpp
+    Data.cpp
     Recipe.cpp
     GlobalRegistry.cpp
 )

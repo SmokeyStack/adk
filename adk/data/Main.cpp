@@ -1,12 +1,15 @@
+#include "Data.h"
 #include "Object.h"
 #include "Recipe.h"
 
 int main() {
     Object SmokeyBedrock("custom_namespace");
-    Recipe recipe;
+    Data DataGenerator;
+    Recipe RecipeGenerator;
 
     SmokeyBedrock.init();
-    recipe.init();
+    DataGenerator.init();
+    RecipeGenerator.init();
 
     return 0;
 }
