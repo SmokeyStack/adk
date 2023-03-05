@@ -126,7 +126,7 @@ class Block {
      * @return json
      */
     virtual json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.19.50";
+        j["format_version"] = "1.19.60";
         j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
         j["minecraft:block"]["components"]["minecraft:unit_cube"] =
             json::object();
