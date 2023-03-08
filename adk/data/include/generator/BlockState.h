@@ -21,9 +21,10 @@ void simpleBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -56,9 +57,10 @@ void simpleBlock(std::string block, std::string north, std::string east,
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -95,9 +97,10 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -130,9 +133,10 @@ void customBlock(std::string block, std::string model, std::string texture) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -153,9 +157,10 @@ void tintedGlass(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -183,9 +188,10 @@ void headBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -223,9 +229,10 @@ void headBlock(std::string block, std::string sides, std::string ends) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -277,9 +284,10 @@ void headBlock(std::string block, std::string north, std::string east,
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -336,9 +344,10 @@ void candleBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -373,9 +382,10 @@ void slabBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 
@@ -410,9 +420,10 @@ void crossBlock(std::string block, std::string texture) {
     std::string my_text, temp_text;
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
-        spdlog::error(
-            "No block fouund: {}.json - Please check if this block exists",
-            block);
+        spdlog::get("Data Generator")
+            ->error(
+                "No block found: {}.json - Please check if this block exists",
+                block);
         exit(EXIT_FAILURE);
     }
 

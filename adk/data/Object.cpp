@@ -1,8 +1,5 @@
 #include "Object.h"
 
-#include <spdlog/async.h>
-#include <spdlog/sinks/basic_file_sink.h>
-
 #include <string>
 
 #include "Block.h"
@@ -13,15 +10,11 @@
 Object::Object(std::string id) { mod_id = id; }
 
 void Object::init() {
-    auto logger =
-        spdlog::basic_logger_mt<spdlog::async_factory>("adk", "logs/log.txt");
-    spdlog::set_default_logger(logger);
+    Registry<Block>* blocks = new Registry<Block>(mod_id);
+    Registry<Item>* items = new Registry<Item>(mod_id);
 
-    Registry<Block>* block = new Registry<Block>(mod_id);
-    Registry<Item>* item = new Registry<Item>(mod_id);
-
-    globalregistry.push_back(block);
-    globalregistry.push_back(item);
+    globalregistry.push_back(blocks);
+    globalregistry.push_back(items);
 
     block->subscribe("custom_block", new Block(BlockProperty()));
     item->subscribe("custom_item", new Item(ItemProperty()));

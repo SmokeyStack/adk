@@ -21,7 +21,8 @@ class ShapedRecipeBuilder : public RecipeBuilder {
 
     void ensureValidity(std::string id) {
         if (_rows.empty()) {
-            spdlog::error("No pattern is defined for shaped recipe - {}", id);
+            spdlog::get("Recipe")->error(
+                "No pattern is defined for shaped recipe - {}", id);
             exit(EXIT_FAILURE);
         } else {
             std::set<char> set;
@@ -31,7 +32,7 @@ class ShapedRecipeBuilder : public RecipeBuilder {
                 for (int a = 0; a < s.length(); a++) {
                     char c0 = s.at(a);
                     if (!_key.count(c0) && c0 != ' ') {
-                        spdlog::info(
+                        spdlog::get("Recipe")->info(
                             " Pattern in recipe {} uses undefined symbol '{}' ",
                             id, c0);
                     }
@@ -58,7 +59,7 @@ class ShapedRecipeBuilder : public RecipeBuilder {
         }
 
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
-            spdlog::error("{} is an invalid item", result);
+            spdlog::get("Recipe")->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
@@ -91,15 +92,16 @@ class ShapedRecipeBuilder : public RecipeBuilder {
         }
 
         if (!(std::find(key.begin(), key.end(), item) != key.end())) {
-            spdlog::error("{} is an invalid item", item);
+            spdlog::get("Recipe")->error("{} is an invalid item", item);
             exit(EXIT_FAILURE);
         }
 
         if (_key.count(symbol)) {
-            spdlog::error("{} is already defined", symbol);
+            spdlog::get("Recipe")->error("{} is already defined", symbol);
             exit(EXIT_FAILURE);
         } else if (symbol == ' ') {
-            spdlog::error("White space(' ') is reserved and cannot be defined");
+            spdlog::get("Recipe")->error(
+                "White space(' ') is reserved and cannot be defined");
             exit(EXIT_FAILURE);
         } else {
             _key[symbol] = item;

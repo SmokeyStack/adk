@@ -1,12 +1,11 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include <spdlog/spdlog.h>
-
 #include <string>
 
 #include "BlockProperty.h"
 #include "json.hpp"
+#include "spdlog/include/spdlog/spdlog.h"
 
 /**
  * @brief Represents a Block
@@ -142,8 +141,9 @@ class Block {
 
         if (_block_light_filter != 15) {
             if (_block_light_filter > 15 || _block_light_filter < 0) {
-                spdlog::error(
-                    "{} - BlockLightFilter can only be in range (0-15)", id);
+                spdlog::get("Blocks/Items")
+                    ->error("{} - BlockLightFilter can only be in range (0-15)",
+                            id);
                 exit(EXIT_FAILURE);
             }
 
@@ -187,8 +187,8 @@ class Block {
 
         if (_friction != 0.4) {
             if (_friction > 0.9 || _friction < 0.0) {
-                spdlog::error("{} - Friction can only be in range (0.0-0.9)",
-                              id);
+                spdlog::get("Blocks/Items")
+                    ->error("{} - Friction can only be in range (0.0-0.9)", id);
                 exit(EXIT_FAILURE);
             }
 
@@ -198,8 +198,9 @@ class Block {
 
         if (_light_emission != 0) {
             if (_light_emission > 15 || _light_emission < 0) {
-                spdlog::error(
-                    "{} - BlockLightFilter can only be in range (0-15)", id);
+                spdlog::get("Blocks/Items")
+                    ->error("{} - BlockLightFilter can only be in range (0-15)",
+                            id);
                 exit(EXIT_FAILURE);
             }
 
@@ -216,8 +217,8 @@ class Block {
         if (_rotation != std::vector<int>{0, 0, 0}) {
             for (auto const& entry : _rotation) {
                 if (entry % 90 != 0) {
-                    spdlog::error("{} - Rotation can only be factors of 90",
-                                  id);
+                    spdlog::get("Blocks/Items")
+                        ->error("{} - Rotation can only be factors of 90", id);
                     exit(EXIT_FAILURE);
                 }
             }

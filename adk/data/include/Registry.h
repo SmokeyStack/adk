@@ -55,13 +55,15 @@ class Registry : public Registrar {
      */
     void subscribe(std::string id, std::variant<Block*, Item*> object) {
         if (!_registry.empty() && _registry.count(id)) {
-            spdlog::error("{} has already been defined!", id);
+            spdlog::get("Blocks/Items")
+                ->error("{} has already been defined!", id);
             exit(EXIT_FAILURE);
         }
 
         std::visit(
             [=](auto&& c) {
-                spdlog::info("Creating {} - {}:{}", c->getType(), mod_id, id);
+                spdlog::get("Blocks/Items")
+                    ->info("Creating {} - {}:{}", c->getType(), mod_id, id);
 
                 _registry[mod_id + ":" + id] = c;
 

@@ -29,7 +29,7 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
         }
 
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
-            spdlog::error("{} is an invalid item", result);
+            spdlog::get("Recipe")->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
@@ -45,8 +45,8 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
             std::map<std::string, std::variant<Block*, Item*>> registry_check;
             registry_check = entry->getRegistrar();
 
-            if (!registry_check.count(result)) {
-                spdlog::error("{} is an invalid item", result);
+            if (!registry_check.count(item)) {
+                spdlog::get("Recipe")->error("{} is an invalid item", item);
                 exit(EXIT_FAILURE);
             }
         }
