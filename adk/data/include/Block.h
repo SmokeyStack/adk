@@ -1,11 +1,12 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
+#include <spdlog/spdlog.h>
+
 #include <string>
 
 #include "BlockProperty.h"
 #include "json.hpp"
-#include "spdlog/include/spdlog/spdlog.h"
 
 /**
  * @brief Represents a Block

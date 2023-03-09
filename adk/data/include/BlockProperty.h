@@ -214,7 +214,7 @@ class BlockProperty {
 
     /**
      * @brief Set the "rotation" component
-     * @warning Will be deprecated in 1.19.80 according to kayla
+     * @warning Deprecated in 1.19.80
      *
      * @param rotation The block's rotation around the center of the cube in
      * degrees. The rotation is specified as [x, y, z]. Angles need to be in
@@ -368,7 +368,7 @@ class BlockProperty {
 
     /**
      * @brief Get the "rotation" component
-     * @warning Will be deprecated in 1.19.80 according to kayla
+     * @warning Deprecated in 1.19.80
      *
      * @return std::vector<int>
      */
