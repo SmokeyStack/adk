@@ -15,9 +15,7 @@ namespace fs = std::filesystem;
  *
  */
 class RecipeBuilder {
-   public:
-    RecipeBuilder(){};
-
+   protected:
     /**
      * @brief Create the recipe
      *
@@ -31,6 +29,9 @@ class RecipeBuilder {
         MyJson << result.dump();
         MyJson.close();
     }
+
+   public:
+    RecipeBuilder(){};
 };
 
 #endif

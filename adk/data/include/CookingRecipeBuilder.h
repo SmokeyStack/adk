@@ -29,6 +29,10 @@ class CookingRecipeBuilder : public RecipeBuilder {
             }
         }
 
+        for (auto const entry : vanillaRegistry) {
+            key.push_back(entry);
+        }
+
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
             spdlog::get("Recipe")->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);

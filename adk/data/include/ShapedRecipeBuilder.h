@@ -58,6 +58,10 @@ class ShapedRecipeBuilder : public RecipeBuilder {
             }
         }
 
+        for (auto const entry : vanillaRegistry) {
+            key.push_back(entry);
+        }
+
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
             spdlog::get("Recipe")->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
@@ -89,6 +93,10 @@ class ShapedRecipeBuilder : public RecipeBuilder {
                  it != registry_check.end(); ++it) {
                 key.push_back(it->first);
             }
+        }
+
+        for (auto const entry : vanillaRegistry) {
+            key.push_back(entry);
         }
 
         if (!(std::find(key.begin(), key.end(), item) != key.end())) {

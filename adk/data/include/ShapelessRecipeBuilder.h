@@ -28,6 +28,10 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
             }
         }
 
+        for (auto const entry : vanillaRegistry) {
+            key.push_back(entry);
+        }
+
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
             spdlog::get("Recipe")->error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
@@ -49,6 +53,10 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
                 spdlog::get("Recipe")->error("{} is an invalid item", item);
                 exit(EXIT_FAILURE);
             }
+        }
+
+        for (auto const entry : vanillaRegistry) {
+            key.push_back(entry);
         }
 
         for (int a = 0; a < count; a++) this->_ingredients.push_back(item);
