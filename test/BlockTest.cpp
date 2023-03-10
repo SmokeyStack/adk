@@ -1,62 +1,92 @@
 #include <gtest/gtest.h>
+#include <spdlog/async.h>
+#include <spdlog/sinks/basic_file_sink.h>
+#include <spdlog/sinks/stdout_sinks.h>
+#include <spdlog/spdlog.h>
 
 #include <filesystem>
+#include <iostream>
 #include <string>
 #include <vector>
 
 #include "../adk/data/include/Block.h"
 #include "../adk/data/include/BlockProperty.h"
+#include "../adk/data/include/GlobalRegistry.h"
 #include "../adk/data/include/Registry.h"
 #include "CheckFile.h"
 
 namespace fs = std::filesystem;
 
 TEST(BlockTest, BasicBlock) {
+    auto console_sink = std::make_shared<spdlog::sinks::stdout_sink_mt>();
+    console_sink->set_level(spdlog::level::err);
+
+    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
+        "logs/log.txt", true);
+    file_sink->set_level(spdlog::level::info);
+
+    spdlog::sinks_init_list sink_list = {file_sink, console_sink};
+
+    auto object_logger = std::make_shared<spdlog::logger>(
+        "Blocks/Items", sink_list.begin(), sink_list.end());
+    auto data_logger = std::make_shared<spdlog::logger>(
+        "Data Generator", sink_list.begin(), sink_list.end());
+    auto recipe_logger = std::make_shared<spdlog::logger>(
+        "Recipe", sink_list.begin(), sink_list.end());
+
+    spdlog::register_logger(object_logger);
+    spdlog::register_logger(data_logger);
+    spdlog::register_logger(recipe_logger);
+
     const std::string MODID = "custom_namespace";
-    Registry<Block> mod(MODID);
+    Registry<Block>* mod = new Registry<Block>(MODID);
+
+    globalregistry.push_back(mod);
 
     std::vector<std::string> tags = {"custom_crafting_table"};
 
-    mod.subscribe("basic_block", new Block(BlockProperty()));
-    mod.subscribe("basic_block_light_filter",
-                  new Block(BlockProperty().setBlockLightFilter(5)));
-    mod.subscribe("basic_block_crafting", new Block(BlockProperty().setCrafting(
-                                              tags, "Custom Crafting Table")));
-    mod.subscribe("basic_block_explosion_bool",
-                  new Block(BlockProperty().setExplosion(false)));
-    mod.subscribe("basic_block_explosion_double",
-                  new Block(BlockProperty().setExplosion(5.5)));
-    mod.subscribe("basic_block_mining_bool",
-                  new Block(BlockProperty().setMining(false)));
-    mod.subscribe("basic_block_mining_double",
-                  new Block(BlockProperty().setMining(5.5)));
-    mod.subscribe("basic_block_name",
-                  new Block(BlockProperty().setName("Custom Name")));
-    mod.subscribe("basic_block_flammable",
-                  new Block(BlockProperty().setFlammable(5, 5)));
-    mod.subscribe("basic_block_friction",
-                  new Block(BlockProperty().setFriction(0.5)));
-    mod.subscribe("basic_block_geometry",
-                  new Block(BlockProperty().setGeometry("custom_geometry")));
-    mod.subscribe("basic_block_light_emission",
-                  new Block(BlockProperty().setLightEmission(5)));
-    mod.subscribe("basic_block_loot",
-                  new Block(BlockProperty().setLoot("path/to/loot.json")));
-    mod.subscribe("basic_block_color",
-                  new Block(BlockProperty().setColor("000000")));
-    mod.subscribe(
+    mod->subscribe("basic_block", new Block(BlockProperty()));
+
+    mod->subscribe("basic_block_light_filter",
+                   new Block(BlockProperty().setBlockLightFilter(5)));
+    mod->subscribe(
+        "basic_block_crafting",
+        new Block(BlockProperty().setCrafting(tags, "Custom Crafting Table")));
+    mod->subscribe("basic_block_explosion_bool",
+                   new Block(BlockProperty().setExplosion(false)));
+    mod->subscribe("basic_block_explosion_double",
+                   new Block(BlockProperty().setExplosion(5.5)));
+    mod->subscribe("basic_block_mining_bool",
+                   new Block(BlockProperty().setMining(false)));
+    mod->subscribe("basic_block_mining_double",
+                   new Block(BlockProperty().setMining(5.5)));
+    mod->subscribe("basic_block_name",
+                   new Block(BlockProperty().setName("Custom Name")));
+    mod->subscribe("basic_block_flammable",
+                   new Block(BlockProperty().setFlammable(5, 5)));
+    mod->subscribe("basic_block_friction",
+                   new Block(BlockProperty().setFriction(0.5)));
+    mod->subscribe("basic_block_geometry",
+                   new Block(BlockProperty().setGeometry("custom_geometry")));
+    mod->subscribe("basic_block_light_emission",
+                   new Block(BlockProperty().setLightEmission(5)));
+    mod->subscribe("basic_block_loot",
+                   new Block(BlockProperty().setLoot("path/to/loot.json")));
+    mod->subscribe("basic_block_color",
+                   new Block(BlockProperty().setColor("000000")));
+    mod->subscribe(
         "basic_block_rotation",
         new Block(BlockProperty().setRotation(std::vector<int>{90, 90, 90})));
 
-    mod.subscribe("basic_block_collision_bool",
-                  new Block(BlockProperty().setCollision(false)));
-    mod.subscribe(
+    mod->subscribe("basic_block_collision_bool",
+                   new Block(BlockProperty().setCollision(false)));
+    mod->subscribe(
         "basic_block_collision_vector",
         new Block(BlockProperty().setCollision(std::make_pair(
             std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8}))));
-    mod.subscribe("basic_block_selection_bool",
-                  new Block(BlockProperty().setSelection(false)));
-    mod.subscribe(
+    mod->subscribe("basic_block_selection_bool",
+                   new Block(BlockProperty().setSelection(false)));
+    mod->subscribe(
         "basic_block_selection_vector",
         new Block(BlockProperty().setSelection(std::make_pair(
             std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8}))));

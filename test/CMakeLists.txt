@@ -13,6 +13,7 @@ set(Headers
     ../adk/data/include/DurabilityItem.h
     ../adk/data/include/FoodItem.h
     ../adk/data/include/FuelItem.h
+    ../adk/data/include/GlobalRegistry.h
     ../adk/data/include/HeadBlock.h
     ../adk/data/include/Item.h
     ../adk/data/include/ItemProperty.h
@@ -32,7 +33,11 @@ set(Headers
 
 add_subdirectory(include/spdlog)
 include_directories(include/spdlog/include)
-add_executable(BlockTest BlockTest.cpp ${Headers})
+add_executable(BlockTest
+    BlockTest.cpp
+    GlobalRegistry.cpp
+    ${Headers}
+)
 target_link_libraries(BlockTest PUBLIC
     gtest_main
     adkhead
@@ -43,7 +48,10 @@ add_test(
     COMMAND BlockTest
 )
 
-add_executable(ItemTest ItemTest.cpp ${Headers})
+add_executable(ItemTest
+    ItemTest.cpp
+    GlobalRegistry.cpp
+    ${Headers})
 target_link_libraries(ItemTest PUBLIC
     gtest_main
     adkhead

@@ -16,6 +16,6 @@ void Object::init() {
     globalregistry.push_back(blocks);
     globalregistry.push_back(items);
 
-    block->subscribe("custom_block", new Block(BlockProperty()));
-    item->subscribe("custom_item", new Item(ItemProperty()));
+    blocks->subscribe("custom_block", new Block(BlockProperty()));
+    items->subscribe("custom_item", new Item(ItemProperty()));
 }

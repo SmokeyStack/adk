@@ -1,6 +1,6 @@
 # Add-on Development Kit
 
-This Add-on Development Kit is essentially just me messing around with ways to create add-ons for Minecraft without touching JSON. It also uses Regolith to export the files to the Minecraft Directory.
+This Add-on Development Kit allows you to create add-ons without writing JSON! It is similar to Forge's MDK for Minecraft: Java Edition
 
 ## Installing ADK
 

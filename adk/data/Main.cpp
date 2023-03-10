@@ -24,6 +24,10 @@ int main() {
     auto recipe_logger = std::make_shared<spdlog::logger>(
         "Recipe", sink_list.begin(), sink_list.end());
 
+    spdlog::register_logger(object_logger);
+    spdlog::register_logger(data_logger);
+    spdlog::register_logger(recipe_logger);
+
     Object MyAddOn("custom_namespace");
     Data DataGenerator;
     Recipe RecipeGenerator;
