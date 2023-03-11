@@ -45,18 +45,26 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
     ShapelessRecipeBuilder
         requires(std::string item, int count = 1)
     {
+        std::vector<std::string> key;
+
         for (auto const entry : globalregistry) {
             std::map<std::string, std::variant<Block*, Item*>> registry_check;
             registry_check = entry->getRegistrar();
 
-            if (!registry_check.count(item)) {
-                spdlog::get("Recipe")->error("{} is an invalid item", item);
-                exit(EXIT_FAILURE);
+            for (std::map<std::string, std::variant<Block*, Item*>>::iterator
+                     it = registry_check.begin();
+                 it != registry_check.end(); ++it) {
+                key.push_back(it->first);
             }
         }
 
         for (auto const entry : vanillaRegistry) {
             key.push_back(entry);
+        }
+
+        if (!(std::find(key.begin(), key.end(), item) != key.end())) {
+            spdlog::get("Recipe")->error("{} is an invalid item", item);
+            exit(EXIT_FAILURE);
         }
 
         for (int a = 0; a < count; a++) this->_ingredients.push_back(item);

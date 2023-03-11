@@ -126,9 +126,8 @@ class ShapedRecipeBuilder : public RecipeBuilder {
         j["minecraft:recipe_shaped"]["pattern"] = _rows;
 
         for (auto const& [key, value] : _key) {
-            const char* test = &key;
-            std::string str(test);
-            j["minecraft:recipe_shaped"]["key"][test]["item"] = value;
+            std::string str(1, key);
+            j["minecraft:recipe_shaped"]["key"][str]["item"] = value;
         }
 
         j["minecraft:recipe_shaped"]["tags"] = {"crafting_table"};
