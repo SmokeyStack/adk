@@ -60,7 +60,7 @@ class CookingRecipeBuilder : public RecipeBuilder {
         j["minecraft:recipe_furnace"]["input"]["item"] = _ingredient;
         j["minecraft:recipe_furnace"]["output"]["item"] = _result;
 
-        createRecipe(_result, j);
+        createRecipe(id, j);
 
         return j;
     }
