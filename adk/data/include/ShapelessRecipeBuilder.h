@@ -9,12 +9,45 @@
 
 class ShapelessRecipeBuilder : public RecipeBuilder {
    private:
+    std::string _type;
     std::string _result;
     int _count;
     std::vector<std::string> _ingredients;
 
    public:
     ShapelessRecipeBuilder shapeless(std::string result, int count = 1) {
+        this->_type = "crafting_table";
+
+        std::vector<std::string> key;
+
+        for (auto const entry : globalregistry) {
+            std::map<std::string, std::variant<Block*, Item*>> registry_check;
+            registry_check = entry->getRegistrar();
+
+            for (std::map<std::string, std::variant<Block*, Item*>>::iterator
+                     it = registry_check.begin();
+                 it != registry_check.end(); ++it) {
+                key.push_back(it->first);
+            }
+        }
+
+        for (auto const entry : vanillaRegistry) {
+            key.push_back(entry);
+        }
+
+        if (!(std::find(key.begin(), key.end(), result) != key.end())) {
+            spdlog::get("Recipe")->error("{} is an invalid item", result);
+            exit(EXIT_FAILURE);
+        }
+
+        this->_result = result;
+        this->_count = count;
+        return *this;
+    }
+
+    ShapelessRecipeBuilder stonecutter(std::string result, int count = 1) {
+        this->_type = "stonecutter";
+
         std::vector<std::string> key;
 
         for (auto const entry : globalregistry) {
@@ -82,7 +115,7 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
             j["minecraft:recipe_shapeless"]["ingredients"].push_back(
                 {{"item", entry}});
 
-        j["minecraft:recipe_shapeless"]["tags"] = {"crafting_table"};
+        j["minecraft:recipe_shapeless"]["tags"] = {_type};
 
         j["minecraft:recipe_shapeless"]["result"] = {{"item", _result},
                                                      {"count", _count}};
