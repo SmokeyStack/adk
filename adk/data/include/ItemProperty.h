@@ -91,6 +91,7 @@ class ItemProperty {
     std::vector<std::string> entity_placer_dispense;
     std::vector<double> offset_main;
     std::vector<double> offset_offhand;
+    std::string projectile_entity;
 
    public:
     /**
@@ -106,7 +107,7 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "icon" object
+     * @brief Set the "icon" component
      *
      * @param icon The icon item component determines the icon to represent the
      item.
@@ -118,7 +119,7 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "max_stack_size" object
+     * @brief Set the "max_stack_size" component
      *
      * @param stack_size The max stack size this item can hold
      * @return ItemProperty
@@ -129,7 +130,7 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "block_placer" object
+     * @brief Set the "block_placer" component
      *
      * @param block Set the placement block name for the planter item
      * @param placement List of block descriptors that contain blocks that this
@@ -144,7 +145,7 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "cooldown" object
+     * @brief Set the "cooldown" component
      *
      * @param category The type of cool down for this item
      * @param time The duration of time this item will spend cooling down before
@@ -158,7 +159,7 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "dye_powder" object
+     * @brief Set the "dye_powder" component
      *
      * @param dye enum Dye
      * @return ItemProperty
@@ -169,7 +170,7 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "entity_placer" object
+     * @brief Set the "entity_placer" component
      *
      * @param entity The entity to be placed in the world
      * @param placement List of block descriptors that contain blocks that this
@@ -188,7 +189,7 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "render_offsets" object - main hand
+     * @brief Set the "render_offsets" component - main hand
      *
      * @param offset Main hand transform data.
      * @return ItemProperty
@@ -199,13 +200,24 @@ class ItemProperty {
     }
 
     /**
-     * @brief Set the "render_offsets" object - off hand
+     * @brief Set the "render_offsets" component - off hand
      *
      * @param offset Off hand transform data.
      * @return ItemProperty
      */
     ItemProperty setRenderOffhand(std::vector<double> offset) {
         this->offset_offhand = offset;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "projectile" component
+     *
+     * @param entity Projectile entity
+     * @return ItemProperty
+     */
+    ItemProperty setProjectileEntity(std::string entity) {
+        this->projectile_entity = entity;
         return *this;
     }
 
@@ -231,7 +243,7 @@ class ItemProperty {
     int getStack() { return stack; }
 
     /**
-     * @brief Get the "block_placer" object
+     * @brief Get the "block_placer" component
      *
      * @return std::string
      */
@@ -305,6 +317,13 @@ class ItemProperty {
      * @return std::vector<double>
      */
     std::vector<double> getOffsetOff() { return offset_offhand; }
+
+    /**
+     * @brief Get the "projectile" component
+     *
+     * @return std::string
+     */
+    std::string getProjectileEntity() { return projectile_entity; }
 };
 
 #endif

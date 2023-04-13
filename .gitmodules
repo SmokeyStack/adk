@@ -1,3 +1,6 @@
 [submodule "adk/data/include/spdlog"]
 	path = adk/data/include/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "googletest"]
+	path = googletest
+	url = https://github.com/google/googletest

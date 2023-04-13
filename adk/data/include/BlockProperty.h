@@ -26,6 +26,8 @@ class BlockProperty {
     std::string loot;
     std::string color;
     std::vector<int> rotation{0, 0, 0};
+    std::vector<double> scale{0, 0, 0};
+    std::vector<double> translation{0, 0, 0};
     std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
         collision = true;
     std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
@@ -213,9 +215,27 @@ class BlockProperty {
     }
 
     /**
-     * @brief Set the "rotation" component
-     * @warning Deprecated in 1.19.80
-     *
+     * @brief Set the "translation" field of "transformation" component
+     * @param translation
+     * @return BlockProperty
+     */
+    BlockProperty setTranslation(std::vector<int> translation) {
+        this->translation = translation;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "scale" field of "transformation" component
+     * @param scale
+     * @return BlockProperty
+     */
+    BlockProperty setScale(std::vector<int> scale) {
+        this->scale = scale;
+        return *this;
+    }
+
+    /**
+     * @brief Set the "rotation" field of "transformation" component
      * @param rotation The block's rotation around the center of the cube in
      * degrees. The rotation is specified as [x, y, z]. Angles need to be in
      * factors of 90
@@ -367,8 +387,21 @@ class BlockProperty {
     std::string getColor() { return color; }
 
     /**
-     * @brief Get the "rotation" component
-     * @warning Deprecated in 1.19.80
+     * @brief Get the "translation" field of "transformation" component
+     *
+     * @return std::vector<int>
+     */
+    std::vector<int> getTranslation() { return translation; }
+
+    /**
+     * @brief Get the "scale" field of "transformation" component
+     *
+     * @return std::vector<int>
+     */
+    std::vector<int> getScale() { return scale; }
+
+    /**
+     * @brief Get the "rotation" field of "transformation" component
      *
      * @return std::vector<int>
      */
