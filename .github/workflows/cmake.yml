@@ -22,6 +22,7 @@ jobs:
 
             - name: Get dependencies
               run: |
+                  git clone https://github.com/google/googletest
                   cd ${{github.workspace}}/test/include
                   git clone https://github.com/gabime/spdlog
 
