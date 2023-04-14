@@ -27,6 +27,7 @@ class Item {
     std::vector<std::string> _entity_placer_dispense;
     std::vector<double> _offset_main;
     std::vector<double> _offset_offhand;
+    std::string _projectile_entity;
 
    public:
     using json = nlohmann::json;
@@ -118,6 +119,10 @@ class Item {
         if (!_offset_offhand.empty())
             j["minecraft:item"]["components"]["minecraft:render_offsets"]
              ["off_hand"] = _offset_offhand;
+
+        if (!_projectile_entity.empty())
+            j["minecraft:item"]["components"]["minecraft:projectile"]
+             ["projectile_entity"] = _projectile_entity;
 
         return j;
     }
