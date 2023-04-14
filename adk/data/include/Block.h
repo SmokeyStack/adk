@@ -31,6 +31,8 @@ class Block {
     std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
         _selection;
     std::pair<std::string, std::string> _creative;
+    std::vector<double> _translation;
+    std::vector<double> _scale;
 
     /**
      * @brief Ensure the collision_box and selection_box is valid
@@ -125,6 +127,8 @@ class Block {
         _collision = property.getCollision();
         _selection = property.getSelection();
         _creative = property.getCreative();
+        _translation = property.getTranslation();
+        _scale = property.getScale();
     }
 
     /**
@@ -224,8 +228,18 @@ class Block {
                 }
             }
 
-            j["minecraft:block"]["components"]["minecraft:rotation"] =
-                _rotation;
+            j["minecraft:block"]["components"]["minecraft:transformation"]
+             ["rotation"] = _rotation;
+        }
+
+        if (_translation != std::vector<double>{0, 0, 0}) {
+            j["minecraft:block"]["components"]["minecraft:transformation"]
+             ["translation"] = _translation;
+        }
+
+        if (_scale != std::vector<double>{0, 0, 0}) {
+            j["minecraft:block"]["components"]["minecraft:transformation"]
+             ["scale"] = _scale;
         }
 
         if (std::get_if<bool>(&_collision)) {
