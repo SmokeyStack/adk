@@ -219,7 +219,7 @@ class BlockProperty {
      * @param translation
      * @return BlockProperty
      */
-    BlockProperty setTranslation(std::vector<int> translation) {
+    BlockProperty setTranslation(std::vector<double> translation) {
         this->translation = translation;
         return *this;
     }
@@ -229,7 +229,7 @@ class BlockProperty {
      * @param scale
      * @return BlockProperty
      */
-    BlockProperty setScale(std::vector<int> scale) {
+    BlockProperty setScale(std::vector<double> scale) {
         this->scale = scale;
         return *this;
     }
@@ -391,14 +391,14 @@ class BlockProperty {
      *
      * @return std::vector<int>
      */
-    std::vector<int> getTranslation() { return translation; }
+    std::vector<double> getTranslation() { return translation; }
 
     /**
      * @brief Get the "scale" field of "transformation" component
      *
      * @return std::vector<int>
      */
-    std::vector<int> getScale() { return scale; }
+    std::vector<double> getScale() { return scale; }
 
     /**
      * @brief Get the "rotation" field of "transformation" component

@@ -1,1 +1,1 @@
-{"format_version":"1.19.70","minecraft:block":{"components":{"minecraft:loot":"path/to/loot.json","minecraft:unit_cube":{}},"description":{"identifier":"custom_namespace:basic_block_loot"}}}
+{"format_version":"1.19.80","minecraft:block":{"components":{"minecraft:loot":"path/to/loot.json","minecraft:unit_cube":{}},"description":{"identifier":"custom_namespace:basic_block_loot"}}}
