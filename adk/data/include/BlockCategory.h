@@ -284,7 +284,7 @@ inline std::string getCreativeCategory(adk::CreativeCategory category) {
         case adk::CreativeCategory::WOOLCARPET:
             return "itemGroup.name.woolCarpet";
         case adk::CreativeCategory::NONE:
-            return "itemGroup.name.woolCarpet";
+            return "";
         default:
             return "Error";
     }

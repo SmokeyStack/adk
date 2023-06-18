@@ -13,8 +13,9 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(adk VERSION 0.1 LANGUAGES CXX)
 
-add_subdirectory(include/spdlog)
-include_directories(include include/generator include/spdlog/include)
+find_package(spdlog REQUIRED)
+
+include_directories(include include/generator)
 add_executable(adk
     Main.cpp
     Object.cpp
@@ -22,3 +23,5 @@ add_executable(adk
     Recipe.cpp
     GlobalRegistry.cpp
 )
+
+target_link_libraries(adk PRIVATE spdlog::spdlog)
