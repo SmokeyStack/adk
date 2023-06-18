@@ -1,6 +1,7 @@
 #ifndef BLOCKPROPERTY_H
 #define BLOCKPROPERTY_H
 
+#include <optional>
 #include <string>
 #include <variant>
 #include <vector>
@@ -15,11 +16,11 @@
 class BlockProperty {
    private:
     int block_light_filter = 15;
-    nlohmann::json::object_t crafting;
+    std::optional<std::pair<std::vector<std::string>, std::string>> crafting;
     std::variant<bool, double> explosion = true;
     std::variant<bool, double> mining = true;
     std::string display_name;
-    nlohmann::json::object_t flammable;
+    std::optional<std::pair<int, int>> flammable;
     double friction = 0.4;
     std::string geometry;
     int light_emission;
@@ -32,7 +33,7 @@ class BlockProperty {
         collision = true;
     std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
         selection = true;
-    std::pair<std::string, std::string> creative;
+    std::optional<std::pair<std::string, std::string>> creative;
 
    public:
     /**
@@ -64,7 +65,7 @@ class BlockProperty {
      */
     BlockProperty setCrafting(std::vector<std::string>& tags,
                               std::string name) {
-        this->crafting = {{"crafting_table", tags}, {"table_name", name}};
+        this->crafting = std::make_pair(tags, name);
         return *this;
     }
 
@@ -145,8 +146,7 @@ class BlockProperty {
      * @return BlockProperty
      */
     BlockProperty setFlammable(int catch_chance, int destroy) {
-        this->flammable = {{"catch_chance_modifier", catch_chance},
-                           {"destroy_chance_modifier", destroy}};
+        this->flammable = std::make_pair(catch_chance, destroy);
         return *this;
     }
 
@@ -310,7 +310,7 @@ class BlockProperty {
     }
 
     /**
-     * @brief Get the "light_dampening" component
+     * @brief Get the "light_dampening" value
      *
      * @return int
      */
@@ -319,9 +319,12 @@ class BlockProperty {
     /**
      * @brief Get the "crafting_table" component
      *
-     * @return nlohmann::json::object_t
+     * @return std::optional<std::pair<std::vector<std::string>, std::string>>
      */
-    nlohmann::json::object_t getCrafting() { return crafting; }
+    std::optional<std::pair<std::vector<std::string>, std::string>>
+    getCrafting() {
+        return crafting;
+    }
 
     /**
      * @brief Get the "destructible_by_explosion" component
@@ -347,9 +350,9 @@ class BlockProperty {
     /**
      * @brief Get the "flamamble" component
      *
-     * @return nlohmann::json::object_t
+     * @return std::optional<std::pair<int, int>>
      */
-    nlohmann::json::object_t getFlamamble() { return flammable; }
+    std::optional<std::pair<int, int>> getFlamamble() { return flammable; }
 
     /**
      * @brief Get the "Friction" component
@@ -434,7 +437,9 @@ class BlockProperty {
      *
      * @return std::pair<std::string, std::string>
      */
-    std::pair<std::string, std::string> getCreative() { return creative; }
+    std::optional<std::pair<std::string, std::string>> getCreative() {
+        return creative;
+    }
 };
 
 #endif
