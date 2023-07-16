@@ -32,20 +32,7 @@ class SaplingBlock : public BushBlock {
     SaplingBlock(BlockProperty property, int number_of_properties,
                  std::string structure,
                  std::string particle = "minecraft:crop_growth_emitter") {
-        _block_light_filter = property.getBlockLightFilter();
-        _crafting = property.getCrafting();
-        _explosion = property.getExplosion();
-        _mining = property.getMining();
-        _display_name = property.getName();
-        _flammable = property.getFlamamble();
-        _friction = property.getFriction();
-        _light_emission = property.getLightEmission();
-        _loot = property.getLoot();
-        _color = property.getColor();
-        _rotation = property.getRotation();
-        _collision = property.getCollision();
-        _selection = property.getSelection();
-        _creative = property.getCreative();
+        __internal = property;
         _number_of_properties = number_of_properties;
         _structure = structure;
         _particle = particle;

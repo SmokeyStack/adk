@@ -17,22 +17,7 @@ class CandleBlock : public Block {
      *
      * @param property BlockProperty
      */
-    CandleBlock(BlockProperty property) {
-        _block_light_filter = property.getBlockLightFilter();
-        _crafting = property.getCrafting();
-        _explosion = property.getExplosion();
-        _mining = property.getMining();
-        _display_name = property.getName();
-        _flammable = property.getFlamamble();
-        _friction = property.getFriction();
-        _light_emission = property.getLightEmission();
-        _loot = property.getLoot();
-        _color = property.getColor();
-        _rotation = property.getRotation();
-        _collision = property.getCollision();
-        _selection = property.getSelection();
-        _creative = property.getCreative();
-    }
+    CandleBlock(BlockProperty property) { _internal = property; }
 
     /**
      * @brief Generates the json object
@@ -45,25 +30,35 @@ class CandleBlock : public Block {
         j = Block::output(mod_id, id);
 
         // Properties
-        j["minecraft:block"]["description"]["properties"][mod_id + ":count"] =
-            json::array({1, 2, 3, 4});
+        j["minecraft:block"]["description"]["properties"][mod_id + ":count"]
+         ["values"] = {{"min", 1}, {"max", 4}};
 
         // Components
-        j["minecraft:block"]["components"].erase("minecraft:collision_box");
+        if (j["minecraft:block"]["components"].contains(
+                "minecraft:collision_box"))
+            j["minecraft:block"]["components"].erase("minecraft:collision_box");
 
-        j["minecraft:block"]["components"]["minecraft:collision_box"]
-         ["origin"] = {-1, 0, -1};
-        j["minecraft:block"]["components"]["minecraft:collision_box"]["size"] =
-            {2, 6, 2};
-        j["minecraft:block"]["components"]["minecraft:selection_box"]
-         ["origin"] = {-1, 0, -1};
-        j["minecraft:block"]["components"]["minecraft:selection_box"]["size"] =
-            {2, 6, 2};
-        j["minecraft:block"]["components"]["minecraft:geometry"] =
-            "geometry.candle_one";
+        j["minecraft:block"]["components"].update(
+            helper.collision(std::make_pair(std::vector<int>{-1, 0, -1},
+                                            std::vector<int>{2, 6, 2}),
+                             id));
+
+        j["minecraft:block"]["components"].update(
+            helper.selection(std::make_pair(std::vector<int>{-1, 0, -1},
+                                            std::vector<int>{2, 6, 2}),
+                             id));
+
+        j["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] =
+            "geometry.candle";
+        j["minecraft:block"]["components"]["minecraft:geometry"]
+         ["bone_visibility"] = {
+             {"one", "q.block_property('" + mod_id + ":count') == 1"},
+             {"two", "q.block_property('" + mod_id + ":count') == 2"},
+             {"three", "q.block_property('" + mod_id + ":count') == 3"},
+             {"four", "q.block_property('" + mod_id + ":count') == 4"}};
         j["minecraft:block"]["components"]["minecraft:on_interact"]
-         ["condition"] = "q.get_equipped_item_name == '" + id +
-                         "' && q.block_property('" + mod_id + ":count') != 4";
+         ["condition"] = "q.is_item_name_any('slot.weapon.mainhand', '" + id +
+                         "') && q.block_property('" + mod_id + ":count') != 4";
         j["minecraft:block"]["components"]["minecraft:on_interact"]["event"] =
             mod_id + ":add_candle";
 
@@ -76,32 +71,37 @@ class CandleBlock : public Block {
          ["decrement_stack"] = json::object();
 
         // Permutations
-        j["minecraft:block"]["permutations"].push_back(
-            {{"components",
-              {{"minecraft:collision_box",
-                {{"origin", {-3, 0, -1}}, {"size", {5, 6, 3}}}},
-               {"minecraft:selection_box",
-                {{"origin", {-3, 0, -1}}, {"size", {5, 6, 3}}}},
-               {"minecraft:geometry", "geometry.candle_two"}}},
-             {"condition", "q.block_property('" + mod_id + ":count') == 2"}});
-        j["minecraft:block"]["permutations"].push_back(
-            {{"components",
-              {{"minecraft:collision_box",
-                {{"origin", {-2, 0, -2}}, {"size", {5, 6, 5}}}},
-               {"minecraft:selection_box",
-                {{"origin", {-2, 0, -2}}, {"size", {5, 6, 5}}}},
-               {"minecraft:geometry", "geometry.candle_three"}}},
-             {"condition", "q.block_property('" + mod_id + ":count') == 3"}});
-        j["minecraft:block"]["permutations"].push_back(
-            {{"components",
-              {{"minecraft:collision_box",
-                {{"origin", {-3, 0, -3}}, {"size", {6, 6, 5}}}},
-               {"minecraft:selection_box",
-                {{"origin", {-3, 0, -3}}, {"size", {6, 6, 5}}}},
-               {"minecraft:geometry", "geometry.candle_four"}}},
-             {"condition", "q.block_property('" + mod_id + ":count') == 4"}});
-
-        j["minecraft:block"]["components"].erase("minecraft:unit_cube");
+        json::object_t temp = {
+            {"condition", "q.block_property('" + mod_id + ":count') == 2"}};
+        temp["components"].update(
+            helper.collision(std::make_pair(std::vector<int>{-3, 0, -1},
+                                            std::vector<int>{5, 6, 3}),
+                             id));
+        temp["components"].update(
+            helper.selection(std::make_pair(std::vector<int>{-3, 0, -1},
+                                            std::vector<int>{5, 6, 3}),
+                             id));
+        j["minecraft:block"]["permutations"].push_back(temp);
+        temp = {{"condition", "q.block_property('" + mod_id + ":count') == 3"}};
+        temp["components"].update(
+            helper.collision(std::make_pair(std::vector<int>{-2, 0, -2},
+                                            std::vector<int>{5, 6, 5}),
+                             id));
+        temp["components"].update(
+            helper.selection(std::make_pair(std::vector<int>{-2, 0, -2},
+                                            std::vector<int>{5, 6, 5}),
+                             id));
+        j["minecraft:block"]["permutations"].push_back(temp);
+        temp = {{"condition", "q.block_property('" + mod_id + ":count') == 4"}};
+        temp["components"].update(
+            helper.collision(std::make_pair(std::vector<int>{-3, 0, -3},
+                                            std::vector<int>{6, 6, 5}),
+                             id));
+        temp["components"].update(
+            helper.selection(std::make_pair(std::vector<int>{-3, 0, -3},
+                                            std::vector<int>{6, 6, 5}),
+                             id));
+        j["minecraft:block"]["permutations"].push_back(temp);
 
         return j;
     };
