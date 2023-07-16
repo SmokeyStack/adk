@@ -97,7 +97,7 @@
 				{
 					"name": "wall",
 					"parent": "root",
-					"pivot": [0, 0, 4],
+					"pivot": [0, 0, 0],
 					"cubes": [
 						{
 							"origin": [-4, 4, 0],
