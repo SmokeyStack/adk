@@ -4,10 +4,7 @@
         {
             "command": "./data/adk/compile.bat",
             "name": "adk",
-            "runWith": "shell",
-            "arguments": [
-                "Hello world"
-            ]
+            "runWith": "shell"
         }
     ]
 }
