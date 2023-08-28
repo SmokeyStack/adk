@@ -112,24 +112,35 @@ class HeadBlock : public Block {
              "!= 16 ? t.block_rotation; };";
 
         // Permutations
-        j["minecraft:block"]["permutations"].push_back(
-            {{"condition",
-              "q.block_property('" + mod_id +
-                  ":rotation') >= 4 || "
-                  "q.block_property('minecraft:block_face') == 'east'"},
-             {"components", helper.rotation(std::vector<int>{0, -90, 0}, id)}});
-        j["minecraft:block"]["permutations"].push_back(
-            {{"condition",
-              "q.block_property('" + mod_id +
-                  ":rotation') >= 8 || "
-                  "q.block_property('minecraft:block_face') == 'south'"},
-             {"components", helper.rotation(std::vector<int>{0, 180, 0}, id)}});
-        j["minecraft:block"]["permutations"].push_back(
-            {{"condition",
-              "q.block_property('" + mod_id +
-                  ":rotation') >= 12 || "
-                  "q.block_property('minecraft:block_face') == 'west'"},
-             {"components", helper.rotation(std::vector<int>{0, 90, 0}, id)}});
+        json::object_t temp = {
+            {"condition",
+             "q.block_property('" + mod_id +
+                 ":rotation') >= 4 || "
+                 "q.block_property('minecraft:block_face') == 'east'"}};
+        temp["components"].update(
+            helper.rotation(std::vector<int>{0, -90, 0}, id));
+        j["minecraft:block"]["permutations"].push_back(temp);
+        temp = {{"condition",
+                 "q.block_property('" + mod_id +
+                     ":rotation') >= 4 || "
+                     "q.block_property('minecraft:block_face') == 'east'"}};
+        temp["components"].update(
+            helper.rotation(std::vector<int>{0, -90, 0}, id));
+        j["minecraft:block"]["permutations"].push_back(temp);
+        temp = {{"condition",
+                 "q.block_property('" + mod_id +
+                     ":rotation') >= 8 || "
+                     "q.block_property('minecraft:block_face') == 'south'"}};
+        temp["components"].update(
+            helper.rotation(std::vector<int>{0, 180, 0}, id));
+        j["minecraft:block"]["permutations"].push_back(temp);
+        temp = {{"condition",
+                 "q.block_property('" + mod_id +
+                     ":rotation') >= 12 || "
+                     "q.block_property('minecraft:block_face') == 'west'"}};
+        temp["components"].update(
+            helper.rotation(std::vector<int>{0, 90, 0}, id));
+        j["minecraft:block"]["permutations"].push_back(temp);
 
         return j;
     };
