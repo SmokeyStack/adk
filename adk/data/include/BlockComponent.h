@@ -1,6 +1,8 @@
 #ifndef BLOCKCOMPONENT_H
 #define BLOCKCOMPONENT_H
 
+#include <spdlog/spdlog.h>
+
 #include <string>
 #include <variant>
 #include <vector>
@@ -23,13 +25,16 @@ class BlockComponent {
             component_check.first.at(1) > 16 ||
             component_check.first.at(2) < -8 ||
             component_check.first.at(2) > 8) {
-            spdlog::error(
-                "{} - Minimal position of the bounds of the {} box. "
-                "\"origin\" "
-                "is "
-                "specified as [x, y, z] and must be in the range (-8, 0, -8) "
-                "to (8, 16, 8), inclusive",
-                id, component);
+            spdlog::get("Blocks/Items")
+                ->error(
+                    "{} - Minimal position of the bounds of the {} box. "
+                    "\"origin\" "
+                    "is "
+                    "specified as [x, y, z] and must be in the range (-8, "
+                    "0, "
+                    "-8) "
+                    "to (8, 16, 8), inclusive",
+                    id, component);
             exit(EXIT_FAILURE);
         }
 
@@ -41,32 +46,32 @@ class BlockComponent {
         int size_3 = component_check.second.at(2);
 
         if ((origin_1 + size_1) < -8 || (origin_1 + size_1) > 8) {
-            spdlog::error(
-                "{} - Size of each side of the {} box. Size is "
-                "specified as [x, y, z]. \"origin\" + \"size\" must be "
-                "in the range (-8, 0, -8) to (8, 16, 8), inclusive",
-                id),
-                component;
+            spdlog::get("Blocks/Items")
+                ->error(
+                    "{} - Size of each side of the {} box. Size is "
+                    "specified as [x, y, z]. \"origin\" + \"size\" must be "
+                    "in the range (-8, 0, -8) to (8, 16, 8), inclusive",
+                    id, component);
             exit(EXIT_FAILURE);
         }
 
         if ((origin_2 + size_2) < 0 || (origin_2 + size_2) > 16) {
-            spdlog::error(
-                "{} - Size of each side of the {} box. Size is "
-                "specified as [x, y, z]. \"origin\" + \"size\" must be "
-                "in the range (-8, 0, -8) to (8, 16, 8), inclusive",
-                id),
-                component;
+            spdlog::get("Blocks/Items")
+                ->error(
+                    "{} - Size of each side of the {} box. Size is "
+                    "specified as [x, y, z]. \"origin\" + \"size\" must be "
+                    "in the range (-8, 0, -8) to (8, 16, 8), inclusive",
+                    id, component);
             exit(EXIT_FAILURE);
         }
 
         if ((origin_3 + size_3) < -8 || (origin_3 + size_3) > 8) {
-            spdlog::error(
-                "{} - Size of each side of the {} box. Size is "
-                "specified as [x, y, z]. \"origin\" + \"size\" must be "
-                "in the range (-8, 0, -8) to (8, 16, 8), inclusive",
-                id),
-                component;
+            spdlog::get("Blocks/Items")
+                ->error(
+                    "{} - Size of each side of the {} box. Size is "
+                    "specified as [x, y, z]. \"origin\" + \"size\" must be "
+                    "in the range (-8, 0, -8) to (8, 16, 8), inclusive",
+                    id, component);
             exit(EXIT_FAILURE);
         }
     }
@@ -266,8 +271,6 @@ class BlockComponent {
 
     nlohmann::json::object_t creativeMenu(
         std::pair<std::string, std::string> value) {
-        spdlog::get("Blocks/Items")->error("{} - Creative", value.second);
-
         nlohmann::json::object_t temp = {
             {"menu_category", {{"category", value.first}}}};
 

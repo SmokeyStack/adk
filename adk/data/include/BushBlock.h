@@ -18,20 +18,7 @@ class BushBlock : public Block {
      * @param property BlockProperty
      */
     BushBlock(BlockProperty property) {
-        _block_light_filter = property.getBlockLightFilter();
-        _crafting = property.getCrafting();
-        _explosion = property.getExplosion();
-        _mining = property.getMining();
-        _display_name = property.getName();
-        _flammable = property.getFlamamble();
-        _friction = property.getFriction();
-        _light_emission = property.getLightEmission();
-        _loot = property.getLoot();
-        _color = property.getColor();
-        _rotation = property.getRotation();
-        _collision = property.getCollision();
-        _selection = property.getSelection();
-        _creative = property.getCreative();
+        _internal = property;
     }
 
     /**

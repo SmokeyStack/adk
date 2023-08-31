@@ -16,6 +16,7 @@
 class Block {
    protected:
     BlockProperty _internal;
+    BlockComponent helper;
 
     /**
      * @brief Ensure the collision_box and selection_box is valid
@@ -48,9 +49,7 @@ class Block {
      * @return json
      */
     virtual json output(std::string mod_id, std::string id) {
-        BlockComponent helper;
-
-        j["format_version"] = "1.19.80";
+        j["format_version"] = "1.20.10";
         j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
 
         if (_internal.getBlockLightFilter() != 15)
