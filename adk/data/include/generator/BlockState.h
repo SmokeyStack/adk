@@ -34,6 +34,8 @@ void simpleBlock(std::string block, std::string texture) {
 
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
      ["texture"] = texture;
+    j["minecraft:block"]["components"]["minecraft:unit_cube"] =
+        nlohmann::json::object();
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
@@ -80,6 +82,8 @@ void simpleBlock(std::string block, std::string north, std::string east,
      ["texture"] = up;
     j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
      ["texture"] = down;
+    j["minecraft:block"]["components"]["minecraft:unit_cube"] =
+        nlohmann::json::object();
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
@@ -116,6 +120,8 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
      ["texture"] = "ends";
     j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
      ["texture"] = "ends";
+    j["minecraft:block"]["components"]["minecraft:unit_cube"] =
+        nlohmann::json::object();
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
@@ -172,6 +178,8 @@ void tintedGlass(std::string block, std::string texture) {
      ["texture"] = texture;
     j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
      ["render_method"] = "blend";
+    j["minecraft:block"]["components"]["minecraft:unit_cube"] =
+        nlohmann::json::object();
 
     TempFile.close();
     std::ofstream MyFile("./BP/blocks/" + block + ".json");
