@@ -21,6 +21,7 @@ add_executable(adk
     Object.cpp
     Data.cpp
     Recipe.cpp
+    Language.cpp
     GlobalRegistry.cpp
 )
 

@@ -18,4 +18,6 @@ extern std::vector<Registrar*> globalregistry;
  */
 extern std::vector<std::string> vanillaRegistry;
 
+extern std::vector<std::string> getIds();
+
 #endif
