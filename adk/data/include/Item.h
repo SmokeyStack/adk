@@ -64,7 +64,7 @@ class Item {
      * @return json
      */
     virtual json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.20.10";
+        j["format_version"] = "1.20.40";
         j["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 
         if (!_display_name.empty())

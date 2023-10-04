@@ -16,22 +16,22 @@ class CookingRecipeBuilder : public RecipeBuilder {
    public:
     CookingRecipeBuilder cook(std::string result, std::string ingredient,
                               std::vector<std::string> tags) {
-        std::vector<std::string> key;
+        std::vector<std::string> key = getIds();
 
-        for (auto const entry : globalregistry) {
-            std::map<std::string, std::variant<Block*, Item*>> registry_check;
-            registry_check = entry->getRegistrar();
+        // for (auto const entry : globalregistry) {
+        //     std::map<std::string, std::variant<Block*, Item*>>
+        //     registry_check; registry_check = entry->getRegistrar();
 
-            for (std::map<std::string, std::variant<Block*, Item*>>::iterator
-                     it = registry_check.begin();
-                 it != registry_check.end(); ++it) {
-                key.push_back(it->first);
-            }
-        }
+        //     for (std::map<std::string, std::variant<Block*, Item*>>::iterator
+        //              it = registry_check.begin();
+        //          it != registry_check.end(); ++it) {
+        //         key.push_back(it->first);
+        //     }
+        // }
 
-        for (auto const entry : vanillaRegistry) {
-            key.push_back(entry);
-        }
+        // for (auto const entry : vanillaRegistry) {
+        //     key.push_back(entry);
+        // }
 
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
             spdlog::get("Recipe")->error("{} is an invalid item", result);
