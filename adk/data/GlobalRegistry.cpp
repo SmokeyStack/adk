@@ -1402,7 +1402,7 @@ std::vector<std::string> vanillaRegistry{
     "minecraft:zombie_villager_spawn_egg"};
 
 std::vector<std::string> getIds() {
-    std::string key;
+    std::vector<std::string> key;
 
     for (auto const entry : globalregistry) {
         std::map<std::string, std::variant<Block*, Item*>> registry_check;
