@@ -58,49 +58,49 @@ class HeadBlock : public Block {
             "geometry.head";
         j["minecraft:block"]["components"]["minecraft:geometry"]
          ["bone_visibility"] = {
-             {"0", "(q.block_property('" + mod_id +
+             {"0", "(q.block_state('" + mod_id +
                        ":rotation') == 0 || "
-                       "q.block_property('" +
+                       "q.block_state('" +
                        mod_id +
                        ":rotation') == 4 || "
-                       "q.block_property('" +
+                       "q.block_state('" +
                        mod_id +
                        ":rotation') == 8 || "
-                       "q.block_property('" +
+                       "q.block_state('" +
                        mod_id +
                        ":rotation') == 12) && "
-                       "q.block_property('minecraft:block_face') == 'up'"},
-             {"22_5", "q.block_property('" + mod_id +
+                       "q.block_state('minecraft:block_face') == 'up'"},
+             {"22_5", "q.block_state('" + mod_id +
                           ":rotation') == 1 || "
-                          "q.block_property('" +
+                          "q.block_state('" +
                           mod_id +
                           ":rotation') == 5 || "
-                          "q.block_property('" +
+                          "q.block_state('" +
                           mod_id +
                           ":rotation') == 9 || "
-                          "q.block_property('" +
+                          "q.block_state('" +
                           mod_id + ":rotation') == 13"},
-             {"45", "q.block_property('" + mod_id +
+             {"45", "q.block_state('" + mod_id +
                         ":rotation') == 2 || "
-                        "q.block_property('" +
+                        "q.block_state('" +
                         mod_id +
                         ":rotation') == 6 || "
-                        "q.block_property('" +
+                        "q.block_state('" +
                         mod_id +
                         ":rotation') == 10 || "
-                        "q.block_property('" +
+                        "q.block_state('" +
                         mod_id + ":rotation') == 14"},
-             {"67_5", "q.block_property('" + mod_id +
+             {"67_5", "q.block_state('" + mod_id +
                           ":rotation') == 3 || "
-                          "q.block_property('" +
+                          "q.block_state('" +
                           mod_id +
                           ":rotation') == 7 || "
-                          "q.block_property('" +
+                          "q.block_state('" +
                           mod_id +
                           ":rotation') == 11 || "
-                          "q.block_property('" +
+                          "q.block_state('" +
                           mod_id + ":rotation') == 15"},
-             {"wall", "q.block_property('minecraft:block_face') != 'up'"}};
+             {"wall", "q.block_state('minecraft:block_face') != 'up'"}};
 
         // Events
         j["minecraft:block"]["events"][mod_id + ":set_rotation"]
@@ -114,30 +114,30 @@ class HeadBlock : public Block {
         // Permutations
         json::object_t temp = {
             {"condition",
-             "q.block_property('" + mod_id +
+             "q.block_state('" + mod_id +
                  ":rotation') >= 4 || "
-                 "q.block_property('minecraft:block_face') == 'east'"}};
+                 "q.block_state('minecraft:block_face') == 'east'"}};
         temp["components"].update(
             helper.rotation(std::vector<int>{0, -90, 0}, id));
         j["minecraft:block"]["permutations"].push_back(temp);
         temp = {{"condition",
-                 "q.block_property('" + mod_id +
+                 "q.block_state('" + mod_id +
                      ":rotation') >= 4 || "
-                     "q.block_property('minecraft:block_face') == 'east'"}};
+                     "q.block_state('minecraft:block_face') == 'east'"}};
         temp["components"].update(
             helper.rotation(std::vector<int>{0, -90, 0}, id));
         j["minecraft:block"]["permutations"].push_back(temp);
         temp = {{"condition",
-                 "q.block_property('" + mod_id +
+                 "q.block_state('" + mod_id +
                      ":rotation') >= 8 || "
-                     "q.block_property('minecraft:block_face') == 'south'"}};
+                     "q.block_state('minecraft:block_face') == 'south'"}};
         temp["components"].update(
             helper.rotation(std::vector<int>{0, 180, 0}, id));
         j["minecraft:block"]["permutations"].push_back(temp);
         temp = {{"condition",
-                 "q.block_property('" + mod_id +
+                 "q.block_state('" + mod_id +
                      ":rotation') >= 12 || "
-                     "q.block_property('minecraft:block_face') == 'west'"}};
+                     "q.block_state('minecraft:block_face') == 'west'"}};
         temp["components"].update(
             helper.rotation(std::vector<int>{0, 90, 0}, id));
         j["minecraft:block"]["permutations"].push_back(temp);

@@ -42,15 +42,15 @@ class AxisBlock : public Block {
 
         // Permutations
         json::object_t temp = {
-            {"condition", "q.block_property('" + mod_id + ":rotation') == 0"}};
+            {"condition", "q.block_state('" + mod_id + ":rotation') == 0"}};
         temp["components"].update(helper.rotation(std::vector<int>(0, 0, 0)));
         j["minecraft:block"]["permutations"].push_back(temp);
         temp = {
-            {"condition", "q.block_property('" + mod_id + ":rotation') == 1"}};
+            {"condition", "q.block_state('" + mod_id + ":rotation') == 1"}};
         temp["components"].update(helper.rotation(std::vector<int>(90, 0, 0)));
         j["minecraft:block"]["permutations"].push_back(temp);
         temp = {
-            {"condition", "q.block_property('" + mod_id + ":rotation') == 2"}};
+            {"condition", "q.block_state('" + mod_id + ":rotation') == 2"}};
         temp["components"].update(helper.rotation(std::vector<int>(0, 0, 90)));
         j["minecraft:block"]["permutations"].push_back(temp);
 

@@ -61,10 +61,10 @@ class SaplingBlock : public BushBlock {
 
         j["minecraft:block"]["events"][mod_id + ":random_tick"]
          ["set_block_property"][mod_id + ":growth_stage"] =
-             "(q.block_property('" + mod_id + ":growth_stage') < " +
+             "(q.block_state('" + mod_id + ":growth_stage') < " +
              std::to_string(_number_of_properties - 1) +
              ") ? "
-             "q.block_property('" +
+             "q.block_state('" +
              mod_id + ":growth_stage') + 1 : " +
              std::to_string(_number_of_properties - 1);
 
@@ -75,7 +75,7 @@ class SaplingBlock : public BushBlock {
             {{"components",
               {{"minecraft:random_ticking",
                 {{"on_tick", {{"event", mod_id + ":final_growth"}}}}}}},
-             {"condition", "q.block_property('" + mod_id +
+             {"condition", "q.block_state('" + mod_id +
                                ":growth_stage') == " +
                                std::to_string(_number_of_properties - 1)}},
         };

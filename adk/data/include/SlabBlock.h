@@ -42,12 +42,12 @@ class SlabBlock : public Block {
         j["minecraft:block"]["components"]["minecraft:geometry"]
          ["bone_visibility"] = {
              {"upper",
-              "q.block_property('minecraft:vertical_half') == 'top' || "
-              "q.block_property('" +
+              "q.block_state('minecraft:vertical_half') == 'top' || "
+              "q.block_state('" +
                   mod_id + ":is_double')"},
              {"lower",
-              "q.block_property('minecraft:vertical_half') == 'bottom' || "
-              "q.block_property('" +
+              "q.block_state('minecraft:vertical_half') == 'bottom' || "
+              "q.block_state('" +
                   mod_id + ":is_double')"}};
 
         // Events
@@ -60,8 +60,8 @@ class SlabBlock : public Block {
         // Permutations
         json::object_t temp = {
             {"condition",
-             "q.block_property('minecraft:vertical_half') == 'top' && "
-             "!q.block_property('" +
+             "q.block_state('minecraft:vertical_half') == 'top' && "
+             "!q.block_state('" +
                  mod_id + ":is_double')"}};
         temp["components"].update(
             helper.collision(std::make_pair(std::vector<int>{-8, 8, -8},
@@ -80,8 +80,8 @@ class SlabBlock : public Block {
                                           mod_id + ":" + id + "')"}}}});
         j["minecraft:block"]["permutations"].push_back(temp);
         temp = {{"condition",
-                 "q.block_property('minecraft:vertical_half') == 'bottom' && "
-                 "!q.block_property('" +
+                 "q.block_state('minecraft:vertical_half') == 'bottom' && "
+                 "!q.block_state('" +
                      mod_id + ":is_double')"}};
         temp["components"].update(
             helper.collision(std::make_pair(std::vector<int>{-8, 0, -8},
@@ -99,7 +99,7 @@ class SlabBlock : public Block {
                                       "mainhand','" +
                                           mod_id + ":" + id + "')"}}}});
         j["minecraft:block"]["permutations"].push_back(temp);
-        temp = {{"condition", "q.block_property('" + mod_id + ":is_double')"}};
+        temp = {{"condition", "q.block_state('" + mod_id + ":is_double')"}};
         temp["components"].update(
             {{"minecraft:on_player_destroyed",
               {{"event", "" + mod_id + ":drop_double"}}}});
