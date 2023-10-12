@@ -30,7 +30,7 @@ class CandleBlock : public Block {
         j = Block::output(mod_id, id);
 
         // Properties
-        j["minecraft:block"]["description"]["properties"][mod_id + ":count"]
+        j["minecraft:block"]["description"]["states"][mod_id + ":count"]
          ["values"] = {{"min", 1}, {"max", 4}};
 
         // Components
@@ -64,7 +64,7 @@ class CandleBlock : public Block {
 
         // Events
         j["minecraft:block"]["events"][mod_id + ":add_candle"]
-         ["set_block_property"][mod_id + ":count"] =
+         ["set_block_state"][mod_id + ":count"] =
              "(q.block_state('" + mod_id +
              ":count') < 4) ? q.block_state('" + mod_id + ":count') + 1 : 4";
         j["minecraft:block"]["events"][mod_id + ":add_candle"]

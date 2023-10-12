@@ -30,7 +30,7 @@ class SlabBlock : public Block {
         j = Block::output(mod_id, id);
 
         // Properties
-        j["minecraft:block"]["description"]["properties"]
+        j["minecraft:block"]["description"]["states"]
          [mod_id + ":is_double"] = json::array({false, true});
         j["minecraft:block"]["description"]["traits"]
          ["minecraft:placement_position"] = {
@@ -52,7 +52,7 @@ class SlabBlock : public Block {
 
         // Events
         j["minecraft:block"]["events"][mod_id + ":become_double"] = {
-            {"set_block_property", {{mod_id + ":is_double", true}}},
+            {"set_block_state", {{mod_id + ":is_double", true}}},
             {"decrement_stack", json::object()}};
         j["minecraft:block"]["events"][mod_id + ":drop_double"] = {
             {"spawn_loot", json::object()}};

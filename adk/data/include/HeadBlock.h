@@ -30,7 +30,7 @@ class HeadBlock : public Block {
         j = Block::output(mod_id, id);
 
         // Properties
-        j["minecraft:block"]["description"]["properties"][mod_id + ":rotation"]
+        j["minecraft:block"]["description"]["states"][mod_id + ":rotation"]
          ["values"] = {{"min", 0}, {"max", 15}};
 
         j["minecraft:block"]["description"]["traits"]
@@ -104,7 +104,7 @@ class HeadBlock : public Block {
 
         // Events
         j["minecraft:block"]["events"][mod_id + ":set_rotation"]
-         ["set_block_property"][mod_id + ":rotation"] =
+         ["set_block_state"][mod_id + ":rotation"] =
              "q.block_face == 1 ? { t.positive_head_rot = q.head_y_rotation(0) "
              "+ 360 * (q.head_y_rotation(0) != "
              "Math.abs(q.head_y_rotation(0))); t.block_rotation = "
@@ -122,13 +122,6 @@ class HeadBlock : public Block {
         j["minecraft:block"]["permutations"].push_back(temp);
         temp = {{"condition",
                  "q.block_state('" + mod_id +
-                     ":rotation') >= 4 || "
-                     "q.block_state('minecraft:block_face') == 'east'"}};
-        temp["components"].update(
-            helper.rotation(std::vector<int>{0, -90, 0}, id));
-        j["minecraft:block"]["permutations"].push_back(temp);
-        temp = {{"condition",
-                 "q.block_state('" + mod_id +
                      ":rotation') >= 8 || "
                      "q.block_state('minecraft:block_face') == 'south'"}};
         temp["components"].update(
@@ -140,6 +133,16 @@ class HeadBlock : public Block {
                      "q.block_state('minecraft:block_face') == 'west'"}};
         temp["components"].update(
             helper.rotation(std::vector<int>{0, 90, 0}, id));
+        j["minecraft:block"]["permutations"].push_back(temp);
+        temp = {{"condition", "q.block_state('minecraft:block_face') != 'up'"}};
+        temp["components"].update(
+            helper.selection(std::make_pair(std::vector<int>{-4, 4, 0},
+                                            std::vector<int>{8, 8, 8}),
+                             id));
+        temp["components"].update(
+            helper.collision(std::make_pair(std::vector<int>{-4, 4, 0},
+                                            std::vector<int>{8, 8, 8}),
+                             id));
         j["minecraft:block"]["permutations"].push_back(temp);
 
         return j;
