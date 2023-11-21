@@ -2,7 +2,7 @@
     "description": "Create add-ons for Minecraft without touching JSON",
     "filters": [
         {
-            "command": "./data/adk/compile.bat",
+            "command": "./data/adk/compile-regolith.bat",
             "name": "adk",
             "runWith": "shell"
         }

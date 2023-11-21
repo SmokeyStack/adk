@@ -28,6 +28,10 @@ int main() {
     spdlog::register_logger(data_logger);
     spdlog::register_logger(recipe_logger);
 
+    spdlog::get("Blocks/Items")
+        ->error("Hi");
+
+    // Edit this to change the namespace of the add-on
     Object MyAddOn("custom_namespace");
     Data DataGenerator;
     Recipe RecipeGenerator;
@@ -35,6 +39,9 @@ int main() {
     MyAddOn.init();
     DataGenerator.init();
     RecipeGenerator.init();
+
+    spdlog::get("Blocks/Items")
+        ->info("Bye");
 
     return 0;
 }
