@@ -1,29 +1,43 @@
 cmake_minimum_required(VERSION 3.12)
+cmake_policy(SET CMP0048 NEW)
+cmake_policy(SET CMP0074 NEW)
 
-set(This adkhead)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+set(PROJECT_NAME adk-test)
+project(${PROJECT_NAME} VERSION 0.1)
+
+configure_file(
+    CMakeLists.txt.in
+    googletest-download/CMakeLists.txt
+)
+execute_process(
+    COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download
+)
+execute_process(
+    COMMAND ${CMAKE_COMMAND} --build .
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/googletest-download
+)
+
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
-project(${This} C CXX)
+add_subdirectory(
+    ${CMAKE_BINARY_DIR}/googletest-src
+    ${CMAKE_BINARY_DIR}/googletest-build
+)
 
-set(CMAKE_C_STANDARD 99)
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_POSITION_INDEPENDENT_CODE)
+if (CMAKE_VERSION VERSION_LESS 2.8.11)
+    include_directories("${gtest_SOURCE_DIR}/include"
+            "${gmock_SOURCE_DIR}/include")
+endif()
 
 enable_testing()
-
-add_subdirectory(googletest)
-
-set(Headers
-    Main.h
-)
-
-set(Sources
-    Main.cpp
-)
-
-add_library(${This} STATIC ${Sources} ${Headers})
-
 add_subdirectory(test)
+
+set(SOURCE_FILES Main.cpp)
+add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
 # add_executable(manifest
 #     Manifest.cpp

@@ -5,7 +5,7 @@
 
 #include <string>
 
-#include "ItemComponent.h"
+//#include "ItemComponent.h"
 #include "ItemProperty.h"
 #include "json.hpp"
 
@@ -16,7 +16,7 @@
 class Item {
    protected:
     ItemProperty _internal;
-    ItemComponent helper;
+    //ItemComponent helper;
 
    public:
     using json = nlohmann::json;
@@ -39,7 +39,7 @@ class Item {
      * @return json
      */
     virtual json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.20.40";
+        /*j["format_version"] = "1.20.40";
         j["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 
         if (!_display_name.empty())
@@ -97,7 +97,7 @@ class Item {
 
         if (!_projectile_entity.empty())
             j["minecraft:item"]["components"]["minecraft:projectile"]
-             ["projectile_entity"] = _projectile_entity;
+             ["projectile_entity"] = _projectile_entity;*/
 
         return j;
     }

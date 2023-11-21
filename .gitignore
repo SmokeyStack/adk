@@ -47,8 +47,10 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 
-# vscode
+# Debug
 .vscode
+.vs
+/build
 
 # Regolith
 /build
