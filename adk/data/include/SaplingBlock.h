@@ -56,11 +56,11 @@ class SaplingBlock : public BushBlock {
             property_array.push_back(a);
         }
 
-        j["minecraft:block"]["description"]["properties"]
+        j["minecraft:block"]["description"]["states"]
          [mod_id + ":growth_stage"] = property_array;
 
         j["minecraft:block"]["events"][mod_id + ":random_tick"]
-         ["set_block_property"][mod_id + ":growth_stage"] =
+         ["set_block_state"][mod_id + ":growth_stage"] =
              "(q.block_state('" + mod_id + ":growth_stage') < " +
              std::to_string(_number_of_properties - 1) +
              ") ? "

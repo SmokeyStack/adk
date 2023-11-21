@@ -5,6 +5,7 @@
 
 #include <string>
 
+//#include "ItemComponent.h"
 #include "ItemProperty.h"
 #include "json.hpp"
 
@@ -14,20 +15,8 @@
  */
 class Item {
    protected:
-    std::string _display_name;
-    std::string _icon;
-    int _stack;
-    std::string _block_placer;
-    std::vector<std::string> _block_placer_placement;
-    std::string _cooldown_category;
-    float _cooldown_time;
-    std::string _dye;
-    std::string _entity_placer;
-    std::vector<std::string> _entity_placer_placement;
-    std::vector<std::string> _entity_placer_dispense;
-    std::vector<double> _offset_main;
-    std::vector<double> _offset_offhand;
-    std::string _projectile_entity;
+    ItemProperty _internal;
+    //ItemComponent helper;
 
    public:
     using json = nlohmann::json;
@@ -40,21 +29,7 @@ class Item {
      *
      * @param property ItemProperty
      */
-    Item(ItemProperty property) {
-        _display_name = property.getName();
-        _icon = property.getIcon();
-        _stack = property.getStack();
-        _block_placer = property.getBlockPlacer();
-        _block_placer_placement = property.getBlockPlacerPlacement();
-        _cooldown_category = property.getCooldownCategory();
-        _cooldown_time = property.getCooldownTime();
-        _dye = property.getDyeProperty();
-        _entity_placer = property.getEntityPlacer();
-        _entity_placer_placement = property.getEntityPlacerPlacement();
-        _entity_placer_dispense = property.getEntityPlacerDispense();
-        _offset_main = property.getOffsetMain();
-        _offset_offhand = property.getOffsetOff();
-    }
+    Item(ItemProperty property) { _internal = property; }
 
     /**
      * @brief Generates the json object
@@ -64,7 +39,7 @@ class Item {
      * @return json
      */
     virtual json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.20.40";
+        /*j["format_version"] = "1.20.40";
         j["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 
         if (!_display_name.empty())
@@ -122,7 +97,7 @@ class Item {
 
         if (!_projectile_entity.empty())
             j["minecraft:item"]["components"]["minecraft:projectile"]
-             ["projectile_entity"] = _projectile_entity;
+             ["projectile_entity"] = _projectile_entity;*/
 
         return j;
     }

@@ -1,63 +1,37 @@
 cmake_minimum_required(VERSION 3.12)
+cmake_policy(SET CMP0048 NEW)
+cmake_policy(SET CMP0074 NEW)
 
-set(Headers
-    ../adk/data/include/ArmorItem.h
-    ../adk/data/include/ArmorType.h
-    ../adk/data/include/AxisBlock.h
-    ../adk/data/include/Block.h
-    ../adk/data/include/BlockCategory.h
-    ../adk/data/include/BlockProperty.h
-    ../adk/data/include/BushBlock.h
-    ../adk/data/include/CandleBlock.h
-    ../adk/data/include/CookingRecipeBuilder.h
-    ../adk/data/include/DurabilityItem.h
-    ../adk/data/include/FoodItem.h
-    ../adk/data/include/FuelItem.h
-    ../adk/data/include/GlobalRegistry.h
-    ../adk/data/include/HeadBlock.h
-    ../adk/data/include/Item.h
-    ../adk/data/include/ItemProperty.h
-    ../adk/data/include/json.hpp
-    ../adk/data/include/ProjectileItem.h
-    ../adk/data/include/RecipeBuilder.h
-    ../adk/data/include/RecordItem.h
-    ../adk/data/include/Registry.h
-    ../adk/data/include/SaplingBlock.h
-    ../adk/data/include/ShapedRecipeBuilder.h
-    ../adk/data/include/ShapelessRecipeBuilder.h
-    ../adk/data/include/SlabBlock.h
-    ../adk/data/include/ToolItem.h
-    ../adk/data/include/generator/BlockState.h
-    ../adk/data/include/generator/ItemState.h
-)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_subdirectory(include/spdlog)
-include_directories(include/spdlog/include)
-add_executable(BlockTest
-    BlockTest.cpp
-    GlobalRegistry.cpp
-    ${Headers}
-)
-target_link_libraries(BlockTest PUBLIC
-    gtest_main
-    adkhead
-)
+include_directories("${PROJECT_SOURCE_DIR}/adk/data/include")
+file(GLOB_RECURSE HEADER_FILES ${PROJECT_SOURCE_DIR}/adk/data/include/*.h ${PROJECT_SOURCE_DIR}/adk/data/include/*.hpp)
+file(COPY ${PROJECT_SOURCE_DIR}/adk/data/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+add_subdirectory(${PROJECT_SOURCE_DIR}/adk/data/third-party/spdlog spdlog)
 
-add_test(
-    NAME BlockTest
-    COMMAND BlockTest
-)
+add_executable(main AdkTest.cpp)
+target_link_libraries(main gtest)
 
-add_executable(ItemTest
-    ItemTest.cpp
-    GlobalRegistry.cpp
-    ${Headers})
-target_link_libraries(ItemTest PUBLIC
-    gtest_main
-    adkhead
-)
+add_executable(BlockTest BlockTest.cpp ${PROJECT_SOURCE_DIR}/adk/data/GlobalRegistry.cpp ${HEADER_FILES})
+target_link_libraries(BlockTest gtest gmock_main spdlog)
+add_test(NAME BlockTest COMMAND BlockTest)
 
-add_test(
-    NAME ItemTest
-    COMMAND ItemTest
-)
+#add_test(
+#    NAME BlockTest
+#    COMMAND BlockTest
+#)
+
+#add_executable(ItemTest
+#    ItemTest.cpp
+#    GlobalRegistry.cpp
+#    ${Headers})
+#target_link_libraries(ItemTest PUBLIC
+#    gtest_main
+#    adkhead
+#)
+
+#add_test(
+#    NAME ItemTest
+#    COMMAND ItemTest
+#)

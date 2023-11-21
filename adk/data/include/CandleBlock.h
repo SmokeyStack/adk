@@ -30,7 +30,7 @@ class CandleBlock : public Block {
         j = Block::output(mod_id, id);
 
         // Properties
-        j["minecraft:block"]["description"]["properties"][mod_id + ":count"]
+        j["minecraft:block"]["description"]["states"][mod_id + ":count"]
          ["values"] = {{"min", 1}, {"max", 4}};
 
         // Components
@@ -57,16 +57,17 @@ class CandleBlock : public Block {
              {"three", "q.block_state('" + mod_id + ":count') == 3"},
              {"four", "q.block_state('" + mod_id + ":count') == 4"}};
         j["minecraft:block"]["components"]["minecraft:on_interact"]
-         ["condition"] = "q.is_item_name_any('slot.weapon.mainhand', '" + id +
-                         "') && q.block_state('" + mod_id + ":count') != 4";
+         ["condition"] =
+             "q.is_item_name_any('slot.weapon.mainhand', '" + mod_id + ":" +
+             id + "') && q.block_state('" + mod_id + ":count') != 4";
         j["minecraft:block"]["components"]["minecraft:on_interact"]["event"] =
             mod_id + ":add_candle";
 
         // Events
         j["minecraft:block"]["events"][mod_id + ":add_candle"]
-         ["set_block_property"][mod_id + ":count"] =
-             "(q.block_state('" + mod_id +
-             ":count') < 4) ? q.block_state('" + mod_id + ":count') + 1 : 4";
+         ["set_block_state"][mod_id + ":count"] =
+             "(q.block_state('" + mod_id + ":count') < 4) ? q.block_state('" +
+             mod_id + ":count') + 1 : 4";
         j["minecraft:block"]["events"][mod_id + ":add_candle"]
          ["decrement_stack"] = json::object();
 

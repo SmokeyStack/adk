@@ -30,14 +30,14 @@ class AxisBlock : public Block {
         j = Block::output(mod_id, id);
 
         // Properties
-        j["minecraft:block"]["description"]["properties"]
+        j["minecraft:block"]["description"]["states"]
          [mod_id + ":rotation"] = json::array({0, 1, 2});
 
         // Components
         j["minecraft:block"]["components"]["minecraft:on_player_placing"]
          ["event"] = mod_id + ":set_rotation";
         j["minecraft:block"]["events"][mod_id + ":set_direction"]
-         ["set_block_property"][mod_id + ":cardinal"] =
+         ["set_block_state"][mod_id + ":cardinal"] =
              "math.floor(q.block_face/2.0)";
 
         // Permutations

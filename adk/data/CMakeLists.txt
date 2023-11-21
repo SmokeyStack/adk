@@ -11,18 +11,28 @@ endif()
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(adk VERSION 0.1 LANGUAGES CXX)
+set(BIN_NAME adk)
+set(LIB_NAME adk-lib)
 
-find_package(spdlog REQUIRED)
+project(${BIN_NAME} VERSION 0.1)
 
-include_directories(include include/generator)
-add_executable(adk
-    Main.cpp
-    Object.cpp
-    Data.cpp
-    Recipe.cpp
-    Language.cpp
-    GlobalRegistry.cpp
-)
+file(GLOB_RECURSE SRC_FILES *.cpp )
+file(GLOB_RECURSE HEADER_FILES include/*.h include/*.hpp)
+add_library(${LIB_NAME} STATIC ${SRC_FILES})
+file(COPY assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-target_link_libraries(adk PRIVATE spdlog::spdlog)
+add_subdirectory(third-party/spdlog)
+
+if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif()
+
+target_include_directories(${LIB_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
+target_include_directories(${LIB_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
+
+target_link_libraries(${LIB_NAME} spdlog)
+
+add_executable(${BIN_NAME} Main.cpp)
+
+target_link_libraries(${BIN_NAME} PRIVATE ${LIB_NAME})
+target_include_directories(${BIN_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})

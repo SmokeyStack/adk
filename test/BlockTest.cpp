@@ -18,6 +18,9 @@
 namespace fs = std::filesystem;
 
 TEST(BlockTest, BasicBlock) {
+    std::filesystem::create_directory("BP");
+    std::filesystem::create_directory("RP");
+
     auto console_sink = std::make_shared<spdlog::sinks::stdout_sink_mt>();
     console_sink->set_level(spdlog::level::err);
 
