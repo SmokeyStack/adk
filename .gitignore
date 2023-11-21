@@ -50,7 +50,7 @@ _deps
 # Debug
 .vscode
 .vs
-/build
+/out
 
 # Regolith
 /build

@@ -8,14 +8,13 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories("${PROJECT_SOURCE_DIR}/adk/data/include")
 file(GLOB_RECURSE HEADER_FILES ${PROJECT_SOURCE_DIR}/adk/data/include/*.h ${PROJECT_SOURCE_DIR}/adk/data/include/*.hpp)
 file(COPY ${PROJECT_SOURCE_DIR}/adk/data/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
-
-find_package(spdlog REQUIRED)
+add_subdirectory(${PROJECT_SOURCE_DIR}/adk/data/third-party/spdlog spdlog)
 
 add_executable(main AdkTest.cpp)
 target_link_libraries(main gtest)
 
 add_executable(BlockTest BlockTest.cpp ${PROJECT_SOURCE_DIR}/adk/data/GlobalRegistry.cpp ${HEADER_FILES})
-target_link_libraries(BlockTest PRIVATE gtest gmock_main spdlog::spdlog)
+target_link_libraries(BlockTest gtest gmock_main spdlog)
 add_test(NAME BlockTest COMMAND BlockTest)
 
 #add_test(
