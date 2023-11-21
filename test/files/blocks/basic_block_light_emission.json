@@ -1,1 +1,1 @@
-{"format_version":"1.19.80","minecraft:block":{"components":{"minecraft:light_emission":5,"minecraft:unit_cube":{}},"description":{"identifier":"custom_namespace:basic_block_light_emission"}}}
+{"format_version":"1.20.40","minecraft:block":{"components":{"minecraft:light_emission":5},"description":{"identifier":"custom_namespace:basic_block_light_emission"}}}

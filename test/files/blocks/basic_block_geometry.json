@@ -1,1 +1,1 @@
-{"format_version":"1.19.80","minecraft:block":{"components":{"minecraft:unit_cube":{}},"description":{"identifier":"custom_namespace:basic_block_geometry"}}}
+{"format_version":"1.20.40","minecraft:block":{"description":{"identifier":"custom_namespace:basic_block_geometry"}}}
