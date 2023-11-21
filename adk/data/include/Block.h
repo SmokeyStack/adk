@@ -18,21 +18,11 @@ class Block {
     BlockProperty _internal;
     BlockComponent helper;
 
-    /**
-     * @brief Ensure the collision_box and selection_box is valid
-     *
-     * @param component_check The vectors of origin and size
-     * @param component Used to log collision or selection
-     * @param id Identifier of block
-     * @return true
-     * @return false
-     */
-
    public:
     using json = nlohmann::json;
     json j;
     std::string getType() { return "block"; };
-
+    
     Block(){};
     /**
      * @brief Construct a new Block object
@@ -49,7 +39,7 @@ class Block {
      * @return json
      */
     virtual json output(std::string mod_id, std::string id) {
-        j["format_version"] = "1.20.40";
+        j["format_version"] = "1.20.50";
         j["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
 
         if (_internal.getBlockLightFilter() != 15)

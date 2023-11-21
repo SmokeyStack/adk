@@ -8,6 +8,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 include_directories("${PROJECT_SOURCE_DIR}/adk/data/include")
 file(GLOB_RECURSE HEADER_FILES ${PROJECT_SOURCE_DIR}/adk/data/include/*.h ${PROJECT_SOURCE_DIR}/adk/data/include/*.hpp)
 file(COPY ${PROJECT_SOURCE_DIR}/adk/data/assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+file(COPY ${PROJECT_SOURCE_DIR}/test/files DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 add_subdirectory(${PROJECT_SOURCE_DIR}/adk/data/third-party/spdlog spdlog)
 
 add_executable(main AdkTest.cpp)

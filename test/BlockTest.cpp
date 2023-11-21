@@ -9,11 +9,11 @@
 #include <string>
 #include <vector>
 
-#include "../adk/data/include/Block.h"
-#include "../adk/data/include/BlockProperty.h"
-#include "../adk/data/include/GlobalRegistry.h"
-#include "../adk/data/include/Registry.h"
+#include "Block.h"
+#include "BlockProperty.h"
 #include "CheckFile.h"
+#include "GlobalRegistry.h"
+#include "Registry.h"
 
 namespace fs = std::filesystem;
 
@@ -94,58 +94,58 @@ TEST(BlockTest, BasicBlock) {
         new Block(BlockProperty().setSelection(std::make_pair(
             std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8}))));
 
-    bool basic = compareFiles("../../test/files/blocks/basic_block.json",
+    bool basic = compareFiles("./files/blocks/basic_block.json",
                               "./BP/blocks/basic_block.json");
     bool light_filter =
-        compareFiles("../../test/files/blocks/basic_block_light_filter.json",
+        compareFiles("./files/blocks/basic_block_light_filter.json",
                      "./BP/blocks/basic_block_light_filter.json");
     bool crafting =
-        compareFiles("../../test/files/blocks/basic_block_crafting.json",
+        compareFiles("./files/blocks/basic_block_crafting.json",
                      "./BP/blocks/basic_block_crafting.json");
     bool explosion_bool =
-        compareFiles("../../test/files/blocks/basic_block_explosion_bool.json",
+        compareFiles("./files/blocks/basic_block_explosion_bool.json",
                      "./BP/blocks/basic_block_explosion_bool.json");
     bool explosion_double = compareFiles(
-        "../../test/files/blocks/basic_block_explosion_double.json",
+        "./files/blocks/basic_block_explosion_double.json",
         "./BP/blocks/basic_block_explosion_double.json");
     bool mining_bool =
-        compareFiles("../../test/files/blocks/basic_block_mining_bool.json",
+        compareFiles("./files/blocks/basic_block_mining_bool.json",
                      "./BP/blocks/basic_block_mining_bool.json");
     bool mining_double =
-        compareFiles("../../test/files/blocks/basic_block_mining_double.json",
+        compareFiles("./files/blocks/basic_block_mining_double.json",
                      "./BP/blocks/basic_block_mining_double.json");
-    bool name = compareFiles("../../test/files/blocks/basic_block_name.json",
+    bool name = compareFiles("./files/blocks/basic_block_name.json",
                              "./BP/blocks/basic_block_name.json");
     bool flammable =
-        compareFiles("../../test/files/blocks/basic_block_flammable.json",
+        compareFiles("./files/blocks/basic_block_flammable.json",
                      "./BP/blocks/basic_block_flammable.json");
     bool friction =
-        compareFiles("../../test/files/blocks/basic_block_friction.json",
+        compareFiles("./files/blocks/basic_block_friction.json",
                      "./BP/blocks/basic_block_friction.json");
     bool geometry =
-        compareFiles("../../test/files/blocks/basic_block_geometry.json",
+        compareFiles("./files/blocks/basic_block_geometry.json",
                      "./BP/blocks/basic_block_geometry.json");
     bool light_emission =
-        compareFiles("../../test/files/blocks/basic_block_light_emission.json",
+        compareFiles("./files/blocks/basic_block_light_emission.json",
                      "./BP/blocks/basic_block_light_emission.json");
-    bool loot = compareFiles("../../test/files/blocks/basic_block_loot.json",
+    bool loot = compareFiles("./files/blocks/basic_block_loot.json",
                              "./BP/blocks/basic_block_loot.json");
-    bool color = compareFiles("../../test/files/blocks/basic_block_color.json",
+    bool color = compareFiles("./files/blocks/basic_block_color.json",
                               "./BP/blocks/basic_block_color.json");
     bool rotation =
-        compareFiles("../../test/files/blocks/basic_block_rotation.json",
+        compareFiles("./files/blocks/basic_block_rotation.json",
                      "./BP/blocks/basic_block_rotation.json");
     bool collision_bool =
-        compareFiles("../../test/files/blocks/basic_block_collision_bool.json",
+        compareFiles("./files/blocks/basic_block_collision_bool.json",
                      "./BP/blocks/basic_block_collision_bool.json");
     bool collision_vector = compareFiles(
-        "../../test/files/blocks/basic_block_collision_vector.json",
+        "./files/blocks/basic_block_collision_vector.json",
         "./BP/blocks/basic_block_collision_vector.json");
     bool selection_bool =
-        compareFiles("../../test/files/blocks/basic_block_selection_bool.json",
+        compareFiles("./files/blocks/basic_block_selection_bool.json",
                      "./BP/blocks/basic_block_selection_bool.json");
     bool selection_vector = compareFiles(
-        "../../test/files/blocks/basic_block_selection_vector.json",
+        "./files/blocks/basic_block_selection_vector.json",
         "./BP/blocks/basic_block_selection_vector.json");
 
     EXPECT_EQ(true, basic) << "Block is not working as expected";
