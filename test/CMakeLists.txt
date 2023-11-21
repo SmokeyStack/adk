@@ -14,7 +14,7 @@ add_subdirectory(${PROJECT_SOURCE_DIR}/adk/data/third-party/spdlog spdlog)
 add_executable(main AdkTest.cpp)
 target_link_libraries(main gtest)
 
-add_executable(BlockTest BlockTest.cpp ${PROJECT_SOURCE_DIR}/adk/data/GlobalRegistry.cpp ${HEADER_FILES})
+add_executable(BlockTest BlockTest.cpp ${PROJECT_SOURCE_DIR}/adk/data/src/GlobalRegistry.cpp ${HEADER_FILES})
 target_link_libraries(BlockTest gtest gmock_main spdlog)
 add_test(NAME BlockTest COMMAND BlockTest)
 
