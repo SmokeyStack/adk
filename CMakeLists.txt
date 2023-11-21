@@ -36,7 +36,7 @@ endif()
 enable_testing()
 add_subdirectory(test)
 
-set(SOURCE_FILES Main.cpp)
+set(SOURCE_FILES SetupTests.cpp)
 add_library(${PROJECT_NAME} ${SOURCE_FILES})
 
 # add_executable(manifest
