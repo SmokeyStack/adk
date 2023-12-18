@@ -21,7 +21,7 @@ file(GLOB_RECURSE HEADER_FILES include/*.h include/*.hpp)
 add_library(${LIB_NAME} STATIC ${SRC_FILES})
 file(COPY assets DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-add_subdirectory(third-party/spdlog)
+find_package(spdlog REQUIRED)
 
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -29,10 +29,8 @@ endif()
 
 target_include_directories(${LIB_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 target_include_directories(${LIB_NAME} PUBLIC ${PROJECT_SOURCE_DIR}/include)
-
-target_link_libraries(${LIB_NAME} spdlog)
+target_link_libraries(${LIB_NAME} PRIVATE spdlog::spdlog)
 
 add_executable(${BIN_NAME} src/Main.cpp)
-
 target_link_libraries(${BIN_NAME} PRIVATE ${LIB_NAME})
 target_include_directories(${BIN_NAME} PRIVATE ${CMAKE_CURRENT_BINARY_DIR})

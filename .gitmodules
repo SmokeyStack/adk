@@ -1,3 +1,0 @@
-[submodule "adk/data/third-party/spdlog"]
-	path = adk/data/third-party/spdlog
-	url = https://github.com/gabime/spdlog
