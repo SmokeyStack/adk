@@ -1,14 +1,13 @@
 #ifndef BLOCKCOMPONENT_H
 #define BLOCKCOMPONENT_H
 
-#include <spdlog/spdlog.h>
-
 #include <string>
 #include <variant>
 #include <vector>
 
 #include "BlockCategory.h"
 #include "json.hpp"
+#include "utility/logger.h"
 
 /**
  * @brief Creates the json components
@@ -34,16 +33,15 @@ protected:
 			component_check.first.at(1) > 16 ||
 			component_check.first.at(2) < -8 ||
 			component_check.first.at(2) > 8) {
-			spdlog::get("Blocks/Items")
-				->error(
-					"{} - Minimal position of the bounds of the {} box. "
-					"\"origin\" "
-					"is "
-					"specified as [x, y, z] and must be in the range (-8, "
-					"0, "
-					"-8) "
-					"to (8, 16, 8), inclusive",
-					id, component);
+			adk::log::error(
+				"{} - Minimal position of the bounds of the {} box. "
+				"\"origin\" "
+				"is "
+				"specified as [x, y, z] and must be in the range (-8, "
+				"0, "
+				"-8) "
+				"to (8, 16, 8), inclusive",
+				id, component);
 			exit(EXIT_FAILURE);
 		}
 
@@ -55,28 +53,25 @@ protected:
 		int size_3 = component_check.second.at(2);
 
 		if ((origin_1 + size_1) < -8 || (origin_1 + size_1) > 8) {
-			spdlog::get("Blocks/Items")
-				->error(
-					"{} - Size of each side of the {} box. Size is "
-					"specified as [x, y, z]. \"origin\" + \"size\" must be "
-					"in the range (-8, 0, -8) to (8, 16, 8), inclusive",
-					id, component);
+			adk::log::error(
+				"{} - Size of each side of the {} box. Size is "
+				"specified as [x, y, z]. \"origin\" + \"size\" must be "
+				"in the range (-8, 0, -8) to (8, 16, 8), inclusive",
+				id, component);
 			exit(EXIT_FAILURE);
 		}
 
 		if ((origin_2 + size_2) < 0 || (origin_2 + size_2) > 16) {
-			spdlog::get("Blocks/Items")
-				->error(
-					"{} - Size of each side of the {} box. Size is "
-					"specified as [x, y, z]. \"origin\" + \"size\" must be "
-					"in the range (-8, 0, -8) to (8, 16, 8), inclusive",
-					id, component);
+			adk::log::error(
+				"{} - Size of each side of the {} box. Size is "
+				"specified as [x, y, z]. \"origin\" + \"size\" must be "
+				"in the range (-8, 0, -8) to (8, 16, 8), inclusive",
+				id, component);
 			exit(EXIT_FAILURE);
 		}
 
 		if ((origin_3 + size_3) < -8 || (origin_3 + size_3) > 8) {
-			spdlog::get("Blocks/Items")
-				->error(
+			adk::log::error(
 					"{} - Size of each side of the {} box. Size is "
 					"specified as [x, y, z]. \"origin\" + \"size\" must be "
 					"in the range (-8, 0, -8) to (8, 16, 8), inclusive",
@@ -97,8 +92,7 @@ public:
 	 */
 	nlohmann::json::object_t blockLightFilter(int value, std::string id) {
 		if (value > 15 || value < 0) {
-			spdlog::get("Blocks/Items")
-				->error("{} - BlockLightFilter can only be in range (0-15)",
+			adk::log::error("{} - BlockLightFilter can only be in range (0-15)",
 					id);
 			exit(EXIT_FAILURE);
 		}
@@ -162,8 +156,7 @@ public:
 
 	nlohmann::json::object_t friction(double value, std::string id) {
 		if (value > 0.9 || value < 0.0) {
-			spdlog::get("Blocks/Items")
-				->error("{} - Friction can only be in range (0.0-0.9)", id);
+			adk::log::error("{} - Friction can only be in range (0.0-0.9)", id);
 			exit(EXIT_FAILURE);
 		}
 
@@ -174,8 +167,7 @@ public:
 
 	nlohmann::json::object_t lightEmission(int value, std::string id) {
 		if (value > 15 || value < 0) {
-			spdlog::get("Blocks/Items")
-				->error("{} - BlockLightFilter can only be in range (0-15)",
+			adk::log::error("{} - BlockLightFilter can only be in range (0-15)",
 					id);
 			exit(EXIT_FAILURE);
 		}
@@ -200,8 +192,7 @@ public:
 	nlohmann::json::object_t rotation(std::vector<int> value, std::string id) {
 		for (auto const& entry : value) {
 			if (entry % 90 != 0) {
-				spdlog::get("Blocks/Items")
-					->error("{} - Rotation can only be factors of 90", id);
+				adk::log::error("{} - Rotation can only be factors of 90", id);
 				exit(EXIT_FAILURE);
 			}
 		}

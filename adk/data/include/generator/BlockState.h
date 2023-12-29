@@ -23,7 +23,7 @@ void simpleBlock(std::string block, std::string texture) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -61,7 +61,7 @@ void simpleBlock(std::string block, std::string north, std::string east,
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -103,7 +103,7 @@ void axisBlock(std::string block, std::string sides, std::string ends) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -141,7 +141,7 @@ void customBlock(std::string block, std::string model, std::string texture) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -165,7 +165,7 @@ void tintedGlass(std::string block, std::string texture) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -198,7 +198,7 @@ void headBlock(std::string block, std::string texture) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -239,7 +239,7 @@ void headBlock(std::string block, std::string sides, std::string ends) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -294,7 +294,7 @@ void headBlock(std::string block, std::string north, std::string east,
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -354,7 +354,7 @@ void candleBlock(std::string block, std::string texture) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -392,7 +392,7 @@ void slabBlock(std::string block, std::string texture) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);
@@ -430,7 +430,7 @@ void crossBlock(std::string block, std::string texture) {
 
     if (!fs::exists("./BP/blocks/" + block + ".json")) {
         spdlog::get("Data Generator")
-            ->error(
+            ::error(
                 "No block found: {}.json - Please check if this block exists",
                 block);
         exit(EXIT_FAILURE);

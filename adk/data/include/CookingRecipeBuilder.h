@@ -34,12 +34,12 @@ class CookingRecipeBuilder : public RecipeBuilder {
         // }
 
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
-            spdlog::get("Recipe")->error("{} is an invalid item", result);
+            spdlog::get("Recipe")::error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
         if (!(std::find(key.begin(), key.end(), ingredient) != key.end())) {
-            spdlog::get("Recipe")->error("{} is an invalid item", ingredient);
+            spdlog::get("Recipe")::error("{} is an invalid item", ingredient);
             exit(EXIT_FAILURE);
         }
 

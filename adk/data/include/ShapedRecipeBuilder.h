@@ -21,7 +21,7 @@ class ShapedRecipeBuilder : public RecipeBuilder {
 
     void ensureValidity(std::string id) {
         if (_rows.empty()) {
-            spdlog::get("Recipe")->error(
+            spdlog::get("Recipe")::error(
                 "No pattern is defined for shaped recipe - {}", id);
             exit(EXIT_FAILURE);
         } else {
@@ -63,7 +63,7 @@ class ShapedRecipeBuilder : public RecipeBuilder {
         // }
 
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
-            spdlog::get("Recipe")->error("{} is an invalid item", result);
+            spdlog::get("Recipe")::error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
@@ -100,15 +100,15 @@ class ShapedRecipeBuilder : public RecipeBuilder {
         // }
 
         if (!(std::find(key.begin(), key.end(), item) != key.end())) {
-            spdlog::get("Recipe")->error("{} is an invalid item", item);
+            spdlog::get("Recipe")::error("{} is an invalid item", item);
             exit(EXIT_FAILURE);
         }
 
         if (_key.count(symbol)) {
-            spdlog::get("Recipe")->error("{} is already defined", symbol);
+            spdlog::get("Recipe")::error("{} is already defined", symbol);
             exit(EXIT_FAILURE);
         } else if (symbol == ' ') {
-            spdlog::get("Recipe")->error(
+            spdlog::get("Recipe")::error(
                 "White space(' ') is reserved and cannot be defined");
             exit(EXIT_FAILURE);
         } else {

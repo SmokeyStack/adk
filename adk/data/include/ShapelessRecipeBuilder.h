@@ -36,7 +36,7 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
         // }
 
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
-            spdlog::get("Recipe")->error("{} is an invalid item", result);
+            spdlog::get("Recipe")::error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
@@ -66,7 +66,7 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
         // }
 
         if (!(std::find(key.begin(), key.end(), result) != key.end())) {
-            spdlog::get("Recipe")->error("{} is an invalid item", result);
+            spdlog::get("Recipe")::error("{} is an invalid item", result);
             exit(EXIT_FAILURE);
         }
 
@@ -96,7 +96,7 @@ class ShapelessRecipeBuilder : public RecipeBuilder {
         // }
 
         if (!(std::find(key.begin(), key.end(), item) != key.end())) {
-            spdlog::get("Recipe")->error("{} is an invalid item", item);
+            spdlog::get("Recipe")::error("{} is an invalid item", item);
             exit(EXIT_FAILURE);
         }
 
