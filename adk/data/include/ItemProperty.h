@@ -5,74 +5,6 @@
 #include <vector>
 
 /**
- * @brief Represents dye color in Minecraft
- *
- */
-enum class Dye {
-    BLACK,
-    RED,
-    GREEN,
-    BROWN,
-    BLUE,
-    PURPLE,
-    CYAN,
-    SILVER,
-    GRAY,
-    PINK,
-    LIME,
-    YELLOW,
-    LIGHTBLUE,
-    MAGENTA,
-    ORANGE,
-    WHITE
-};
-
-/**
- * @brief Get the Dye object
- *
- * @param dye enum Dye
- * @return std::string
- */
-inline std::string getDye(Dye dye) {
-    switch (dye) {
-        case Dye::BLACK:
-            return "black";
-        case Dye::RED:
-            return "red";
-        case Dye::GREEN:
-            return "green";
-        case Dye::BROWN:
-            return "brown";
-        case Dye::BLUE:
-            return "blue";
-        case Dye::PURPLE:
-            return "purple";
-        case Dye::CYAN:
-            return "cyan";
-        case Dye::SILVER:
-            return "silver";
-        case Dye::GRAY:
-            return "gray";
-        case Dye::PINK:
-            return "pink";
-        case Dye::LIME:
-            return "lime";
-        case Dye::YELLOW:
-            return "yellow";
-        case Dye::LIGHTBLUE:
-            return "lightblue";
-        case Dye::MAGENTA:
-            return "magenta";
-        case Dye::ORANGE:
-            return "orange";
-        case Dye::WHITE:
-            return "white";
-        default:
-            return "Error";
-    }
-}
-
-/**
  * @brief Represents item properties such as icon, stack size, etc
  *
  */
@@ -85,7 +17,6 @@ class ItemProperty {
     std::vector<std::string> block_placer_placement;
     std::string cooldown_category;
     float cooldown_time;
-    std::string dye;
     std::string entity_placer;
     std::vector<std::string> entity_placer_placement;
     std::vector<std::string> entity_placer_dispense;
@@ -155,17 +86,6 @@ class ItemProperty {
     ItemProperty setCooldown(std::string category, float time) {
         this->cooldown_category = category;
         this->cooldown_time = time;
-        return *this;
-    }
-
-    /**
-     * @brief Set the "dye_powder" component
-     *
-     * @param dye enum Dye
-     * @return ItemProperty
-     */
-    ItemProperty setDye(Dye dye) {
-        this->dye = getDye(dye);
         return *this;
     }
 
@@ -271,13 +191,6 @@ class ItemProperty {
      * @return float
      */
     float getCooldownTime() { return cooldown_time; }
-
-    /**
-     * @brief Get the "dye_powder" component
-     *
-     * @return std::string
-     */
-    std::string getDyeProperty() { return dye; }
 
     /**
      * @brief Get the "entity_placer" component

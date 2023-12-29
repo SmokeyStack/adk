@@ -12,6 +12,8 @@ As a standalone, you will need to manually copy the files to your `com.mojang` f
 __**Common Steps**__
 - Install [Visual Studio Build Tools](https://visualstudio.microsoft.com/downloads/#build-tools-for-visual-studio-2022)
 - Install [CMake](https://cmake.org/install/)
+- Install [vcpkg](https://github.com/microsoft/vcpkg) and set up command line integration as described in the Vcpkg docs. Remember the location of vcpkg's `CMAKE_TOOLCHAIN_FILE`
+- Run `vcpkg install spdlog:x64-windows`
 
 __**Standalone**__
 - Clone this repository
@@ -49,3 +51,10 @@ __**Standalone**__
 __**Regolith Filter**__
 
 - Run `regolith run default`(or whichever profile you're using) to build your add-on
+
+## Third Party Software
+
+This project uses the following third party software:
+
+- [gabime/spdlog](https://github.com/gabime/spdlog)
+- [nlohmann/json](https://github.com/nlohmann/json)
