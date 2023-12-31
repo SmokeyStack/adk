@@ -1,6 +1,6 @@
 #include "Language.h"
 
-#include "GlobalRegistry.h"
+#include "registry_global.h"
 
 Language::Language(std::string id, std::string locale) {
     mod_id = id;

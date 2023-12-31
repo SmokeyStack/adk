@@ -6,8 +6,8 @@
 #include <string>
 #include <variant>
 
-#include "GlobalRegistry.h"
-#include "Registry.h"
+#include "registry_global.h"
+#include "registry.h"
 #include "json.hpp"
 
 namespace fs = std::filesystem;
@@ -21,7 +21,7 @@ class LanguageBuilder {
     void add(std::string id, std::string value) {
         for (auto const entry : globalregistry) {
             std::map<std::string, std::variant<Block*, Item*>> registry_check;
-            registry_check = entry->getRegistrar();
+            registry_check = entry->GetRegistry();
 
             for (std::map<std::string, std::variant<Block*, Item*>>::iterator
                      it = registry_check.begin();

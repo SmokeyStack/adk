@@ -1,6 +1,6 @@
-#include "Data.h"
-#include "Object.h"
-#include "Recipe.h"
+#include "data.h"
+#include "object.h"
+#include "recipe.h"
 #include "utility/logger.h"
 
 int main() {

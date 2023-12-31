@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 
-#include "Registry.h"
+#include "registry.h"
 #include "json.hpp"
 
 namespace fs = std::filesystem;

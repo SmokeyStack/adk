@@ -8,8 +8,8 @@
 #include <string>
 #include <vector>
 
-#include "GlobalRegistry.h"
-#include "RecipeBuilder.h"
+#include "registry_global.h"
+#include "builder_recipe.h"
 #include "json.hpp"
 
 class ShapedRecipeBuilder : public RecipeBuilder {

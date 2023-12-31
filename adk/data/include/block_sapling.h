@@ -3,8 +3,8 @@
 
 #include <vector>
 
-#include "BlockProperty.h"
-#include "BushBlock.h"
+#include "block_property.h"
+#include "block_bush.h"
 #include "json.hpp"
 
 /**

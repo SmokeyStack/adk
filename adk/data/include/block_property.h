@@ -6,7 +6,7 @@
 #include <variant>
 #include <vector>
 
-#include "BlockCategory.h"
+#include "block_category.h"
 #include "json.hpp"
 
 /**

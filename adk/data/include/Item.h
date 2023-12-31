@@ -6,7 +6,7 @@
 #include <string>
 
 //#include "ItemComponent.h"
-#include "ItemProperty.h"
+#include "item_property.h"
 #include "json.hpp"
 
 /**
@@ -38,7 +38,7 @@ class Item {
      * @param id Identifier for the item
      * @return json
      */
-    virtual json output(std::string mod_id, std::string id) {
+    virtual json Generate(std::string mod_id, std::string id) {
         /*j["format_version"] = "1.20.40";
         j["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 

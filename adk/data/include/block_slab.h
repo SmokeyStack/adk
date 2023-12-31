@@ -1,8 +1,8 @@
 #ifndef SLABBLOCK_H
 #define SLABBLOCK_H
 
-#include "Block.h"
-#include "BlockProperty.h"
+#include "block.h"
+#include "block_property.h"
 #include "json.hpp"
 
 /**

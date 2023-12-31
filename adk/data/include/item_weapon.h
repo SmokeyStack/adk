@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "DurabilityItem.h"
-#include "ItemProperty.h"
+#include "item_durability.h"
+#include "item_property.h"
 #include "json.hpp"
 
 /**

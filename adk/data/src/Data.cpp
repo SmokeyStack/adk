@@ -1,9 +1,9 @@
-#include "Data.h"
+#include "data.h"
 
 #include <string>
 
-#include "GlobalRegistry.h"
-#include "generator/BlockState.h"
+#include "registry_global.h"
+#include "generator/block_state.h"
 
 Data::Data() {}
 

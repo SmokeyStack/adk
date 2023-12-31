@@ -3,9 +3,9 @@
 
 #include <string>
 
-#include "ArmorType.h"
-#include "DurabilityItem.h"
-#include "ItemProperty.h"
+#include "type_armor.h"
+#include "item_durability.h"
+#include "item_property.h"
 #include "json.hpp"
 
 /**

@@ -8,10 +8,10 @@
 #include <string>
 #include <vector>
 
-#include "../adk/data/include/GlobalRegistry.h"
-#include "../adk/data/include/Item.h"
-#include "../adk/data/include/ItemProperty.h"
-#include "../adk/data/include/Registry.h"
+#include "../adk/data/include/registry_global.h"
+#include "../adk/data/include/item.h"
+#include "../adk/data/include/item_property.h"
+#include "../adk/data/include/registry.h"
 #include "CheckFile.h"
 
 namespace fs = std::filesystem;

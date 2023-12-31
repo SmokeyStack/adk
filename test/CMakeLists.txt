@@ -14,7 +14,7 @@ find_package(spdlog REQUIRED)
 add_executable(main AdkTest.cpp)
 target_link_libraries(main gtest)
 
-add_executable(BlockTest BlockTest.cpp ${PROJECT_SOURCE_DIR}/adk/data/src/GlobalRegistry.cpp ${PROJECT_SOURCE_DIR}/adk/data/src/utility/logger.cpp ${HEADER_FILES})
+add_executable(BlockTest BlockTest.cpp ${PROJECT_SOURCE_DIR}/adk/data/src/registry_global.cpp ${PROJECT_SOURCE_DIR}/adk/data/src/utility/logger.cpp ${HEADER_FILES})
 target_link_libraries(BlockTest PRIVATE gtest gmock_main spdlog::spdlog)
 add_test(NAME BlockTest COMMAND BlockTest)
 

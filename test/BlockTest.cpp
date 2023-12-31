@@ -8,12 +8,13 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <variant>
 
-#include "Block.h"
-#include "BlockProperty.h"
+#include "block.h"
+#include "block_property.h"
 #include "CheckFile.h"
-#include "GlobalRegistry.h"
-#include "Registry.h"
+#include "registry_global.h"
+#include "registry.h"
 #include "utility/logger.h"
 
 namespace fs = std::filesystem;
@@ -33,56 +34,56 @@ TEST(BlockTest, BasicBlock) {
     adk::log::info("Starting Block Test");
 
     const std::string MODID = "custom_namespace";
-    Registry<Block>* mod = new Registry<Block>(MODID);
+    adk::Registry<adk::Block>* mod = new adk::Registry<adk::Block>(MODID);
 
-    globalregistry.push_back(mod);
+    adk::registry_global.push_back(mod);
 
     std::vector<std::string> tags = {"custom_crafting_table"};
 
-    mod->subscribe("basic_block", new Block(BlockProperty()));
+    mod->Subscribe("basic_block", new adk::Block(BlockProperty()));
 
-    mod->subscribe("basic_block_light_filter",
-                   new Block(BlockProperty().setBlockLightFilter(5)));
-    mod->subscribe(
+    mod->Subscribe("basic_block_light_filter",
+                   new adk::Block(BlockProperty().setBlockLightFilter(5)));
+    mod->Subscribe(
         "basic_block_crafting",
-        new Block(BlockProperty().setCrafting(tags, "Custom Crafting Table")));
-    mod->subscribe("basic_block_explosion_bool",
-                   new Block(BlockProperty().setExplosion(false)));
-    mod->subscribe("basic_block_explosion_double",
-                   new Block(BlockProperty().setExplosion(5.5)));
-    mod->subscribe("basic_block_mining_bool",
-                   new Block(BlockProperty().setMining(false)));
-    mod->subscribe("basic_block_mining_double",
-                   new Block(BlockProperty().setMining(5.5)));
-    mod->subscribe("basic_block_name",
-                   new Block(BlockProperty().setName("Custom Name")));
-    mod->subscribe("basic_block_flammable",
-                   new Block(BlockProperty().setFlammable(5, 5)));
-    mod->subscribe("basic_block_friction",
-                   new Block(BlockProperty().setFriction(0.5)));
-    mod->subscribe("basic_block_geometry",
-                   new Block(BlockProperty().setGeometry("custom_geometry")));
-    mod->subscribe("basic_block_light_emission",
-                   new Block(BlockProperty().setLightEmission(5)));
-    mod->subscribe("basic_block_loot",
-                   new Block(BlockProperty().setLoot("path/to/loot.json")));
-    mod->subscribe("basic_block_color",
-                   new Block(BlockProperty().setColor("000000")));
-    mod->subscribe(
+        new adk::Block(BlockProperty().setCrafting(tags, "Custom Crafting Table")));
+    mod->Subscribe("basic_block_explosion_bool",
+                   new adk::Block(BlockProperty().setExplosion(false)));
+    mod->Subscribe("basic_block_explosion_double",
+                   new adk::Block(BlockProperty().setExplosion(5.5)));
+    mod->Subscribe("basic_block_mining_bool",
+                   new adk::Block(BlockProperty().setMining(false)));
+    mod->Subscribe("basic_block_mining_double",
+                   new adk::Block(BlockProperty().setMining(5.5)));
+    mod->Subscribe("basic_block_name",
+                   new adk::Block(BlockProperty().setName("Custom Name")));
+    mod->Subscribe("basic_block_flammable",
+                   new adk::Block(BlockProperty().setFlammable(5, 5)));
+    mod->Subscribe("basic_block_friction",
+                   new adk::Block(BlockProperty().setFriction(0.5)));
+    mod->Subscribe("basic_block_geometry",
+                   new adk::Block(BlockProperty().setGeometry("custom_geometry")));
+    mod->Subscribe("basic_block_light_emission",
+                   new adk::Block(BlockProperty().setLightEmission(5)));
+    mod->Subscribe("basic_block_loot",
+                   new adk::Block(BlockProperty().setLoot("path/to/loot.json")));
+    mod->Subscribe("basic_block_color",
+                   new adk::Block(BlockProperty().setColor("000000")));
+    mod->Subscribe(
         "basic_block_rotation",
-        new Block(BlockProperty().setRotation(std::vector<int>{90, 90, 90})));
+        new adk::Block(BlockProperty().setRotation(std::vector<int>{90, 90, 90})));
 
-    mod->subscribe("basic_block_collision_bool",
-                   new Block(BlockProperty().setCollision(false)));
-    mod->subscribe(
+    mod->Subscribe("basic_block_collision_bool",
+                   new adk::Block(BlockProperty().setCollision(false)));
+    mod->Subscribe(
         "basic_block_collision_vector",
-        new Block(BlockProperty().setCollision(std::make_pair(
+        new adk::Block(BlockProperty().setCollision(std::make_pair(
             std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8}))));
-    mod->subscribe("basic_block_selection_bool",
-                   new Block(BlockProperty().setSelection(false)));
-    mod->subscribe(
+    mod->Subscribe("basic_block_selection_bool",
+                   new adk::Block(BlockProperty().setSelection(false)));
+    mod->Subscribe(
         "basic_block_selection_vector",
-        new Block(BlockProperty().setSelection(std::make_pair(
+        new adk::Block(BlockProperty().setSelection(std::make_pair(
             std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8}))));
 
     bool basic = compareFiles("./files/blocks/basic_block.json",
