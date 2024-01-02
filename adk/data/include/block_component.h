@@ -278,7 +278,7 @@ namespace adk {
 		 * @brief Creates the "translation" key for the "transformation" component
 		 * Transformed geometries still have the same restrictions that non-transformed geometries have such as a maximum size of 30/16 units.
 		 *
-		 * @param value Vector of rotation in degrees
+		 * @param value Vector of translation in degrees
 		 *
 		 * @return nlohmann::json::object_t
 		*/
@@ -293,7 +293,7 @@ namespace adk {
 		 * @brief Creates the "scale" key for the "transformation" component
 		 * Transformed geometries still have the same restrictions that non-transformed geometries have such as a maximum size of 30/16 units.
 		 *
-		 * @param value Vector of rotation in degrees
+		 * @param value Vector of scale in degrees
 		 *
 		 * @return nlohmann::json::object_t
 		*/
@@ -314,7 +314,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t CollisionBox(bool value) {
+		nlohmann::json::object_t BoxCollision(bool value) {
 			nlohmann::json::object_t output = { {"minecraft:collision_box", value} };
 
 			return output;
@@ -334,7 +334,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t CollisionBox(std::vector<int> origin, std::vector<int> size, std::string id) {
+		nlohmann::json::object_t BoxCollision(std::vector<int> origin, std::vector<int> size, std::string id) {
 			EnsureValidity(origin, size, "collision", id);
 
 			nlohmann::json::object_t output = { {"minecraft:collision_box",{{"origin",origin},{"size", size}}} };
@@ -352,7 +352,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t SelectionBox(bool value) {
+		nlohmann::json::object_t BoxSelection(bool value) {
 			nlohmann::json::object_t output = { {"minecraft:selection_box", value} };
 
 			return output;
@@ -372,7 +372,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t SelectionBox(std::vector<int> origin, std::vector<int> size, std::string id) {
+		nlohmann::json::object_t BoxSelection(std::vector<int> origin, std::vector<int> size, std::string id) {
 			EnsureValidity(origin, size, "selection", id);
 
 			nlohmann::json::object_t output = { {"minecraft:selection_box",{{"origin",origin},{"size", size}}} };

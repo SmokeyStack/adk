@@ -1,5 +1,4 @@
-#ifndef BLOCKPROPERTY_H
-#define BLOCKPROPERTY_H
+#pragma once
 
 #include <optional>
 #include <string>
@@ -9,437 +8,487 @@
 #include "block_category.h"
 #include "json.hpp"
 
-/**
- * @brief Represents block properties such as destroy speed, loot, etc
- *
- */
-class BlockProperty {
-   private:
-    int block_light_filter = 15;
-    std::optional<std::pair<std::vector<std::string>, std::string>> crafting;
-    std::variant<bool, double> explosion = true;
-    std::variant<bool, double> mining = true;
-    std::string display_name;
-    std::optional<std::pair<int, int>> flammable;
-    double friction = 0.4;
-    std::string geometry;
-    int light_emission;
-    std::string loot;
-    std::string color;
-    std::vector<int> rotation{0, 0, 0};
-    std::vector<double> scale{0, 0, 0};
-    std::vector<double> translation{0, 0, 0};
-    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-        collision = true;
-    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-        selection = true;
-    std::optional<std::pair<std::string, std::string>> creative;
+namespace adk {
+	/**
+	 * @brief Represents block properties such as destroy speed, loot, etc
+	 */
+	class BlockProperty {
+	public:
+		/**
+		 * @brief Sets the "light_dampening" component
+		 *
+		 * @param value The amount that light will be dampened when it passes through the block, in a range (0-15).
+		 * Higher value means the light will be dampened more.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetLightDampening(int value) {
+			this->light_dampening = value;
 
-   public:
-    /**
-     * @brief Sets the "light_dampening" component
-     *
-     * @param light_filter The amount that light will be dampened when it passes
-     through the block, in a range (0-15). Higher value means the light will be
-     dampened more
-     * @return BlockProperty
-     */
-    BlockProperty setBlockLightFilter(int light_filter) {
-        this->block_light_filter = light_filter;
-        return *this;
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Set the "crafting_table" component
-     *
-     * @param tags Defines the tags recipes should define to be crafted on this
-     * table. Limited to 64 tags. Each tag is limited to 64 characters
-     * @param name Specifies the language file key that maps to what text will
-     * be displayed in the UI of this table. If the string given can not be
-     * resolved as a loc string, the raw string given will be  displayed. If
-     * this field is omitted, the name displayed will default to the name
-     * specified in the "display_name" component. If this block has no
-     * "display_name" component, the name displayed will default to the name of
-     * the block
-     * @return BlockProperty
-     */
-    BlockProperty setCrafting(std::vector<std::string>& tags,
-                              std::string name) {
-        this->crafting = std::make_pair(tags, name);
-        return *this;
-    }
+		/**
+		 * @brief Sets the "crafting_table" component
+		 *
+		 * @param tags Defines the tags recipes should define to be crafted on this table.
+		 * Limited to 64 tags.
+		 * Each tag is limited to 64 characters.
+		 *
+		 * @param name Specifies the language file key that maps to what text will be displayed in the UI of this table.
+		 * If the string given can not be resolved as a loc string, the raw string given will be displayed.
+		 * If this field is omitted, the name displayed will default to the name specified in the "display_name" component.
+		 * If this block has no "display_name" component, the name displayed will default to the name of the block.
+		 *
+		 * @return nlohmann::json::object_t
+		*/
+		BlockProperty SetCrafting(std::vector<std::string> tags, std::string name) {
+			this->crafting = std::make_pair(tags, name);
 
-    /**
-     * @brief Sets "destructible_by_explosion" component
-     *
-     * @param explosion_resistance Sets the explosion resistance for the
-     * block. Greater values result in greater resistance to explosions
-     * The scale will be different for different explosion power levels. A
-     * negative value or 0 means it will easily explode; larger numbers
-     * increase level of resistance
-     * @return BlockProperty
-     */
-    BlockProperty setExplosion(
-        std::variant<bool, double> explosion_resistance) {
-        if (std::get_if<bool>(&explosion_resistance)) {
-            this->explosion = std::get<bool>(explosion_resistance);
-            return *this;
-        } else {
-            this->explosion = std::get<double>(explosion_resistance);
-            return *this;
-        }
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Set the "destructible_by_mining" component
-     *
-     * @param mining_speed Sets the number of seconds it takes to destroy
-     * the block with base equipment. Greater numbers result in greater
-     * mining times
-     * @return BlockProperty
-     */
-    BlockProperty setMining(std::variant<bool, double> mining_speed) {
-        if (std::get_if<bool>(&mining_speed)) {
-            this->mining = std::get<bool>(mining_speed);
-            return *this;
-        } else {
-            this->mining = std::get<double>(mining_speed);
-            return *this;
-        }
-    }
+		/**
+		 * @brief Sets the "destructible_by_explosion" component
+		 *
+		 * @param value Describes how resistant the block is to explosion.
+		 * Greater values mean the block is less likely to break when near an explosion (or has higher resistance to explosions).
+		 * The scale will be different for different explosion power levels.
+		 * A negative value or 0 means it will easily explode; larger numbers increase level of resistance.
+		 *
+		 * @return BlockProperty
+		*/
+		BlockProperty SetDestructibleByExplosion(
+			std::variant<bool, double> value) {
+			if (std::get_if<bool>(&value)) {
+				this->explosion = std::get<bool>(value);
 
-    /**
-     * @brief Set the "display_name" component
-     *
-     * @param name Specifies the language file key that maps to what text
-     * will be displayed when you hover over the block in your inventory and
-     * hotbar If the string given can not be resolved as a loc string, the
-     * raw string given will be displayed. If this component is omitted, the
-     * name of the block will be used as the display name
-     * @return BlockProperty
-     */
-    BlockProperty setName(std::string name) {
-        this->display_name = name;
-        return *this;
-    }
+				return *this;
+			}
 
-    /**
-     * @brief Set the "flammable" component
-     *
-     * @param catch_chance A modifier affecting the chance that this block
-     * will catch flame when next to a fire. Values are greater than or
-     * equal to 0, with a higher number meaning more likely to catch on
-     * fire. For a "catch_chance_modifier" greater than 0, the fire will
-     * continue to burn until the block is destroyed (or it will burn
-     * forever if the "destroy_chance_modifier" is 0). If the
-     * "catch_chance_modifier" is 0, and the block is directly ignited, the
-     * fire will eventually burn out without destroying the block (or it
-     * will have a chance to be destroyed if "destroy_chance_modifier" is
-     * greater than 0). The default value of 5 is the same as that of Planks
-     * @param destroy A modifier affecting the chance that this block will
-     * be destroyed by flames when on fire. Values are greater than or equal
-     * to 0, with a higher number meaning more likely to be destroyed by
-     * fire. For a "destroy_chance_modifier" of 0, the block will never be
-     * destroyed by fire, and the fire will burn forever if the
-     * "catch_chance_modifier" is greater than 0. The default value of 20 is
-     * the same as that of Planks
-     * @return BlockProperty
-     */
-    BlockProperty setFlammable(int catch_chance, int destroy) {
-        this->flammable = std::make_pair(catch_chance, destroy);
-        return *this;
-    }
+			this->explosion = std::get<double>(value);
 
-    /**
-     * @brief Set the "friction" component
-     *
-     * @param friction Describes the friction for this block in a range of
-     (0.0-0.9). Friction affects an entity's movement speed when it travels
-     on the block. Greater value results in more friction
-     * @return BlockProperty
-     */
-    BlockProperty setFriction(double friction) {
-        this->friction = friction;
-        return *this;
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Set the "geometry" component
-     *
-     * @param geometry The description identifier of the geometry file to
-     * use to render this block. This identifier must match an existing
-     * geometry identifier in any of the currently loaded resource packs
-     * @return BlockProperty
-     */
-    BlockProperty setGeometry(std::string geometry) {
-        this->geometry = geometry;
-        return *this;
-    }
+		/**
+		 * @brief Set the "destructible_by_mining" component
+		 *
+		 * @param value Sets the number of seconds it takes to destroy the block with base equipment.
+		 * Greater numbers result in greater mining times.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetDestructibleByMining(std::variant<bool, double> value) {
+			if (std::get_if<bool>(&value)) {
+				this->mining = std::get<bool>(value);
 
-    /**
-     * @brief Set the "light_emission" component
-     *
-     * @param emission The amount of light this block will emit in a range
-     * (0-15). Higher value means more light will be emitted
-     * @return BlockProperty
-     */
-    BlockProperty setLightEmission(int emission) {
-        this->light_emission = emission;
-        return *this;
-    }
+				return *this;
+			}
 
-    /**
-     * @brief Set the "loot" component
-     *
-     * @param loot_table The path to the loot table, relative to the
-     * behavior pack. Path string is limited to 256 characters
-     * @return BlockProperty
-     */
-    BlockProperty setLoot(std::string loot_table) {
-        this->loot = loot_table;
-        return *this;
-    }
+			this->mining = std::get<double>(value);
 
-    /**
-     * @brief Set the "map_color" component
-     *
-     * @param map_color Sets the color of the block when rendered to a map.
-     * The color is represented as a hex value in the format "#RRGGBB". May
-     * also be expressed as an array of [R, G, B] from 0 to 255. If this
-     * component is omitted, the block will not show up on the map
-     * @return BlockProperty
-     */
-    BlockProperty setColor(std::string map_color) {
-        this->color = map_color;
-        return *this;
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Set the "translation" field of "transformation" component
-     * @param translation
-     * @return BlockProperty
-     */
-    BlockProperty setTranslation(std::vector<double> translation) {
-        this->translation = translation;
-        return *this;
-    }
+		/**
+		 * @brief Set the "display_name" component
+		 *
+		 * @param value Specifies the language file key that maps to what text will be displayed when you hover over the block in your inventory and hotbar.
+		 * If the string given can not be resolved as a loc string, the raw string given will be displayed.
+		 * If this component is omitted, the name of the block will be used as the display name.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetDisplayName(std::string value) {
+			this->display_name = value;
 
-    /**
-     * @brief Set the "scale" field of "transformation" component
-     * @param scale
-     * @return BlockProperty
-     */
-    BlockProperty setScale(std::vector<double> scale) {
-        this->scale = scale;
-        return *this;
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Set the "rotation" field of "transformation" component
-     * @param rotation The block's rotation around the center of the cube in
-     * degrees. The rotation is specified as [x, y, z]. Angles need to be in
-     * factors of 90
-     * @return BlockProperty
-     */
-    BlockProperty setRotation(std::vector<int> rotation) {
-        this->rotation = rotation;
-        return *this;
-    }
+		/**
+		 * @brief Sets the "flammable" component
+		 *
+		 * @param value Describes the flammable properties for this block.
+		 * If set to true, default values are used.
+		 * If set to false, or if this component is omitted, the block will not be able to catch on fire naturally from neighbors, but it can still be directly ignited.
+		 *
+		 * @return BlockProperty
+		*/
+		BlockProperty SetFlammable(bool value) {
+			this->flammable = value;
 
-    /**
-     * @brief Set the "collision_box" component
-     *
-     * @param collision_box Accepts either bool or pair of int vectors
-     * @return BlockProperty
-     */
-    BlockProperty setCollision(
-        std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-            collision_box) {
-        if (std::get_if<bool>(&collision_box)) {
-            this->collision = std::get<bool>(collision_box);
-            return *this;
-        } else {
-            this->collision =
-                std::get<std::pair<std::vector<int>, std::vector<int>>>(
-                    collision_box);
-            return *this;
-        }
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Set the "selection_box" component
-     *
-     * @param selection_box Accepts either a bool or a pair of int vectors
-     * @return BlockProperty
-     */
-    BlockProperty setSelection(
-        std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-            selection_box) {
-        if (std::get_if<bool>(&selection_box)) {
-            this->selection = std::get<bool>(selection_box);
-            return *this;
-        } else {
-            this->selection =
-                std::get<std::pair<std::vector<int>, std::vector<int>>>(
-                    selection_box);
-            return *this;
-        }
-    }
+		/**
+		 * @brief Sets the "flammable" component
+		 *
+		 * @param catch_chance A modifier affecting the chance that this block will catch flame when next to a fire.
+		 * Values are greater than or equal to 0, with a higher number meaning more likely to catch on fire.
+		 * For a "catch_chance_modifier" greater than 0, the fire will continue to burn until the block is destroyed (or it will burn forever if the "destroy_chance_modifier" is 0).
+		 * If the "catch_chance_modifier" is 0, and the block is directly ignited, the fire will eventually burn out without destroying the block (or it will have a chance to be destroyed if "destroy_chance_modifier" is greater than 0).
+		 * The default value of 5 is the same as that of Planks.
+		 *
+		 * @param destroy_chance A modifier affecting the chance that this block will be destroyed by flames when on fire.
+		 * Values are greater than or equal to 0, with a higher number meaning more likely to be destroyed by fire.
+		 * For a "destroy_chance_modifier" of 0, the block will never be destroyed by fire, and the fire will burn forever if the "catch_chance_modifier" is greater than 0.
+		 * The default value of 20 is the same as that of Planks.
+		 *
+		 * @return nlohmann::json::object_t
+		*/
+		BlockProperty SetFlammable(int catch_chance, int destroy_chance) {
+			this->flammable = std::make_pair(catch_chance, destroy_chance);
 
-    /**
-     * @brief Set the Creative Category component
-     *
-     * @param tab Determines which category this block will be placed under
-     in the inventory and crafting table container screens. Options are
-     "construction", "nature", "equipment", "items", and "none". If omitted
-     or "none" is specified, the block will not appear in the inventory or
-     crafting table container screens
-     * @param category Specifies the language file key that maps to which
-     expandable/collapsible group this block will be a part of within a
-     category. If this field is omitted, or there is no group whose name
-     matches the loc string, this block will be placed standalone in the
-     given category
-     * @return BlockProperty
-     */
-    BlockProperty setCreativeCategory(
-        adk::CreativeTab tab,
-        adk::CreativeCategory category = adk::CreativeCategory::NONE) {
-        this->creative = std::make_pair(adk::getCreativeTab(tab),
-                                        adk::getCreativeCategory(category));
-        return *this;
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "light_dampening" value
-     *
-     * @return int
-     */
-    int getBlockLightFilter() { return block_light_filter; }
+		/**
+		 * @brief Set the "friction" component
+		 *
+		 * @param value Describes the friction for this block in a range of (0.0-0.9).
+		 * Friction affects an entity's movement speed when it travels on the block.
+		 * Greater value results in more friction.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetFriction(double value) {
+			this->friction = value;
 
-    /**
-     * @brief Get the "crafting_table" component
-     *
-     * @return std::optional<std::pair<std::vector<std::string>, std::string>>
-     */
-    std::optional<std::pair<std::vector<std::string>, std::string>>
-    getCrafting() {
-        return crafting;
-    }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "destructible_by_explosion" component
-     *
-     * @return std::variant<bool, double>
-     */
-    std::variant<bool, double> getExplosion() { return explosion; }
+		/**
+		 * @brief Set the "light_emission" component
+		 *
+		 * @param value The amount of light this block will emit in a range (0-15).
+		 * Higher value means more light will be emitted.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetLightEmission(int value) {
+			this->light_emission = value;
 
-    /**
-     * @brief Get the "destructible_by_mining" component
-     *
-     * @return std::variant<bool, double>
-     */
-    std::variant<bool, double> getMining() { return mining; }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "display_name" component
-     *
-     * @return std::string
-     */
-    std::string getName() { return display_name; }
+		/**
+		 * @brief Set the "loot" component
+		 *
+		 * @param value The path to the loot table, relative to the behavior pack.
+		 * Path string is limited to 256 characters.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetLoot(std::string value) {
+			this->loot = value;
 
-    /**
-     * @brief Get the "flamamble" component
-     *
-     * @return std::optional<std::pair<int, int>>
-     */
-    std::optional<std::pair<int, int>> getFlamamble() { return flammable; }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "Friction" component
-     *
-     * @return double
-     */
-    double getFriction() { return friction; }
+		/**
+		 * @brief Set the "map_color" component
+		 *
+		 * @param value Sets the color of the block when rendered to a map.
+		 * The color is represented as a hex value in the format "#RRGGBB".
+		 * May also be expressed as an array of [R, G, B] from 0 to 255.
+		 * If this component is omitted, the block will not show up on the map.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetMapColor(std::string value) {
+			this->map_color = value;
 
-    /**
-     * @brief Get the "geometry" component
-     *
-     * @return std::string
-     */
-    std::string getGeometry() { return geometry; }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "light_emission" component
-     *
-     * @return int
-     */
-    int getLightEmission() { return light_emission; }
+		/**
+		 * @brief Set the "map_color" component
+		 *
+		 * @param value Sets the color of the block when rendered to a map.
+		 * The color is represented as a hex value in the format "#RRGGBB".
+		 * May also be expressed as an array of [R, G, B] from 0 to 255.
+		 * If this component is omitted, the block will not show up on the map.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetMapColor(std::vector<int> value) {
+			this->map_color = value;
 
-    /**
-     * @brief Get the "loot" component
-     *
-     * @return std::string
-     */
-    std::string getLoot() { return loot; }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "map_color" component
-     *
-     * @return std::string
-     */
-    std::string getColor() { return color; }
+		/**
+		 * @brief Creates the "translation" key for the "transformation" component
+		 * Transformed geometries still have the same restrictions that non-transformed geometries have such as a maximum size of 30/16 units.
+		 *
+		 * @param value Vector of rotation in degrees
+		 *
+		 * @return BlockProperty
+		*/
+		BlockProperty SetTranslation(std::vector<double> value) {
+			this->translation = translation;
 
-    /**
-     * @brief Get the "translation" field of "transformation" component
-     *
-     * @return std::vector<int>
-     */
-    std::vector<double> getTranslation() { return translation; }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "scale" field of "transformation" component
-     *
-     * @return std::vector<int>
-     */
-    std::vector<double> getScale() { return scale; }
+		/**
+		 * @brief Creates the "scale" key for the "transformation" component
+		 * Transformed geometries still have the same restrictions that non-transformed geometries have such as a maximum size of 30/16 units.
+		 *
+		 * @param value Vector of scale in degrees
+		 *
+		 * @return BlockProperty
+		*/
+		BlockProperty SetScale(std::vector<double> value) {
+			this->scale = scale;
 
-    /**
-     * @brief Get the "rotation" field of "transformation" component
-     *
-     * @return std::vector<int>
-     */
-    std::vector<int> getRotation() { return rotation; }
+			return *this;
+		}
 
-    /**
-     * @brief Get the "collision_box" component
-     *
-     * @return std::variant<bool, std::pair<std::vector<int>,
-     * std::vector<int>>>
-     */
-    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-    getCollision() {
-        return collision;
-    }
+		/**
+		 * @brief Creates the "rotation" key for the "transformation" component
+		 * Transformed geometries still have the same restrictions that non-transformed geometries have such as a maximum size of 30/16 units.
+		 *
+		 * @param value Vector of rotation in degrees
+		 *
+		 * @param id Identifier of the block
+		 *
+		 * @return BlockProperty
+		*/
+		BlockProperty SetRotation(std::vector<int> rotation) {
+			this->rotation = rotation;
+			return *this;
+		}
 
-    /**
-     * @brief Get the "selection_box" component
-     *
-     * @return std::variant<bool, std::pair<std::vector<int>,
-     * std::vector<int>>>
-     */
-    std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-    getSelection() {
-        return selection;
-    }
+		/**
+		 * @brief Set the "collision_box" component
+		 *
+		 * @param value Defines the area of the block that collides with entities.
+		 * If set to true, default values are used.
+		 * If set to false, the block's collision with entities is disabled.
+		 * If this component is omitted, default values are used.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetBoxCollision(bool value) {
+			this->box_collision = value;
 
-    /**
-     * @brief Get the Creative Category component
-     *
-     * @return std::pair<std::string, std::string>
-     */
-    std::optional<std::pair<std::string, std::string>> getCreative() {
-        return creative;
-    }
-};
+			return *this;
+		}
 
-#endif
+		/**
+		 * @brief Set the "collision_box" component
+		 *
+		 * @param origin Minimal position of the bounds of the collision box.
+		 * "origin" is specified as [x, y, z] and must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
+		 *
+		 * @param size Size of each side of the collision box.
+		 * Size is specified as [x, y, z].
+		 * "origin" + "size" must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetBoxCollision(std::vector<int> origin, std::vector<int> size) {
+			this->box_collision = std::make_pair(origin, size);
+
+			return *this;
+		}
+
+		/**
+		 * @brief Set the "selection_box" component
+		 *
+		 * @param value Defines the area of the block that is selected by the player's cursor.
+		 * If set to true, default values are used.
+		 * If set to false, this block is not selectable by the player's cursor.
+		 * If this component is omitted, default values are used.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetBoxSelection(bool value) {
+			this->box_selection = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Set the "selection_box" component
+		 *
+		 * @param origin Minimal position of the bounds of the collision box.
+		 * "origin" is specified as [x, y, z] and must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
+		 *
+		 * @param size Size of each side of the collision box.
+		 * Size is specified as [x, y, z].
+		 * "origin" + "size" must be in the range (-8, 0, -8) to (8, 16, 8), inclusive.
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetBoxSelection(std::vector<int> origin, std::vector<int> size) {
+			this->box_selection = std::make_pair(origin, size);;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Registers the block to a tab in the creative menu
+		 *
+		 * @param category Tab the block is placed under
+		 * @param group Optional - Group the block is placed into
+		 *
+		 * @return BlockProperty
+		*/
+		BlockProperty SetCreativeCategory(adk::CreativeCategory category, adk::CreativeGroup group = adk::CreativeGroup::NONE) {
+			this->creative_category = category;
+			this->creative_group = group;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Gets the "light_dampening" value
+		 *
+		 * @return int
+		 */
+		int GetLightDampening() const { return light_dampening; }
+
+		/**
+		 * @brief Gets the "crafting_table" component
+		 *
+		 * @return std::vector<std::string>
+		*/
+		std::optional<std::pair<std::vector<std::string>, std::string>> GetCrafting() const { return crafting; }
+
+		/**
+		 * @brief Gets the "destructible_by_explosion" component
+		 *
+		 * @return std::variant<bool, double>
+		 */
+		std::variant<bool, double> GetDestructibleByExplosion() const { return explosion; }
+
+		/**
+		 * @brief Gets the "destructible_by_mining" component
+		 *
+		 * @return std::variant<bool, double>
+		 */
+		std::variant<bool, double> GetDestructibleByMining() const { return mining; }
+
+		/**
+		 * @brief Gets the "display_name" component
+		 *
+		 * @return std::string
+		 */
+		std::string GetDisplayName() const { return display_name; }
+
+		/**
+		 * @brief Gets the "flamamble" component
+		 *
+		 * @return std::variant<bool, std::pair<int, int>>
+		 */
+		std::variant<bool, std::pair<int, int>> GetFlamamble() const { return flammable; }
+
+		/**
+		 * @brief Gets the "friction" component
+		 *
+		 * @return double
+		 */
+		double GetFriction() const { return friction; }
+
+		/**
+		 * @brief Gets the "light_emission" component
+		 *
+		 * @return int
+		 */
+		int GetLightEmission() const { return light_emission; }
+
+		/**
+		 * @brief Gets the "loot" component
+		 *
+		 * @return std::string
+		 */
+		std::string GetLoot() const { return loot; }
+
+		/**
+		 * @brief Gets the "map_color" component
+		 *
+		 * @return std::string
+		 */
+		std::variant<std::string, std::vector<int>> GetMapColor() const { return map_color; }
+
+		/**
+		 * @brief Gets the "translation" field of "transformation" component
+		 *
+		 * @return std::vector<int>
+		 */
+		std::vector<double> GetTranslation() const { return translation; }
+
+		/**
+		 * @brief Gets the "scale" field of "transformation" component
+		 *
+		 * @return std::vector<int>
+		 */
+		std::vector<double> GetScale() const { return scale; }
+
+		/**
+		 * @brief Gets the "rotation" field of "transformation" component
+		 *
+		 * @return std::vector<int>
+		 */
+		std::vector<int> GetRotation() const { return rotation; }
+
+		/**
+		 * @brief Gets the "collision_box" component
+		 *
+		 * @return std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+		 */
+		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>> GetBoxCollision() const {
+			return box_collision;
+		}
+
+		/**
+		 * @brief Gets the "selection_box" component
+		 *
+		 * @return std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+		 */
+		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>> GetBoxSelection() const {
+			return box_selection;
+		}
+
+		/**
+		 * @brief Gets the Creative Category component
+		 *
+		 * @return adk::CreativeCategory
+		 */
+		adk::CreativeCategory GetCreativeCategory() const {
+			return creative_category;
+		}
+
+		/**
+		 * @brief Gets the Creative Group component
+		 *
+		 * @return adk::CreativeGroup
+		 */
+		adk::CreativeGroup GetCreativeGroup() const {
+			return creative_group;
+		}
+	private:
+		int light_dampening = 15;
+		std::optional<std::pair<std::vector<std::string>, std::string>> crafting;
+		std::variant<bool, double> explosion = true;
+		std::variant<bool, double> mining = true;
+		std::string display_name;
+		std::variant<bool, std::pair<int, int>> flammable = true;
+		double friction = 0.4;
+		int light_emission;
+		std::string loot;
+		std::variant<std::string, std::vector<int>> map_color;
+		std::vector<int> rotation{ 0, 0, 0 };
+		std::vector<double> scale{ 0, 0, 0 };
+		std::vector<double> translation{ 0, 0, 0 };
+		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+			box_collision = true;
+		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
+			box_selection = true;
+		adk::CreativeCategory creative_category = adk::CreativeCategory::NONE;
+		adk::CreativeGroup creative_group = adk::CreativeGroup::NONE;
+	};
+} // namespace adk

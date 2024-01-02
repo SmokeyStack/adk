@@ -33,106 +33,181 @@ namespace adk {
 		 * @brief Generates the json object
 		 *
 		 * @param mod_id Namespace identifier
-		 * 
+		 *
 		 * @param id Identifier for the item
-		 * 
+		 *
 		 * @return json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
 			output["format_version"] = "1.20.50";
 			output["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
 
-			if (internal_.getBlockLightFilter() != 15)
+			// Registering "light_dampening" component
+			if (internal_.GetLightDampening() != 15)
 				output["minecraft:block"]["components"].update(
-					helper_.LightDampening(internal_.getBlockLightFilter(), id));
+					helper_.LightDampening(
+						internal_.GetLightDampening(), id
+					)
+				);
 
-			if (internal_.getCrafting().has_value())
+			// Registering "crafting_table" component
+			if (internal_.GetCrafting().has_value())
 				output["minecraft:block"]["components"].update(
-					helper_.Crafting(internal_.getCrafting().value()));
+					helper_.Crafting(
+						internal_.GetCrafting().value().first,
+						internal_.GetCrafting().value().second
+					)
+				);
 
-			if (std::get_if<bool>(&internal_.getExplosion())) {
-				if (!std::get<bool>(internal_.getExplosion()))
+			// Registering "destructible_by_explosion" component
+			if (std::get_if<bool>(&internal_.GetDestructibleByExplosion())) {
+				if (!std::get<bool>(internal_.GetDestructibleByExplosion()))
 					output["minecraft:block"]["components"].update(
-						helper_.destructibleByExplosion(false));
+						helper_.DestructibleByExplosion(false)
+					);
 			}
-			else if (std::get_if<double>(&internal_.getExplosion()))
+			else if (std::get_if<double>(&internal_.GetDestructibleByExplosion()))
 				output["minecraft:block"]["components"].update(
-					helper_.destructibleByExplosion(
-						std::get<double>(internal_.getExplosion())));
+					helper_.DestructibleByExplosion(
+						std::get<double>(internal_.GetDestructibleByExplosion())
+					)
+				);
 
-			if (std::get_if<bool>(&internal_.getMining())) {
-				if (!std::get<bool>(internal_.getMining()))
+			// Registering "destructible_by_mining" component
+			if (std::get_if<bool>(&internal_.GetDestructibleByMining())) {
+				if (!std::get<bool>(internal_.GetDestructibleByMining()))
 					output["minecraft:block"]["components"].update(
-						helper_.DestructibleByMining(false));
+						helper_.DestructibleByMining(false)
+					);
 			}
-			else if (std::get_if<double>(&internal_.getMining()))
+			else if (std::get_if<double>(&internal_.GetDestructibleByMining()))
 				output["minecraft:block"]["components"].update(
 					helper_.DestructibleByMining(
-						std::get<double>(internal_.getMining())));
+						std::get<double>(internal_.GetDestructibleByMining())
+					)
+				);
 
-			if (!internal_.getName().empty())
+			// Registering "display_name" component
+			if (!internal_.GetDisplayName().empty())
 				output["minecraft:block"]["components"].update(
-					helper_.DisplayName(internal_.getName()));
+					helper_.DisplayName(
+						internal_.GetDisplayName()
+					)
+				);
 
-			if (internal_.getFlamamble().has_value())
-				output["minecraft:block"]["components"].update(
-					helper_.Flammable(internal_.getFlamamble().value()));
-
-			if (internal_.getFriction() != 0.4)
-				output["minecraft:block"]["components"].update(
-					helper_.Friction(internal_.getFriction(), id));
-
-			if (internal_.getLightEmission() != 0)
-				output["minecraft:block"]["components"].update(
-					helper_.LightEmission(internal_.getLightEmission(), id));
-
-			if (!internal_.getLoot().empty())
-				output["minecraft:block"]["components"].update(
-					helper_.Loot(internal_.getLoot()));
-
-			if (!internal_.getColor().empty())
-				output["minecraft:block"]["components"].update(
-					helper_.MapColor(internal_.getColor()));
-
-			if (internal_.getRotation() != std::vector<int>{0, 0, 0})
-				output["minecraft:block"]["components"].update(
-					helper_.Rotation(internal_.getRotation(), id));
-
-			if (internal_.getTranslation() != std::vector<double>{0, 0, 0})
-				output["minecraft:block"]["components"].update(
-					helper_.Translation(internal_.getTranslation()));
-
-			if (internal_.getScale() != std::vector<double>{0, 0, 0})
-				output["minecraft:block"]["components"].update(
-					helper_.Scale(internal_.getScale()));
-
-			if (std::get_if<bool>(&internal_.getCollision())) {
-				if (!std::get<bool>(internal_.getCollision()))
+			// Registering "flammable" component
+			if (std::get_if<bool>(&internal_.GetFlamamble())) {
+				if (!std::get<bool>(internal_.GetFlamamble()))
 					output["minecraft:block"]["components"].update(
-						helper_.CollisionBox(false, id));
-
+						helper_.Flammable(false)
+					);
 			}
-			else if (std::get_if<std::pair<std::vector<int>, std::vector<int>>>(
-				&internal_.getCollision())) {
+			else if (std::get_if<std::pair<int, int>>(&internal_.GetFlamamble()))
 				output["minecraft:block"]["components"].update(
-					helper_.CollisionBox(internal_.getCollision(), id));
-			}
+					helper_.Flammable(
+						std::get<std::pair<int, int>>(internal_.GetFlamamble()).first,
+						std::get<std::pair<int, int>>(internal_.GetFlamamble()).second
+					)
+				);
 
-			if (std::get_if<bool>(&internal_.getSelection())) {
-				if (!std::get<bool>(internal_.getSelection()))
+			// Registering "friction" component
+			if (internal_.GetFriction() != 0.4)
+				output["minecraft:block"]["components"].update(
+					helper_.Friction(internal_.GetFriction(), id)
+				);
+
+			// Registering "light_emission" component
+			if (internal_.GetLightEmission() != 0)
+				output["minecraft:block"]["components"].update(
+					helper_.LightEmission(internal_.GetLightEmission(), id)
+				);
+
+			// Registering "loot" component
+			if (!internal_.GetLoot().empty())
+				output["minecraft:block"]["components"].update(
+					helper_.Loot(internal_.GetLoot())
+				);
+
+			// Registering "map_color" component
+			if (std::get_if<std::string>(&internal_.GetMapColor())) {
+				if (!std::get<std::string>(internal_.GetMapColor()).empty())
 					output["minecraft:block"]["components"].update(
-						helper_.selection(false, id));
-
+						helper_.MapColor(
+							std::get<std::string>(internal_.GetMapColor())
+						)
+					);
 			}
-			else if (std::get_if<std::pair<std::vector<int>, std::vector<int>>>(
-				&internal_.getSelection())) {
+			else if (std::get_if<std::vector<int>>(&internal_.GetMapColor()))
 				output["minecraft:block"]["components"].update(
-					helper_.selection(internal_.getSelection(), id));
+					helper_.MapColor(
+						std::get<std::vector<int>>(internal_.GetMapColor())
+					)
+				);
+
+			// Registering "transformation" component
+			if (internal_.GetRotation() != std::vector<int>{0, 0, 0})
+				output["minecraft:block"]["components"].update(
+					helper_.Rotation(internal_.GetRotation(), id)
+				);
+
+			if (internal_.GetTranslation() != std::vector<double>{0, 0, 0})
+				output["minecraft:block"]["components"].update(
+					helper_.Translation(internal_.GetTranslation())
+				);
+
+			if (internal_.GetScale() != std::vector<double>{0, 0, 0})
+				output["minecraft:block"]["components"].update(
+					helper_.Scale(internal_.GetScale())
+				);
+
+			// Registering "collision_box" component
+			if (std::get_if<bool>(&internal_.GetBoxCollision())) {
+				if (!std::get<bool>(internal_.GetBoxCollision()))
+					output["minecraft:block"]["components"].update(
+						helper_.BoxCollision(false)
+					);
+			}
+			else if (std::get_if<std::pair<std::vector<int>, std::vector<int>>>(&internal_.GetBoxCollision())) {
+				output["minecraft:block"]["components"].update(
+					helper_.BoxCollision(
+						std::get<std::pair<std::vector<int>, std::vector<int>>>(internal_.GetBoxCollision()).first,
+						std::get<std::pair<std::vector<int>, std::vector<int>>>(internal_.GetBoxCollision()).second,
+						id
+					)
+				);
 			}
 
-			if (internal_.getCreative().has_value())
+			// Registering "selection_box" component
+			if (std::get_if<bool>(&internal_.GetBoxSelection())) {
+				if (!std::get<bool>(internal_.GetBoxSelection()))
+					output["minecraft:block"]["components"].update(
+						helper_.BoxSelection(false)
+					);
+			}
+			else if (std::get_if<std::pair<std::vector<int>, std::vector<int>>>(&internal_.GetBoxSelection())) {
+				output["minecraft:block"]["components"].update(
+					helper_.BoxSelection(
+						std::get<std::pair<std::vector<int>, std::vector<int>>>(internal_.GetBoxSelection()).first,
+						std::get<std::pair<std::vector<int>, std::vector<int>>>(internal_.GetBoxSelection()).second,
+						id
+					)
+				);
+			}
+
+			// Registering creative menu
+			if (!adk::GetCreativeGroup(internal_.GetCreativeGroup()).empty())
 				output["minecraft:block"]["description"].update(
-					helper_.CreativeMenu(internal_.getCreative().value()));
+					helper_.CreativeMenu(
+						adk::GetCreativeCategory(internal_.GetCreativeCategory()),
+						adk::GetCreativeGroup(internal_.GetCreativeGroup())
+					)
+				);
+			else
+				output["minecraft:block"]["description"].update(
+					helper_.CreativeMenu(
+						adk::GetCreativeCategory(internal_.GetCreativeCategory())
+					)
+				);
 
 			return output;
 		}

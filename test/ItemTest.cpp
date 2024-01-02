@@ -44,7 +44,7 @@ TEST(ItemTest, BasicItem) {
 
     mod->subscribe("basic_item", new Item(ItemProperty()));
 
-    bool basic = compareFiles("../../test/files/basic_item.json",
+    bool basic = CompareFiles("../../test/files/basic_item.json",
                               "./BP/items/basic_item.json");
 
     EXPECT_EQ(true, basic) << "Item is not working as expected";
