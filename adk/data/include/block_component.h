@@ -4,7 +4,6 @@
 #include <variant>
 #include <vector>
 
-#include "block_category.h"
 #include "json.hpp"
 #include "utility/logger.h"
 
@@ -397,15 +396,23 @@ namespace adk {
 
 			return output;
 		}
+
+		nlohmann::json::object_t PlacementFilter(nlohmann::json j) {
+			nlohmann::json::object_t output = { {"minecraft:placement_filter",{{"conditions",{j}}}} };
+
+			return output;
+		}
 	protected:
 		/**
 		 * @brief Ensure the collision_box and selection_box is valid
 		 *
 		 * @param component_check The vectors of origin and size
+		 *
 		 * @param component Used to log collision or selection
+		 *
 		 * @param id Identifier of block
-		 * @return true
-		 * @return false
+		 *
+		 * @return validity
 		 */
 		void EnsureValidity(std::vector<int> origin, std::vector<int> size, std::string component, std::string id) {
 			if (origin.at(0) < -8 ||

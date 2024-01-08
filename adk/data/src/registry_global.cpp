@@ -1,7 +1,7 @@
 #include "registry_global.h"
 
 namespace adk {
-	std::vector<adk::Registrar*> registry_global{};
+	std::vector<Registrar*> registry_global{};
 
 	std::vector<std::string> registry_vanilla{
 	"minecraft:acacia_boat",

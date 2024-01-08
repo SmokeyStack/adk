@@ -60,7 +60,7 @@ class ArmorItem : public DurabilityItem {
      *
      * @param mod_id Namespace identifier
      * @param id Identifier for the item
-     * @return json
+     * @return nlohmann::json
      */
     json output(std::string mod_id, std::string id) {
         j = DurabilityItem::output(mod_id, id);

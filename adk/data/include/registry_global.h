@@ -10,7 +10,7 @@ namespace adk {
 	 * @brief Stores the registry entries to be used across the whole api
 	 *
 	 */
-	extern std::vector<adk::Registrar*> registry_global;
+	extern std::vector<Registrar*> registry_global;
 
 	/**
 	 * @brief Stores the vanilla entries to be used across the whole api

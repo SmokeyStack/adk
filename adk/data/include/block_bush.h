@@ -1,43 +1,42 @@
-#ifndef BUSHBLOCK_H
-#define BUSHBLOCK_H
+#pragma once	
 
 #include "block.h"
 #include "block_property.h"
 #include "json.hpp"
 
-/**
- * @brief Represents a Bush Block
- *
- */
-class BushBlock : public Block {
-   public:
-    BushBlock(){};
-    /**
-     * @brief Construct a new Bush Block object
-     *
-     * @param property BlockProperty
-     */
-    BushBlock(BlockProperty property) {
-        _internal = property;
-    }
+namespace adk {
+	/**
+	 * @brief Represents a Bush Block
+	 */
+	class BlockBush : public Block {
+	public:
+		BlockBush() {};
+		/**
+		 * @brief Construct a new Bush Block object
+		 *
+		 * @param property BlockProperty
+		 */
+		BlockBush(BlockProperty property) { internal_ = property; }
 
-    /**
-     * @brief Generates the json object
-     *
-     * @param mod_id Namespace identifier
-     * @param id Identifier for the item
-     * @return json
-     */
-    json output(std::string mod_id, std::string id) {
-        j = Block::output(mod_id, id);
-        j["minecraft:block"]["components"]["minecraft:placement_filter"]
-         ["conditions"] = {{{"allowed_faces", json::array({"up"})},
-                            {"block_filter",
-                             json::array({{{"tags", "q.any_tag('dirt')"}},
-                                          {{"tags", "q.any_tag('grass')"}}})}}};
+		/**
+		 * @brief Generates the json object
+		 *
+		 * @param mod_id Namespace identifier
+		 *
+		 * @param id Identifier for the block
+		 *
+		 * @return nlohmann::json
+		 */
+		nlohmann::json Generate(std::string mod_id, std::string id) {
+			output_ = Block::Generate(mod_id, id);
 
-        return j;
-    }
-};
+			output_["minecraft:block"]["components"]["minecraft:placement_filter"]
+				["conditions"] = { {{"allowed_faces", nlohmann::json::array({"up"})},
+								   {"block_filter",
+									nlohmann::json::array({{{"tags", "q.any_tag('dirt')"}},
+												 {{"tags", "q.any_tag('grass')"}}})}} };
 
-#endif
+			return j;
+		}
+	};
+} // namespace adk

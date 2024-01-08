@@ -1,7 +1,5 @@
 #pragma once
 
-#include <spdlog/spdlog.h>
-
 #include <filesystem>
 #include <fstream>
 #include <map>
@@ -52,13 +50,13 @@ namespace adk {
 		 */
 		void Subscribe(std::string id, std::variant<Block*, Item*> object) {
 			if (!registry_.empty() && registry_.count(id)) {
-				adk::log::error("{} has already been defined!", id);
+				log::error("{} has already been defined!", id);
 				exit(EXIT_FAILURE);
 			}
 
 			std::visit(
 				[=](auto&& content) {
-					adk::log::info("Creating {} - {}:{}", content->getType(), mod_id_, id);
+					log::info("Creating {} - {}:{}", content->getType(), mod_id_, id);
 					registry_[mod_id_ + ":" + id] = content;
 
 					if (!fs::exists("./BP/" + content->getType() + "s/"))
@@ -92,7 +90,7 @@ namespace adk {
 			if (registry_.count(id))
 				return registry_[id];
 			else {
-				adk::log::error("{} has not been defined!", id);
+				log::error("{} has not been defined!", id);
 				exit(EXIT_FAILURE);
 			}
 		}

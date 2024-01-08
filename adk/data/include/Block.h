@@ -30,7 +30,7 @@ namespace adk {
 		 *
 		 * @param id Identifier for the block
 		 *
-		 * @return json
+		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_["format_version"] = "1.20.50";
@@ -201,6 +201,12 @@ namespace adk {
 					helper_.CreativeMenu(
 						adk::GetCreativeCategory(internal_.GetCreativeCategory())
 					)
+				);
+
+			// Registering Placemt Filter
+			if (!internal_.GetPlacementFilter().allowed_faces.empty())
+				output_["minecraft:block"]["components"].update(
+					helper_.PlacementFilter(internal_.GetPlacementFilter())
 				);
 
 			return output_;

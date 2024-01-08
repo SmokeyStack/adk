@@ -34,6 +34,14 @@ TEST(BlockTest, BlockBasic) {
 	Registry<Block>* mod = new Registry<Block>(MOD_ID);
 	registry_global.push_back(mod);
 	std::vector<std::string> crafting_tags = { "custom_crafting_table" };
+	BlockPlacementFilter filter_tags = {
+		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP},
+		std::vector<std::string>{ "stone","dirt" }
+	};
+	BlockPlacementFilter filter_states = {
+		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP},
+		std::vector<std::string>{ "minecraft:stone","minecraft:dirt" }
+	};
 
 	mod->Subscribe("block_basic", new Block(BlockProperty()));
 	mod->Subscribe("block_basic_light_dampening", new Block(BlockProperty().SetLightDampening(5)));
@@ -59,6 +67,8 @@ TEST(BlockTest, BlockBasic) {
 	mod->Subscribe("block_basic_box_selection_vector", new Block(BlockProperty().SetBoxSelection(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
 	mod->Subscribe("block_basic_creative_category", new Block(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION)));
 	mod->Subscribe("block_basic_creative_group", new Block(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION, adk::CreativeGroup::SMITHINGTEMPLATES)));
+	mod->Subscribe("block_basic_filter_tags", new Block(BlockProperty().SetBlockPlacementFilter(filter_tags)));
+	mod->Subscribe("block_basic_filter_states", new Block(BlockProperty().SetBlockPlacementFilter(filter_states)));
 
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic.json", "./BP/blocks/block_basic.json")) << "Block is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_light_dampening.json", "./BP/blocks/block_basic_light_dampening.json")) << "SetLightDampening is not working as expected";
@@ -84,6 +94,8 @@ TEST(BlockTest, BlockBasic) {
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_vector.json", "./BP/blocks/block_basic_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_creative_category.json", "./BP/blocks/block_basic_creative_category.json")) << "SetCreativeCategory (category) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_creative_group.json", "./BP/blocks/block_basic_creative_group.json")) << "SetCreativeCategory (group) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_tags.json", "./BP/blocks/block_basic_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_states.json", "./BP/blocks/block_basic_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
 }
 
 TEST(BlockTest, BlockAxis) {
@@ -104,6 +116,14 @@ TEST(BlockTest, BlockAxis) {
 	Registry<Block>* mod = new Registry<Block>(MOD_ID);
 	registry_global.push_back(mod);
 	std::vector<std::string> crafting_tags = { "custom_crafting_table" };
+	BlockPlacementFilter filter_tags = {
+		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP},
+		std::vector<std::string>{ "stone","dirt" }
+	};
+	BlockPlacementFilter filter_states = {
+		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP},
+		std::vector<std::string>{ "minecraft:stone","minecraft:dirt" }
+	};
 
 	mod->Subscribe("block_axis", new BlockAxis(BlockProperty()));
 	mod->Subscribe("block_axis_light_dampening", new BlockAxis(BlockProperty().SetLightDampening(5)));
@@ -128,6 +148,8 @@ TEST(BlockTest, BlockAxis) {
 	mod->Subscribe("block_axis_box_selection_vector", new BlockAxis(BlockProperty().SetBoxSelection(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
 	mod->Subscribe("block_axis_creative_category", new BlockAxis(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION)));
 	mod->Subscribe("block_axis_creative_group", new BlockAxis(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION, adk::CreativeGroup::SMITHINGTEMPLATES)));
+	mod->Subscribe("block_axis_filter_tags", new BlockAxis(BlockProperty().SetBlockPlacementFilter(filter_tags)));
+	mod->Subscribe("block_axis_filter_states", new BlockAxis(BlockProperty().SetBlockPlacementFilter(filter_states)));
 
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis.json", "./BP/blocks/block_axis.json")) << "Block is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_light_dampening.json", "./BP/blocks/block_axis_light_dampening.json")) << "SetLightDampening is not working as expected";
@@ -152,4 +174,6 @@ TEST(BlockTest, BlockAxis) {
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_box_selection_vector.json", "./BP/blocks/block_axis_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_creative_category.json", "./BP/blocks/block_axis_creative_category.json")) << "SetCreativeCategory (category) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_creative_group.json", "./BP/blocks/block_axis_creative_group.json")) << "SetCreativeCategory (group) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_filter_tags.json", "./BP/blocks/block_axis_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_filter_states.json", "./BP/blocks/block_axis_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
 }

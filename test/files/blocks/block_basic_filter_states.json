@@ -1,0 +1,1 @@
+{"format_version":"1.20.50","minecraft:block":{"components":{"minecraft:placement_filter":{"conditions":[{"allowed_faces":["up"],"block_filter":[{"tags":"q.any_tag('minecraft:stone','minecraft:dirt')"}]}]}},"description":{"identifier":"custom_namespace:block_basic_filter_states","menu_category":{"category":"none"}}}}

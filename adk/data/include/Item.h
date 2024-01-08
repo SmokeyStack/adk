@@ -36,7 +36,7 @@ class Item {
      *
      * @param mod_id Namespace identifier
      * @param id Identifier for the item
-     * @return json
+     * @return nlohmann::json
      */
     virtual json Generate(std::string mod_id, std::string id) {
         /*j["format_version"] = "1.20.40";

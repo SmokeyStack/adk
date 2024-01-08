@@ -26,7 +26,7 @@ namespace adk {
 		 *
 		 * @param id Identifier for the block
 		 *
-		 * @return json
+		 * @return nlohmann::json
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_ = Block::Generate(mod_id, id);
