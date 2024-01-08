@@ -1,0 +1,1 @@
+{"format_version":"1.20.50","minecraft:block":{"components":{"minecraft:flammable":false,"minecraft:placement_filter":{"conditions":[{"allowed_faces":["up"],"block_filter":[{"tags":"q.any_tag('dirt','grass')"}]}]}},"description":{"identifier":"custom_namespace:block_plant_flammable_bool","menu_category":{"category":"none"}}}}
