@@ -49,10 +49,10 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		 */
-		nlohmann::json::object_t PlacerBlock(std::string block, std::vector<std::string> used_on) {
+		nlohmann::json::object_t PlacerBlock(std::string block, std::vector<std::string> use_on) {
 			nlohmann::json::object_t temp = {
 				{"minecraft:block_placer",
-				 {{"block", block}, {"used_on", used_on}}} };
+				 {{"block", block}, {"used_on", use_on}}} };
 
 			return temp;
 		}
@@ -255,7 +255,8 @@ namespace adk {
 		/**
 		 * @brief Creates the "fuel" component
 		 *
-		 * @param value How long in seconds will this fuel cook items for. Minimum value: 0.05.
+		 * @param value How long in seconds will this fuel cook items for.
+		 * Minimum value: 0.05.
 		 *
 		 * @return nlohmann::json::object_t
 		*/
@@ -307,7 +308,8 @@ namespace adk {
 		/**
 		 * @brief Creates the "icon" component
 		 *
-		 * @param value The key from the resource_pack/textures/item_texture.json 'texture_data' object associated with the texture file
+		 * @param value This map contains the different textures that can be used for the item's icon.
+		 * Default will contain the actual icon texture.
 		 *
 		 * @return nlohmann::json::object_t
 		*/
@@ -359,9 +361,9 @@ namespace adk {
 		/**
 		 * @brief Creates the "projectile" component
 		 *
-		 * @param projectile_entity The entity to be fired as a projectile
+		 * @param projectile_entity The entity to be fired as a projectile.
 		 *
-		 * @param minimum_critical_power Defines the time a projectile needs to charge in order to critically hit
+		 * @param minimum_critical_power Defines the time a projectile needs to charge in order to critically hit.
 		 *
 		 * @return nlohmann::json::object_t
 		*/
