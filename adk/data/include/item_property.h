@@ -81,6 +81,55 @@ namespace adk {
 		}
 	}
 
+	enum class WearableSlot {
+		WEAPON_MAINHAND,
+		WEAPON_OFFHAND,
+		ARMOR_HEAD,
+		ARMOR_CHEST,
+		ARMOR_LEGS,
+		ARMOR_FEET,
+		HOTBAR,
+		INVENTORY,
+		ENDERCHEST,
+		SADDLE,
+		ARMOR,
+		CHEST,
+		EQUIPPABLE
+	};
+
+	inline std::string GetWearableSlot(WearableSlot slot) {
+		switch (slot) {
+		case adk::WearableSlot::WEAPON_MAINHAND:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::WEAPON_OFFHAND:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::ARMOR_HEAD:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::ARMOR_CHEST:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::ARMOR_LEGS:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::ARMOR_FEET:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::HOTBAR:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::INVENTORY:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::ENDERCHEST:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::SADDLE:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::ARMOR:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::CHEST:
+			return "slot.weapon.mainhand";
+		case adk::WearableSlot::EQUIPPABLE:
+			return "slot.weapon.mainhand";
+		default:
+			break;
+		}
+	}
+
 	namespace {
 		/**
 		 * @brief Sets how much damage the item can take before breaking, and allows the item to be combined at an anvil, grindstone, or crafting table.
@@ -110,6 +159,35 @@ namespace adk {
 			std::optional<std::string> using_converts_to;
 		};
 
+		struct ItemRecord {
+			std::string sound_event;
+			float duration;
+			int comparator_signal;
+		};
+
+		struct ItemShooterAmmunition {
+			std::string item;
+			std::optional<bool> use_offhand = false;
+			std::optional<bool> search_inventory = false;
+			std::optional<bool> use_in_creative = false;
+		};
+
+		struct ItemShooter {
+			std::vector<ItemShooterAmmunition> ammunition;
+			bool charge_on_draw = false;
+			double max_draw_duration = 0.0;
+			bool scale_power_by_draw_duration = false;
+		};
+
+		struct ItemThrowable {
+			bool do_swing_animation = false;
+			float launch_power_scale = 1.0;
+			float max_draw_duration = 0.0;
+			float max_launch_power = 1.0;
+			float min_draw_duration = 0.0;
+			bool scale_power_by_draw_duration = false;
+		};
+
 		void to_json(nlohmann::json& j, const ItemDurability& p) {
 			if (p.damage_chance.has_value()) {
 				j = nlohmann::json{
@@ -127,22 +205,61 @@ namespace adk {
 
 		void to_json(nlohmann::json& j, const ItemEntityPlacer& p) {
 			j.update({ {"entity", p.entity} });
-			if (p.use_on.has_value()) {
+
+			if (p.use_on.has_value())
 				j.update({ "use_on",p.use_on.value() });
-			}
-			if (p.dispense_on.has_value()) {
+			if (p.dispense_on.has_value())
 				j.update({ "dispense_on",p.dispense_on.value() });
-			}
 		}
 
 		void to_json(nlohmann::json& j, const ItemFood& p) {
 			j.update({ {"nutrition", p.nutrition}, {"saturation_modifier", p.saturation_modifier} });
-			if (p.can_always_eat.has_value()) {
+
+			if (p.can_always_eat.has_value())
 				j.update({ "can_always_eat",p.can_always_eat.value() });
-			}
-			if (p.using_converts_to.has_value()) {
+			if (p.using_converts_to.has_value())
 				j.update({ "using_converts_to",p.using_converts_to.value() });
-			}
+		}
+
+		void to_json(nlohmann::json& j, const ItemRecord& p) {
+			j.update({ {"sound_event", p.sound_event}, {"duration", p.duration}, {"comparator_signal", p.comparator_signal} });
+		}
+
+		void to_json(nlohmann::json& j, const ItemShooter& p) {
+			j.update({ {"ammunition", p.ammunition} });
+
+			if (p.charge_on_draw)
+				j.update({ "charge_on_draw",p.charge_on_draw });
+			if (p.max_draw_duration != 0.0)
+				j.update({ "max_draw_duration",p.max_draw_duration });
+			if (p.scale_power_by_draw_duration)
+				j.update({ "scale_power_by_draw_duration",p.scale_power_by_draw_duration });
+		}
+
+		void to_json(nlohmann::json& j, const ItemShooterAmmunition& p) {
+			j.update({ {"item", p.item} });
+
+			if (p.use_offhand)
+				j.update({ "use_offhand",p.use_offhand });
+			if (p.search_inventory)
+				j.update({ "search_inventory",p.search_inventory });
+			if (p.use_in_creative)
+				j.update({ "use_in_creative",p.use_in_creative });
+		}
+
+		void to_json(nlohmann::json& j, const ItemThrowable& p) {
+			if (p.do_swing_animation)
+				j.update({ "do_swing_animation",p.do_swing_animation });
+			if (p.launch_power_scale != 1.0)
+				j.update({ "launch_power_scale",p.launch_power_scale });
+			if (p.max_draw_duration != 0.0)
+				j.update({ "max_draw_duration",p.max_draw_duration });
+			if (p.max_launch_power != 1.0)
+				j.update({ "max_launch_power",p.max_launch_power });
+			if (p.min_draw_duration != 0.0)
+				j.update({ "min_draw_duration",p.min_draw_duration });
+			if (p.scale_power_by_draw_duration)
+				j.update({ "scale_power_by_draw_duration",p.scale_power_by_draw_duration });
 		}
 	}
 
@@ -286,7 +403,7 @@ namespace adk {
 		 *
 		 * @return ItemProperty
 		*/
-		ItemProperty SetEnchantable(std::string slot, int value) {
+		ItemProperty SetEnchantable(adk::EnchantableSlot slot, int value) {
 			this->enchantable_slot = slot;
 			this->enchantable_value = value;
 
@@ -428,7 +545,7 @@ namespace adk {
 		/**
 		 * @brief Sets the "projectile" component
 		 *
-		  * @param projectile_entity The entity to be fired as a projectile.
+		 * @param projectile_entity The entity to be fired as a projectile.
 		 *
 		 * @param minimum_critical_power Defines the time a projectile needs to charge in order to critically hit.
 		 *
@@ -437,6 +554,130 @@ namespace adk {
 		ItemProperty SetProjectile(std::string projectile_entity, float minimum_critical_power) {
 			this->projectile_entity = projectile_entity;
 			this->projectile_min_critical_power = minimum_critical_power;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "record" component
+		 *
+		 * @param value ItemRecord struct
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetRecord(ItemRecord value) {
+			this->record = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "shooter" component
+		 *
+		 * @param value ItemShooter struct
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetShooter(ItemShooter value) {
+			this->shooter = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "should_despawn" component
+		 *
+		 * @param value Sets whether the item should eventually despawn while floating in the world.
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetShouldDespawn(bool value) {
+			this->should_despawn = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "stacked_by_data" component
+		 *
+		 * @param value Sets whether the same item with different aux values can stack and merge while floating in the world.
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetStackedByData(bool value) {
+			this->stacked_by_data = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "tags" component
+		 *
+		 * @param value An array which can contain multiple item tags.
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetTags(std::vector<std::string> value) {
+			this->tags = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "throwable" component
+		 *
+		 * @param value ItemThrowable struct
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetThrowable(ItemThrowable value) {
+			this->throwable = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "use_animation" component
+		 *
+		 * @param value Which animation to play when using an item.
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetUseAnimation(std::string value) {
+			this->use_animation = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Sets the "use_modifiers" component
+		 *
+		 * @param movement_modifier Modifier value to scale the players movement speed when item is in use.
+		 *
+		 * @param use_duration How long the item takes to use in seconds.
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetUseModifiers(float movement_modifier, float use_duration) {
+			this->use_modifiers_movement = movement_modifier;
+			this->use_modifiers_duration = use_duration;
+
+			return *this;
+		}
+		
+		/**
+		 * @brief Sets the "wearable" component
+		 *
+		 * @param slot Determines where the item can be worn.
+		 * If any non-hand slot is chosen, the max stack size is set to 1.
+		 *
+		 * @param protection How much protection the wearable has.
+		 *
+		 * @return ItemProperty
+		*/
+		ItemProperty SetWearable(adk::WearableSlot slot, int protection) {
+			this->wearable_slot = slot;
+			this->wearable_protection = protection;
 
 			return *this;
 		}
@@ -450,7 +691,7 @@ namespace adk {
 		int damage;
 		std::string display_name;
 		ItemDurability durability;
-		std::string enchantable_slot;
+		adk::EnchantableSlot enchantable_slot;
 		std::string enchantable_value;
 		ItemEntityPlacer placer_entity;
 		ItemFood food;
@@ -464,5 +705,16 @@ namespace adk {
 		int max_stack_size = 64;
 		float projectile_min_critical_power;
 		std::string projectile_entity;
+		ItemRecord record;
+		ItemShooter shooter;
+		bool should_despawn;
+		bool stacked_by_data;
+		std::vector<std::string> tags;
+		ItemThrowable throwable;
+		std::string use_animation;
+		float use_modifiers_movement;
+		float use_modifiers_duration;
+		adk::WearableSlot wearable_slot;
+		int wearable_protection;
 	};
-} // namespace adk
+} // namespace

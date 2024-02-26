@@ -403,12 +403,6 @@ namespace adk {
 			return temp;
 		}
 
-		nlohmann::json::object_t Repairable(nlohmann::json j) {
-			nlohmann::json::object_t temp = { {"minecraft:repairable", {j}} };
-
-			return temp;
-		}
-
 		/**
 		 * @brief Creates the "shooter" component
 		 *
