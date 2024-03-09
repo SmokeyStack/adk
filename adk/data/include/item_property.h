@@ -313,7 +313,7 @@ namespace adk {
 		}
 
 		/**
-		 * @brief Set the "max_stack_size" component
+		 * @brief Set the "can_destroy_in_creative" component
 		 *
 		 * @param value Defines whether the item can destroy blocks while in creative.
 		 *
