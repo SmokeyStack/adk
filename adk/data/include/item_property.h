@@ -29,6 +29,7 @@ namespace adk {
 		SHOVEL,
 		SWORD,
 		ALL,
+		NONE
 	};
 
 	/**
@@ -94,7 +95,8 @@ namespace adk {
 		SADDLE,
 		ARMOR,
 		CHEST,
-		EQUIPPABLE
+		EQUIPPABLE,
+		NONE
 	};
 
 	inline std::string GetWearableSlot(WearableSlot slot) {
@@ -167,9 +169,9 @@ namespace adk {
 
 		struct ItemShooterAmmunition {
 			std::string item;
-			std::optional<bool> use_offhand = false;
-			std::optional<bool> search_inventory = false;
-			std::optional<bool> use_in_creative = false;
+			bool use_offhand = false;
+			bool search_inventory = false;
+			bool use_in_creative = false;
 		};
 
 		struct ItemShooter {
@@ -186,6 +188,7 @@ namespace adk {
 			float max_launch_power = 1.0;
 			float min_draw_duration = 0.0;
 			bool scale_power_by_draw_duration = false;
+			bool is_throwable = true;
 		};
 
 		void to_json(nlohmann::json& j, const ItemDurability& p) {
@@ -225,17 +228,6 @@ namespace adk {
 			j.update({ {"sound_event", p.sound_event}, {"duration", p.duration}, {"comparator_signal", p.comparator_signal} });
 		}
 
-		void to_json(nlohmann::json& j, const ItemShooter& p) {
-			j.update({ {"ammunition", p.ammunition} });
-
-			if (p.charge_on_draw)
-				j.update({ "charge_on_draw",p.charge_on_draw });
-			if (p.max_draw_duration != 0.0)
-				j.update({ "max_draw_duration",p.max_draw_duration });
-			if (p.scale_power_by_draw_duration)
-				j.update({ "scale_power_by_draw_duration",p.scale_power_by_draw_duration });
-		}
-
 		void to_json(nlohmann::json& j, const ItemShooterAmmunition& p) {
 			j.update({ {"item", p.item} });
 
@@ -245,6 +237,17 @@ namespace adk {
 				j.update({ "search_inventory",p.search_inventory });
 			if (p.use_in_creative)
 				j.update({ "use_in_creative",p.use_in_creative });
+		}
+
+		void to_json(nlohmann::json& j, const ItemShooter& p) {
+			j.update({ {"ammunition", p.ammunition} });
+
+			if (p.charge_on_draw)
+				j.update({ "charge_on_draw",p.charge_on_draw });
+			if (p.max_draw_duration != 0.0)
+				j.update({ "max_draw_duration",p.max_draw_duration });
+			if (p.scale_power_by_draw_duration)
+				j.update({ "scale_power_by_draw_duration",p.scale_power_by_draw_duration });
 		}
 
 		void to_json(nlohmann::json& j, const ItemThrowable& p) {
@@ -664,7 +667,7 @@ namespace adk {
 
 			return *this;
 		}
-		
+
 		/**
 		 * @brief Sets the "wearable" component
 		 *
@@ -681,6 +684,74 @@ namespace adk {
 
 			return *this;
 		}
+
+		bool GetAllowOffHand() const { return allow_offhand; }
+
+		bool GetCanDestoryInCreative() const { return can_destroy_in_creative; }
+
+		std::string GetPlacerBlockBlock() const { return placer_block_block; }
+
+		std::vector<std::string> GetPlacerBlockUseOn() const { return placer_block_use_on; }
+
+		std::string GetCooldownCategory() const { return cooldown_category; }
+
+		float GetCooldownDuration() const { return cooldown_duration; }
+
+		int GetDamage() const { return damage; }
+
+		std::string GetDisplayName() const { return display_name; }
+
+		ItemDurability GetDurability() const { return durability; }
+
+		adk::EnchantableSlot GetEnchantableSlot() const { return enchantable_slot; }
+
+		int GetEnchantableValue() const { return enchantable_value; }
+
+		ItemEntityPlacer GetPlacerEntity() const { return placer_entity; }
+
+		ItemFood GetFood() const { return food; }
+
+		float GetFuelDuration() const { return fuel_duration; }
+
+		bool GetGlint() const { return glint; }
+
+		bool GetHandEquipped() const { return hand_equipped; }
+
+		std::string GetHoverTextColor() const { return hover_text_color; }
+
+		std::string GetIcon() const { return icon; }
+
+		std::string GetInteractButton() const { return interact_button; }
+
+		bool GetLiquidClipped() const { return liquid_clipped; }
+
+		int GetMaxStackSize() const { return max_stack_size; }
+
+		float GetProjectileMinCriticalPower() const { return projectile_min_critical_power; }
+
+		std::string GetProjectileEntity() const { return projectile_entity; }
+
+		ItemRecord GetRecord() const { return record; }
+
+		ItemShooter GetShooter() const { return shooter; }
+
+		bool GetShouldDespawn() const { return should_despawn; }
+
+		bool GetStackedByData() const { return stacked_by_data; }
+
+		std::vector<std::string> GetTags() const { return tags; }
+
+		ItemThrowable GetThrowable() const { return throwable; }
+
+		std::string GetUseAnimation() const { return use_animation; }
+
+		float GetUseModifiersMovement() const { return use_modifiers_movement; }
+
+		float GetUseModifiersDuration() const { return use_modifiers_duration; }
+
+		adk::WearableSlot GetWearableSlot() const { return wearable_slot; }
+
+		int GetWearableProtection() const { return wearable_protection; }
 	private:
 		bool allow_offhand = false;
 		bool can_destroy_in_creative = false;
@@ -691,8 +762,8 @@ namespace adk {
 		int damage;
 		std::string display_name;
 		ItemDurability durability;
-		adk::EnchantableSlot enchantable_slot;
-		std::string enchantable_value;
+		adk::EnchantableSlot enchantable_slot = adk::EnchantableSlot::NONE;
+		int enchantable_value;
 		ItemEntityPlacer placer_entity;
 		ItemFood food;
 		float fuel_duration;
@@ -714,7 +785,7 @@ namespace adk {
 		std::string use_animation;
 		float use_modifiers_movement;
 		float use_modifiers_duration;
-		adk::WearableSlot wearable_slot;
+		adk::WearableSlot wearable_slot = adk::WearableSlot::NONE;
 		int wearable_protection;
 	};
 } // namespace

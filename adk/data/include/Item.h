@@ -1,106 +1,193 @@
-#ifndef ITEM_H
-#define ITEM_H
-
-#include <spdlog/spdlog.h>
+#pragma once
 
 #include <string>
 
-//#include "ItemComponent.h"
+#include "item_component.h"
 #include "item_property.h"
 #include "json.hpp"
 
-/**
- * @brief Represents an Item
- *
- */
-class Item {
-   protected:
-    ItemProperty _internal;
-    //ItemComponent helper;
+namespace adk {
+	/**
+	 * @brief Represents an Item
+	 *
+	 */
+	class Item {
+	public:
+		std::string getType() { return "item"; };
 
-   public:
-    using json = nlohmann::json;
-    json j;
-    std::string getType() { return "item"; };
+		Item() {};
 
-    Item(){};
-    /**
-     * @brief Construct a new Item object
-     *
-     * @param property ItemProperty
-     */
-    Item(ItemProperty property) { _internal = property; }
+		/**
+		 * @brief Construct a new Item object
+		 *
+		 * @param property ItemProperty
+		 */
+		Item(ItemProperty property) { internal_ = property; }
 
-    /**
-     * @brief Generates the json object
-     *
-     * @param mod_id Namespace identifier
-     * @param id Identifier for the item
-     * @return nlohmann::json
-     */
-    virtual json Generate(std::string mod_id, std::string id) {
-        /*j["format_version"] = "1.20.40";
-        j["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
+		/**
+		 * @brief Generates the json object
+		 *
+		 * @param mod_id Namespace identifier
+		 *
+		 * @param id Identifier for the item
+		 *
+		 * @return nlohmann::json
+		 */
+		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
+			output_["format_version"] = "1.20.60";
+			output_["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 
-        if (!_display_name.empty())
-            j["minecraft:item"]["components"]["minecraft:display_name"]
-             ["value"] = _display_name;
+			if (internal_.GetAllowOffHand())
+				output_["minecraft:item"]["components"].update(helper_.AllowOffHand(internal_.GetAllowOffHand()));
 
-        if (!_icon.empty())
-            j["minecraft:item"]["components"]["minecraft:icon"]["texture"] =
-                _icon;
+			if (internal_.GetCanDestoryInCreative())
+				output_["minecraft:item"]["components"].update(helper_.CanDestroyInCreative(internal_.GetCanDestoryInCreative()));
 
-        if (_stack != 64 && _stack != NULL)
-            j["minecraft:item"]["components"]["minecraft:max_stack_size"] =
-                _stack;
+			if (!internal_.GetPlacerBlockBlock().empty()) {
+				output_["minecraft:item"]["components"].update(helper_.PlacerBlock(internal_.GetPlacerBlockBlock()));
 
-        if (!_block_placer.empty()) {
-            j["minecraft:item"]["components"]["minecraft:block_placer"]
-             ["block"] = _block_placer;
+				if (internal_.GetPlacerBlockUseOn().size() != 0)
+					output_["minecraft:item"]["components"].update(helper_.PlacerBlock(internal_.GetPlacerBlockBlock(), internal_.GetPlacerBlockUseOn()));
+			}
 
-            if (!_block_placer_placement.empty())
-                j["minecraft:item"]["components"]["minecraft:block_placer"]
-                 ["use_on"] = _block_placer_placement;
-        }
+			if (!internal_.GetCooldownCategory().empty())
+				output_["minecraft:item"]["components"].update(helper_.Cooldown(internal_.GetCooldownCategory(), internal_.GetCooldownDuration()));
 
-        if (!_cooldown_category.empty() && _cooldown_time != NULL) {
-            j["minecraft:item"]["components"]["minecraft:cooldown"]
-             ["category"] = _cooldown_category;
-            j["minecraft:item"]["components"]["minecraft:cooldown"]
-             ["duration"] = _cooldown_time;
-        }
+			if (internal_.GetDamage() != 0)
+				output_["minecraft:item"]["components"].update(helper_.Damage(internal_.GetDamage(), id));
 
-        if (!_dye.empty())
-            j["minecraft:item"]["components"]["minecraft:dye_powder"]["color"] =
-                _dye;
+			if (!internal_.GetDisplayName().empty())
+				output_["minecraft:item"]["components"].update(helper_.DisplayName(internal_.GetDisplayName()));
 
-        if (!_entity_placer.empty()) {
-            j["minecraft:item"]["components"]["minecraft:block_placer"]
-             ["entity"] = _entity_placer;
+			if (internal_.GetDurability().durability != 0) {
+				if (internal_.GetDurability().damage_chance.has_value())
+					output_["minecraft:item"]["components"].update(helper_.Durability(internal_.GetDurability().durability, internal_.GetDurability().damage_chance.value().first, internal_.GetDurability().damage_chance.value().second, id));
+				else
+					output_["minecraft:item"]["components"].update(helper_.Durability(internal_.GetDurability().durability, 0, 0, id));
+			}
 
-            if (!_entity_placer_placement.empty())
-                j["minecraft:item"]["components"]["minecraft:block_placer"]
-                 ["use_on"] = _entity_placer_placement;
+			if (internal_.GetEnchantableSlot() != adk::EnchantableSlot::NONE)
+				output_["minecraft:item"]["components"].update(helper_.Enchantable(adk::GetEnchantableSlot(internal_.GetEnchantableSlot()), internal_.GetEnchantableValue(), id));
 
-            if (!_entity_placer_dispense.empty())
-                j["minecraft:item"]["components"]["minecraft:block_placer"]
-                 ["dispense_on"] = _entity_placer_dispense;
-        }
+			if (!internal_.GetPlacerEntity().entity.empty()) {
+				std::vector<std::string> use_on;
+				std::vector<std::string> dispense_on;
 
-        if (!_offset_main.empty())
-            j["minecraft:item"]["components"]["minecraft:render_offsets"]
-             ["main_hand"] = _offset_main;
+				if (internal_.GetPlacerEntity().use_on.has_value())
+					use_on = internal_.GetPlacerEntity().use_on.value();
+				if (internal_.GetPlacerEntity().dispense_on.has_value())
+					dispense_on = internal_.GetPlacerEntity().dispense_on.value();
 
-        if (!_offset_offhand.empty())
-            j["minecraft:item"]["components"]["minecraft:render_offsets"]
-             ["off_hand"] = _offset_offhand;
+				output_["minecraft:item"]["components"].update(helper_.PlacerEntity(
+					internal_.GetPlacerEntity().entity,
+					use_on,
+					dispense_on
+				));
+			}
 
-        if (!_projectile_entity.empty())
-            j["minecraft:item"]["components"]["minecraft:projectile"]
-             ["projectile_entity"] = _projectile_entity;*/
+			if (internal_.GetFood().nutrition != 0 && internal_.GetFood().saturation_modifier != 0) {
+				bool can_always_eat = false;
+				std::string using_converts_to;
 
-        return j;
-    }
-};
+				if (internal_.GetFood().can_always_eat.has_value())
+					can_always_eat = internal_.GetFood().can_always_eat.value();
+				if (internal_.GetFood().using_converts_to.has_value())
+					using_converts_to = internal_.GetFood().using_converts_to.value();
 
-#endif
+
+				output_["minecraft:item"]["components"].update(helper_.Food(
+					internal_.GetFood().nutrition,
+					internal_.GetFood().saturation_modifier,
+					can_always_eat,
+					using_converts_to
+				));
+			}
+
+			if (internal_.GetFuelDuration() != 0)
+				output_["minecraft:item"]["components"].update(helper_.Fuel(internal_.GetFuelDuration()));
+
+			if (internal_.GetGlint())
+				output_["minecraft:item"]["components"].update(helper_.Glint(internal_.GetGlint()));
+
+			if (internal_.GetHandEquipped())
+				output_["minecraft:item"]["components"].update(helper_.HandEquipped(internal_.GetHandEquipped()));
+
+			if (!internal_.GetHoverTextColor().empty())
+				output_["minecraft:item"]["components"].update(helper_.HoverTextColor(internal_.GetHoverTextColor()));
+
+			if (!internal_.GetIcon().empty())
+				output_["minecraft:item"]["components"].update(helper_.Icon(internal_.GetIcon()));
+			if (!internal_.GetInteractButton().empty())
+				output_["minecraft:item"]["components"].update(helper_.InteractButton(internal_.GetInteractButton()));
+
+			if (internal_.GetLiquidClipped())
+				output_["minecraft:item"]["components"].update(helper_.LiquidClipped(internal_.GetLiquidClipped()));
+
+			if (internal_.GetMaxStackSize() != 64)
+				output_["minecraft:item"]["components"].update(helper_.MaxStackSize(internal_.GetMaxStackSize()));
+
+			if (!internal_.GetProjectileEntity().empty())
+				output_["minecraft:item"]["components"].update(helper_.Projectile(internal_.GetProjectileEntity(),
+					internal_.GetProjectileMinCriticalPower()
+				));
+
+			if (!internal_.GetRecord().sound_event.empty())
+				output_["minecraft:item"]["components"].update(helper_.Record(
+					internal_.GetRecord().sound_event,
+					internal_.GetRecord().duration,
+					internal_.GetRecord().comparator_signal,
+					id
+				));
+
+			if (internal_.GetShooter().ammunition.size() != 0)
+				output_["minecraft:item"]["components"].update(helper_.Shooter(
+					internal_.GetShooter().ammunition,
+					internal_.GetShooter().charge_on_draw,
+					internal_.GetShooter().max_draw_duration,
+					internal_.GetShooter().scale_power_by_draw_duration
+				));
+
+			if (internal_.GetShouldDespawn())
+				output_["minecraft:item"]["components"].update(helper_.ShouldDespawn(internal_.GetShouldDespawn()));
+
+			if (internal_.GetStackedByData())
+				output_["minecraft:item"]["components"].update(helper_.StackedByData(internal_.GetStackedByData()));
+
+			if (!internal_.GetTags().empty())
+				output_["minecraft:item"]["components"].update(helper_.Tags(internal_.GetTags()));
+
+			if (internal_.GetThrowable().is_throwable) {
+				output_["minecraft:item"]["components"].update(helper_.Throwable(
+					internal_.GetThrowable().do_swing_animation,
+					internal_.GetThrowable().launch_power_scale,
+					internal_.GetThrowable().max_draw_duration,
+					internal_.GetThrowable().max_launch_power,
+					internal_.GetThrowable().min_draw_duration,
+					internal_.GetThrowable().scale_power_by_draw_duration
+				));
+			}
+
+
+			if (!internal_.GetUseAnimation().empty())
+				output_["minecraft:item"]["components"].update(helper_.UseAnimation(internal_.GetUseAnimation()));
+
+			if (internal_.GetUseModifiersDuration() != 0)
+				output_["minecraft:item"]["components"].update(helper_.UseModifiers(
+					internal_.GetUseModifiersDuration(),
+					internal_.GetUseModifiersMovement()
+				));
+
+			if (internal_.GetWearableSlot() != adk::WearableSlot::NONE)
+				output_["minecraft:item"]["components"].update(helper_.Wearable(
+					internal_.GetWearableProtection(),
+					adk::GetWearableSlot(internal_.GetWearableSlot()
+					)));
+
+			return output_;
+		}
+	protected:
+		ItemProperty internal_;
+		ItemComponent helper_;
+		nlohmann::json output_;
+	};
+} // namespace adk

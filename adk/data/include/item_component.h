@@ -20,7 +20,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		 */
 		nlohmann::json::object_t AllowOffHand(bool value) {
-			nlohmann::json::object_t temp = { {"minecraft:allow_off_hand", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:allow_off_hand", {{"value",value}}} };
 
 			return temp;
 		}
@@ -65,7 +65,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		 */
 		nlohmann::json::object_t CanDestroyInCreative(bool value) {
-			nlohmann::json::object_t temp = { {"minecraft:can_destroy_in_creative", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:can_destroy_in_creative", {{"value",value}}} };
 
 			return temp;
 		}
@@ -104,7 +104,7 @@ namespace adk {
 				exit(EXIT_FAILURE);
 			}
 
-			nlohmann::json::object_t temp = { {"minecraft:damage", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:damage", {{"value",value}}} };
 
 			return temp;
 		}
@@ -117,7 +117,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		 */
 		nlohmann::json::object_t DisplayName(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:display_name", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:display_name", {{"value",value}}} };
 
 			return temp;
 		}
@@ -206,17 +206,17 @@ namespace adk {
 		/**
 		 * @brief Creates the "food" component
 		 *
-		 * @param can_always_eat If "true" you can always eat this item (even when not hungry).
-		 *
 		 * @param nutrition The value that is added to the actor's nutrition when the item is used.
 		 *
 		 * @param saturation_modifier Saturation Modifier is used in this formula: (nutrition * saturation_modifier * 2) when applying the saturation buff.
+		 *
+		 * @param can_always_eat If "true" you can always eat this item (even when not hungry).
 		 *
 		 * @param using_converts_to When used, converts to the item specified by the string in this field.
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Food(bool can_always_eat, int nutrition, float saturation_modifier, std::string using_converts_to = "") {
+		nlohmann::json::object_t Food(int nutrition, float saturation_modifier, bool can_always_eat = false, std::string using_converts_to = "") {
 			nlohmann::json::object_t temp = { {"minecraft:food",
 				{{"can_always_eat", can_always_eat},
 				{"nutrition", nutrition},
@@ -235,7 +235,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t Fuel(float value) {
-			nlohmann::json::object_t temp = { {"minecraft:fuel", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:fuel", {{"value",value}}} };
 
 			return temp;
 		}
@@ -248,7 +248,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t Glint(bool value) {
-			nlohmann::json::object_t temp = { {"minecraft:glint", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:glint", {{"value",value}}} };
 
 			return temp;
 		}
@@ -261,7 +261,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t HandEquipped(bool value) {
-			nlohmann::json::object_t temp = { {"minecraft:hand_equipped", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:hand_equipped", {{"value",value}}} };
 
 			return temp;
 		}
@@ -274,7 +274,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t HoverTextColor(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:hover_text_color", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:hover_text_color", {{"value",value}}} };
 
 			return temp;
 		}
@@ -288,7 +288,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t Icon(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:icon", {"textures",{"default",value}}} };
+			nlohmann::json::object_t temp = { {"minecraft:icon", {{"textures",{{"default",value}}}}} };
 
 			return temp;
 		}
@@ -313,8 +313,8 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t LiquidClipped(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:liquid_clipped", {"value",value}} };
+		nlohmann::json::object_t LiquidClipped(bool value) {
+			nlohmann::json::object_t temp = { {"minecraft:liquid_clipped", {{"value",value}}} };
 
 			return temp;
 		}
@@ -326,8 +326,8 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t MaxStackSize(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:max_stack_size", {"value",value}} };
+		nlohmann::json::object_t MaxStackSize(int value) {
+			nlohmann::json::object_t temp = { {"minecraft:max_stack_size", {{"value",value}}} };
 
 			return temp;
 		}
@@ -362,7 +362,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Record(int comparator_signal, float duration, std::string sound_event, std::string id) {
+		nlohmann::json::object_t Record(std::string sound_event, float duration, int comparator_signal, std::string id) {
 			if (comparator_signal > 13 || comparator_signal < 1) {
 				adk::log::error("{} - comparator_signal can only be in range (0-15)", id);
 
@@ -408,7 +408,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t ShouldDespawn(bool value) {
-			nlohmann::json::object_t temp = { {"minecraft:should_despawn", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:should_despawn", {{"value",value}}} };
 
 			return temp;
 		}
@@ -421,7 +421,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t StackedByData(bool value) {
-			nlohmann::json::object_t temp = { {"minecraft:stacked_by_data", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:stacked_by_data", {{"value",value}}} };
 
 			return temp;
 		}
@@ -434,7 +434,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t Tags(std::vector<std::string> value) {
-			nlohmann::json::object_t temp = { {"minecraft:tags", {"value",value}} };
+			nlohmann::json::object_t temp = { {"minecraft:tags", {{"value",value}}} };
 
 			return temp;
 		}
@@ -476,8 +476,8 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t UseAnimations(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:use_animation ", {"value",value}} };
+		nlohmann::json::object_t UseAnimation(std::string value) {
+			nlohmann::json::object_t temp = { {"minecraft:use_animation ", {{"value",value}}} };
 
 			return temp;
 		}
