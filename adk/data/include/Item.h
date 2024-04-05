@@ -34,13 +34,13 @@ namespace adk {
 		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_["format_version"] = "1.20.60";
+			output_["format_version"] = "1.20.80";
 			output_["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 
 			if (internal_.GetAllowOffHand())
 				output_["minecraft:item"]["components"].update(helper_.AllowOffHand(internal_.GetAllowOffHand()));
 
-			if (internal_.GetCanDestoryInCreative())
+			if (!internal_.GetCanDestoryInCreative())
 				output_["minecraft:item"]["components"].update(helper_.CanDestroyInCreative(internal_.GetCanDestoryInCreative()));
 
 			if (!internal_.GetPlacerBlockBlock().empty()) {
@@ -104,7 +104,7 @@ namespace adk {
 			}
 
 			if (internal_.GetFuelDuration() != 0)
-				output_["minecraft:item"]["components"].update(helper_.Fuel(internal_.GetFuelDuration()));
+				output_["minecraft:item"]["components"].update(helper_.Fuel(internal_.GetFuelDuration(), id));
 
 			if (internal_.GetGlint())
 				output_["minecraft:item"]["components"].update(helper_.Glint(internal_.GetGlint()));
@@ -140,12 +140,7 @@ namespace adk {
 				));
 
 			if (internal_.GetShooter().ammunition.size() != 0)
-				output_["minecraft:item"]["components"].update(helper_.Shooter(
-					internal_.GetShooter().ammunition,
-					internal_.GetShooter().charge_on_draw,
-					internal_.GetShooter().max_draw_duration,
-					internal_.GetShooter().scale_power_by_draw_duration
-				));
+				output_["minecraft:item"]["components"].update(helper_.Shooter(internal_.GetShooter()));
 
 			if (internal_.GetShouldDespawn())
 				output_["minecraft:item"]["components"].update(helper_.ShouldDespawn(internal_.GetShouldDespawn()));
@@ -156,17 +151,8 @@ namespace adk {
 			if (!internal_.GetTags().empty())
 				output_["minecraft:item"]["components"].update(helper_.Tags(internal_.GetTags()));
 
-			if (internal_.GetThrowable().is_throwable) {
-				output_["minecraft:item"]["components"].update(helper_.Throwable(
-					internal_.GetThrowable().do_swing_animation,
-					internal_.GetThrowable().launch_power_scale,
-					internal_.GetThrowable().max_draw_duration,
-					internal_.GetThrowable().max_launch_power,
-					internal_.GetThrowable().min_draw_duration,
-					internal_.GetThrowable().scale_power_by_draw_duration
-				));
-			}
-
+			if (internal_.GetThrowable().is_throwable)
+				output_["minecraft:item"]["components"].update(helper_.Throwable(internal_.GetThrowable()));
 
 			if (!internal_.GetUseAnimation().empty())
 				output_["minecraft:item"]["components"].update(helper_.UseAnimation(internal_.GetUseAnimation()));
@@ -174,7 +160,8 @@ namespace adk {
 			if (internal_.GetUseModifiersDuration() != 0)
 				output_["minecraft:item"]["components"].update(helper_.UseModifiers(
 					internal_.GetUseModifiersDuration(),
-					internal_.GetUseModifiersMovement()
+					internal_.GetUseModifiersMovement(),
+					id
 				));
 
 			if (internal_.GetWearableSlot() != adk::WearableSlot::NONE)

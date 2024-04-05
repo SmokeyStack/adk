@@ -52,7 +52,7 @@ namespace adk {
 		nlohmann::json::object_t PlacerBlock(std::string block, std::vector<std::string> use_on) {
 			nlohmann::json::object_t temp = {
 				{"minecraft:block_placer",
-				 {{"block", block}, {"used_on", use_on}}} };
+				 {{"block", block}, {"use_on", use_on}}} };
 
 			return temp;
 		}
@@ -197,7 +197,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t PlacerEntity(std::string entity, std::vector<std::string> dispense_on = {}, std::vector<std::string> use_on = {}) {
+		nlohmann::json::object_t PlacerEntity(std::string entity, std::vector<std::string> use_on = {}, std::vector<std::string> dispense_on = {}) {
 			nlohmann::json::object_t temp = { {"minecraft:entity_placer", {{"entity", entity}, {"dispense_on", dispense_on}, {"use_on", use_on}}} };
 
 			return temp;
@@ -234,8 +234,14 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Fuel(float value) {
-			nlohmann::json::object_t temp = { {"minecraft:fuel", {{"value",value}}} };
+		nlohmann::json::object_t Fuel(float value, std::string id) {
+			if (value < 0.05) {
+				log::error("{} - The fuel duration must be a minimum of 0.05", id);
+
+				exit(EXIT_FAILURE);
+			}
+
+			nlohmann::json::object_t temp = { {"minecraft:fuel", {{"duration",value}}} };
 
 			return temp;
 		}
@@ -364,7 +370,7 @@ namespace adk {
 		*/
 		nlohmann::json::object_t Record(std::string sound_event, float duration, int comparator_signal, std::string id) {
 			if (comparator_signal > 13 || comparator_signal < 1) {
-				adk::log::error("{} - comparator_signal can only be in range (0-15)", id);
+				log::error("{} - comparator_signal can only be in range (0-15)", id);
 
 				exit(EXIT_FAILURE);
 			}
@@ -380,22 +386,12 @@ namespace adk {
 		/**
 		 * @brief Creates the "shooter" component
 		 *
-		 * @param j Sets the entity that is used as ammunition
-		 *
-		 * @param charge_on_draw Sets if the item is charged when drawn
-		 *
-		 * @param max_draw_duration Determines how long can the weapon can be drawn before releasing automatically
-		 *
-		 * @param scale_power_by_draw_duration When set to 'true', the longer the weapon is drawn, the more power it will have when released
+		 * @param j ItemShooter struct
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Shooter(nlohmann::json j, bool charge_on_draw, float max_draw_duration, bool scale_power_by_draw_duration) {
-			nlohmann::json::object_t temp = { {"minecraft:shooter",
-				{{"max_draw_duration", max_draw_duration},
-				{"scale_power_by_draw_duration",scale_power_by_draw_duration},
-				{"charge_on_draw",charge_on_draw},
-				{"ammunition", {j}}}} };
+		nlohmann::json::object_t Shooter(nlohmann::json j) {
+			nlohmann::json::object_t temp = { {"minecraft:shooter", j} };
 
 			return temp;
 		}
@@ -434,7 +430,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t Tags(std::vector<std::string> value) {
-			nlohmann::json::object_t temp = { {"minecraft:tags", {{"value",value}}} };
+			nlohmann::json::object_t temp = { {"minecraft:tags", {{"tags",value}}} };
 
 			return temp;
 		}
@@ -442,29 +438,12 @@ namespace adk {
 		/**
 		 * @brief Creates the "throwable" component
 		 *
-		 * @param do_swing_animation Whether the item should use the swing animation when thrown.
-		 *
-		 * @param launch_power_scale The scale at which the power of the throw increases
-		 *
-		 * @param max_draw_duration The maximum duration to draw a throwable item.
-		 *
-		 * @param max_launch_power The maximum power to launch the throwable item.
-		 *
-		 * @param min_draw_duration The minimum duration to draw a throwable item.
-		 *
-		 * @param scale_power_by_draw_duration Whether or not the power of the throw increases with duration charged.
-		 * When true, The longer you hold, the more power it will have when released.
+		 * @param j ItemThrowable struct
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Throwable(bool do_swing_animation, float launch_power_scale, float max_draw_duration, float max_launch_power, float min_draw_duration, bool scale_power_by_draw_duration) {
-			nlohmann::json::object_t temp = { {"minecraft:throwable",
-				{{"do_swing_animation", do_swing_animation},
-				{"launch_power_scale",launch_power_scale},
-				{"max_draw_duration",max_draw_duration},
-				{"max_launch_power",max_launch_power},
-				{"min_draw_duration",min_draw_duration},
-				{"scale_power_by_draw_duration",scale_power_by_draw_duration}}} };
+		nlohmann::json::object_t Throwable(nlohmann::json j) {
+			nlohmann::json::object_t temp = { {"minecraft:throwable",{j} } };
 
 			return temp;
 		}
@@ -489,9 +468,17 @@ namespace adk {
 		 *
 		 * @param movement_modifier Modifier value to scale the players movement speed when item is in use.
 		 *
+		 * @param id Identifier of the item
+		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t UseModifiers(float use_duration, float movement_modifier) {
+		nlohmann::json::object_t UseModifiers(float use_duration, float movement_modifier, std::string id) {
+			if (movement_modifier < 0 || movement_modifier >1) {
+				log::error("{} - movement_modifier can only be from 0-1", id);
+
+				exit(EXIT_FAILURE);
+			}
+
 			nlohmann::json::object_t temp = { {"minecraft:use_modifiers",
 				{{"use_duration", use_duration},
 				{"movement_modifier", movement_modifier}}} };

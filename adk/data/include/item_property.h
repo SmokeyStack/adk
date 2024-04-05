@@ -101,32 +101,16 @@ namespace adk {
 
 	inline std::string GetWearableSlot(WearableSlot slot) {
 		switch (slot) {
-		case adk::WearableSlot::WEAPON_MAINHAND:
-			return "slot.weapon.mainhand";
 		case adk::WearableSlot::WEAPON_OFFHAND:
-			return "slot.weapon.mainhand";
+			return "slot.weapon.offhand";
 		case adk::WearableSlot::ARMOR_HEAD:
-			return "slot.weapon.mainhand";
+			return "slot.armor.head";
 		case adk::WearableSlot::ARMOR_CHEST:
-			return "slot.weapon.mainhand";
+			return "slot.armor.chest";
 		case adk::WearableSlot::ARMOR_LEGS:
-			return "slot.weapon.mainhand";
+			return "slot.armor.legs";
 		case adk::WearableSlot::ARMOR_FEET:
-			return "slot.weapon.mainhand";
-		case adk::WearableSlot::HOTBAR:
-			return "slot.weapon.mainhand";
-		case adk::WearableSlot::INVENTORY:
-			return "slot.weapon.mainhand";
-		case adk::WearableSlot::ENDERCHEST:
-			return "slot.weapon.mainhand";
-		case adk::WearableSlot::SADDLE:
-			return "slot.weapon.mainhand";
-		case adk::WearableSlot::ARMOR:
-			return "slot.weapon.mainhand";
-		case adk::WearableSlot::CHEST:
-			return "slot.weapon.mainhand";
-		case adk::WearableSlot::EQUIPPABLE:
-			return "slot.weapon.mainhand";
+			return "slot.armor.feet";
 		default:
 			break;
 		}
@@ -162,9 +146,9 @@ namespace adk {
 		};
 
 		struct ItemRecord {
-			std::string sound_event;
-			float duration;
-			int comparator_signal;
+			std::string sound_event = "";
+			float duration = 0.0;
+			int comparator_signal = 0;
 		};
 
 		struct ItemShooterAmmunition {
@@ -182,29 +166,14 @@ namespace adk {
 		};
 
 		struct ItemThrowable {
+			bool is_throwable = false;
 			bool do_swing_animation = false;
 			float launch_power_scale = 1.0;
 			float max_draw_duration = 0.0;
 			float max_launch_power = 1.0;
 			float min_draw_duration = 0.0;
 			bool scale_power_by_draw_duration = false;
-			bool is_throwable = true;
 		};
-
-		void to_json(nlohmann::json& j, const ItemDurability& p) {
-			if (p.damage_chance.has_value()) {
-				j = nlohmann::json{
-					{"max_durability", p.durability},
-					{"damage_chance",{
-						{"min",p.damage_chance.value().first},
-						{"max",p.damage_chance.value().second}
-					}}
-				};
-			}
-			else {
-				j = nlohmann::json{ {"max_durability", p.durability} };
-			}
-		}
 
 		void to_json(nlohmann::json& j, const ItemEntityPlacer& p) {
 			j.update({ {"entity", p.entity} });
@@ -232,37 +201,37 @@ namespace adk {
 			j.update({ {"item", p.item} });
 
 			if (p.use_offhand)
-				j.update({ "use_offhand",p.use_offhand });
+				j.update({ {"use_offhand",p.use_offhand} });
 			if (p.search_inventory)
-				j.update({ "search_inventory",p.search_inventory });
+				j.update({ {"search_inventory",p.search_inventory} });
 			if (p.use_in_creative)
-				j.update({ "use_in_creative",p.use_in_creative });
+				j.update({ {"use_in_creative",p.use_in_creative } });
 		}
 
 		void to_json(nlohmann::json& j, const ItemShooter& p) {
 			j.update({ {"ammunition", p.ammunition} });
 
 			if (p.charge_on_draw)
-				j.update({ "charge_on_draw",p.charge_on_draw });
+				j.update({ { "charge_on_draw",p.charge_on_draw } });
 			if (p.max_draw_duration != 0.0)
-				j.update({ "max_draw_duration",p.max_draw_duration });
+				j.update({ { "max_draw_duration",p.max_draw_duration } });
 			if (p.scale_power_by_draw_duration)
-				j.update({ "scale_power_by_draw_duration",p.scale_power_by_draw_duration });
+				j.update({ { "scale_power_by_draw_duration",p.scale_power_by_draw_duration } });
 		}
 
 		void to_json(nlohmann::json& j, const ItemThrowable& p) {
 			if (p.do_swing_animation)
-				j.update({ "do_swing_animation",p.do_swing_animation });
+				j.update({ { "do_swing_animation",p.do_swing_animation } });
 			if (p.launch_power_scale != 1.0)
-				j.update({ "launch_power_scale",p.launch_power_scale });
+				j.update({ { "launch_power_scale",p.launch_power_scale } });
 			if (p.max_draw_duration != 0.0)
-				j.update({ "max_draw_duration",p.max_draw_duration });
+				j.update({ { "max_draw_duration",p.max_draw_duration } });
 			if (p.max_launch_power != 1.0)
-				j.update({ "max_launch_power",p.max_launch_power });
+				j.update({ { "max_launch_power",p.max_launch_power } });
 			if (p.min_draw_duration != 0.0)
-				j.update({ "min_draw_duration",p.min_draw_duration });
+				j.update({ { "min_draw_duration",p.min_draw_duration } });
 			if (p.scale_power_by_draw_duration)
-				j.update({ "scale_power_by_draw_duration",p.scale_power_by_draw_duration });
+				j.update({ { "scale_power_by_draw_duration",p.scale_power_by_draw_duration } });
 		}
 	}
 
@@ -292,7 +261,7 @@ namespace adk {
 		 *
 		 * @return ItemProperty
 		 */
-		ItemProperty PlacerBlock(std::string value) {
+		ItemProperty SetPlacerBlock(std::string value) {
 			this->placer_block_block = value;
 
 			return *this;
@@ -308,7 +277,7 @@ namespace adk {
 		 *
 		 * @return ItemProperty
 		 */
-		ItemProperty PlacerBlock(std::string block, std::vector<std::string> use_on) {
+		ItemProperty SetPlacerBlock(std::string block, std::vector<std::string> use_on) {
 			this->placer_block_block = block;
 			this->placer_block_use_on = use_on;
 
@@ -655,13 +624,14 @@ namespace adk {
 		/**
 		 * @brief Sets the "use_modifiers" component
 		 *
-		 * @param movement_modifier Modifier value to scale the players movement speed when item is in use.
-		 *
 		 * @param use_duration How long the item takes to use in seconds.
+		 *
+		 * @param movement_modifier Modifier value to scale the players movement speed when item is in use.
+		 * Range: 0-1.
 		 *
 		 * @return ItemProperty
 		*/
-		ItemProperty SetUseModifiers(float movement_modifier, float use_duration) {
+		ItemProperty SetUseModifiers(float use_duration, float movement_modifier) {
 			this->use_modifiers_movement = movement_modifier;
 			this->use_modifiers_duration = use_duration;
 
@@ -754,7 +724,7 @@ namespace adk {
 		int GetWearableProtection() const { return wearable_protection; }
 	private:
 		bool allow_offhand = false;
-		bool can_destroy_in_creative = false;
+		bool can_destroy_in_creative = true;
 		std::string placer_block_block;
 		std::vector<std::string> placer_block_use_on;
 		std::string cooldown_category;

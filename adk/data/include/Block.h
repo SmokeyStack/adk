@@ -33,7 +33,7 @@ namespace adk {
 		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_["format_version"] = "1.20.60";
+			output_["format_version"] = "1.20.80";
 			output_["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
 
 			// Registering "light_dampening" component
