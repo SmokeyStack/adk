@@ -10,6 +10,7 @@ endif()
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+option(GITHUB_ACTION "Are you running on GitHub Actions?" OFF)
 
 set(BIN_NAME adk)
 set(LIB_NAME adk-lib)

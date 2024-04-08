@@ -19,7 +19,7 @@ jobs:
                 submodules: true
 
             - name: Configure CMake
-              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+              run: cmake -S . -B build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DGITHUB_ACTION=ON
 
             - name: Build
               # Build your program with the given configuration
