@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "LanguageBuilder.h"
+#include "builder_language.h"
 
 class Language : public LanguageBuilder {
    public:

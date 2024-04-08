@@ -1,7 +1,7 @@
-#include "Recipe.h"
+#include "recipe.h"
 
-#include "GlobalRegistry.h"
-#include "ShapedRecipeBuilder.h"
+#include "registry_global.h"
+#include "builder_recipe_shaped.h"
 
 Recipe::Recipe() {}
 

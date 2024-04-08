@@ -1,0 +1,1 @@
+{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:shooter":{"ammunition":[{"item":"minecraft:arrow"}],"max_draw_duration":1.0}},"description":{"identifier":"custom_namespace:item_basic_shooter_max_draw_duration"}}}

@@ -1,11 +1,11 @@
-#include "Object.h"
+#include "object.h"
 
 #include <string>
 
-#include "Block.h"
-#include "GlobalRegistry.h"
-#include "Item.h"
-#include "Registry.h"
+#include "block.h"
+#include "registry_global.h"
+#include "item.h"
+#include "registry.h"
 
 Object::Object(std::string id) { mod_id = id; }
 

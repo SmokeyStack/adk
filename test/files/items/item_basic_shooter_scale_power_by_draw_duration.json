@@ -1,0 +1,1 @@
+{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:shooter":{"ammunition":[{"item":"minecraft:arrow"}],"scale_power_by_draw_duration":true}},"description":{"identifier":"custom_namespace:item_basic_shooter_scale_power_by_draw_duration"}}}

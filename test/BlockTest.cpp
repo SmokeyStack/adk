@@ -1,180 +1,229 @@
 #include <gtest/gtest.h>
-#include <spdlog/async.h>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/sinks/stdout_sinks.h>
-#include <spdlog/spdlog.h>
 
 #include <filesystem>
 #include <iostream>
 #include <string>
 #include <vector>
 
-#include "Block.h"
-#include "BlockProperty.h"
+#include "block.h"
+#include "block_axis.h"
+#include "block_plant.h"
+#include "block_property.h"
 #include "CheckFile.h"
-#include "GlobalRegistry.h"
-#include "Registry.h"
+#include "registry.h"
+#include "registry_global.h"
+#include "utility/logger.h"
 
 namespace fs = std::filesystem;
+using namespace adk;
 
-TEST(BlockTest, BasicBlock) {
-    std::filesystem::create_directory("BP");
-    std::filesystem::create_directory("RP");
+namespace {
+	auto console_log_level = Level::Info;
+	auto file_log_level = Level::Trace;
+	std::filesystem::path log_directory = "logs/debug.log";
+	const std::string MOD_ID = "custom_namespace";
+	Registry<Block>* mod = new Registry<Block>(MOD_ID);
+	std::vector<std::string> crafting_tags = { "custom_crafting_table" };
+	BlockPlacementFilter filter_tags = {
+		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP}
+	};
+	BlockPlacementFilter filter_states = {
+		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP}
+	};
 
-    auto console_sink = std::make_shared<spdlog::sinks::stdout_sink_mt>();
-    console_sink->set_level(spdlog::level::err);
+	static void SetupCommon() {
+		SetupLoggerStage1();
+		SetupLoggerStage2(log_directory, console_log_level, file_log_level);
 
-    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
-        "logs/log.txt", true);
-    file_sink->set_level(spdlog::level::info);
+		registry_global.push_back(mod);
+		filter_tags.tags = { "stone","dirt" };
+		filter_states.states = { "minecraft:stone","minecraft:dirt" };
+	}
+}
 
-    spdlog::sinks_init_list sink_list = {file_sink, console_sink};
+TEST(BlockTest, BlockBasic) {
+	std::filesystem::create_directory("BP");
+	std::filesystem::create_directory("RP");
 
-    auto object_logger = std::make_shared<spdlog::logger>(
-        "Blocks/Items", sink_list.begin(), sink_list.end());
-    auto data_logger = std::make_shared<spdlog::logger>(
-        "Data Generator", sink_list.begin(), sink_list.end());
-    auto recipe_logger = std::make_shared<spdlog::logger>(
-        "Recipe", sink_list.begin(), sink_list.end());
+	SetupCommon();
 
-    spdlog::register_logger(object_logger);
-    spdlog::register_logger(data_logger);
-    spdlog::register_logger(recipe_logger);
+	log::info("Starting Block Basic Test");
 
-    const std::string MODID = "custom_namespace";
-    Registry<Block>* mod = new Registry<Block>(MODID);
+	mod->Subscribe("block_basic", new Block(BlockProperty()));
+	mod->Subscribe("block_basic_light_dampening", new Block(BlockProperty().SetLightDampening(5)));
+	mod->Subscribe("block_basic_crafting", new Block(BlockProperty().SetCrafting(crafting_tags, "Custom Crafting Table")));
+	mod->Subscribe("block_basic_destructible_by_explosion_bool", new Block(BlockProperty().SetDestructibleByExplosion(false)));
+	mod->Subscribe("block_basic_destructible_by_explosion_double", new Block(BlockProperty().SetDestructibleByExplosion(5.5)));
+	mod->Subscribe("block_basic_destructible_by_mining_bool", new Block(BlockProperty().SetDestructibleByMining(false)));
+	mod->Subscribe("block_basic_destructible_by_mining_double", new Block(BlockProperty().SetDestructibleByMining(5.5)));
+	mod->Subscribe("block_basic_display_name", new Block(BlockProperty().SetDisplayName("Custom Name")));
+	mod->Subscribe("block_basic_flammable_bool", new Block(BlockProperty().SetFlammable(false)));
+	mod->Subscribe("block_basic_flammable_object", new Block(BlockProperty().SetFlammable(5, 5)));
+	mod->Subscribe("block_basic_friction", new Block(BlockProperty().SetFriction(0.5)));
+	mod->Subscribe("block_basic_light_emission", new Block(BlockProperty().SetLightEmission(5)));
+	mod->Subscribe("block_basic_loot", new Block(BlockProperty().SetLoot("path/to/loot.json")));
+	mod->Subscribe("block_basic_map_color_hex", new Block(BlockProperty().SetMapColor("#FF9900")));
+	mod->Subscribe("block_basic_map_color_rgb", new Block(BlockProperty().SetMapColor(std::vector<int>{33, 33, 33})));
+	mod->Subscribe("block_basic_translation", new Block(BlockProperty().SetTranslation(std::vector<double>{5, 5, 5})));
+	mod->Subscribe("block_basic_scale", new Block(BlockProperty().SetScale(std::vector<double>{5, 5, 5})));
+	mod->Subscribe("block_basic_rotation", new Block(BlockProperty().SetRotation(std::vector<int>{90, 90, 90})));
+	mod->Subscribe("block_basic_box_collision_bool", new Block(BlockProperty().SetBoxCollision(false)));
+	mod->Subscribe("block_basic_box_collision_vector", new Block(BlockProperty().SetBoxCollision(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
+	mod->Subscribe("block_basic_box_selection_bool", new Block(BlockProperty().SetBoxSelection(false)));
+	mod->Subscribe("block_basic_box_selection_vector", new Block(BlockProperty().SetBoxSelection(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
+	mod->Subscribe("block_basic_creative_category", new Block(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION)));
+	mod->Subscribe("block_basic_creative_group", new Block(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION, adk::CreativeGroup::SMITHINGTEMPLATES)));
+	mod->Subscribe("block_basic_filter_tags", new Block(BlockProperty().SetBlockPlacementFilter(filter_tags)));
+	mod->Subscribe("block_basic_filter_states", new Block(BlockProperty().SetBlockPlacementFilter(filter_states)));
 
-    globalregistry.push_back(mod);
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic.json", "./BP/blocks/block_basic.json")) << "Block is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_light_dampening.json", "./BP/blocks/block_basic_light_dampening.json")) << "SetLightDampening is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_crafting.json", "./BP/blocks/block_basic_crafting.json")) << "SetCrafting is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_destructible_by_explosion_bool.json", "./BP/blocks/block_basic_destructible_by_explosion_bool.json")) << "SetDestructibleByExplosion (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_destructible_by_explosion_double.json", "./BP/blocks/block_basic_destructible_by_explosion_double.json")) << "SetDestructibleByExplosion (double) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_destructible_by_mining_bool.json", "./BP/blocks/block_basic_destructible_by_mining_bool.json")) << "SetDestructibleByMining (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_destructible_by_mining_double.json", "./BP/blocks/block_basic_destructible_by_mining_double.json")) << "SetDestructibleByMining (double) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_display_name.json", "./BP/blocks/block_basic_display_name.json")) << "SetDisplayName is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_flammable_bool.json", "./BP/blocks/block_basic_flammable_bool.json")) << "SetFlammable (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_flammable_object.json", "./BP/blocks/block_basic_flammable_object.json")) << "SetFlammable (object) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_friction.json", "./BP/blocks/block_basic_friction.json")) << "SetFriction is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_light_emission.json", "./BP/blocks/block_basic_light_emission.json")) << "SetLightEmission is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_loot.json", "./BP/blocks/block_basic_loot.json")) << "SetLoot is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_map_color_hex.json", "./BP/blocks/block_basic_map_color_hex.json")) << "SetMapColor (hex) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_map_color_rgb.json", "./BP/blocks/block_basic_map_color_rgb.json")) << "SetMapColor (rgb) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_translation.json", "./BP/blocks/block_basic_translation.json")) << "SetTranslation is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_scale.json", "./BP/blocks/block_basic_scale.json")) << "SetScale is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_rotation.json", "./BP/blocks/block_basic_rotation.json")) << "SetRotation is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_collision_bool.json", "./BP/blocks/block_basic_box_collision_bool.json")) << "SetBoxCollision (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_collision_vector.json", "./BP/blocks/block_basic_box_collision_vector.json")) << "SetBoxCollision (vector) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_bool.json", "./BP/blocks/block_basic_box_selection_bool.json")) << "SetBoxSelection (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_vector.json", "./BP/blocks/block_basic_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_creative_category.json", "./BP/blocks/block_basic_creative_category.json")) << "SetCreativeCategory (category) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_creative_group.json", "./BP/blocks/block_basic_creative_group.json")) << "SetCreativeCategory (group) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_tags.json", "./BP/blocks/block_basic_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_states.json", "./BP/blocks/block_basic_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
+}
 
-    std::vector<std::string> tags = {"custom_crafting_table"};
+TEST(BlockTest, BlockAxis) {
+	std::filesystem::create_directory("BP");
+	std::filesystem::create_directory("RP");
 
-    mod->subscribe("basic_block", new Block(BlockProperty()));
+	SetupCommon();
 
-    mod->subscribe("basic_block_light_filter",
-                   new Block(BlockProperty().setBlockLightFilter(5)));
-    mod->subscribe(
-        "basic_block_crafting",
-        new Block(BlockProperty().setCrafting(tags, "Custom Crafting Table")));
-    mod->subscribe("basic_block_explosion_bool",
-                   new Block(BlockProperty().setExplosion(false)));
-    mod->subscribe("basic_block_explosion_double",
-                   new Block(BlockProperty().setExplosion(5.5)));
-    mod->subscribe("basic_block_mining_bool",
-                   new Block(BlockProperty().setMining(false)));
-    mod->subscribe("basic_block_mining_double",
-                   new Block(BlockProperty().setMining(5.5)));
-    mod->subscribe("basic_block_name",
-                   new Block(BlockProperty().setName("Custom Name")));
-    mod->subscribe("basic_block_flammable",
-                   new Block(BlockProperty().setFlammable(5, 5)));
-    mod->subscribe("basic_block_friction",
-                   new Block(BlockProperty().setFriction(0.5)));
-    mod->subscribe("basic_block_geometry",
-                   new Block(BlockProperty().setGeometry("custom_geometry")));
-    mod->subscribe("basic_block_light_emission",
-                   new Block(BlockProperty().setLightEmission(5)));
-    mod->subscribe("basic_block_loot",
-                   new Block(BlockProperty().setLoot("path/to/loot.json")));
-    mod->subscribe("basic_block_color",
-                   new Block(BlockProperty().setColor("000000")));
-    mod->subscribe(
-        "basic_block_rotation",
-        new Block(BlockProperty().setRotation(std::vector<int>{90, 90, 90})));
+	log::info("Starting Block Axis Test");
 
-    mod->subscribe("basic_block_collision_bool",
-                   new Block(BlockProperty().setCollision(false)));
-    mod->subscribe(
-        "basic_block_collision_vector",
-        new Block(BlockProperty().setCollision(std::make_pair(
-            std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8}))));
-    mod->subscribe("basic_block_selection_bool",
-                   new Block(BlockProperty().setSelection(false)));
-    mod->subscribe(
-        "basic_block_selection_vector",
-        new Block(BlockProperty().setSelection(std::make_pair(
-            std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8}))));
+	mod->Subscribe("block_axis", new BlockAxis(BlockProperty()));
+	mod->Subscribe("block_axis_light_dampening", new BlockAxis(BlockProperty().SetLightDampening(5)));
+	mod->Subscribe("block_axis_crafting", new BlockAxis(BlockProperty().SetCrafting(crafting_tags, "Custom Crafting Table")));
+	mod->Subscribe("block_axis_destructible_by_explosion_bool", new BlockAxis(BlockProperty().SetDestructibleByExplosion(false)));
+	mod->Subscribe("block_axis_destructible_by_explosion_double", new BlockAxis(BlockProperty().SetDestructibleByExplosion(5.5)));
+	mod->Subscribe("block_axis_destructible_by_mining_bool", new BlockAxis(BlockProperty().SetDestructibleByMining(false)));
+	mod->Subscribe("block_axis_destructible_by_mining_double", new BlockAxis(BlockProperty().SetDestructibleByMining(5.5)));
+	mod->Subscribe("block_axis_display_name", new BlockAxis(BlockProperty().SetDisplayName("Custom Name")));
+	mod->Subscribe("block_axis_flammable_bool", new BlockAxis(BlockProperty().SetFlammable(false)));
+	mod->Subscribe("block_axis_flammable_object", new BlockAxis(BlockProperty().SetFlammable(5, 5)));
+	mod->Subscribe("block_axis_friction", new BlockAxis(BlockProperty().SetFriction(0.5)));
+	mod->Subscribe("block_axis_light_emission", new BlockAxis(BlockProperty().SetLightEmission(5)));
+	mod->Subscribe("block_axis_loot", new BlockAxis(BlockProperty().SetLoot("path/to/loot.json")));
+	mod->Subscribe("block_axis_map_color_hex", new BlockAxis(BlockProperty().SetMapColor("#FF9900")));
+	mod->Subscribe("block_axis_map_color_rgb", new BlockAxis(BlockProperty().SetMapColor(std::vector<int>{33, 33, 33})));
+	mod->Subscribe("block_axis_translation", new BlockAxis(BlockProperty().SetTranslation(std::vector<double>{5, 5, 5})));
+	mod->Subscribe("block_axis_scale", new BlockAxis(BlockProperty().SetScale(std::vector<double>{5, 5, 5})));
+	mod->Subscribe("block_axis_box_collision_bool", new BlockAxis(BlockProperty().SetBoxCollision(false)));
+	mod->Subscribe("block_axis_box_collision_vector", new BlockAxis(BlockProperty().SetBoxCollision(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
+	mod->Subscribe("block_axis_box_selection_bool", new BlockAxis(BlockProperty().SetBoxSelection(false)));
+	mod->Subscribe("block_axis_box_selection_vector", new BlockAxis(BlockProperty().SetBoxSelection(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
+	mod->Subscribe("block_axis_creative_category", new BlockAxis(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION)));
+	mod->Subscribe("block_axis_creative_group", new BlockAxis(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION, adk::CreativeGroup::SMITHINGTEMPLATES)));
+	mod->Subscribe("block_axis_filter_tags", new BlockAxis(BlockProperty().SetBlockPlacementFilter(filter_tags)));
+	mod->Subscribe("block_axis_filter_states", new BlockAxis(BlockProperty().SetBlockPlacementFilter(filter_states)));
 
-    bool basic = compareFiles("./files/blocks/basic_block.json",
-                              "./BP/blocks/basic_block.json");
-    bool light_filter =
-        compareFiles("./files/blocks/basic_block_light_filter.json",
-                     "./BP/blocks/basic_block_light_filter.json");
-    bool crafting =
-        compareFiles("./files/blocks/basic_block_crafting.json",
-                     "./BP/blocks/basic_block_crafting.json");
-    bool explosion_bool =
-        compareFiles("./files/blocks/basic_block_explosion_bool.json",
-                     "./BP/blocks/basic_block_explosion_bool.json");
-    bool explosion_double = compareFiles(
-        "./files/blocks/basic_block_explosion_double.json",
-        "./BP/blocks/basic_block_explosion_double.json");
-    bool mining_bool =
-        compareFiles("./files/blocks/basic_block_mining_bool.json",
-                     "./BP/blocks/basic_block_mining_bool.json");
-    bool mining_double =
-        compareFiles("./files/blocks/basic_block_mining_double.json",
-                     "./BP/blocks/basic_block_mining_double.json");
-    bool name = compareFiles("./files/blocks/basic_block_name.json",
-                             "./BP/blocks/basic_block_name.json");
-    bool flammable =
-        compareFiles("./files/blocks/basic_block_flammable.json",
-                     "./BP/blocks/basic_block_flammable.json");
-    bool friction =
-        compareFiles("./files/blocks/basic_block_friction.json",
-                     "./BP/blocks/basic_block_friction.json");
-    bool geometry =
-        compareFiles("./files/blocks/basic_block_geometry.json",
-                     "./BP/blocks/basic_block_geometry.json");
-    bool light_emission =
-        compareFiles("./files/blocks/basic_block_light_emission.json",
-                     "./BP/blocks/basic_block_light_emission.json");
-    bool loot = compareFiles("./files/blocks/basic_block_loot.json",
-                             "./BP/blocks/basic_block_loot.json");
-    bool color = compareFiles("./files/blocks/basic_block_color.json",
-                              "./BP/blocks/basic_block_color.json");
-    bool rotation =
-        compareFiles("./files/blocks/basic_block_rotation.json",
-                     "./BP/blocks/basic_block_rotation.json");
-    bool collision_bool =
-        compareFiles("./files/blocks/basic_block_collision_bool.json",
-                     "./BP/blocks/basic_block_collision_bool.json");
-    bool collision_vector = compareFiles(
-        "./files/blocks/basic_block_collision_vector.json",
-        "./BP/blocks/basic_block_collision_vector.json");
-    bool selection_bool =
-        compareFiles("./files/blocks/basic_block_selection_bool.json",
-                     "./BP/blocks/basic_block_selection_bool.json");
-    bool selection_vector = compareFiles(
-        "./files/blocks/basic_block_selection_vector.json",
-        "./BP/blocks/basic_block_selection_vector.json");
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis.json", "./BP/blocks/block_axis.json")) << "Block is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_light_dampening.json", "./BP/blocks/block_axis_light_dampening.json")) << "SetLightDampening is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_crafting.json", "./BP/blocks/block_axis_crafting.json")) << "SetCrafting is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_destructible_by_explosion_bool.json", "./BP/blocks/block_axis_destructible_by_explosion_bool.json")) << "SetDestructibleByExplosion (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_destructible_by_explosion_double.json", "./BP/blocks/block_axis_destructible_by_explosion_double.json")) << "SetDestructibleByExplosion (double) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_destructible_by_mining_bool.json", "./BP/blocks/block_axis_destructible_by_mining_bool.json")) << "SetDestructibleByMining (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_destructible_by_mining_double.json", "./BP/blocks/block_axis_destructible_by_mining_double.json")) << "SetDestructibleByMining (double) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_display_name.json", "./BP/blocks/block_axis_display_name.json")) << "SetDisplayName is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_flammable_bool.json", "./BP/blocks/block_axis_flammable_bool.json")) << "SetFlammable (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_flammable_object.json", "./BP/blocks/block_axis_flammable_object.json")) << "SetFlammable (object) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_friction.json", "./BP/blocks/block_axis_friction.json")) << "SetFriction is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_light_emission.json", "./BP/blocks/block_axis_light_emission.json")) << "SetLightEmission is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_loot.json", "./BP/blocks/block_axis_loot.json")) << "SetLoot is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_map_color_hex.json", "./BP/blocks/block_axis_map_color_hex.json")) << "SetMapColor (hex) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_map_color_rgb.json", "./BP/blocks/block_axis_map_color_rgb.json")) << "SetMapColor (rgb) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_translation.json", "./BP/blocks/block_axis_translation.json")) << "SetTranslation is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_scale.json", "./BP/blocks/block_axis_scale.json")) << "SetScale is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_box_collision_bool.json", "./BP/blocks/block_axis_box_collision_bool.json")) << "SetBoxCollision (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_box_collision_vector.json", "./BP/blocks/block_axis_box_collision_vector.json")) << "SetBoxCollision (vector) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_box_selection_bool.json", "./BP/blocks/block_axis_box_selection_bool.json")) << "SetBoxSelection (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_box_selection_vector.json", "./BP/blocks/block_axis_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_creative_category.json", "./BP/blocks/block_axis_creative_category.json")) << "SetCreativeCategory (category) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_creative_group.json", "./BP/blocks/block_axis_creative_group.json")) << "SetCreativeCategory (group) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_filter_tags.json", "./BP/blocks/block_axis_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_axis_filter_states.json", "./BP/blocks/block_axis_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
+}
 
-    EXPECT_EQ(true, basic) << "Block is not working as expected";
-    EXPECT_EQ(true, light_filter)
-        << "setBlockLightFilter is not working as expected";
-    EXPECT_EQ(true, crafting) << "setCrafting is not working as expected";
-    EXPECT_EQ(true, explosion_bool)
-        << "setExplosion(bool) is not working as expected";
-    EXPECT_EQ(true, explosion_double)
-        << "setExplosion(double) is not working as expected";
-    EXPECT_EQ(true, mining_bool)
-        << "setMining(bool) is not working as expected";
-    EXPECT_EQ(true, mining_double)
-        << "setMining(double) is not working as expected";
-    EXPECT_EQ(true, name) << "setName is not working as expected";
-    EXPECT_EQ(true, flammable) << "setFlammable is not working as expected";
-    EXPECT_EQ(true, friction) << "setFriction is not working as expected";
-    EXPECT_EQ(true, geometry) << "setGeometry is not working as expected";
-    EXPECT_EQ(true, light_emission)
-        << "setLightEmission is not working as expected";
-    EXPECT_EQ(true, loot) << "setLoot is not working as expected";
-    EXPECT_EQ(true, color) << "setColor is not working as expected";
-    EXPECT_EQ(true, rotation) << "setRotation is not working as expected";
-    EXPECT_EQ(true, collision_bool)
-        << "setCollision(bool) is not working as expected";
-    EXPECT_EQ(true, collision_vector)
-        << "setCollision(vector) is not working as expected";
-    EXPECT_EQ(true, selection_bool)
-        << "setSelection(bool) is not working as expected";
-    EXPECT_EQ(true, selection_vector)
-        << "setSelection(vector) is not working as expected";
+TEST(BlockTest, BlockPlant) {
+	std::filesystem::create_directory("BP");
+	std::filesystem::create_directory("RP");
+
+	SetupCommon();
+
+	log::info("Starting Block Plant Test");
+
+	mod->Subscribe("block_plant", new BlockPlant(BlockProperty()));
+	mod->Subscribe("block_plant_light_dampening", new BlockPlant(BlockProperty().SetLightDampening(5)));
+	mod->Subscribe("block_plant_crafting", new BlockPlant(BlockProperty().SetCrafting(crafting_tags, "Custom Crafting Table")));
+	mod->Subscribe("block_plant_destructible_by_explosion_bool", new BlockPlant(BlockProperty().SetDestructibleByExplosion(false)));
+	mod->Subscribe("block_plant_destructible_by_explosion_double", new BlockPlant(BlockProperty().SetDestructibleByExplosion(5.5)));
+	mod->Subscribe("block_plant_destructible_by_mining_bool", new BlockPlant(BlockProperty().SetDestructibleByMining(false)));
+	mod->Subscribe("block_plant_destructible_by_mining_double", new BlockPlant(BlockProperty().SetDestructibleByMining(5.5)));
+	mod->Subscribe("block_plant_display_name", new BlockPlant(BlockProperty().SetDisplayName("Custom Name")));
+	mod->Subscribe("block_plant_flammable_bool", new BlockPlant(BlockProperty().SetFlammable(false)));
+	mod->Subscribe("block_plant_flammable_object", new BlockPlant(BlockProperty().SetFlammable(5, 5)));
+	mod->Subscribe("block_plant_friction", new BlockPlant(BlockProperty().SetFriction(0.5)));
+	mod->Subscribe("block_plant_light_emission", new BlockPlant(BlockProperty().SetLightEmission(5)));
+	mod->Subscribe("block_plant_loot", new BlockPlant(BlockProperty().SetLoot("path/to/loot.json")));
+	mod->Subscribe("block_plant_map_color_hex", new BlockPlant(BlockProperty().SetMapColor("#FF9900")));
+	mod->Subscribe("block_plant_map_color_rgb", new BlockPlant(BlockProperty().SetMapColor(std::vector<int>{33, 33, 33})));
+	mod->Subscribe("block_plant_translation", new BlockPlant(BlockProperty().SetTranslation(std::vector<double>{5, 5, 5})));
+	mod->Subscribe("block_plant_scale", new BlockPlant(BlockProperty().SetScale(std::vector<double>{5, 5, 5})));
+	mod->Subscribe("block_plant_rotation", new BlockPlant(BlockProperty().SetRotation(std::vector<int>{90, 90, 90})));
+	mod->Subscribe("block_plant_box_collision_bool", new BlockPlant(BlockProperty().SetBoxCollision(false)));
+	mod->Subscribe("block_plant_box_collision_vector", new BlockPlant(BlockProperty().SetBoxCollision(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
+	mod->Subscribe("block_plant_box_selection_bool", new BlockPlant(BlockProperty().SetBoxSelection(false)));
+	mod->Subscribe("block_plant_box_selection_vector", new BlockPlant(BlockProperty().SetBoxSelection(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
+	mod->Subscribe("block_plant_creative_category", new BlockPlant(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION)));
+	mod->Subscribe("block_plant_creative_group", new BlockPlant(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION, adk::CreativeGroup::SMITHINGTEMPLATES)));
+	mod->Subscribe("block_plant_filter_tags", new BlockPlant(BlockProperty().SetBlockPlacementFilter(filter_tags)));
+	mod->Subscribe("block_plant_filter_states", new BlockPlant(BlockProperty().SetBlockPlacementFilter(filter_states)));
+
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant.json", "./BP/blocks/block_plant.json")) << "Block is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_light_dampening.json", "./BP/blocks/block_plant_light_dampening.json")) << "SetLightDampening is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_crafting.json", "./BP/blocks/block_plant_crafting.json")) << "SetCrafting is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_destructible_by_explosion_bool.json", "./BP/blocks/block_plant_destructible_by_explosion_bool.json")) << "SetDestructibleByExplosion (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_destructible_by_explosion_double.json", "./BP/blocks/block_plant_destructible_by_explosion_double.json")) << "SetDestructibleByExplosion (double) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_destructible_by_mining_bool.json", "./BP/blocks/block_plant_destructible_by_mining_bool.json")) << "SetDestructibleByMining (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_destructible_by_mining_double.json", "./BP/blocks/block_plant_destructible_by_mining_double.json")) << "SetDestructibleByMining (double) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_display_name.json", "./BP/blocks/block_plant_display_name.json")) << "SetDisplayName is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_flammable_bool.json", "./BP/blocks/block_plant_flammable_bool.json")) << "SetFlammable (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_flammable_object.json", "./BP/blocks/block_plant_flammable_object.json")) << "SetFlammable (object) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_friction.json", "./BP/blocks/block_plant_friction.json")) << "SetFriction is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_light_emission.json", "./BP/blocks/block_plant_light_emission.json")) << "SetLightEmission is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_loot.json", "./BP/blocks/block_plant_loot.json")) << "SetLoot is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_map_color_hex.json", "./BP/blocks/block_plant_map_color_hex.json")) << "SetMapColor (hex) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_map_color_rgb.json", "./BP/blocks/block_plant_map_color_rgb.json")) << "SetMapColor (rgb) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_translation.json", "./BP/blocks/block_plant_translation.json")) << "SetTranslation is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_scale.json", "./BP/blocks/block_plant_scale.json")) << "SetScale is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_rotation.json", "./BP/blocks/block_plant_rotation.json")) << "SetRotation is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_box_collision_bool.json", "./BP/blocks/block_plant_box_collision_bool.json")) << "SetBoxCollision (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_box_collision_vector.json", "./BP/blocks/block_plant_box_collision_vector.json")) << "SetBoxCollision (vector) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_box_selection_bool.json", "./BP/blocks/block_plant_box_selection_bool.json")) << "SetBoxSelection (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_box_selection_vector.json", "./BP/blocks/block_plant_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_creative_category.json", "./BP/blocks/block_plant_creative_category.json")) << "SetCreativeCategory (category) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_creative_group.json", "./BP/blocks/block_plant_creative_group.json")) << "SetCreativeCategory (group) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_filter_tags.json", "./BP/blocks/block_plant_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_plant_filter_states.json", "./BP/blocks/block_plant_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
 }

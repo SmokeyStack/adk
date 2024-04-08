@@ -1,35 +1,16 @@
-#include <spdlog/async.h>
-#include <spdlog/sinks/basic_file_sink.h>
-#include <spdlog/sinks/stdout_sinks.h>
-#include <spdlog/spdlog.h>
-
-#include "Data.h"
-#include "Object.h"
-#include "Recipe.h"
+#include "data.h"
+#include "object.h"
+#include "recipe.h"
+#include "utility/logger.h"
 
 int main() {
-    auto console_sink = std::make_shared<spdlog::sinks::stdout_sink_mt>();
-    console_sink->set_level(spdlog::level::err);
+    adk::SetupLoggerStage1();
 
-    auto file_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
-        "logs/log.txt", true);
-    file_sink->set_level(spdlog::level::info);
+    auto console_log_level = adk::Level::Info;
+    auto file_log_level = adk::Level::Trace;
+    std::filesystem::path log_directory = "logs/debug.log";
 
-    spdlog::sinks_init_list sink_list = {file_sink, console_sink};
-
-    auto object_logger = std::make_shared<spdlog::logger>(
-        "Blocks/Items", sink_list.begin(), sink_list.end());
-    auto data_logger = std::make_shared<spdlog::logger>(
-        "Data Generator", sink_list.begin(), sink_list.end());
-    auto recipe_logger = std::make_shared<spdlog::logger>(
-        "Recipe", sink_list.begin(), sink_list.end());
-
-    spdlog::register_logger(object_logger);
-    spdlog::register_logger(data_logger);
-    spdlog::register_logger(recipe_logger);
-
-    spdlog::get("Blocks/Items")
-        ->error("Hi");
+    adk::SetupLoggerStage2(log_directory, console_log_level, file_log_level);
 
     // Edit this to change the namespace of the add-on
     Object MyAddOn("custom_namespace");
@@ -39,9 +20,6 @@ int main() {
     MyAddOn.init();
     DataGenerator.init();
     RecipeGenerator.init();
-
-    spdlog::get("Blocks/Items")
-        ->info("Bye");
 
     return 0;
 }
