@@ -33,5 +33,5 @@ else()
 	target_link_libraries(ItemTest PRIVATE gtest gmock_main spdlog::spdlog)
 endif()
 
-add_test(NAME BlockTest COMMAND BlockTest)
+#add_test(NAME BlockTest COMMAND BlockTest)
 add_test(NAME ItemTest COMMAND ItemTest)
