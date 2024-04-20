@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <variant>
 
 #include "item_component.h"
 #include "item_property.h"
