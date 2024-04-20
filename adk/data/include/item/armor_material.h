@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "item.h"
+#include "item/item.h"
 
 namespace adk {
 	class ArmorMaterial {

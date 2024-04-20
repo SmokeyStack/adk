@@ -3,7 +3,7 @@
 #include <string>
 
 #include "item/armor_material.h"
-#include "item_property.h"
+#include "item/item_property.h"
 #include "json.hpp"
 
 namespace adk {

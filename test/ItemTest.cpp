@@ -6,10 +6,10 @@
 #include <vector>
 
 #include "CheckFile.h"
-#include "item.h"
 #include "item/armor_materials.h"
-#include "item_armor.h"
-#include "item_property.h"
+#include "item/item.h"
+#include "item/item_armor.h"
+#include "item/item_property.h"
 #include "registry.h"
 #include "registry_global.h"
 #include "shared_construct.h"

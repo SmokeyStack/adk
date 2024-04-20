@@ -3,8 +3,8 @@
 #include <string>
 #include <unordered_map>
 
-#include "armor_material.h"
-#include "item.h"
+#include "item/armor_material.h"
+#include "item/item.h"
 
 namespace adk {
 	class ArmorMaterials : public ArmorMaterial {
