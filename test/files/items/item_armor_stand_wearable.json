@@ -1,0 +1,1 @@
+{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand"},"minecraft:wearable":{"protection":10,"slot":"slot.armor.chest"}},"description":{"identifier":"custom_namespace:item_armor_stand_wearable"}}}

@@ -1,0 +1,1 @@
+{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand"},"minecraft:liquid_clipped":{"value":true}},"description":{"identifier":"custom_namespace:item_armor_stand_liquid_clipped"}}}

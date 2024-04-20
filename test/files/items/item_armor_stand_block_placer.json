@@ -1,0 +1,1 @@
+{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:block_placer":{"block":"minecraft:bedrock"},"minecraft:entity_placer":{"entity":"minecraft:armor_stand"}},"description":{"identifier":"custom_namespace:item_armor_stand_block_placer"}}}
