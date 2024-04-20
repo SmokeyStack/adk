@@ -171,6 +171,12 @@ namespace adk {
 
 					exit(EXIT_FAILURE);
 				}
+
+				if (j["damage_chance"]["min"] > j["damage_chance"]["max"]) {
+					log::error("{} - Min damage chance cannot exceed max damage chance", id);
+
+					exit(EXIT_FAILURE);
+				}
 			}
 
 			nlohmann::json::object_t temp = { {"minecraft:durability", {j}} };
@@ -511,7 +517,7 @@ namespace adk {
 
 			nlohmann::json::object_t temp = { {"minecraft:wearable",{{"slot",slot}}} };
 
-			if(protection != 0)
+			if (protection != 0)
 				temp["minecraft:wearable"]["protection"] = protection;
 
 			return temp;

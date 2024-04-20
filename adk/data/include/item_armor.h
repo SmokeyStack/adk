@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "armor_material.h"
+#include "item/armor_material.h"
 #include "item_property.h"
 #include "json.hpp"
 
@@ -13,7 +13,6 @@ namespace adk {
 	 */
 	class ItemArmor : public Item {
 	public:
-		ItemArmor() {};
 		/**
 		 * @brief Construct a new Armor Item object
 		 *
@@ -25,11 +24,11 @@ namespace adk {
 		 * @param damage_chance_max Maximum chance the armor takes damage
 		 * @param dispensable Can this armor be equipped by a dispenser
 		 */
-		ItemArmor(ArmorMaterial material, WearableSlot slot, ItemProperty property) {
+		ItemArmor(ArmorMaterial* material, WearableSlot slot, ItemProperty property) {
 			internal_ = property;
 			material_ = material;
 			slot_ = slot;
-			protection_ = material.GetProtection(slot);
+			protection_ = material->GetProtection(slot);
 		}
 
 		/**
@@ -43,10 +42,44 @@ namespace adk {
 			output_ = Item::Generate(mod_id, id);
 
 			output_["minecraft:item"]["components"].update(
-				helper_.Enchantable(
-					GetEnchantableSlot(material_.GetEnchantabilitySlot(slot_)),
-					material_.GetEnchantability(),
+				helper_.Durability(
+					ItemDurability{
+						material_->GetDurability(slot_),
+						std::make_pair<int>(100,100)
+					},
 					id
+				)
+			);
+
+			output_["minecraft:item"]["components"].update(
+				helper_.Wearable(
+					GetWearableSlot(slot_),
+					protection_,
+					id
+				)
+			);
+
+			output_["minecraft:item"]["components"].update(
+				helper_.Enchantable(
+					GetEnchantableSlot(material_->GetEnchantabilitySlot(slot_)),
+					material_->GetEnchantability(),
+					id
+				)
+			);
+
+			output_["minecraft:item"]["components"].update(
+				helper_.Enchantable(
+					GetEnchantableSlot(material_->GetEnchantabilitySlot(slot_)),
+					material_->GetEnchantability(),
+					id
+				)
+			);
+
+			output_["minecraft:item"]["components"].update(
+				helper_.Repairable(
+					ItemRepairable{
+						std::vector<ItemRepairableItems>{{"math.floor(q.max_durability * 0.25)",std::vector<std::string>{{material_->GetRepairIngredient()}}}}
+					}
 				)
 			);
 
@@ -54,7 +87,7 @@ namespace adk {
 		}
 	protected:
 		WearableSlot slot_;
-		ArmorMaterial material_;
+		ArmorMaterial* material_;
 	private:
 		int protection_;
 	};

@@ -7,6 +7,8 @@
 
 #include "CheckFile.h"
 #include "item.h"
+#include "item/armor_materials.h"
+#include "item_armor.h"
 #include "item_property.h"
 #include "registry.h"
 #include "registry_global.h"
@@ -186,7 +188,7 @@ TEST(ItemTest, ItemBasic) {
 	mod->Subscribe("item_basic_use_modifiers", new Item(ItemProperty().SetUseModifiers(1, 0.5)));
 	mod->Subscribe("item_basic_wearable", new Item(ItemProperty().SetWearable(WearableSlot::ArmorChest, 10)));
 
-	EXPECT_EQ(true, CompareFiles("./files/items/item_basic.json", "./BP/items/item_basic.json")) << "SetCrafting is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_basic.json", "./BP/items/item_basic.json")) << "Item is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_basic_allow_off_hand.json", "./BP/items/item_basic_allow_off_hand.json")) << "SetAllowOffhand is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_basic_block_placer.json", "./BP/items/item_basic_block_placer.json")) << "SetBlockPlacer is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_basic_block_placer_use_on.json", "./BP/items/item_basic_block_placer_use_on.json")) << "SetBlockPlacer (UseOn) is not working as expected";
@@ -241,4 +243,125 @@ TEST(ItemTest, ItemBasic) {
 	EXPECT_EQ(true, CompareFiles("./files/items/item_basic_use_animation.json", "./BP/items/item_basic_use_animation.json")) << "SetUseAnimation is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_basic_use_modifiers.json", "./BP/items/item_basic_use_modifiers.json")) << "SetUseModifiers is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_basic_wearable.json", "./BP/items/item_basic_wearable.json")) << "SetWearable is not working as expected";
+}
+
+TEST(ItemTest, ItemArmor) {
+	std::filesystem::create_directory("BP");
+	std::filesystem::create_directory("RP");
+
+	SetupCommon();
+
+	log::info("Starting Item Armor Test");
+
+	mod->Subscribe("item_armor", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty()));
+	mod->Subscribe("item_armor_allow_off_hand", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetAllowOffHand(true)));
+	mod->Subscribe("item_armor_block_placer", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetPlacerBlock("minecraft:bedrock")));
+	mod->Subscribe("item_armor_block_placer_use_on", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetPlacerBlock("minecraft:bedrock", std::vector<std::string>{"minecraft:grass", "minecraft:glass"})));
+	mod->Subscribe("item_armor_can_destroy_in_creative", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetCanDestroyInCreative(false)));
+	mod->Subscribe("item_armor_cooldown", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetCooldown("test", 10)));
+	mod->Subscribe("item_armor_custom_components", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetCustomComponents(std::vector<std::string>{ "adk-lib:custom_component", "adk-lib:custom_component_two" })));
+	mod->Subscribe("item_armor_damage", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetDamage(10)));
+	mod->Subscribe("item_armor_display_name", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetDisplayName("Custom Name")));
+	mod->Subscribe("item_armor_digger_name", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetDigger(digger_name)));
+	mod->Subscribe("item_armor_digger_states", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetDigger(digger_block_descriptor_states)));
+	mod->Subscribe("item_armor_digger_tags", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetDigger(digger_block_descriptor_tags)));
+	mod->Subscribe("item_armor_durability", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetDurability(durability)));
+	mod->Subscribe("item_armor_durability_chance", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetDurability(durability_chance)));
+	mod->Subscribe("item_armor_enchantable", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetEnchantable(EnchantableSlot::Sword, 255)));
+	mod->Subscribe("item_armor_entity_placer", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetPlacerEntity(entity_placer)));
+	mod->Subscribe("item_armor_entity_placer_use_on", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetPlacerEntity(entity_placer_use_on)));
+	mod->Subscribe("item_armor_entity_placer_dispense_on", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetPlacerEntity(entity_placer_dispense_on)));
+	mod->Subscribe("item_armor_entity_placer_both", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetPlacerEntity(entity_placer_both)));
+	mod->Subscribe("item_armor_food_nutrition", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetFood(food_nutrition)));
+	mod->Subscribe("item_armor_food_can_always_eat", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetFood(food_can_always_eat)));
+	mod->Subscribe("item_armor_food_using_converts_to", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetFood(food_using_converts_to)));
+	mod->Subscribe("item_armor_food_saturation_modifier", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetFood(food_saturation_modifier)));
+	mod->Subscribe("item_armor_fuel", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetFuel(0.05)));
+	mod->Subscribe("item_armor_glint", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetGlint(true)));
+	mod->Subscribe("item_armor_hand_equipped", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetHandEquipped(true)));
+	mod->Subscribe("item_armor_hover_text_color", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetHoverTextColor("green")));
+	mod->Subscribe("item_armor_interact_button_bool", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetInteractButton(false)));
+	mod->Subscribe("item_armor_interact_button_string", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetInteractButton(std::string("Interact with me!"))));
+	mod->Subscribe("item_armor_liquid_clipped", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetLiquidClipped(true)));
+	mod->Subscribe("item_armor_max_stack_size", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetMaxStackSize(32)));
+	mod->Subscribe("item_armor_projectile", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetProjectile("minecraft:arrow", 0.0)));
+	mod->Subscribe("item_armor_record", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetRecord(record)));
+	mod->Subscribe("item_armor_record_comparator_signal", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetRecord(record_comparator_signal)));
+	mod->Subscribe("item_armor_record_duration", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetRecord(record_duration)));
+	mod->Subscribe("item_armor_repairable", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetRepairable(repairable)));
+	mod->Subscribe("item_armor_shooter_ammunition_item", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShooter(shooter_ammunition_item)));
+	mod->Subscribe("item_armor_shooter_ammunition_search_inventory", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShooter(shooter_ammunition_search_inventory)));
+	mod->Subscribe("item_armor_shooter_ammunition_use_in_creative", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShooter(shooter_ammunition_use_in_creative)));
+	mod->Subscribe("item_armor_shooter_ammunition_use_offhand", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShooter(shooter_ammunition_use_offhand)));
+	mod->Subscribe("item_armor_shooter_charge_on_draw", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShooter(shooter_charge_on_draw)));
+	mod->Subscribe("item_armor_shooter_max_draw_duration", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShooter(shooter_max_draw_duration)));
+	mod->Subscribe("item_armor_shooter_scale_power_by_draw_duration", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShooter(shooter_scale_power_by_draw_duration)));
+	mod->Subscribe("item_armor_should_despawn", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetShouldDespawn(false)));
+	mod->Subscribe("item_armor_stacked_by_data", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetStackedByData(true)));
+	mod->Subscribe("item_armor_tags", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetTags(std::vector<std::string>{"tag1", "tag2"})));
+	mod->Subscribe("item_armor_throwable_do_swing_animation", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetThrowable(throwable_do_swing_animation)));
+	mod->Subscribe("item_armor_throwable_launch_power_scale", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetThrowable(throwable_launch_power_scale)));
+	mod->Subscribe("item_armor_throwable_max_draw_duration", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetThrowable(throwable_max_draw_duration)));
+	mod->Subscribe("item_armor_throwable_max_launch_power", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetThrowable(throwable_max_launch_power)));
+	mod->Subscribe("item_armor_throwable_min_draw_duration", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetThrowable(throwable_min_draw_duration)));
+	mod->Subscribe("item_armor_throwable_scale_power_by_draw_duration", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetThrowable(throwable_scale_power_by_draw_duration)));
+	mod->Subscribe("item_armor_use_animation", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetUseAnimation("eat")));
+	mod->Subscribe("item_armor_use_modifiers", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetUseModifiers(1, 0.5)));
+	mod->Subscribe("item_armor_wearable", new ItemArmor(&ArmorMaterials::Leather, WearableSlot::ArmorHead, ItemProperty().SetWearable(WearableSlot::ArmorChest, 10)));
+
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor.json", "./BP/items/item_armor.json")) << "Item Armor is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_allow_off_hand.json", "./BP/items/item_armor_allow_off_hand.json")) << "SetAllowOffhand is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_block_placer.json", "./BP/items/item_armor_block_placer.json")) << "SetBlockPlacer is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_block_placer_use_on.json", "./BP/items/item_armor_block_placer_use_on.json")) << "SetBlockPlacer (UseOn) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_can_destroy_in_creative.json", "./BP/items/item_armor_can_destroy_in_creative.json")) << "SetCanDestoryInCreative is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_cooldown.json", "./BP/items/item_armor_cooldown.json")) << "SetCrafting is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_custom_components.json", "./BP/items/item_armor_custom_components.json")) << "SetCustomComponents is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_damage.json", "./BP/items/item_armor_damage.json")) << "SetDamage is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_digger_name.json", "./BP/items/item_armor_digger_name.json")) << "SetDigger (Name) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_digger_states.json", "./BP/items/item_armor_digger_states.json")) << "SetDigger (States) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_digger_tags.json", "./BP/items/item_armor_digger_tags.json")) << "SetDigger (Tags) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_display_name.json", "./BP/items/item_armor_display_name.json")) << "SetDisplayName is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_durability.json", "./BP/items/item_armor_durability.json")) << "SetDurability is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_durability_chance.json", "./BP/items/item_armor_durability_chance.json")) << "SetDurability (DamageChance) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_enchantable.json", "./BP/items/item_armor_enchantable.json")) << "SetEnchantable is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_entity_placer.json", "./BP/items/item_armor_entity_placer.json")) << "SetEntityPlacer is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_entity_placer_both.json", "./BP/items/item_armor_entity_placer_both.json")) << "SetEntityPlacer (Both) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_entity_placer_dispense_on.json", "./BP/items/item_armor_entity_placer_dispense_on.json")) << "SetEntityPlacer (DispenseOn) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_entity_placer_use_on.json", "./BP/items/item_armor_entity_placer_use_on.json")) << "SetEntityPlacer (UseOn) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_food_can_always_eat.json", "./BP/items/item_armor_food_can_always_eat.json")) << "SetFood (CanAlwaysEat) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_food_nutrition.json", "./BP/items/item_armor_food_nutrition.json")) << "SetFood (Nurtition) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_food_saturation_modifier.json", "./BP/items/item_armor_food_saturation_modifier.json")) << "SetFood (SaturationModifier) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_food_using_converts_to.json", "./BP/items/item_armor_food_using_converts_to.json")) << "SetFood (UsingConvertsTo) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_fuel.json", "./BP/items/item_armor_fuel.json")) << "SetFuel is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_glint.json", "./BP/items/item_armor_glint.json")) << "SetGlint is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_hand_equipped.json", "./BP/items/item_armor_hand_equipped.json")) << "SetHandEquipped is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_hover_text_color.json", "./BP/items/item_armor_hover_text_color.json")) << "SetHoverTextColor is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_interact_button_bool.json", "./BP/items/item_armor_interact_button_bool.json")) << "SetInteractButton (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_interact_button_string.json", "./BP/items/item_armor_interact_button_string.json")) << "SetInteractButton (string) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_liquid_clipped.json", "./BP/items/item_armor_liquid_clipped.json")) << "SetLiquidClipped is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_max_stack_size.json", "./BP/items/item_armor_max_stack_size.json")) << "SetMaxStackSize is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_projectile.json", "./BP/items/item_armor_projectile.json")) << "SetProjectile is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_record.json", "./BP/items/item_armor_record.json")) << "SetRecord is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_record_comparator_signal.json", "./BP/items/item_armor_record_comparator_signal.json")) << "SetRecord (ComparatorSignal) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_record_duration.json", "./BP/items/item_armor_record_duration.json")) << "SetRecord (Duration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_repairable.json", "./BP/items/item_armor_repairable.json")) << "SetRepairable is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_shooter_ammunition_item.json", "./BP/items/item_armor_shooter_ammunition_item.json")) << "SetShooter (Ammunition) (Item) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_shooter_ammunition_search_inventory.json", "./BP/items/item_armor_shooter_ammunition_search_inventory.json")) << "SetShooter (Ammunition) (SearchInventory)is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_shooter_ammunition_use_in_creative.json", "./BP/items/item_armor_shooter_ammunition_use_in_creative.json")) << "SetShooter (Ammunition) (UseInCreative)is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_shooter_ammunition_use_offhand.json", "./BP/items/item_armor_shooter_ammunition_use_offhand.json")) << "SetShooter (Ammunition) (UseOffhand) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_shooter_charge_on_draw.json", "./BP/items/item_armor_shooter_charge_on_draw.json")) << "SetShooter (ChargeOnDraw) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_shooter_max_draw_duration.json", "./BP/items/item_armor_shooter_max_draw_duration.json")) << "SetShooter (MaxDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_shooter_scale_power_by_draw_duration.json", "./BP/items/item_armor_shooter_scale_power_by_draw_duration.json")) << "SetShooter (ScalePowerByDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_should_despawn.json", "./BP/items/item_armor_should_despawn.json")) << "SetShouldDespawn is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stacked_by_data.json", "./BP/items/item_armor_stacked_by_data.json")) << "SetStackedByData is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_tags.json", "./BP/items/item_armor_tags.json")) << "SetTags is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_throwable_do_swing_animation.json", "./BP/items/item_armor_throwable_do_swing_animation.json")) << "SetThrowable (DoSwingAnimation) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_throwable_launch_power_scale.json", "./BP/items/item_armor_throwable_launch_power_scale.json")) << "SetThrowable (LaunchPowerScale) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_throwable_max_draw_duration.json", "./BP/items/item_armor_throwable_max_draw_duration.json")) << "SetThrowable (MaxDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_throwable_max_launch_power.json", "./BP/items/item_armor_throwable_max_launch_power.json")) << "SetThrowable (MaxLaunchPower) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_throwable_min_draw_duration.json", "./BP/items/item_armor_throwable_min_draw_duration.json")) << "SetThrowable (MinDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_throwable_scale_power_by_draw_duration.json", "./BP/items/item_armor_throwable_scale_power_by_draw_duration.json")) << "SetThrowable (ScalePowerByDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_use_animation.json", "./BP/items/item_armor_use_animation.json")) << "SetUseAnimation is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_use_modifiers.json", "./BP/items/item_armor_use_modifiers.json")) << "SetUseModifiers is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_wearable.json", "./BP/items/item_armor_wearable.json")) << "SetWearable is not working as expected";
 }
