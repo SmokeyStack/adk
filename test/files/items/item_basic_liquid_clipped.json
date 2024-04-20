@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:liquid_clipped":{"value":true}},"description":{"identifier":"custom_namespace:item_basic_liquid_clipped"}}}
+{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:liquid_clipped":{"value":true}},"description":{"identifier":"custom_namespace:item_basic_liquid_clipped"}}}

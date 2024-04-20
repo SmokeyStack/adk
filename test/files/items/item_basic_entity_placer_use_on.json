@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:entity_placer":{"dispense_on":[],"entity":"minecraft:armor_stand","use_on":["minecraft:grass","minecraft:glass"]}},"description":{"identifier":"custom_namespace:item_basic_entity_placer_use_on"}}}
+{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand","use_on":["minecraft:grass","minecraft:glass"]}},"description":{"identifier":"custom_namespace:item_basic_entity_placer_use_on"}}}
