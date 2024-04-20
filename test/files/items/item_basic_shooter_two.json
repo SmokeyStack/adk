@@ -1,1 +1,0 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:shooter":{"ammunition":[{"item":"minecraft:arrow"},{"item":"minecraft:trident"}]}},"description":{"identifier":"custom_namespace:item_basic_shooter_two"}}}

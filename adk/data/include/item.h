@@ -34,8 +34,9 @@ namespace adk {
 		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_["format_version"] = "1.20.80";
+			output_["format_version"] = "1.21.0";
 			output_["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
+			nlohmann::json temp;
 
 			if (internal_.GetAllowOffHand())
 				output_["minecraft:item"]["components"].update(helper_.AllowOffHand(internal_.GetAllowOffHand()));
@@ -51,60 +52,36 @@ namespace adk {
 			}
 
 			if (!internal_.GetCooldownCategory().empty())
-				output_["minecraft:item"]["components"].update(helper_.Cooldown(internal_.GetCooldownCategory(), internal_.GetCooldownDuration()));
+				output_["minecraft:item"]["components"].update(helper_.Cooldown(internal_.GetCooldownCategory(), internal_.GetCooldownDurationSeconds()));
+
+			if (!internal_.GetCustomComponents().empty())
+				output_["minecraft:item"]["components"].update(helper_.CustomComponents(internal_.GetCustomComponents()));
 
 			if (internal_.GetDamage() != 0)
 				output_["minecraft:item"]["components"].update(helper_.Damage(internal_.GetDamage(), id));
+
+			if (!internal_.GetDigger().destroy_speeds.empty())
+				output_["minecraft:item"]["components"].update(helper_.Digger(internal_.GetDigger()));
 
 			if (!internal_.GetDisplayName().empty())
 				output_["minecraft:item"]["components"].update(helper_.DisplayName(internal_.GetDisplayName()));
 
 			if (internal_.GetDurability().durability != 0) {
-				if (internal_.GetDurability().damage_chance.has_value())
-					output_["minecraft:item"]["components"].update(helper_.Durability(internal_.GetDurability().durability, internal_.GetDurability().damage_chance.value().first, internal_.GetDurability().damage_chance.value().second, id));
-				else
-					output_["minecraft:item"]["components"].update(helper_.Durability(internal_.GetDurability().durability, 0, 0, id));
+				output_["minecraft:item"]["components"].update(helper_.Durability(internal_.GetDurability(), id));
 			}
 
-			if (internal_.GetEnchantableSlot() != adk::EnchantableSlot::NONE)
-				output_["minecraft:item"]["components"].update(helper_.Enchantable(adk::GetEnchantableSlot(internal_.GetEnchantableSlot()), internal_.GetEnchantableValue(), id));
+			if (internal_.GetEnchantableSlot() != EnchantableSlot::None)
+				output_["minecraft:item"]["components"].update(helper_.Enchantable(GetEnchantableSlot(internal_.GetEnchantableSlot()), internal_.GetEnchantableValue(), id));
 
-			if (!internal_.GetPlacerEntity().entity.empty()) {
-				std::vector<std::string> use_on;
-				std::vector<std::string> dispense_on;
+			if (!internal_.GetPlacerEntity().entity.empty())
+				output_["minecraft:item"]["components"].update(helper_.PlacerEntity(internal_.GetPlacerEntity()));
 
-				if (internal_.GetPlacerEntity().use_on.has_value())
-					use_on = internal_.GetPlacerEntity().use_on.value();
-				if (internal_.GetPlacerEntity().dispense_on.has_value())
-					dispense_on = internal_.GetPlacerEntity().dispense_on.value();
+			temp = internal_.GetFood();
+			if (!temp.is_null())
+				output_["minecraft:item"]["components"].update(helper_.Food(internal_.GetFood()));
 
-				output_["minecraft:item"]["components"].update(helper_.PlacerEntity(
-					internal_.GetPlacerEntity().entity,
-					use_on,
-					dispense_on
-				));
-			}
-
-			if (internal_.GetFood().nutrition != 0 && internal_.GetFood().saturation_modifier != 0) {
-				bool can_always_eat = false;
-				std::string using_converts_to;
-
-				if (internal_.GetFood().can_always_eat.has_value())
-					can_always_eat = internal_.GetFood().can_always_eat.value();
-				if (internal_.GetFood().using_converts_to.has_value())
-					using_converts_to = internal_.GetFood().using_converts_to.value();
-
-
-				output_["minecraft:item"]["components"].update(helper_.Food(
-					internal_.GetFood().nutrition,
-					internal_.GetFood().saturation_modifier,
-					can_always_eat,
-					using_converts_to
-				));
-			}
-
-			if (internal_.GetFuelDuration() != 0)
-				output_["minecraft:item"]["components"].update(helper_.Fuel(internal_.GetFuelDuration(), id));
+			if (internal_.GetFuelDurationSeconds() != 0)
+				output_["minecraft:item"]["components"].update(helper_.Fuel(internal_.GetFuelDurationSeconds(), id));
 
 			if (internal_.GetGlint())
 				output_["minecraft:item"]["components"].update(helper_.Glint(internal_.GetGlint()));
@@ -115,9 +92,11 @@ namespace adk {
 			if (!internal_.GetHoverTextColor().empty())
 				output_["minecraft:item"]["components"].update(helper_.HoverTextColor(internal_.GetHoverTextColor()));
 
-			if (!internal_.GetIcon().empty())
-				output_["minecraft:item"]["components"].update(helper_.Icon(internal_.GetIcon()));
-			if (!internal_.GetInteractButton().empty())
+			if (std::holds_alternative<bool>(internal_.GetInteractButton()))
+				if (!std::get<bool>(internal_.GetInteractButton()))
+					output_["minecraft:item"]["components"].update(helper_.InteractButton(internal_.GetInteractButton()));
+
+			if (std::holds_alternative<std::string>(internal_.GetInteractButton()))
 				output_["minecraft:item"]["components"].update(helper_.InteractButton(internal_.GetInteractButton()));
 
 			if (internal_.GetLiquidClipped())
@@ -127,22 +106,18 @@ namespace adk {
 				output_["minecraft:item"]["components"].update(helper_.MaxStackSize(internal_.GetMaxStackSize()));
 
 			if (!internal_.GetProjectileEntity().empty())
-				output_["minecraft:item"]["components"].update(helper_.Projectile(internal_.GetProjectileEntity(),
-					internal_.GetProjectileMinCriticalPower()
-				));
+				output_["minecraft:item"]["components"].update(helper_.Projectile(internal_.GetProjectileEntity(), internal_.GetProjectileMinCriticalPower()));
 
 			if (!internal_.GetRecord().sound_event.empty())
-				output_["minecraft:item"]["components"].update(helper_.Record(
-					internal_.GetRecord().sound_event,
-					internal_.GetRecord().duration,
-					internal_.GetRecord().comparator_signal,
-					id
-				));
+				output_["minecraft:item"]["components"].update(helper_.Record(internal_.GetRecord(), id));
+
+			if (!internal_.GetRepairable().repair_items.empty())
+				output_["minecraft:item"]["components"].update(helper_.Repairable(internal_.GetRepairable()));
 
 			if (internal_.GetShooter().ammunition.size() != 0)
 				output_["minecraft:item"]["components"].update(helper_.Shooter(internal_.GetShooter()));
 
-			if (internal_.GetShouldDespawn())
+			if (!internal_.GetShouldDespawn())
 				output_["minecraft:item"]["components"].update(helper_.ShouldDespawn(internal_.GetShouldDespawn()));
 
 			if (internal_.GetStackedByData())
@@ -151,24 +126,22 @@ namespace adk {
 			if (!internal_.GetTags().empty())
 				output_["minecraft:item"]["components"].update(helper_.Tags(internal_.GetTags()));
 
-			if (internal_.GetThrowable().is_throwable)
+			temp = internal_.GetThrowable();
+			if (!temp.is_null())
 				output_["minecraft:item"]["components"].update(helper_.Throwable(internal_.GetThrowable()));
 
 			if (!internal_.GetUseAnimation().empty())
 				output_["minecraft:item"]["components"].update(helper_.UseAnimation(internal_.GetUseAnimation()));
 
-			if (internal_.GetUseModifiersDuration() != 0)
+			if (internal_.GetUseModifiersDurationSeconds() != 0)
 				output_["minecraft:item"]["components"].update(helper_.UseModifiers(
-					internal_.GetUseModifiersDuration(),
+					internal_.GetUseModifiersDurationSeconds(),
 					internal_.GetUseModifiersMovement(),
 					id
 				));
 
-			if (internal_.GetWearableSlot() != adk::WearableSlot::NONE)
-				output_["minecraft:item"]["components"].update(helper_.Wearable(
-					internal_.GetWearableProtection(),
-					adk::GetWearableSlot(internal_.GetWearableSlot()
-					)));
+			if (internal_.GetWearableSlot() != WearableSlot::None)
+				output_["minecraft:item"]["components"].update(helper_.Wearable(GetWearableSlot(internal_.GetWearableSlot()), internal_.GetWearableProtection(), id));
 
 			return output_;
 		}

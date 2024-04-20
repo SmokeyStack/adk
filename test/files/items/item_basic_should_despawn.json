@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:should_despawn":{"value":true}},"description":{"identifier":"custom_namespace:item_basic_should_despawn"}}}
+{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:should_despawn":{"value":false}},"description":{"identifier":"custom_namespace:item_basic_should_despawn"}}}

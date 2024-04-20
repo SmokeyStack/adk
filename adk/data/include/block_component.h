@@ -113,7 +113,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t DisplayName(std::string value) {
-			nlohmann::json::object_t output = { {"display_name", value} };
+			nlohmann::json::object_t output = { {"minecraft:display_name", value} };
 
 			return output;
 		}

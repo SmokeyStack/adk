@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <variant>
 #include <vector>
 
 #include "json.hpp"
@@ -75,14 +76,27 @@ namespace adk {
 		 *
 		 * @param category The type of cool down for this item.
 		 *
-		 * @param duration The duration of time (in seconds) items with a matching category will spend cooling down before becoming usable again.
+		 * @param duration_seconds The duration of time (in seconds) items with a matching category will spend cooling down before becoming usable again.
 		 *
 		 * @return nlohmann::json::object_t
 		 */
-		nlohmann::json::object_t Cooldown(std::string category, float duration) {
+		nlohmann::json::object_t Cooldown(std::string category, double duration_seconds) {
 			nlohmann::json::object_t temp = {
 				{"minecraft:cooldown",
-				 {{"category", category}, {"duration", duration}}} };
+				 {{"category", category}, {"duration", duration_seconds}}} };
+
+			return temp;
+		}
+
+		/**
+		 * @brief Sets the "custom_components" component
+		 *
+		 * @param value Array of custom components
+		 *
+		 * @return nlohmann::json::object_t
+		 */
+		nlohmann::json::object_t CustomComponents(std::vector<std::string> value) {
+			nlohmann::json::object_t temp = { {"minecraft:custom_components",value} };
 
 			return temp;
 		}
@@ -109,6 +123,12 @@ namespace adk {
 			return temp;
 		}
 
+		nlohmann::json::object_t Digger(nlohmann::json j) {
+			nlohmann::json::object_t temp = { {"minecraft:digger", j} };
+
+			return temp;
+		}
+
 		/**
 		 * @brief Creates the "display_name" component
 		 *
@@ -125,38 +145,35 @@ namespace adk {
 		/**
 		 * @brief Creates the "durability" component
 		 *
-		 * @param durability_max Max durability is the amount of damage that this item can take before breaking.
-		 * This is a required parameter with a minimum value of 0.
-		 *
-		 * @param chance_min Minimum damage chance that the item will take damage.
-		 *
-		 * @param chance_max Maximum damage chance that the item will take damage.
+		 * @param j ItemDurability struct
 		 *
 		 * @param id Identifier of the item
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Durability(int durability_max, int chance_min, int chance_max, std::string id) {
-			if (durability_max < 0) {
-				log::error("{} - Max durability can only be a positive value", id);
+		nlohmann::json::object_t Durability(nlohmann::json j, std::string id) {
+			if (j.contains("max_durability")) {
+				if (j["max_durability"] < 0) {
+					log::error("{} - Max durability can only be a positive value", id);
 
-				exit(EXIT_FAILURE);
+					exit(EXIT_FAILURE);
+				}
+			}
+			if (j.contains("damage_chance")) {
+				if (j["damage_chance"]["min"] < 0) {
+					log::error("{} - Min damage chance can only be a positive value", id);
+
+					exit(EXIT_FAILURE);
+				}
+
+				if (j["damage_chance"]["max"] > 100) {
+					log::error("{} - Max damage chance cannot exceed 100", id);
+
+					exit(EXIT_FAILURE);
+				}
 			}
 
-			if (chance_min < 0) {
-				log::error("{} - Min damage chance can only be a positive value", id);
-
-				exit(EXIT_FAILURE);
-			}
-
-			if (chance_max > 100) {
-				log::error("{} - Max damage chance cannot exceed 100", id);
-
-				exit(EXIT_FAILURE);
-			}
-
-			nlohmann::json::object_t temp = { {"minecraft:durability",
-				{{"max_durability", durability_max}, {"damage_chance", {{"min", chance_min},{"max", chance_max}}}}} };
+			nlohmann::json::object_t temp = { {"minecraft:durability", {j}} };
 
 			return temp;
 		}
@@ -187,18 +204,12 @@ namespace adk {
 		/**
 		 * @brief Creates the "entity_placer" component
 		 *
-		 * @param entity The entity to be placed in the world.
-		 *
-		 * @param dispense_on List of block descriptors that contain blocks that this item can be dispensed on.
-		 * If left empty, all blocks will be allowed.
-		 *
-		 * @param use_on List of block descriptors that contain blocks that this item can be used on.
-		 * If left empty, all blocks will be allowed.
+		 * @param j ItemPlacerEntity struct
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t PlacerEntity(std::string entity, std::vector<std::string> use_on = {}, std::vector<std::string> dispense_on = {}) {
-			nlohmann::json::object_t temp = { {"minecraft:entity_placer", {{"entity", entity}, {"dispense_on", dispense_on}, {"use_on", use_on}}} };
+		nlohmann::json::object_t PlacerEntity(nlohmann::json j) {
+			nlohmann::json::object_t temp = { {"minecraft:entity_placer", {j}} };
 
 			return temp;
 		}
@@ -206,22 +217,12 @@ namespace adk {
 		/**
 		 * @brief Creates the "food" component
 		 *
-		 * @param nutrition The value that is added to the actor's nutrition when the item is used.
-		 *
-		 * @param saturation_modifier Saturation Modifier is used in this formula: (nutrition * saturation_modifier * 2) when applying the saturation buff.
-		 *
-		 * @param can_always_eat If "true" you can always eat this item (even when not hungry).
-		 *
-		 * @param using_converts_to When used, converts to the item specified by the string in this field.
+		 * @param j ItemFood struct
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Food(int nutrition, float saturation_modifier, bool can_always_eat = false, std::string using_converts_to = "") {
-			nlohmann::json::object_t temp = { {"minecraft:food",
-				{{"can_always_eat", can_always_eat},
-				{"nutrition", nutrition},
-				{"saturation_modifier", saturation_modifier},
-				{"using_converts_to", using_converts_to}}} };
+		nlohmann::json::object_t Food(nlohmann::json j) {
+			nlohmann::json::object_t temp = { {"minecraft:food",{j}} };
 
 			return temp;
 		}
@@ -234,7 +235,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Fuel(float value, std::string id) {
+		nlohmann::json::object_t Fuel(double value, std::string id) {
 			if (value < 0.05) {
 				log::error("{} - The fuel duration must be a minimum of 0.05", id);
 
@@ -286,28 +287,21 @@ namespace adk {
 		}
 
 		/**
-		 * @brief Creates the "icon" component
-		 *
-		 * @param value This map contains the different textures that can be used for the item's icon.
-		 * Default will contain the actual icon texture.
-		 *
-		 * @return nlohmann::json::object_t
-		*/
-		nlohmann::json::object_t Icon(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:icon", {{"textures",{{"default",value}}}}} };
-
-			return temp;
-		}
-
-		/**
 		 * @brief Creates the "interact_button" component
 		 *
 		 * @param value What text is displayed on the button
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t InteractButton(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:interact_button", value} };
+		nlohmann::json::object_t InteractButton(std::variant<bool, std::string> value) {
+			nlohmann::json::object_t temp;
+
+			if (std::holds_alternative<std::string>(value)) {
+				temp = { {"minecraft:interact_button", {{"value",std::get<std::string>(value)}}} };
+			}
+			else if (std::holds_alternative<bool>(value)) {
+				temp = { {"minecraft:interact_button", {{"value",std::get<bool>(value)}}} };
+			}
 
 			return temp;
 		}
@@ -347,7 +341,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Projectile(std::string projectile_entity, float minimum_critical_power) {
+		nlohmann::json::object_t Projectile(std::string projectile_entity, double minimum_critical_power) {
 			nlohmann::json::object_t temp = { {"minecraft:projectile",
 				{{"projectile_entity", projectile_entity},
 				{"minimum_critical_power",minimum_critical_power}}} };
@@ -358,27 +352,37 @@ namespace adk {
 		/**
 		 * @brief Creates the "record" component
 		 *
-		 * @param comparator_signal Signal strength for comparator blocks to use from 1 - 13.
-		 *
-		 * @param duration Duration of sound event in seconds float value.
-		 *
-		 * @param sound_event Sound event types
+		 * @param j ItemRecord struct
 		 *
 		 * @param id Identifier of the item
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Record(std::string sound_event, float duration, int comparator_signal, std::string id) {
-			if (comparator_signal > 13 || comparator_signal < 1) {
-				log::error("{} - comparator_signal can only be in range (0-15)", id);
+		nlohmann::json::object_t Record(nlohmann::json j, std::string id) {
+			if (j.contains("comparator_signal")) {
+				int comparator_signal = j["comparator_signal"];
 
-				exit(EXIT_FAILURE);
+				if (comparator_signal > 15 || comparator_signal < 1) {
+					log::error("{} - comparator_signal can only be in range (0-15)", id);
+
+					exit(EXIT_FAILURE);
+				}
 			}
 
-			nlohmann::json::object_t temp = { {"minecraft:record",
-					{{"comparator_signal", comparator_signal},
-					{"duration",duration},
-					{"sound_event",sound_event}}} };
+			nlohmann::json::object_t temp = { {"minecraft:record",{j}} };
+
+			return temp;
+		}
+
+		/**
+		 * @brief Creates the "record" component
+		 *
+		 * @param j ItemRepairable struct
+		 *
+		 * @return nlohmann::json::object_t
+		*/
+		nlohmann::json::object_t Repairable(nlohmann::json j) {
+			nlohmann::json::object_t temp = { {"minecraft:repairable",{j}} };
 
 			return temp;
 		}
@@ -456,7 +460,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		nlohmann::json::object_t UseAnimation(std::string value) {
-			nlohmann::json::object_t temp = { {"minecraft:use_animation ", {{"value",value}}} };
+			nlohmann::json::object_t temp = { {"minecraft:use_animation", {{"value",value}}} };
 
 			return temp;
 		}
@@ -464,7 +468,7 @@ namespace adk {
 		/**
 		 * @brief Creates the "use_modifiers" component
 		 *
-		 * @param use_duration How long the item takes to use in seconds.
+		 * @param use_duration_seconds How long the item takes to use in seconds.
 		 *
 		 * @param movement_modifier Modifier value to scale the players movement speed when item is in use.
 		 *
@@ -472,7 +476,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t UseModifiers(float use_duration, float movement_modifier, std::string id) {
+		nlohmann::json::object_t UseModifiers(double use_duration_seconds, double movement_modifier, std::string id) {
 			if (movement_modifier < 0 || movement_modifier >1) {
 				log::error("{} - movement_modifier can only be from 0-1", id);
 
@@ -480,7 +484,7 @@ namespace adk {
 			}
 
 			nlohmann::json::object_t temp = { {"minecraft:use_modifiers",
-				{{"use_duration", use_duration},
+				{{"use_duration", use_duration_seconds},
 				{"movement_modifier", movement_modifier}}} };
 
 			return temp;
@@ -489,17 +493,26 @@ namespace adk {
 		/**
 		 * @brief Creates the "wearable" component
 		 *
-		 * @param protection How much protection the wearable has.
-		 *
 		 * @param slot Determines where the item can be worn.
 		 * If any non-hand slot is chosen, the max stack size is set to 1.
 		 *
+		 * @param protection How much protection the wearable has.
+		 *
+		 * @param id Identifier of the item
+		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Wearable(int protection, std::string slot) {
-			nlohmann::json::object_t temp = { {"minecraft:wearable",
-				{{"protection", protection},
-				{"slot",slot}}} };
+		nlohmann::json::object_t Wearable(std::string slot, int protection, std::string id) {
+			if (protection < 0) {
+				log::error("{} - Protection can only be a positive value", id);
+
+				exit(EXIT_FAILURE);
+			}
+
+			nlohmann::json::object_t temp = { {"minecraft:wearable",{{"slot",slot}}} };
+
+			if(protection != 0)
+				temp["minecraft:wearable"]["protection"] = protection;
 
 			return temp;
 		}
