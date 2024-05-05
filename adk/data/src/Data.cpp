@@ -2,9 +2,11 @@
 
 #include <string>
 
+#include "generator/state_block.h"
 #include "registry_global.h"
-#include "generator/block_state.h"
 
-Data::Data() {}
+namespace adk {
+	Data::Data() {}
 
-void Data::init() { simpleBlock("custom_block", "custom_texture"); }
+	void Data::init() { simpleBlock("custom_block", "custom_texture"); }
+}  // namespace adk

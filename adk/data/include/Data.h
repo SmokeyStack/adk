@@ -1,16 +1,15 @@
-#ifndef DATA_H
-#define DATA_H
+#pragma once
 
 #include <string>
 
-class Data {
-   private:
-    std::string mod_id;
+namespace adk {
+	class Data {
+	private:
+		std::string mod_id;
 
-   public:
-    Data();
+	public:
+		Data();
 
-    void init();
-};
-
-#endif
+		void init();
+	};
+}  // namespace adk

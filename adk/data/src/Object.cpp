@@ -3,19 +3,21 @@
 #include <string>
 
 #include "block.h"
-#include "registry_global.h"
-#include "item.h"
+#include "item/item.h"
 #include "registry.h"
+#include "registry_global.h"
 
-Object::Object(std::string id) { mod_id = id; }
+namespace adk {
+	Object::Object(std::string id) { mod_id = id; }
 
-void Object::init() {
-    Registry<Block>* blocks = new Registry<Block>(mod_id);
-    Registry<Item>* items = new Registry<Item>(mod_id);
+	void Object::init() {
+		Registry<Block>* blocks = new Registry<Block>(mod_id);
+		Registry<Item>* items = new Registry<Item>(mod_id);
 
-    globalregistry.push_back(blocks);
-    globalregistry.push_back(items);
+		registry_global.push_back(blocks);
+		registry_global.push_back(items);
 
-    blocks->subscribe("custom_block", new Block(BlockProperty()));
-    items->subscribe("custom_item", new Item(ItemProperty()));
-}
+		blocks->Subscribe("custom_block", new Block(BlockProperty()));
+		items->Subscribe("custom_item", new Item(ItemProperty()));
+	}
+} // namespace adk

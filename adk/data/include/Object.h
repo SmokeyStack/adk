@@ -1,16 +1,15 @@
-#ifndef OBJECT_H
-#define OBJECT_H
+#pragma once
 
 #include <string>
 
-class Object {
-   private:
-    std::string mod_id;
+namespace adk {
+	class Object {
+	private:
+		std::string mod_id;
 
-   public:
-    Object(std::string id);
+	public:
+		Object(std::string id);
 
-    void init();
-};
-
-#endif
+		void init();
+	};
+} // namespace adk

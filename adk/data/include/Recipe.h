@@ -1,16 +1,15 @@
-#ifndef RECIPE_H
-#define RECIPE_H
+#pragma once
 
 #include <string>
 
-class Recipe {
-   private:
-    std::string mod_id;
+namespace adk {
+	class Recipe {
+	private:
+		std::string mod_id;
 
-   public:
-    Recipe();
+	public:
+		Recipe();
 
-    void init();
-};
-
-#endif
+		void init();
+	};
+}  // namespace adk
