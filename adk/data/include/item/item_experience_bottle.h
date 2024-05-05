@@ -8,16 +8,16 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Arrow Item
+	 * @brief Represents an Experience Bottle Item
 	 */
-	class ItemArrow : public Item {
+	class ItemExperienceBottle : public Item {
 	public:
 		/**
-		 * @brief Construct a new Arrow Item object
+		 * @brief Construct a new Experience Bottle Item object
 		 *
 		 * @param property ItemProperty
 		 */
-		ItemArrow(ItemProperty property) { internal_ = property; }
+		ItemExperienceBottle(ItemProperty property) { internal_ = property; }
 
 		/**
 		 * @brief Generates the json object
@@ -32,7 +32,12 @@ namespace adk {
 			output_ = Item::Generate(mod_id, id);
 
 			output_["minecraft:item"]["components"].update(
-				helper_.Projectile("minecraft:arrow", 0.0)
+				helper_.Projectile("minecraft:xp_bottle")
+			);
+			ItemThrowable throwable;
+			throwable.do_swing_animation = true;
+			output_["minecraft:item"]["components"].update(
+				helper_.Throwable(throwable)
 			);
 
 			return output_;

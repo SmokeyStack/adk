@@ -8,16 +8,16 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Arrow Item
+	 * @brief Represents a Flint and Steel Item
 	 */
-	class ItemArrow : public Item {
+	class ItemFlintAndSteel : public Item {
 	public:
 		/**
-		 * @brief Construct a new Arrow Item object
+		 * @brief Construct a new Flint and Steel Item object
 		 *
 		 * @param property ItemProperty
 		 */
-		ItemArrow(ItemProperty property) { internal_ = property; }
+		ItemFlintAndSteel(ItemProperty property) { internal_ = property; }
 
 		/**
 		 * @brief Generates the json object
@@ -32,7 +32,7 @@ namespace adk {
 			output_ = Item::Generate(mod_id, id);
 
 			output_["minecraft:item"]["components"].update(
-				helper_.Projectile("minecraft:arrow", 0.0)
+				helper_.CustomComponents(std::vector<std::string>{"adk-lib:on_use_on_fire"})
 			);
 
 			return output_;

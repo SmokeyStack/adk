@@ -8,16 +8,16 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Arrow Item
+	 * @brief Represents a Potion Item
 	 */
-	class ItemArrow : public Item {
+	class ItemPotion : public Item {
 	public:
 		/**
-		 * @brief Construct a new Arrow Item object
+		 * @brief Construct a new Potion Item object
 		 *
 		 * @param property ItemProperty
 		 */
-		ItemArrow(ItemProperty property) { internal_ = property; }
+		ItemPotion(ItemProperty property) { internal_ = property; }
 
 		/**
 		 * @brief Generates the json object
@@ -30,10 +30,6 @@ namespace adk {
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_ = Item::Generate(mod_id, id);
-
-			output_["minecraft:item"]["components"].update(
-				helper_.Projectile("minecraft:arrow", 0.0)
-			);
 
 			return output_;
 		}

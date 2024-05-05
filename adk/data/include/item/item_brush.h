@@ -8,21 +8,15 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Armor Item
+	 * @brief Represents an Brush Item
 	 *
 	 */
 	class ItemBrush : public Item {
 	public:
 		/**
-		 * @brief Construct a new Armor Item object
+		 * @brief Construct a new Brush Item object
 		 *
-		 * @param property An ItemProperty object
-		 * @param protection How much protection point should this armor give
-		 * @param slot Which slot should the armor go in
-		 * @param durability How much durability point should this armor have
-		 * @param damage_chance_min Minimum chance the armor takes damage
-		 * @param damage_chance_max Maximum chance the armor takes damage
-		 * @param dispensable Can this armor be equipped by a dispenser
+		 * @param property ItemProperty
 		 */
 		ItemBrush(ItemProperty property) { internal_ = property; }
 
@@ -30,15 +24,15 @@ namespace adk {
 		 * @brief Generates the json object
 		 *
 		 * @param mod_id Namespace identifier
+		 * 
 		 * @param id Identifier for the item
+		 * 
 		 * @return nlohmann::json
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_ = Item::Generate(mod_id, id);
-
-			output_["minecraft:item"]["components"].update(
-				helper_.UseModifiers(200, 0.35, id)
-			);
+			output_["minecraft:item"]["components"].update(helper_.InteractButton("action.interact.brush"));
+			output_["minecraft:item"]["components"].update(helper_.UseModifiers(200, 0.35, id));
 
 			return output_;
 		}

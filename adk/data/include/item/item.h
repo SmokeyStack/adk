@@ -10,11 +10,15 @@
 namespace adk {
 	/**
 	 * @brief Represents an Item
-	 *
 	 */
 	class Item {
 	public:
-		std::string getType() { return "item"; };
+		/**
+		 * @brief Returns the type of the object
+		 * 
+		 * @return std::string
+		 */
+		std::string GetType() { return "item"; };
 
 		Item() {};
 

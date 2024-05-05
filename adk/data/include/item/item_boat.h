@@ -8,21 +8,18 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Armor Item
-	 *
+	 * @brief Represents an Boat Item
 	 */
 	class ItemBoat : public Item {
 	public:
 		/**
-		 * @brief Construct a new Armor Item object
+		 * @brief Construct a new Boat Item object
 		 *
-		 * @param property An ItemProperty object
-		 * @param protection How much protection point should this armor give
-		 * @param slot Which slot should the armor go in
-		 * @param durability How much durability point should this armor have
-		 * @param damage_chance_min Minimum chance the armor takes damage
-		 * @param damage_chance_max Maximum chance the armor takes damage
-		 * @param dispensable Can this armor be equipped by a dispenser
+		 * @param chest Does the boat have a chest
+		 * 
+		 * @param type Type of the boat
+		 * 
+		 * @param property ItemProeprty
 		 */
 		ItemBoat(bool chest, std::string type, ItemProperty property) {
 			internal_ = property;
@@ -34,7 +31,9 @@ namespace adk {
 		 * @brief Generates the json object
 		 *
 		 * @param mod_id Namespace identifier
+		 * 
 		 * @param id Identifier for the item
+		 * 
 		 * @return nlohmann::json
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {

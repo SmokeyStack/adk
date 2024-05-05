@@ -8,16 +8,16 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Arrow Item
+	 * @brief Represents an Snowball Item
 	 */
-	class ItemArrow : public Item {
+	class ItemSnowball : public Item {
 	public:
 		/**
-		 * @brief Construct a new Arrow Item object
+		 * @brief Construct a new Snowball Item object
 		 *
 		 * @param property ItemProperty
 		 */
-		ItemArrow(ItemProperty property) { internal_ = property; }
+		ItemSnowball(ItemProperty property) { internal_ = property; }
 
 		/**
 		 * @brief Generates the json object
@@ -32,7 +32,7 @@ namespace adk {
 			output_ = Item::Generate(mod_id, id);
 
 			output_["minecraft:item"]["components"].update(
-				helper_.Projectile("minecraft:arrow", 0.0)
+				helper_.Projectile("minecraft:snowball", 0.0)
 			);
 
 			return output_;

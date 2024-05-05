@@ -12,7 +12,7 @@ namespace adk {
 	 */
 	class Block {
 	public:
-		std::string getType() { return "block"; };
+		std::string GetType() { return "block"; };
 
 		Block() {};
 

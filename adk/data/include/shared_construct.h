@@ -11,12 +11,17 @@ namespace adk {
 	struct BlockDescriptor {
 		std::string name;
 		std::map<std::string, std::variant<std::string, int, bool>> states;
-		std::string tags;
+		std::vector<std::string> tags;
 	};
 
 	static void to_json(nlohmann::json& j, const BlockDescriptor& p) {
 		if (!p.tags.empty()) {
-			j.update({ { "tags", p.tags } });
+			std::string query;
+			for each (std::string var in p.tags) {
+				query.append("'" + var + "',");
+			}
+			query.pop_back();
+			j.update({ { "tags", "q.any_tag(" + query + ")" } });
 
 			return;
 		}

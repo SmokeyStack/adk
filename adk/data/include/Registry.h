@@ -56,13 +56,13 @@ namespace adk {
 
 			std::visit(
 				[=](auto&& content) {
-					log::info("Creating {} - {}:{}", content->getType(), mod_id_, id);
+					log::info("Creating {} - {}:{}", content->GetType(), mod_id_, id);
 					registry_[mod_id_ + ":" + id] = content;
 
-					if (!fs::exists("./BP/" + content->getType() + "s/"))
-						fs::create_directory("./BP/" + content->getType() + "s/");
+					if (!fs::exists("./BP/" + content->GetType() + "s/"))
+						fs::create_directory("./BP/" + content->GetType() + "s/");
 
-					std::ofstream output("./BP/" + content->getType() + "s/" + id +
+					std::ofstream output("./BP/" + content->GetType() + "s/" + id +
 						".json");
 					output << content->Generate(mod_id_, id).dump();
 					output.close();

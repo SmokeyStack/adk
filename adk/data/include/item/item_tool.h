@@ -2,31 +2,28 @@
 
 #include <string>
 
-#include "item/armor_material.h"
 #include "item/item.h"
 #include "item/item_property.h"
+#include "item/tool_material.h"
 #include "json.hpp"
 
 namespace adk {
 	/**
-	 * @brief Represents an Armor Item
+	 * @brief Represents a Tool Item
 	 */
-	class ItemArmor : public Item {
+	class ItemTool : public Item {
 	public:
+		ItemTool() {};
 		/**
-		 * @brief Construct a new Armor Item object
+		 * @brief Construct a new Tool Item object
 		 *
-		 * @param material ArmorMaterial of the Armor.
-		 * 
-		 * @param slot Determines where the item can be worn.
-		 * 
+		 * @param material ToolMaterial of the Item.
+		 *
 		 * @param property ItemProperty.
 		 */
-		ItemArmor(ArmorMaterial* material, WearableSlot slot, ItemProperty property) {
+		ItemTool(ToolMaterial* material, ItemProperty property) {
 			internal_ = property;
 			material_ = material;
-			slot_ = slot;
-			protection_ = material->GetProtection(slot);
 		}
 
 		/**
@@ -42,25 +39,18 @@ namespace adk {
 			output_ = Item::Generate(mod_id, id);
 
 			output_["minecraft:item"]["components"].update(
+				helper_.Enchantable(
+					"all",
+					material_->GetEnchantability(),
+					id
+				)
+			);
+			output_["minecraft:item"]["components"].update(
 				helper_.Durability(
 					ItemDurability{
-						material_->GetDurability(slot_),
+						material_->GetDurability(),
 						std::make_pair<int>(0,100)
 					},
-					id
-				)
-			);
-			output_["minecraft:item"]["components"].update(
-				helper_.Wearable(
-					GetWearableSlot(slot_),
-					protection_,
-					id
-				)
-			);
-			output_["minecraft:item"]["components"].update(
-				helper_.Enchantable(
-					GetEnchantableSlot(material_->GetEnchantabilitySlot(slot_)),
-					material_->GetEnchantability(),
 					id
 				)
 			);
@@ -75,9 +65,6 @@ namespace adk {
 			return output_;
 		}
 	protected:
-		WearableSlot slot_;
-		ArmorMaterial* material_;
-	private:
-		int protection_;
+		ToolMaterial* material_;
 	};
 } // namespace adk

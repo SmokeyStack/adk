@@ -8,29 +8,44 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Armor Item
-	 *
+	 * @brief Represents a Bucket Item
 	 */
-	class ItemBrush : public Item {
+	class ItemBucket : public Item {
 	public:
 		/**
-		 * @brief Construct a new Armor Item object
+		 * @brief Construct a new Bucket Item object
 		 *
-		 * @param property An ItemProperty object
-		 * @param protection How much protection point should this armor give
-		 * @param slot Which slot should the armor go in
-		 * @param durability How much durability point should this armor have
-		 * @param damage_chance_min Minimum chance the armor takes damage
-		 * @param damage_chance_max Maximum chance the armor takes damage
-		 * @param dispensable Can this armor be equipped by a dispenser
+		 * @param fluid The fluid that the bucket can hold
+		 *
+		 * @param property ItemProperty
 		 */
-		ItemBrush(ItemProperty property) { internal_ = property; }
+		ItemBucket(std::string fluid, ItemProperty property) {
+			internal_ = property;
+			fluid_ = fluid;
+		}
+
+		/**
+		 * @brief Construct a new Bucket Item object
+		 *
+		 * @param fluid The fluid that the bucket can hold
+		 *
+		 * @param fluid_pickup The fluids that the bucket can pick up
+		 *
+		 * @param property ItemProperty
+		 */
+		ItemBucket(std::string fluid, std::vector<std::string> fluid_pickup, ItemProperty property) {
+			internal_ = property;
+			fluid_ = fluid;
+			fluid_pickup_ = fluid_pickup;
+		}
 
 		/**
 		 * @brief Generates the json object
 		 *
 		 * @param mod_id Namespace identifier
+		 *
 		 * @param id Identifier for the item
+		 *
 		 * @return nlohmann::json
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {
@@ -39,8 +54,35 @@ namespace adk {
 			output_["minecraft:item"]["components"].update(
 				helper_.CustomComponents(std::vector<std::string>{"adk-lib:use_on_bucket"})
 			);
+			output_["minecraft:item"]["components"].update(
+				helper_.LiquidClipped(true)
+			);
+
+			if (fluid_ == "adk-lib:fluid_empty") {
+
+				if (output_["minecraft:item"]["components"].contains("minecraft:tags"))
+					output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back(fluid_);
+				else
+					output_["minecraft:item"]["components"].update(
+						helper_.Tags(std::vector<std::string>{fluid_})
+					);
+				for (auto& fluid : fluid_pickup_)
+					output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back(fluid);
+
+				return output_;
+			}
+
+			if (output_["minecraft:item"]["components"].contains("minecraft:tags"))
+				output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back(fluid_);
+			else
+				output_["minecraft:item"]["components"].update(
+					helper_.Tags(std::vector<std::string>{fluid_})
+				);
 
 			return output_;
 		}
+	protected:
+		std::string fluid_;
+		std::vector<std::string> fluid_pickup_;
 	};
 } // namespace adk
