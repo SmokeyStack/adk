@@ -23,7 +23,6 @@ namespace adk {
 			internal_ = property;
 			type_ = type;
 		}
-
 		/**
 		 * @brief Generates the json object
 		 *
@@ -43,6 +42,12 @@ namespace adk {
 			output_["minecraft:item"]["components"].update(
 				helper_.PlacerEntity(minecart)
 			);
+			if (output_["minecraft:item"]["components"].contains("minecraft:tags"))
+				output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back("minecraft:is_minecart");
+			else
+				output_["minecraft:item"]["components"].update(
+					helper_.Tags(std::vector<std::string>{"minecraft:is_minecart"})
+				);
 
 			return output_;
 		}

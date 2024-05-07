@@ -18,7 +18,6 @@ namespace adk {
 		 * @param property ItemProperty
 		 */
 		ItemElytra(ItemProperty property) { internal_ = property; }
-
 		/**
 		 * @brief Generates the json object
 		 *
@@ -30,7 +29,6 @@ namespace adk {
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_ = Item::Generate(mod_id, id);
-
 			/*
 			 * This was supposed to be a custom component that implements the elytra functionality of not being able to be damaged if the item has 1 durability left.
 			 * Unfortunately, I forgot that onBeforeDurabilityDamage only activates if the item gets damaged by hitting an entity, not by using it.
@@ -42,6 +40,12 @@ namespace adk {
 			output_["minecraft:item"]["components"].update(
 				helper_.Wearable(GetWearableSlot(WearableSlot::ArmorChest), 0, id)
 			);
+			if (output_["minecraft:item"]["components"].contains("minecraft:tags"))
+				output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back("minecraft:is_armor");
+			else
+				output_["minecraft:item"]["components"].update(
+					helper_.Tags(std::vector<std::string>{"minecraft:is_armor"})
+				);
 
 			return output_;
 		}

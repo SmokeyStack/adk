@@ -45,7 +45,7 @@ namespace adk {
 				helper_.Durability(
 					ItemDurability{
 						material_->GetDurability(slot_),
-						std::make_pair<int>(0,100)
+						std::make_pair<int>(60,100)
 					},
 					id
 				)
@@ -71,6 +71,12 @@ namespace adk {
 					}
 				)
 			);
+			if (output_["minecraft:item"]["components"].contains("minecraft:tags"))
+				output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back({ "minecraft:is_armor" ,"minecraft:trimmable_armors" });
+			else
+				output_["minecraft:item"]["components"].update(
+					helper_.Tags(std::vector<std::string>{"minecraft:is_armor", "minecraft:trimmable_armors"})
+				);
 
 			return output_;
 		}

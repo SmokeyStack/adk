@@ -8,7 +8,7 @@
 
 namespace adk {
 	/**
-	 * @brief Represents an Boat Item
+	 * @brief Represents a Boat Item
 	 */
 	class ItemBoat : public Item {
 	public:
@@ -16,9 +16,9 @@ namespace adk {
 		 * @brief Construct a new Boat Item object
 		 *
 		 * @param chest Does the boat have a chest
-		 * 
+		 *
 		 * @param type Type of the boat
-		 * 
+		 *
 		 * @param property ItemProeprty
 		 */
 		ItemBoat(bool chest, std::string type, ItemProperty property) {
@@ -26,14 +26,13 @@ namespace adk {
 			chest_ = chest;
 			type_ = type;
 		}
-
 		/**
 		 * @brief Generates the json object
 		 *
 		 * @param mod_id Namespace identifier
-		 * 
+		 *
 		 * @param id Identifier for the item
-		 * 
+		 *
 		 * @return nlohmann::json
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {
@@ -46,6 +45,12 @@ namespace adk {
 			else
 				output_["minecraft:item"]["components"].update(
 					helper_.PlacerEntity(ItemEntityPlacer{ "minecraft:boat" })
+				);
+			if (output_["minecraft:item"]["components"].contains("minecraft:tags"))
+				output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back({ "minecraft:boat" ,"minecraft:boats" });
+			else
+				output_["minecraft:item"]["components"].update(
+					helper_.Tags(std::vector<std::string>{"minecraft:boat", "minecraft:boats"})
 				);
 
 			return output_;
