@@ -1,8 +1,12 @@
-#pragma once	
+#pragma once
 
-#include "block/block.h"
+#include <string>
+
+#include "block.h"
+#include "block_component.h"
 #include "block_property.h"
 #include "json.hpp"
+#include "shared_construct.h"
 
 namespace adk {
 	/**
@@ -16,7 +20,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockPlant(BlockProperty property) { internal_ = property; }
+		BlockPlant(BlockProperty property) : Block(property) { internal_ = property; }
 
 		/**
 		 * @brief Generates the json object
@@ -30,12 +34,15 @@ namespace adk {
 		nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_ = Block::Generate(mod_id, id);
 
-			BlockPlacementFilter filter = {
-				std::vector<BlockAllowedFaces>{BlockAllowedFaces::UP}
-			};
-			filter.tags = { "dirt","grass" };
+			BlockPlacementFilter filter;
+			filter.allowed_faces.push_back(BlockAllowedFaces::UP);
+			BlockDescriptor block_descriptor;
+			block_descriptor.tags = { "dirt", "farmland" };
+			filter.block_filter.push_back(block_descriptor);
 
-			output_["minecraft:block"]["components"].update(helper_.PlacementFilter(filter));
+			output_["minecraft:block"]["components"].update(
+				helper_.PlacementFilter(filter)
+			);
 
 			return output_;
 		}

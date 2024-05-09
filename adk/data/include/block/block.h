@@ -12,6 +12,11 @@ namespace adk {
 	 */
 	class Block {
 	public:
+		/**
+		 * @brief Returns the type of the object
+		 *
+		 * @return std::string
+		 */
 		std::string GetType() { return "block"; };
 
 		Block() {};
@@ -35,8 +40,8 @@ namespace adk {
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_["format_version"] = "1.20.80";
 			output_["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
+			nlohmann::json temp;
 
-			// Registering "light_dampening" component
 			if (internal_.GetLightDampening() != 15)
 				output_["minecraft:block"]["components"].update(
 					helper_.LightDampening(
@@ -44,13 +49,15 @@ namespace adk {
 					)
 				);
 
-			// Registering "crafting_table" component
-			if (internal_.GetCrafting().has_value())
+			temp = internal_.GetCrafting();
+			if (temp["crafting_tags"].size() > 64) {
+				log::error("Crafting tags for block {} cannot exceed the limit of 64 tags.", id);
+				exit(EXIT_FAILURE);
+			}
+
+			if (!temp["crafting_tags"].empty())
 				output_["minecraft:block"]["components"].update(
-					helper_.Crafting(
-						internal_.GetCrafting().value().first,
-						internal_.GetCrafting().value().second
-					)
+					helper_.Crafting(internal_.GetCrafting())
 				);
 
 			// Registering "destructible_by_explosion" component
@@ -208,6 +215,15 @@ namespace adk {
 				output_["minecraft:block"]["components"].update(
 					helper_.PlacementFilter(internal_.GetPlacementFilter())
 				);
+
+			if (!internal_.GetTags().empty()) {
+				for (auto& tag : internal_.GetTags()) {
+					output_["minecraft:block"]["components"]["tag:" + tag] = nlohmann::json::object();
+				}
+			}
+
+			if (!internal_.GetCustomComponents().empty())
+				output_["minecraft:block"]["components"].update(helper_.CustomComponents(internal_.GetCustomComponents()));
 
 			return output_;
 		}

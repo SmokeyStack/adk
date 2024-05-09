@@ -1,7 +1,7 @@
 #ifndef SLABBLOCK_H
 #define SLABBLOCK_H
 
-#include "block.h"
+#include "block/block.h"
 #include "block_property.h"
 #include "json.hpp"
 

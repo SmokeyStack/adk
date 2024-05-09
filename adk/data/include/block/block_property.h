@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "json.hpp"
+#include "shared_construct.h"
 
 namespace adk {
 	/**
@@ -347,10 +348,20 @@ namespace adk {
 	}
 
 	namespace {
+		struct BlockCraftingTable {
+			std::vector<std::string> crafting_tags;
+			std::string table_name;
+		};
+
+		void to_json(nlohmann::json& j, const BlockCraftingTable& p) {
+			j.update({ {"crafting_tags", p.crafting_tags} });
+
+			if (!p.table_name.empty()) j.update({ {"table_name", p.table_name} });
+		}
+
 		struct BlockPlacementFilter {
 			std::vector<BlockAllowedFaces> allowed_faces;
-			std::optional<std::vector<std::string>> tags;
-			std::optional<std::vector<std::string>> states;
+			std::vector<std::variant<std::string, BlockDescriptor>> block_filter;
 		};
 
 		void to_json(nlohmann::json& j, const BlockPlacementFilter& p) {
@@ -358,20 +369,15 @@ namespace adk {
 			for each (BlockAllowedFaces var in p.allowed_faces) {
 				allowed_faces.push_back(GetBlockAllowedFaces(var));
 			}
-			nlohmann::json j2;
-			if (p.tags.has_value()) {
-				std::string query;
-				for each (std::string var in p.tags.value()) {
-					query.append("'" + var + "',");
+			nlohmann::json j2 = nlohmann::json::array();
+			for each (auto entries in p.block_filter) {
+				if (std::holds_alternative<std::string>(entries)) {
+					j2.push_back(std::get<std::string>(entries));
 				}
-				query.pop_back();
-				j2.push_back({ {"tags", "q.any_tag(" + query + ")"} });
+				else {
+					j2.push_back(std::get<BlockDescriptor>(entries));
+				}
 			}
-
-			if (p.states.has_value())
-				for each (std::string var in p.states.value()) {
-					j2.push_back({ {"name", var} });
-				}
 
 			j = nlohmann::json{ {"allowed_faces", allowed_faces}, {"block_filter", j2} };
 		}
@@ -399,19 +405,12 @@ namespace adk {
 		/**
 		 * @brief Sets the "crafting_table" component
 		 *
-		 * @param tags Defines the tags recipes should define to be crafted on this table.
-		 * Limited to 64 tags.
-		 * Each tag is limited to 64 characters.
-		 *
-		 * @param name Specifies the language file key that maps to what text will be displayed in the UI of this table.
-		 * If the string given can not be resolved as a loc string, the raw string given will be displayed.
-		 * If this field is omitted, the name displayed will default to the name specified in the "display_name" component.
-		 * If this block has no "display_name" component, the name displayed will default to the name of the block.
+		 * @param value BlockCraftingTable struct
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		BlockProperty SetCrafting(std::vector<std::string> tags, std::string name) {
-			this->crafting = std::make_pair(tags, name);
+		BlockProperty SetCrafting(BlockCraftingTable value) {
+			this->crafting_ = value;
 
 			return *this;
 		}
@@ -640,7 +639,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetBoxCollision(bool value) {
-			this->box_collision = value;
+			this->box_collision_ = value;
 
 			return *this;
 		}
@@ -658,7 +657,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetBoxCollision(std::vector<int> origin, std::vector<int> size) {
-			this->box_collision = std::make_pair(origin, size);
+			this->box_collision_ = std::make_pair(origin, size);
 
 			return *this;
 		}
@@ -737,7 +736,7 @@ namespace adk {
 		 *
 		 * @return std::vector<std::string>
 		*/
-		std::optional<std::pair<std::vector<std::string>, std::string>> GetCrafting() const { return crafting; }
+		BlockCraftingTable GetCrafting() const { return crafting_; }
 
 		/**
 		 * @brief Gets the "destructible_by_explosion" component
@@ -822,7 +821,7 @@ namespace adk {
 		 * @return std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
 		 */
 		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>> GetBoxCollision() const {
-			return box_collision;
+			return box_collision_;
 		}
 
 		/**
@@ -860,9 +859,49 @@ namespace adk {
 		BlockPlacementFilter GetPlacementFilter() const {
 			return placement_filter;
 		}
+
+		/**
+		 * @brief Sets the "tags" component
+		 *
+		 * @param value The "tags" component determines which tags are attached to an item.
+		 *
+		 * @return BlockProperty
+		*/
+		BlockProperty SetTags(std::vector<std::string> value) {
+			this->tags_ = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Gets the "tags" component
+		 *
+		 * @return std::vector<std::string>
+		*/
+		std::vector<std::string> GetTags() const { return tags_; }
+
+		/**
+		 * @brief Sets the "custom_components" component
+		 *
+		 * @param value Array of custom components
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetCustomComponents(std::vector<std::string> value) {
+			this->custom_components_ = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Gets the "custom_components" component
+		 *
+		 * @return std::vector<std::string>
+		 */
+		std::vector<std::string> GetCustomComponents() const { return custom_components_; }
 	private:
 		int light_dampening = 15;
-		std::optional<std::pair<std::vector<std::string>, std::string>> crafting;
+		BlockCraftingTable crafting_;
 		std::variant<bool, double> explosion = true;
 		std::variant<bool, double> mining = true;
 		std::string display_name;
@@ -875,11 +914,13 @@ namespace adk {
 		std::vector<double> scale{ 0, 0, 0 };
 		std::vector<double> translation{ 0, 0, 0 };
 		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-			box_collision = true;
+			box_collision_ = true;
 		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
 			box_selection = true;
 		adk::CreativeCategory creative_category = adk::CreativeCategory::NONE;
 		adk::CreativeGroup creative_group = adk::CreativeGroup::NONE;
 		BlockPlacementFilter placement_filter;
+		std::vector<std::string> tags_;
+		std::vector<std::string> custom_components_;
 	};
 } // namespace adk

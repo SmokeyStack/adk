@@ -38,21 +38,12 @@ namespace adk {
 		/**
 		 * @brief Creates the "crafting_table" component
 		 *
-		 * @param tags Defines the tags recipes should define to be crafted on this table.
-		 * Limited to 64 tags.
-		 * Each tag is limited to 64 characters.
-		 *
-		 * @param name Specifies the language file key that maps to what text will be displayed in the UI of this table.
-		 * If the string given can not be resolved as a loc string, the raw string given will be displayed.
-		 * If this field is omitted, the name displayed will default to the name specified in the "display_name" component.
-		 * If this block has no "display_name" component, the name displayed will default to the name of the block.
+		 * @param j BlockCraftingTable struct
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Crafting(std::vector<std::string> tags, std::string name) {
-			nlohmann::json::object_t output = {
-				{"minecraft:crafting_table",
-				 {{"crafting_tags", tags}, {"table_name", name}}} };
+		nlohmann::json::object_t Crafting(nlohmann::json j) {
+			nlohmann::json::object_t output = { {"minecraft:crafting_table",{j} } };
 
 			return output;
 		}
@@ -401,6 +392,32 @@ namespace adk {
 			nlohmann::json::object_t output = { {"minecraft:placement_filter",{{"conditions",{j}}}} };
 
 			return output;
+		}
+
+		/**
+		 * @brief Creates the "tags" component
+		 *
+		 * @param value An array which can contain multiple item tags.
+		 *
+		 * @return nlohmann::json::object_t
+		*/
+		nlohmann::json::object_t Tags(std::vector<std::string> value) {
+			nlohmann::json::object_t temp = { {"minecraft:tags", {{"tags",value}}} };
+
+			return temp;
+		}
+
+		/**
+		 * @brief Sets the "custom_components" component
+		 *
+		 * @param value Array of custom components
+		 *
+		 * @return nlohmann::json::object_t
+		 */
+		nlohmann::json::object_t CustomComponents(std::vector<std::string> value) {
+			nlohmann::json::object_t temp = { {"minecraft:custom_components",value} };
+
+			return temp;
 		}
 	protected:
 		/**

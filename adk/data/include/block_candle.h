@@ -1,7 +1,7 @@
 #ifndef CANDLEBLOCK_H
 #define CANDLEBLOCK_H
 
-#include "block.h"
+#include "block/block.h"
 #include "block_property.h"
 #include "json.hpp"
 

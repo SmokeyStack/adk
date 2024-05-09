@@ -1,7 +1,7 @@
 #ifndef HEADBLOCK_H
 #define HEADBLOCK_H
 
-#include "block.h"
+#include "block/block.h"
 #include "block_property.h"
 #include "json.hpp"
 

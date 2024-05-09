@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "block.h"
+#include "block/block.h"
 #include "item/item.h"
 #include "registry.h"
 #include "registry_global.h"

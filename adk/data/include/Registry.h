@@ -6,7 +6,7 @@
 #include <string>
 #include <variant>
 
-#include "block.h"
+#include "block/block.h"
 #include "item/item.h"
 
 namespace fs = std::filesystem;

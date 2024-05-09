@@ -1470,19 +1470,12 @@ namespace adk {
 		std::vector<std::string> key;
 
 		for (auto const entry : registry_global) {
-			std::map<std::string, std::variant<Block*, Item*>> registry_check;
-			registry_check = entry->GetRegistry();
+			auto registry_check = entry->GetRegistry();
 
-			for (std::map<std::string, std::variant<Block*, Item*>>::iterator it =
-				registry_check.begin();
-				it != registry_check.end(); ++it) {
-				key.push_back(it->first);
-			}
+			for (const auto& [id, _] : registry_check) key.push_back(id);
 		}
 
-		for (auto const& entry : registry_vanilla) {
-			key.push_back(entry);
-		}
+		key.insert(key.end(), registry_vanilla.begin(), registry_vanilla.end());
 
 		return key;
 	}

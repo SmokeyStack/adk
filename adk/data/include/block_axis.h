@@ -1,6 +1,6 @@
 #pragma once
 
-#include "block.h"
+#include "block/block.h"
 #include "block_property.h"
 #include "json.hpp"
 
