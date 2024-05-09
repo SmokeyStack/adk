@@ -193,11 +193,86 @@ namespace adk {
 			TempFile >> output;
 		}
 		output["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["texture"] = texture;
-		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs";
-		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["north_east"] = "q.block_state('" + id + ":north_east')";
-		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["south_east"] = "q.block_state('" + id + ":south_east')";
-		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["south_west"] = "q.block_state('" + id + ":south_west')";
-		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["north_west"] = "q.block_state('" + id + ":north_west')";
+		std::string upper_north_east = fmt::format(
+			"q.block_state('{namespace}:shape') == 'straight' || q.block_state('{namespace}:shape') == 'outer_right' || q.block_state('{namespace}:shape') == 'inner_left' || q.block_state('{namespace}:shape') == 'inner_right' || q.block_state('minecraft:vertical_half') == 'top'",
+			fmt::arg("namespace", id)
+		);
+		std::string upper_north_west = fmt::format(
+			"q.block_state('{namespace}:shape') == 'straight' || q.block_state('{namespace}:shape') == 'outer_left' || q.block_state('{namespace}:shape') == 'inner_left' || q.block_state('{namespace}:shape') == 'inner_right' || q.block_state('minecraft:vertical_half') == 'top'",
+			fmt::arg("namespace", id)
+		);
+		std::string upper_south_east = fmt::format(
+			"q.block_state('{namespace}:shape') == 'inner_left' || q.block_state('minecraft:vertical_half') == 'top'",
+			fmt::arg("namespace", id)
+		);
+		std::string upper_south_west = fmt::format(
+			"q.block_state('{namespace}:shape') == 'inner_right' || q.block_state('minecraft:vertical_half') == 'top'",
+			fmt::arg("namespace", id)
+		);
+		std::string lower_north_east = fmt::format(
+			"q.block_state('{namespace}:shape') == 'straight' || q.block_state('{namespace}:shape') == 'outer_right' || q.block_state('{namespace}:shape') == 'inner_left' || q.block_state('{namespace}:shape') == 'inner_right' || q.block_state('minecraft:vertical_half') == 'bottom'",
+			fmt::arg("namespace", id)
+		);
+		std::string lower_north_west = fmt::format(
+			"q.block_state('{namespace}:shape') == 'straight' || q.block_state('{namespace}:shape') == 'outer_left' || q.block_state('{namespace}:shape') == 'inner_left' || q.block_state('{namespace}:shape') == 'inner_right' || q.block_state('minecraft:vertical_half') == 'bottom'",
+			fmt::arg("namespace", id)
+		);
+		std::string lower_south_east = fmt::format(
+			"q.block_state('{namespace}:shape') == 'inner_left' || q.block_state('minecraft:vertical_half') == 'bottom'",
+			fmt::arg("namespace", id)
+		);
+		std::string lower_south_west = fmt::format(
+			"q.block_state('{namespace}:shape') == 'inner_right' || q.block_state('minecraft:vertical_half') == 'bottom'",
+			fmt::arg("namespace", id)
+		);
+		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_north";
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_west"] = upper_south_west;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_east"] = lower_north_east;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_west"] = lower_north_west;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_east"] = lower_south_east;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_west"] = lower_south_west;
+		nlohmann::json::object_t temp = {
+			{"condition",
+			 "q.block_state('minecraft:cardinal_direction') == 'east'"} };
+		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_east";
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_west"] = upper_south_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_east"] = lower_north_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_west"] = lower_north_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_east"] = lower_south_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_west"] = lower_south_west;
+		output["minecraft:block"]["permutations"].push_back(temp);
+		temp = {
+			{"condition",
+			 "q.block_state('minecraft:cardinal_direction') == 'west'"} };
+		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_west";
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_west"] = upper_south_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_east"] = lower_north_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_west"] = lower_north_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_east"] = lower_south_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_west"] = lower_south_west;
+		output["minecraft:block"]["permutations"].push_back(temp);
+		temp = {
+			{"condition",
+			 "q.block_state('" + id + ":south')"} };
+		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_south";
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_west"] = upper_south_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_east"] = lower_north_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_north_west"] = lower_north_west;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_east"] = lower_south_east;
+		temp["components"]["minecraft:geometry"]["bone_visibility"]["lower_south_west"] = lower_south_west;
+		output["minecraft:block"]["permutations"].push_back(temp);
 		{
 			std::ofstream OutputFile(filePath);
 			OutputFile << output.dump();

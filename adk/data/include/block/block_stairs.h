@@ -34,10 +34,8 @@ namespace adk {
 
 			output_["minecraft:block"]["description"]["traits"]["minecraft:placement_position"]["enabled_states"] = { "minecraft:vertical_half" };
 			output_["minecraft:block"]["description"]["traits"]["minecraft:placement_direction"]["enabled_states"] = { "minecraft:cardinal_direction" };
-			output_["minecraft:block"]["description"]["states"][mod_id + ":north_east"] = { true, false };
-			output_["minecraft:block"]["description"]["states"][mod_id + ":south_east"] = { false, true };
-			output_["minecraft:block"]["description"]["states"][mod_id + ":south_west"] = { false, true };
-			output_["minecraft:block"]["description"]["states"][mod_id + ":north_west"] = { true, false };
+			output_["minecraft:block"]["description"]["states"][mod_id + ":shape"] = { "straight", "inner_left","inner_right","outer_left","outer_right" };
+			output_["minecraft:block"]["description"]["states"][mod_id + ":south"] = { false, true };
 
 			if (output_["minecraft:block"]["components"].contains("minecraft:custom_components"))
 				output_["minecraft:block"]["components"]["minecraft:custom_components"].push_back({ "adk-lib:before_on_player_place_stairs" });
@@ -45,17 +43,6 @@ namespace adk {
 				output_["minecraft:block"]["components"].update(
 					helper_.CustomComponents(std::vector<std::string>{"adk-lib:before_on_player_place_stairs"})
 				);
-
-			nlohmann::json::object_t temp = {
-			{"condition",
-			 "q.block_state('minecraft:vertical_half') == 'top'"} };
-			temp["components"].update(
-				helper_.Scale(
-					std::vector<int>{0, 1, 0},
-					id
-				)
-			);
-			output_["minecraft:block"]["permutations"].push_back(temp);
 
 			return output_;
 		}
