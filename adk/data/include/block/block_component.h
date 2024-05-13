@@ -370,24 +370,6 @@ namespace adk {
 			return output;
 		}
 
-		/**
-		 * @brief Registers the block to a tab in the creative menu
-		 *
-		 * @param category Tab the block is placed under
-		 * @param group Optional - Group the block is placed into
-		 *
-		 * @return nlohmann::json::object_t
-		*/
-		nlohmann::json::object_t CreativeMenu(std::string category, std::string group = "") {
-			nlohmann::json::object_t output = {
-				{"menu_category", {{"category", category}}} };
-
-			if (!group.empty())
-				output["menu_category"].update({ {"group", group} });
-
-			return output;
-		}
-
 		nlohmann::json::object_t PlacementFilter(nlohmann::json j) {
 			nlohmann::json::object_t output = { {"minecraft:placement_filter",{{"conditions",{j}}}} };
 

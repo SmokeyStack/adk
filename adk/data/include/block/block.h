@@ -60,7 +60,6 @@ namespace adk {
 					helper_.Crafting(internal_.GetCrafting())
 				);
 
-			// Registering "destructible_by_explosion" component
 			if (std::get_if<bool>(&internal_.GetDestructibleByExplosion())) {
 				if (!std::get<bool>(internal_.GetDestructibleByExplosion()))
 					output_["minecraft:block"]["components"].update(
@@ -74,7 +73,6 @@ namespace adk {
 					)
 				);
 
-			// Registering "destructible_by_mining" component
 			if (std::get_if<bool>(&internal_.GetDestructibleByMining())) {
 				if (!std::get<bool>(internal_.GetDestructibleByMining()))
 					output_["minecraft:block"]["components"].update(
@@ -88,7 +86,6 @@ namespace adk {
 					)
 				);
 
-			// Registering "display_name" component
 			if (!internal_.GetDisplayName().empty())
 				output_["minecraft:block"]["components"].update(
 					helper_.DisplayName(
@@ -96,7 +93,6 @@ namespace adk {
 					)
 				);
 
-			// Registering "flammable" component
 			if (std::get_if<bool>(&internal_.GetFlamamble())) {
 				if (!std::get<bool>(internal_.GetFlamamble()))
 					output_["minecraft:block"]["components"].update(
@@ -111,25 +107,21 @@ namespace adk {
 					)
 				);
 
-			// Registering "friction" component
 			if (internal_.GetFriction() != 0.4)
 				output_["minecraft:block"]["components"].update(
 					helper_.Friction(internal_.GetFriction(), id)
 				);
 
-			// Registering "light_emission" component
 			if (internal_.GetLightEmission() != 0)
 				output_["minecraft:block"]["components"].update(
 					helper_.LightEmission(internal_.GetLightEmission(), id)
 				);
 
-			// Registering "loot" component
 			if (!internal_.GetLoot().empty())
 				output_["minecraft:block"]["components"].update(
 					helper_.Loot(internal_.GetLoot())
 				);
 
-			// Registering "map_color" component
 			if (std::get_if<std::string>(&internal_.GetMapColor())) {
 				if (!std::get<std::string>(internal_.GetMapColor()).empty())
 					output_["minecraft:block"]["components"].update(
@@ -145,7 +137,6 @@ namespace adk {
 					)
 				);
 
-			// Registering "transformation" component
 			if (internal_.GetRotation() != std::vector<int>{0, 0, 0})
 				output_["minecraft:block"]["components"].update(
 					helper_.Rotation(internal_.GetRotation(), id)
@@ -161,7 +152,6 @@ namespace adk {
 					helper_.Scale(internal_.GetScale())
 				);
 
-			// Registering "collision_box" component
 			if (std::get_if<bool>(&internal_.GetBoxCollision())) {
 				if (!std::get<bool>(internal_.GetBoxCollision()))
 					output_["minecraft:block"]["components"].update(
@@ -178,7 +168,6 @@ namespace adk {
 				);
 			}
 
-			// Registering "selection_box" component
 			if (std::get_if<bool>(&internal_.GetBoxSelection())) {
 				if (!std::get<bool>(internal_.GetBoxSelection()))
 					output_["minecraft:block"]["components"].update(
@@ -195,22 +184,6 @@ namespace adk {
 				);
 			}
 
-			// Registering creative menu
-			if (!adk::GetCreativeGroup(internal_.GetCreativeGroup()).empty())
-				output_["minecraft:block"]["description"].update(
-					helper_.CreativeMenu(
-						adk::GetCreativeCategory(internal_.GetCreativeCategory()),
-						adk::GetCreativeGroup(internal_.GetCreativeGroup())
-					)
-				);
-			else
-				output_["minecraft:block"]["description"].update(
-					helper_.CreativeMenu(
-						adk::GetCreativeCategory(internal_.GetCreativeCategory())
-					)
-				);
-
-			// Registering Placemt Filter
 			if (!internal_.GetPlacementFilter().allowed_faces.empty())
 				output_["minecraft:block"]["components"].update(
 					helper_.PlacementFilter(internal_.GetPlacementFilter())
@@ -225,7 +198,7 @@ namespace adk {
 			if (!internal_.GetCustomComponents().empty())
 				output_["minecraft:block"]["components"].update(helper_.CustomComponents(internal_.GetCustomComponents()));
 
-			if (internal_.GetTick().has_value()){
+			if (internal_.GetTick().has_value()) {
 				const auto& [first, second, third] = internal_.GetTick().value();
 				output_["minecraft:block"]["components"].update(
 					helper_.Tick(first, second, third)
