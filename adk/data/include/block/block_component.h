@@ -419,6 +419,23 @@ namespace adk {
 
 			return temp;
 		}
+
+		/**
+		 * @brief Sets the "tick" component
+		 *
+		 * @param minimum_tick Minimum number of ticks before the block can be ticked
+		 *
+		 * @param maximum_tick Maximum number of ticks before the block can be ticked
+		 *
+		 * @param loop If the block should loop the tick
+		 *
+		 * @return nlohmann::json::object_t
+		 */
+		nlohmann::json::object_t Tick(int minimum_tick, int maximum_tick, bool loop = true) {
+			nlohmann::json::object_t temp = { {"minecraft:tick",{{"interval_range", {minimum_tick, maximum_tick}},{"looping", loop}}} };
+
+			return temp;
+		}
 	protected:
 		/**
 		 * @brief Ensure the collision_box and selection_box is valid

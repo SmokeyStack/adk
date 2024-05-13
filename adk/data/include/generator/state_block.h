@@ -10,6 +10,39 @@
 #include "utility/logger.h"
 
 namespace adk {
+	struct MaterialInstances {
+		std::string textures;
+		std::string render_method = "opaque";
+		bool ambient_occlusion = true;
+		bool face_dimming = true;
+	};
+
+	struct BlockTextures {
+		MaterialInstances all;
+		MaterialInstances sides;
+		MaterialInstances ends;
+		MaterialInstances up;
+		MaterialInstances down;
+		MaterialInstances north;
+		MaterialInstances east;
+		MaterialInstances south;
+		MaterialInstances west;
+	};
+
+	void to_json(nlohmann::json& j, const MaterialInstances& p) {
+		if (!p.textures.empty())
+			j.update({ {"texture", p.textures} });
+		if (p.render_method != "opaque") {
+			j.update({ {"render_method", p.render_method} });
+		}
+		if (!p.ambient_occlusion) {
+			j.update({ {"ambient_occlusion", p.ambient_occlusion} });
+		}
+		if (!p.face_dimming) {
+			j.update({ {"face_dimming", p.face_dimming} });
+		}
+	}
+
 	/**
 	 * @brief Creates a one texture block
 	 *
@@ -17,7 +50,7 @@ namespace adk {
 	 *
 	 * @param texture Name of the texture defined in `terrain_texture.json`
 	 */
-	void SimpleBlock(std::string block, std::string texture) {
+	void SimpleBlock(std::string block, BlockTextures textures) {
 		auto registry = GetIDs();
 
 		if (!(std::find(registry.begin(), registry.end(), block) != registry.end())) {
@@ -28,12 +61,50 @@ namespace adk {
 		block = block.substr(block.find(":") + 1);
 		const std::string filePath = "./BP/blocks/" + block + ".json";
 		nlohmann::json output;
+
 		{
 			std::ifstream TempFile(filePath);
 			TempFile >> output;
 		}
-		output["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["texture"] = texture;
+
+		nlohmann::json temp;
+		temp = textures.all;
+		if (!temp.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["*"] = temp;
+		temp = textures.ends;
+		if (!temp.is_null()) {
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["ends"] = temp;
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = "ends";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["down"] = "ends";
+		}
+		temp = textures.sides;
+		if (!temp.is_null()) {
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["sides"] = temp;
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["north"] = "sides";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["east"] = "sides";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["south"] = "sides";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["west"] = "sides";
+		}
+		temp = textures.up;
+		if (!temp.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = temp;
+		temp = textures.down;
+		if (!temp.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["down"] = temp;
+		temp = textures.north;
+		if (!temp.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["north"] = temp;
+		temp = textures.east;
+		if (!temp.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["east"] = temp;
+		temp = textures.south;
+		if (!temp.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = temp;
+		temp = textures.west;
+		if (!temp.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["west"] = temp;
 		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "minecraft:geometry.full_block";
+
 		{
 			std::ofstream OutputFile(filePath);
 			OutputFile << output.dump();
@@ -288,51 +359,86 @@ namespace adk {
 	}
 
 	/**
-	 * @brief Sides can have different textures
+	 * @brief Creates a stair block
 	 *
 	 * @param block Identifier of the block, omit namespace
-	 * @param north Texture for the north face
-	 * @param east Texture for the east face
-	 * @param south Texture for the south face
-	 * @param west Texture for the west face
-	 * @param up Texture for the up face
-	 * @param down Texture for the down face
+	 *
+	 * @param texture Name of the texture defined in `terrain_texture.json`
 	 */
-	void simpleBlock(std::string block, std::string north, std::string east,
-		std::string south, std::string west, std::string up,
-		std::string down) {
-		std::string my_text, temp_text;
+	void TorchBlock(std::string block, BlockTextures textures) {
+		auto registry = GetIDs();
 
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
+		if (!(std::find(registry.begin(), registry.end(), block) != registry.end())) {
+			log::error("No block found: {} - Please check if this block exists", block);
 			exit(EXIT_FAILURE);
 		}
 
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
+		std::string id = block;
+		block = block.substr(block.find(":") + 1);
+		id = id.substr(0, id.find(":"));
+		const std::string filePath = "./BP/blocks/" + block + ".json";
+		nlohmann::json output;
+		{
+			std::ifstream TempFile(filePath);
+			TempFile >> output;
+		}
 
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["north"]
-			["texture"] = north;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["east"]
-			["texture"] = east;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["south"]
-			["texture"] = south;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["west"]
-			["texture"] = west;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["texture"] = up;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
-			["texture"] = down;
-		j["minecraft:block"]["components"]["minecraft:unit_cube"] =
-			nlohmann::json::object();
+		nlohmann::json textures_json;
+		textures_json = textures.all;
+		if (!textures_json.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["*"] = textures_json;
+		textures_json = textures.ends;
+		if (!textures_json.is_null()) {
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["ends"] = textures_json;
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = "ends";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["down"] = "ends";
+		}
+		textures_json = textures.sides;
+		if (!textures_json.is_null()) {
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["sides"] = textures_json;
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["north"] = "sides";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["east"] = "sides";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["south"] = "sides";
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["west"] = "sides";
+		}
+		textures_json = textures.up;
+		if (!textures_json.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = textures_json;
+		textures_json = textures.down;
+		if (!textures_json.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["down"] = textures_json;
+		textures_json = textures.north;
+		if (!textures_json.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["north"] = textures_json;
+		textures_json = textures.east;
+		if (!textures_json.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["east"] = textures_json;
+		textures_json = textures.south;
+		if (!textures_json.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = textures_json;
+		textures_json = textures.west;
+		if (!textures_json.is_null())
+			output["minecraft:block"]["components"]["minecraft:material_instances"]["west"] = textures_json;
+		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.torch";
+		std::string condition = fmt::format(
+			"q.block_state('{state}') == 'north' || q.block_state('{state}') == 'east' || q.block_state('{state}') == 'south' || q.block_state('{state}') == 'west'",
+			fmt::arg("state", "minecraft:block_face")
+		);
+		nlohmann::json::object_t geo_json = { {"condition",condition} };
+		geo_json["components"]["minecraft:geometry"]["identifier"] = "geometry.torch_wall";
+		output["minecraft:block"]["permutations"].push_back(geo_json);
+		{
+			std::ofstream OutputFile(filePath);
+			OutputFile << output.dump();
+		}
 
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
+		const std::string sourcePath = "./data/adk/assets/torch.geo.json";
+		const std::string targetPath = "./RP/models/blocks/torch.geo.json";
+
+		if (!std::filesystem::exists(targetPath)) {
+			std::filesystem::create_directories("./RP/models/blocks");
+			std::filesystem::copy(sourcePath, targetPath);
+		}
 	}
 
 	/**

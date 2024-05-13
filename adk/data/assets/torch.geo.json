@@ -1,0 +1,173 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.torch",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-1, 0, -8],
+							"size": [2, 16, 16],
+							"uv": {
+								"north": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								},
+								"east": {
+									"uv": [0, 0],
+									"uv_size": [16, 16]
+								},
+								"south": {
+									"uv": [0, 0],
+									"uv_size": [0, 16]
+								},
+								"west": {
+									"uv": [0, 0],
+									"uv_size": [16, 16]
+								},
+								"up": {
+									"uv": [2, 0],
+									"uv_size": [-2, 0]
+								},
+								"down": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								}
+							}
+						},
+						{
+							"origin": [-8, 0, -1],
+							"size": [16, 16, 2],
+							"uv": {
+								"north": {
+									"uv": [0, 0],
+									"uv_size": [16, 16]
+								},
+								"east": {
+									"uv": [0, 0],
+									"uv_size": [0, 16]
+								},
+								"south": {
+									"uv": [0, 0],
+									"uv_size": [16, 16]
+								},
+								"west": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								},
+								"up": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								},
+								"down": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								}
+							}
+						},
+						{
+							"origin": [-1, 0, -1],
+							"size": [2, 10, 2],
+							"uv": {
+								"north": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								},
+								"east": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								},
+								"south": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								},
+								"west": {
+									"uv": [0, 0],
+									"uv_size": [0, 0]
+								},
+								"up": {
+									"uv": [9, 8],
+									"uv_size": [-2, -2]
+								},
+								"down": {
+									"uv": [9, 15],
+									"uv_size": [-2, -2]
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"description": {
+				"identifier": "geometry.torch_wall",
+				"texture_width": 16,
+				"texture_height": 16,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, -3, 0],
+					"cubes": [
+						{
+							"origin": [7, 0.5, -8],
+							"size": [2, 16, 16],
+							"pivot": [0, 0.5, 0],
+							"rotation": [0, 0, -22.5],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [0, 0]},
+								"east": {"uv": [0, 0], "uv_size": [16, 16]},
+								"south": {"uv": [0, 0], "uv_size": [0, 16]},
+								"west": {"uv": [0, 0], "uv_size": [16, 16]},
+								"up": {"uv": [2, 0], "uv_size": [-2, 0]},
+								"down": {"uv": [0, 0], "uv_size": [0, 0]}
+							}
+						},
+						{
+							"origin": [0, 0.5, -1],
+							"size": [16, 16, 2],
+							"pivot": [0, 0.5, 0],
+							"rotation": [0, 0, -22.5],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [16, 16]},
+								"east": {"uv": [0, 0], "uv_size": [0, 16]},
+								"south": {"uv": [0, 0], "uv_size": [16, 16]},
+								"west": {"uv": [0, 0], "uv_size": [0, 0]},
+								"up": {"uv": [0, 0], "uv_size": [0, 0]},
+								"down": {"uv": [0, 0], "uv_size": [0, 0]}
+							}
+						},
+						{
+							"origin": [7, 0.5, -1],
+							"size": [2, 10, 2],
+							"pivot": [0, 0.5, 0],
+							"rotation": [0, 0, -22.5],
+							"uv": {
+								"north": {"uv": [0, 0], "uv_size": [0, 0]},
+								"east": {"uv": [0, 0], "uv_size": [0, 0]},
+								"south": {"uv": [0, 0], "uv_size": [0, 0]},
+								"west": {"uv": [0, 0], "uv_size": [0, 0]},
+								"up": {"uv": [9, 8], "uv_size": [-2, -2]},
+								"down": {"uv": [9, 15], "uv_size": [-2, -2]}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}

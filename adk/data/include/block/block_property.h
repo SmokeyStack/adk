@@ -899,6 +899,30 @@ namespace adk {
 		 * @return std::vector<std::string>
 		 */
 		std::vector<std::string> GetCustomComponents() const { return custom_components_; }
+
+		/**
+		 * @brief Sets the "tick" component
+		 *
+		 * @param minimum_tick Minimum number of ticks before the block can be ticked
+		 *
+		 * @param maximum_tick Maximum number of ticks before the block can be ticked
+		 *
+		 * @param loop If the block should loop the tick
+		 *
+		 * @return BlockProperty
+		 */
+		BlockProperty SetTick(std::vector<std::string> value) {
+			this->custom_components_ = value;
+
+			return *this;
+		}
+
+		/**
+		 * @brief Gets the "tick" component
+		 *
+		 * @return std::tuple<int, int, bool>
+		 */
+		std::optional<std::tuple<int, int, bool>> GetTick() const { return tick_; }
 	private:
 		int light_dampening = 15;
 		BlockCraftingTable crafting_;
@@ -922,5 +946,6 @@ namespace adk {
 		BlockPlacementFilter placement_filter;
 		std::vector<std::string> tags_;
 		std::vector<std::string> custom_components_;
+		std::optional<std::tuple<int, int, bool>> tick_;
 	};
 } // namespace adk

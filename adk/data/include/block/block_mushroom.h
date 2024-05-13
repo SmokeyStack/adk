@@ -9,16 +9,16 @@
 
 namespace adk {
 	/**
-	 * @brief Represents a Flower Block
+	 * @brief Represents a Mushroom Block
 	 */
-	class BlockFlower : public BlockPlant {
+	class BlockMushroom: public BlockPlant {
 	public:
 		/**
-		 * @brief Construct a new Plant Block object
+		 * @brief Construct a new Mushroom Block object
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockFlower(BlockProperty property) : BlockPlant(property) { internal_ = property; }
+		BlockMushroom(BlockProperty property) : BlockPlant(property) { internal_ = property; }
 
 		/**
 		 * @brief Generates the json object
@@ -33,15 +33,12 @@ namespace adk {
 			output_ = BlockPlant::Generate(mod_id, id);
 
 			output_["minecraft:block"]["components"].update(
-				helper_.Translation(std::vector<double>{0.0, -0.0625, 0.0})
-			);
-			output_["minecraft:block"]["components"].update(
 				helper_.BoxCollision(false)
 			);
 			output_["minecraft:block"]["components"].update(
 				helper_.BoxSelection(
 					std::vector<int>{-3, 0, -3}, 
-					std::vector<int>{6, 10, 6},
+					std::vector<int>{6, 6, 6},
 					id
 				)
 			);

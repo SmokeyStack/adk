@@ -225,6 +225,13 @@ namespace adk {
 			if (!internal_.GetCustomComponents().empty())
 				output_["minecraft:block"]["components"].update(helper_.CustomComponents(internal_.GetCustomComponents()));
 
+			if (internal_.GetTick().has_value()){
+				const auto& [first, second, third] = internal_.GetTick().value();
+				output_["minecraft:block"]["components"].update(
+					helper_.Tick(first, second, third)
+				);
+			}
+
 			return output_;
 		}
 	protected:
