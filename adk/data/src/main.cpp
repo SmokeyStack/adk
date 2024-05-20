@@ -1,6 +1,7 @@
 #include <filesystem>
 
 #include "data.h"
+#include "loot.h"
 #include "object.h"
 #include "recipe.h"
 #include "utility/logger.h"
@@ -17,11 +18,13 @@ int main() {
 	// Edit this to change the namespace of the add-on
 	adk::Object MyAddOn("custom_namespace");
 	adk::Data DataGenerator;
-	//adk::Recipe RecipeGenerator;
+	adk::Recipe RecipeGenerator;
+	adk::Loot LootGenerator;
 
 	MyAddOn.init();
 	DataGenerator.init();
-	//RecipeGenerator.init();
+	RecipeGenerator.init();
+	LootGenerator.init();
 
 	return 0;
 }
