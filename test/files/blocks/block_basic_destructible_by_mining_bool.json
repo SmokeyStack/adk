@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:block":{"components":{"minecraft:destructible_by_mining":false},"description":{"identifier":"custom_namespace:block_basic_destructible_by_mining_bool","menu_category":{"category":"none"}}}}
+{"format_version":"1.20.80","minecraft:block":{"components":{"minecraft:destructible_by_mining":false},"description":{"identifier":"custom_namespace:block_basic_destructible_by_mining_bool"}}}
