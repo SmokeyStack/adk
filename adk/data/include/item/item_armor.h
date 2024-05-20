@@ -3,26 +3,24 @@
 #include <string>
 
 #include "item/armor_material.h"
+#include "item/item.h"
 #include "item/item_property.h"
 #include "json.hpp"
 
 namespace adk {
 	/**
 	 * @brief Represents an Armor Item
-	 *
 	 */
 	class ItemArmor : public Item {
 	public:
 		/**
 		 * @brief Construct a new Armor Item object
 		 *
-		 * @param property An ItemProperty object
-		 * @param protection How much protection point should this armor give
-		 * @param slot Which slot should the armor go in
-		 * @param durability How much durability point should this armor have
-		 * @param damage_chance_min Minimum chance the armor takes damage
-		 * @param damage_chance_max Maximum chance the armor takes damage
-		 * @param dispensable Can this armor be equipped by a dispenser
+		 * @param material ArmorMaterial of the Armor.
+		 * 
+		 * @param slot Determines where the item can be worn.
+		 * 
+		 * @param property ItemProperty.
 		 */
 		ItemArmor(ArmorMaterial* material, WearableSlot slot, ItemProperty property) {
 			internal_ = property;
@@ -35,7 +33,9 @@ namespace adk {
 		 * @brief Generates the json object
 		 *
 		 * @param mod_id Namespace identifier
+		 *
 		 * @param id Identifier for the item
+		 *
 		 * @return nlohmann::json
 		 */
 		nlohmann::json Generate(std::string mod_id, std::string id) {
@@ -45,12 +45,11 @@ namespace adk {
 				helper_.Durability(
 					ItemDurability{
 						material_->GetDurability(slot_),
-						std::make_pair<int>(100,100)
+						std::make_pair<int>(60,100)
 					},
 					id
 				)
 			);
-
 			output_["minecraft:item"]["components"].update(
 				helper_.Wearable(
 					GetWearableSlot(slot_),
@@ -58,7 +57,6 @@ namespace adk {
 					id
 				)
 			);
-
 			output_["minecraft:item"]["components"].update(
 				helper_.Enchantable(
 					GetEnchantableSlot(material_->GetEnchantabilitySlot(slot_)),
@@ -66,15 +64,6 @@ namespace adk {
 					id
 				)
 			);
-
-			output_["minecraft:item"]["components"].update(
-				helper_.Enchantable(
-					GetEnchantableSlot(material_->GetEnchantabilitySlot(slot_)),
-					material_->GetEnchantability(),
-					id
-				)
-			);
-
 			output_["minecraft:item"]["components"].update(
 				helper_.Repairable(
 					ItemRepairable{
@@ -82,6 +71,12 @@ namespace adk {
 					}
 				)
 			);
+			if (output_["minecraft:item"]["components"].contains("minecraft:tags"))
+				output_["minecraft:item"]["components"]["minecraft:tags"]["tags"].push_back({ "minecraft:is_armor" ,"minecraft:trimmable_armors" });
+			else
+				output_["minecraft:item"]["components"].update(
+					helper_.Tags(std::vector<std::string>{"minecraft:is_armor", "minecraft:trimmable_armors"})
+				);
 
 			return output_;
 		}

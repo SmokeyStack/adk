@@ -1,1 +1,1 @@
-{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:record":{"duration":10.0,"sound_event":"record.pigstep"}},"description":{"identifier":"custom_namespace:item_basic_record_duration"}}}
+{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:record":{"duration":10.0,"sound_event":"record.pigstep"}},"description":{"identifier":"custom_namespace:item_basic_record_duration"}}}

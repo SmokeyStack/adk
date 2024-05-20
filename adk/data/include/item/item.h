@@ -10,11 +10,15 @@
 namespace adk {
 	/**
 	 * @brief Represents an Item
-	 *
 	 */
 	class Item {
 	public:
-		std::string getType() { return "item"; };
+		/**
+		 * @brief Returns the type of the object
+		 * 
+		 * @return std::string
+		 */
+		std::string GetType() { return "item"; };
 
 		Item() {};
 
@@ -35,7 +39,7 @@ namespace adk {
 		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_["format_version"] = "1.21.0";
+			output_["format_version"] = "1.20.80";
 			output_["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 			nlohmann::json temp;
 

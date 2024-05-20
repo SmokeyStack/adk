@@ -1,0 +1,1 @@
+{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand"},"minecraft:record":{"comparator_signal":10,"duration":10.0,"sound_event":"record.pigstep"}},"description":{"identifier":"custom_namespace:item_armor_stand_record"}}}

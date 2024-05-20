@@ -7,6 +7,9 @@
 #include "item/item.h"
 
 namespace adk {
+	/**
+	 * @brief Contains all the default armour components used in vanilla armour items.
+	 */
 	class ArmorMaterials : public ArmorMaterial {
 	public:
 		static ArmorMaterials Leather;

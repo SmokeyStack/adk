@@ -347,7 +347,7 @@ namespace adk {
 		 *
 		 * @return nlohmann::json::object_t
 		*/
-		nlohmann::json::object_t Projectile(std::string projectile_entity, double minimum_critical_power) {
+		nlohmann::json::object_t Projectile(std::string projectile_entity, double minimum_critical_power = 0.0) {
 			nlohmann::json::object_t temp = { {"minecraft:projectile",
 				{{"projectile_entity", projectile_entity},
 				{"minimum_critical_power",minimum_critical_power}}} };

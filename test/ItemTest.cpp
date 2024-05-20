@@ -4,11 +4,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "CheckFile.h"
 #include "item/armor_materials.h"
 #include "item/item.h"
 #include "item/item_armor.h"
+#include "item/item_armor_stand.h"
+#include "item/item_pickaxe.h"
+#include "item/tool_materials.h"
 #include "item/item_property.h"
 #include "registry.h"
 #include "registry_global.h"
@@ -77,7 +81,7 @@ namespace {
 		digger_destroy_speeds_states.block = block_descriptor_states;
 		digger_destroy_speeds_states.speed = -1;
 		digger_block_descriptor_states.destroy_speeds = { digger_destroy_speeds_states };
-		block_descriptor_tags.tags = "q.any_tag('dirt')";
+		block_descriptor_tags.tags = std::vector<std::string>{ "dirt" };
 		digger_destroy_speeds_tags.block = block_descriptor_tags;
 		digger_destroy_speeds_tags.speed = -1;
 		digger_block_descriptor_tags.destroy_speeds = { digger_destroy_speeds_tags };
@@ -364,4 +368,125 @@ TEST(ItemTest, ItemArmor) {
 	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_use_animation.json", "./BP/items/item_armor_use_animation.json")) << "SetUseAnimation is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_use_modifiers.json", "./BP/items/item_armor_use_modifiers.json")) << "SetUseModifiers is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_wearable.json", "./BP/items/item_armor_wearable.json")) << "SetWearable is not working as expected";
+}
+
+TEST(ItemTest, ItemArmorStand) {
+	std::filesystem::create_directory("BP");
+	std::filesystem::create_directory("RP");
+
+	SetupCommon();
+
+	log::info("Starting Item Armor Stand Test");
+
+	mod->Subscribe("item_armor_stand", new ItemArmorStand(ItemProperty()));
+	mod->Subscribe("item_armor_stand_allow_off_hand", new ItemArmorStand(ItemProperty().SetAllowOffHand(true)));
+	mod->Subscribe("item_armor_stand_block_placer", new ItemArmorStand(ItemProperty().SetPlacerBlock("minecraft:bedrock")));
+	mod->Subscribe("item_armor_stand_block_placer_use_on", new ItemArmorStand(ItemProperty().SetPlacerBlock("minecraft:bedrock", std::vector<std::string>{"minecraft:grass", "minecraft:glass"})));
+	mod->Subscribe("item_armor_stand_can_destroy_in_creative", new ItemArmorStand(ItemProperty().SetCanDestroyInCreative(false)));
+	mod->Subscribe("item_armor_stand_cooldown", new ItemArmorStand(ItemProperty().SetCooldown("test", 10)));
+	mod->Subscribe("item_armor_stand_custom_components", new ItemArmorStand(ItemProperty().SetCustomComponents(std::vector<std::string>{ "adk-lib:custom_component", "adk-lib:custom_component_two" })));
+	mod->Subscribe("item_armor_stand_damage", new ItemArmorStand(ItemProperty().SetDamage(10)));
+	mod->Subscribe("item_armor_stand_display_name", new ItemArmorStand(ItemProperty().SetDisplayName("Custom Name")));
+	mod->Subscribe("item_armor_stand_digger_name", new ItemArmorStand(ItemProperty().SetDigger(digger_name)));
+	mod->Subscribe("item_armor_stand_digger_states", new ItemArmorStand(ItemProperty().SetDigger(digger_block_descriptor_states)));
+	mod->Subscribe("item_armor_stand_digger_tags", new ItemArmorStand(ItemProperty().SetDigger(digger_block_descriptor_tags)));
+	mod->Subscribe("item_armor_stand_durability", new ItemArmorStand(ItemProperty().SetDurability(durability)));
+	mod->Subscribe("item_armor_stand_durability_chance", new ItemArmorStand(ItemProperty().SetDurability(durability_chance)));
+	mod->Subscribe("item_armor_stand_enchantable", new ItemArmorStand(ItemProperty().SetEnchantable(EnchantableSlot::Sword, 255)));
+	mod->Subscribe("item_armor_stand_entity_placer", new ItemArmorStand(ItemProperty().SetPlacerEntity(entity_placer)));
+	mod->Subscribe("item_armor_stand_entity_placer_use_on", new ItemArmorStand(ItemProperty().SetPlacerEntity(entity_placer_use_on)));
+	mod->Subscribe("item_armor_stand_entity_placer_dispense_on", new ItemArmorStand(ItemProperty().SetPlacerEntity(entity_placer_dispense_on)));
+	mod->Subscribe("item_armor_stand_entity_placer_both", new ItemArmorStand(ItemProperty().SetPlacerEntity(entity_placer_both)));
+	mod->Subscribe("item_armor_stand_food_nutrition", new ItemArmorStand(ItemProperty().SetFood(food_nutrition)));
+	mod->Subscribe("item_armor_stand_food_can_always_eat", new ItemArmorStand(ItemProperty().SetFood(food_can_always_eat)));
+	mod->Subscribe("item_armor_stand_food_using_converts_to", new ItemArmorStand(ItemProperty().SetFood(food_using_converts_to)));
+	mod->Subscribe("item_armor_stand_food_saturation_modifier", new ItemArmorStand(ItemProperty().SetFood(food_saturation_modifier)));
+	mod->Subscribe("item_armor_stand_fuel", new ItemArmorStand(ItemProperty().SetFuel(0.05)));
+	mod->Subscribe("item_armor_stand_glint", new ItemArmorStand(ItemProperty().SetGlint(true)));
+	mod->Subscribe("item_armor_stand_hand_equipped", new ItemArmorStand(ItemProperty().SetHandEquipped(true)));
+	mod->Subscribe("item_armor_stand_hover_text_color", new ItemArmorStand(ItemProperty().SetHoverTextColor("green")));
+	mod->Subscribe("item_armor_stand_interact_button_bool", new ItemArmorStand(ItemProperty().SetInteractButton(false)));
+	mod->Subscribe("item_armor_stand_interact_button_string", new ItemArmorStand(ItemProperty().SetInteractButton(std::string("Interact with me!"))));
+	mod->Subscribe("item_armor_stand_liquid_clipped", new ItemArmorStand(ItemProperty().SetLiquidClipped(true)));
+	mod->Subscribe("item_armor_stand_max_stack_size", new ItemArmorStand(ItemProperty().SetMaxStackSize(32)));
+	mod->Subscribe("item_armor_stand_projectile", new ItemArmorStand(ItemProperty().SetProjectile("minecraft:arrow", 0.0)));
+	mod->Subscribe("item_armor_stand_record", new ItemArmorStand(ItemProperty().SetRecord(record)));
+	mod->Subscribe("item_armor_stand_record_comparator_signal", new ItemArmorStand(ItemProperty().SetRecord(record_comparator_signal)));
+	mod->Subscribe("item_armor_stand_record_duration", new ItemArmorStand(ItemProperty().SetRecord(record_duration)));
+	mod->Subscribe("item_armor_stand_repairable", new ItemArmorStand(ItemProperty().SetRepairable(repairable)));
+	mod->Subscribe("item_armor_stand_shooter_ammunition_item", new ItemArmorStand(ItemProperty().SetShooter(shooter_ammunition_item)));
+	mod->Subscribe("item_armor_stand_shooter_ammunition_search_inventory", new ItemArmorStand(ItemProperty().SetShooter(shooter_ammunition_search_inventory)));
+	mod->Subscribe("item_armor_stand_shooter_ammunition_use_in_creative", new ItemArmorStand(ItemProperty().SetShooter(shooter_ammunition_use_in_creative)));
+	mod->Subscribe("item_armor_stand_shooter_ammunition_use_offhand", new ItemArmorStand(ItemProperty().SetShooter(shooter_ammunition_use_offhand)));
+	mod->Subscribe("item_armor_stand_shooter_charge_on_draw", new ItemArmorStand(ItemProperty().SetShooter(shooter_charge_on_draw)));
+	mod->Subscribe("item_armor_stand_shooter_max_draw_duration", new ItemArmorStand(ItemProperty().SetShooter(shooter_max_draw_duration)));
+	mod->Subscribe("item_armor_stand_shooter_scale_power_by_draw_duration", new ItemArmorStand(ItemProperty().SetShooter(shooter_scale_power_by_draw_duration)));
+	mod->Subscribe("item_armor_stand_should_despawn", new ItemArmorStand(ItemProperty().SetShouldDespawn(false)));
+	mod->Subscribe("item_armor_stand_stacked_by_data", new ItemArmorStand(ItemProperty().SetStackedByData(true)));
+	mod->Subscribe("item_armor_stand_tags", new ItemArmorStand(ItemProperty().SetTags(std::vector<std::string>{"tag1", "tag2"})));
+	mod->Subscribe("item_armor_stand_throwable_do_swing_animation", new ItemArmorStand(ItemProperty().SetThrowable(throwable_do_swing_animation)));
+	mod->Subscribe("item_armor_stand_throwable_launch_power_scale", new ItemArmorStand(ItemProperty().SetThrowable(throwable_launch_power_scale)));
+	mod->Subscribe("item_armor_stand_throwable_max_draw_duration", new ItemArmorStand(ItemProperty().SetThrowable(throwable_max_draw_duration)));
+	mod->Subscribe("item_armor_stand_throwable_max_launch_power", new ItemArmorStand(ItemProperty().SetThrowable(throwable_max_launch_power)));
+	mod->Subscribe("item_armor_stand_throwable_min_draw_duration", new ItemArmorStand(ItemProperty().SetThrowable(throwable_min_draw_duration)));
+	mod->Subscribe("item_armor_stand_throwable_scale_power_by_draw_duration", new ItemArmorStand(ItemProperty().SetThrowable(throwable_scale_power_by_draw_duration)));
+	mod->Subscribe("item_armor_stand_use_animation", new ItemArmorStand(ItemProperty().SetUseAnimation("eat")));
+	mod->Subscribe("item_armor_stand_use_modifiers", new ItemArmorStand(ItemProperty().SetUseModifiers(1, 0.5)));
+	mod->Subscribe("item_armor_stand_wearable", new ItemArmorStand(ItemProperty().SetWearable(WearableSlot::ArmorChest, 10)));
+
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand.json", "./BP/items/item_armor_stand.json")) << "Item is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_allow_off_hand.json", "./BP/items/item_armor_stand_allow_off_hand.json")) << "SetAllowOffhand is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_block_placer.json", "./BP/items/item_armor_stand_block_placer.json")) << "SetBlockPlacer is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_block_placer_use_on.json", "./BP/items/item_armor_stand_block_placer_use_on.json")) << "SetBlockPlacer (UseOn) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_can_destroy_in_creative.json", "./BP/items/item_armor_stand_can_destroy_in_creative.json")) << "SetCanDestoryInCreative is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_cooldown.json", "./BP/items/item_armor_stand_cooldown.json")) << "SetCrafting is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_custom_components.json", "./BP/items/item_armor_stand_custom_components.json")) << "SetCustomComponents is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_damage.json", "./BP/items/item_armor_stand_damage.json")) << "SetDamage is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_digger_name.json", "./BP/items/item_armor_stand_digger_name.json")) << "SetDigger (Name) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_digger_states.json", "./BP/items/item_armor_stand_digger_states.json")) << "SetDigger (States) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_digger_tags.json", "./BP/items/item_armor_stand_digger_tags.json")) << "SetDigger (Tags) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_display_name.json", "./BP/items/item_armor_stand_display_name.json")) << "SetDisplayName is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_durability.json", "./BP/items/item_armor_stand_durability.json")) << "SetDurability is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_durability_chance.json", "./BP/items/item_armor_stand_durability_chance.json")) << "SetDurability (DamageChance) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_enchantable.json", "./BP/items/item_armor_stand_enchantable.json")) << "SetEnchantable is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_entity_placer.json", "./BP/items/item_armor_stand_entity_placer.json")) << "SetEntityPlacer is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_entity_placer_both.json", "./BP/items/item_armor_stand_entity_placer_both.json")) << "SetEntityPlacer (Both) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_entity_placer_dispense_on.json", "./BP/items/item_armor_stand_entity_placer_dispense_on.json")) << "SetEntityPlacer (DispenseOn) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_entity_placer_use_on.json", "./BP/items/item_armor_stand_entity_placer_use_on.json")) << "SetEntityPlacer (UseOn) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_food_can_always_eat.json", "./BP/items/item_armor_stand_food_can_always_eat.json")) << "SetFood (CanAlwaysEat) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_food_nutrition.json", "./BP/items/item_armor_stand_food_nutrition.json")) << "SetFood (Nurtition) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_food_saturation_modifier.json", "./BP/items/item_armor_stand_food_saturation_modifier.json")) << "SetFood (SaturationModifier) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_food_using_converts_to.json", "./BP/items/item_armor_stand_food_using_converts_to.json")) << "SetFood (UsingConvertsTo) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_fuel.json", "./BP/items/item_armor_stand_fuel.json")) << "SetFuel is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_glint.json", "./BP/items/item_armor_stand_glint.json")) << "SetGlint is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_hand_equipped.json", "./BP/items/item_armor_stand_hand_equipped.json")) << "SetHandEquipped is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_hover_text_color.json", "./BP/items/item_armor_stand_hover_text_color.json")) << "SetHoverTextColor is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_interact_button_bool.json", "./BP/items/item_armor_stand_interact_button_bool.json")) << "SetInteractButton (bool) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_interact_button_string.json", "./BP/items/item_armor_stand_interact_button_string.json")) << "SetInteractButton (string) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_liquid_clipped.json", "./BP/items/item_armor_stand_liquid_clipped.json")) << "SetLiquidClipped is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_max_stack_size.json", "./BP/items/item_armor_stand_max_stack_size.json")) << "SetMaxStackSize is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_projectile.json", "./BP/items/item_armor_stand_projectile.json")) << "SetProjectile is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_record.json", "./BP/items/item_armor_stand_record.json")) << "SetRecord is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_record_comparator_signal.json", "./BP/items/item_armor_stand_record_comparator_signal.json")) << "SetRecord (ComparatorSignal) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_record_duration.json", "./BP/items/item_armor_stand_record_duration.json")) << "SetRecord (Duration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_repairable.json", "./BP/items/item_armor_stand_repairable.json")) << "SetRepairable is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_shooter_ammunition_item.json", "./BP/items/item_armor_stand_shooter_ammunition_item.json")) << "SetShooter (Ammunition) (Item) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_shooter_ammunition_search_inventory.json", "./BP/items/item_armor_stand_shooter_ammunition_search_inventory.json")) << "SetShooter (Ammunition) (SearchInventory)is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_shooter_ammunition_use_in_creative.json", "./BP/items/item_armor_stand_shooter_ammunition_use_in_creative.json")) << "SetShooter (Ammunition) (UseInCreative)is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_shooter_ammunition_use_offhand.json", "./BP/items/item_armor_stand_shooter_ammunition_use_offhand.json")) << "SetShooter (Ammunition) (UseOffhand) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_shooter_charge_on_draw.json", "./BP/items/item_armor_stand_shooter_charge_on_draw.json")) << "SetShooter (ChargeOnDraw) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_shooter_max_draw_duration.json", "./BP/items/item_armor_stand_shooter_max_draw_duration.json")) << "SetShooter (MaxDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_shooter_scale_power_by_draw_duration.json", "./BP/items/item_armor_stand_shooter_scale_power_by_draw_duration.json")) << "SetShooter (ScalePowerByDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_should_despawn.json", "./BP/items/item_armor_stand_should_despawn.json")) << "SetShouldDespawn is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_stacked_by_data.json", "./BP/items/item_armor_stand_stacked_by_data.json")) << "SetStackedByData is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_tags.json", "./BP/items/item_armor_stand_tags.json")) << "SetTags is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_throwable_do_swing_animation.json", "./BP/items/item_armor_stand_throwable_do_swing_animation.json")) << "SetThrowable (DoSwingAnimation) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_throwable_launch_power_scale.json", "./BP/items/item_armor_stand_throwable_launch_power_scale.json")) << "SetThrowable (LaunchPowerScale) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_throwable_max_draw_duration.json", "./BP/items/item_armor_stand_throwable_max_draw_duration.json")) << "SetThrowable (MaxDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_throwable_max_launch_power.json", "./BP/items/item_armor_stand_throwable_max_launch_power.json")) << "SetThrowable (MaxLaunchPower) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_throwable_min_draw_duration.json", "./BP/items/item_armor_stand_throwable_min_draw_duration.json")) << "SetThrowable (MinDrawDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_throwable_scale_power_by_draw_duration.json", "./BP/items/item_armor_stand_throwable_scale_power_by_draw_duration.json")) << "SetThrowable (ScalePowerByDuration) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_use_animation.json", "./BP/items/item_armor_stand_use_animation.json")) << "SetUseAnimation is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_use_modifiers.json", "./BP/items/item_armor_stand_use_modifiers.json")) << "SetUseModifiers is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_stand_wearable.json", "./BP/items/item_armor_stand_wearable.json")) << "SetWearable is not working as expected";
 }
