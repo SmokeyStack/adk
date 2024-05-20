@@ -3,15 +3,13 @@
 #include <string>
 
 namespace adk {
-	class Data {
+	class Recipe {
 	private:
 		std::string mod_id;
 
 	public:
-		Data();
+		Recipe();
 
 		void init();
-
-		void RegisterToCreativeMenu();
 	};
 }  // namespace adk

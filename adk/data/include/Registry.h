@@ -17,12 +17,21 @@ namespace adk {
 	 */
 	class Registrar {
 	public:
-		virtual void Subscribe(std::string id,
-			std::variant<Block*, Item*> object) {}
+		virtual void Subscribe(std::string id, std::variant<Block*, Item*> object) {}
 
 		virtual std::map<std::string, std::variant<Block*, Item*>> GetRegistry() {
 			std::map<std::string, std::variant<Block*, Item*>> registry;
 			return registry;
+		}
+
+		virtual std::variant<Block*, Item*>* Get(std::string id) {
+			std::map<std::string, std::variant<Block*, Item*>> registry;
+			if (registry.count(id))
+				return &registry[id];
+			else {
+				log::error("{} has not been defined!", id);
+				return NULL;
+			}
 		}
 	};
 
@@ -45,7 +54,7 @@ namespace adk {
 		 * @brief Generates the json file
 		 *
 		 * @param id The name of the identifier, omit the namespace
-		 * 
+		 *
 		 * @param object Class Objects such as Blocks, items, etc
 		 */
 		void Subscribe(std::string id, std::variant<Block*, Item*> object) {
@@ -81,20 +90,19 @@ namespace adk {
 
 		/**
 		 * @brief Get the instance of ID from the Registry
-		 * 
+		 *
 		 * @param id The name of the identifier, including the namespace
-		 * 
+		 *
 		 * @return std::variant<Block*, Item*>
 		*/
-		std::variant<Block*, Item*> get(std::string id) {
+		std::variant<Block*, Item*>* Get(std::string id) {
 			if (registry_.count(id))
-				return registry_[id];
+				return &registry_[id];
 			else {
 				log::error("{} has not been defined!", id);
-				exit(EXIT_FAILURE);
+				return NULL;
 			}
 		}
-
 	private:
 		std::string mod_id_;
 		std::map<std::string, std::variant<Block*, Item*>> registry_;
