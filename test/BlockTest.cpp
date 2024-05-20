@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "block.h"
+#include "block/block.h"
 #include "block_axis.h"
 #include "block_plant.h"
 #include "block_property.h"

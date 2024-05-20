@@ -1,1 +1,1 @@
-{"format_version":"1.21.0","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand"},"minecraft:food":{"using_converts_to":"minecraft:apple"}},"description":{"identifier":"custom_namespace:item_armor_stand_food_using_converts_to"}}}
+{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand"},"minecraft:food":{"using_converts_to":"minecraft:apple"}},"description":{"identifier":"custom_namespace:item_armor_stand_food_using_converts_to"}}}

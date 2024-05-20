@@ -4,12 +4,15 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 #include "CheckFile.h"
 #include "item/armor_materials.h"
 #include "item/item.h"
 #include "item/item_armor.h"
 #include "item/item_armor_stand.h"
+#include "item/item_pickaxe.h"
+#include "item/tool_materials.h"
 #include "item/item_property.h"
 #include "registry.h"
 #include "registry_global.h"
@@ -78,7 +81,7 @@ namespace {
 		digger_destroy_speeds_states.block = block_descriptor_states;
 		digger_destroy_speeds_states.speed = -1;
 		digger_block_descriptor_states.destroy_speeds = { digger_destroy_speeds_states };
-		block_descriptor_tags.tags = "q.any_tag('dirt')";
+		block_descriptor_tags.tags = std::vector<std::string>{ "dirt" };
 		digger_destroy_speeds_tags.block = block_descriptor_tags;
 		digger_destroy_speeds_tags.speed = -1;
 		digger_block_descriptor_tags.destroy_speeds = { digger_destroy_speeds_tags };
@@ -366,7 +369,6 @@ TEST(ItemTest, ItemArmor) {
 	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_use_modifiers.json", "./BP/items/item_armor_use_modifiers.json")) << "SetUseModifiers is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/items/item_armor_wearable.json", "./BP/items/item_armor_wearable.json")) << "SetWearable is not working as expected";
 }
-
 
 TEST(ItemTest, ItemArmorStand) {
 	std::filesystem::create_directory("BP");
