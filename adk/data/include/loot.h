@@ -3,12 +3,9 @@
 #include <string>
 
 namespace adk {
-	class Recipe {
-	private:
-		std::string mod_id;
-
+	class Loot {
 	public:
-		Recipe();
+		Loot();
 
 		void init();
 	};
