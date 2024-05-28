@@ -5,9 +5,9 @@
 #include <string>
 
 #include "json.hpp"
-#include "registry.h"
-#include "loot/loot_type.h"
 #include "loot/function/loot_function.h"
+#include "loot/loot_type.h"
+#include "registry.h"
 
 namespace adk {
 	/**

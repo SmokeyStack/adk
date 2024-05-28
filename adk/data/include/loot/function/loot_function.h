@@ -1,6 +1,7 @@
 #pragma once
 
 #include "json.hpp"
+#include "utility/logger.h"
 
 namespace adk {
 	/**
