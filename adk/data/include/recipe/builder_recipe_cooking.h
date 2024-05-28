@@ -10,7 +10,7 @@
 namespace adk {
 	class CookingRecipeBuilder : public RecipeBuilder {
 	private:
-		std::string _result;
+		std::string result_;
 		std::string _ingredient;
 		std::vector<std::string> _tags;
 
@@ -44,13 +44,13 @@ namespace adk {
 				exit(EXIT_FAILURE);
 			}
 
-			this->_result = result;
+			this->result_ = result;
 			this->_ingredient = ingredient;
 			this->_tags = tags;
 			return *this;
 		}
 
-		nlohmann::json save(std::string id) {
+		nlohmann::json Build(std::string id) {
 			nlohmann::json j;
 
 			j["format_version"] = "1.17";
@@ -59,9 +59,9 @@ namespace adk {
 			j["minecraft:recipe_furnace"]["tags"] = _tags;
 
 			j["minecraft:recipe_furnace"]["input"]["item"] = _ingredient;
-			j["minecraft:recipe_furnace"]["output"]["item"] = _result;
+			j["minecraft:recipe_furnace"]["output"]["item"] = result_;
 
-			createRecipe(id, j);
+			BuildRecipe(id, j);
 
 			return j;
 		}

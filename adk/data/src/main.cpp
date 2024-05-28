@@ -18,11 +18,12 @@ int main() {
 	// Edit this to change the namespace of the add-on
 	adk::Object MyAddOn("custom_namespace");
 	adk::Data DataGenerator;
-	adk::Recipe RecipeGenerator;
+	adk::Recipe RecipeGenerator("custom_namespace");
 	adk::Loot LootGenerator;
 
 	MyAddOn.init();
 	DataGenerator.init();
+	DataGenerator.RegisterToCreativeMenu();
 	RecipeGenerator.init();
 	LootGenerator.init();
 

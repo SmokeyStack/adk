@@ -4,12 +4,11 @@
 
 namespace adk {
 	class Recipe {
-	private:
-		std::string mod_id;
-
 	public:
-		Recipe();
+		Recipe(std::string id);
 
 		void init();
+	private:
+		std::string mod_id;
 	};
 }  // namespace adk
