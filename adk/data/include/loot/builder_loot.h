@@ -13,23 +13,21 @@ namespace adk {
 	 */
 	class BuilderLoot {
 	public:
-		BuilderLoot pool(LootPool pool){
+		BuilderLoot pool(LootPool pool) {
 			pools_.push_back(pool);
 
 			return *this;
 		}
 
-		nlohmann::json save(std::string id) {
+		nlohmann::json Build(std::string id) {
 			id_ = id;
 			nlohmann::json result;
 			result["pools"] = nlohmann::json::array();
 
-			for (auto& pool : pools_) {
-				result["pools"].push_back(pool);
-			}
+			for (auto& pool : pools_) result["pools"].push_back(pool);
 
 			CreateLootTable(id_, result);
-			
+
 			return result;
 		}
 	protected:
