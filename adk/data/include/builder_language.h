@@ -24,7 +24,7 @@ namespace adk {
 				else if (std::get_if<Item*>(entry)) break;
 			}
 
-			if (entry == NULL) return;
+			if (entry == NULL) return *this;
 
 			std::visit(
 				[=](auto&& content) {
