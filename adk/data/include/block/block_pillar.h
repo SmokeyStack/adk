@@ -18,7 +18,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockPillar(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockPillar(BlockProperty property) : Block(property) {}
 
 		/**
 		 * @brief Generates the json object

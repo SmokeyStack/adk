@@ -17,8 +17,13 @@ namespace adk {
 		 * @brief Construct a new Slab Block object
 		 *
 		 * @param property BlockProperty
+		 * 
+		 * @param is_double_loot Identifier for the loot table.
+		 * This is used to determine what to drop when the slab is in the double state.
 		 */
-		BlockSlab(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockSlab(BlockProperty property, std::string is_double_loot) : Block(property) {
+			is_double_loot_ = is_double_loot;
+		}
 
 		/**
 		 * @brief Generates the json object
@@ -80,13 +85,13 @@ namespace adk {
 			{"condition",
 			 "q.block_state('" + mod_id + ":is_double')"} };
 			temp["components"].update(
-				helper_.CustomComponents({ "adk-lib:on_player_destroy_spawn_item" })
+				helper_.Loot(is_double_loot_)
 			);
 			output_["minecraft:block"]["permutations"].push_back(temp);
-			std::string tag = "adk-lib:spawn_item_" + mod_id + ":" + id;
-			output_["minecraft:block"]["components"]["tag:" + tag] = nlohmann::json::object();
 
 			return output_;
 		}
+	private:
+		std::string is_double_loot_;
 	};
 } // namespace adk
