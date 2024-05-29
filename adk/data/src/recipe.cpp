@@ -1,14 +1,15 @@
 #include "recipe.h"
 
+#include "recipe/builder_recipe_furnace.h"
 #include "recipe/builder_recipe_shaped.h"
 #include "recipe/builder_recipe_shapeless.h"
 #include "recipe/unlock_context.h"
 #include "registry_global.h"
 
 namespace adk {
-	Recipe::Recipe(std::string id) { mod_id = id; }
+    Recipe::Recipe(std::string id) { mod_id = id; }
 
-	void Recipe::init() {
+    void Recipe::init() {
         ShapedRecipeBuilder(mod_id)
             .Shaped("minecraft:bedrock")
             .Pattern("ppp")
@@ -22,5 +23,11 @@ namespace adk {
             .Unlock(RecipeUnlockContext::ALWAYS_UNLOCKED)
             .Tags({ "crafting_table" })
             .Build("custom_shapeless_recipe");
-	}
-} // namespace adk
+        FurnaceRecipeBuilder(mod_id)
+            .Furnace("minecraft:bedrock")
+            .Input("minecraft:dirt")
+            .Unlock(RecipeUnlockContext::ALWAYS_UNLOCKED)
+            .Tags({ "furnace" })
+            .Build("custom_furnace_recipe");
+    }
+}  // namespace adk

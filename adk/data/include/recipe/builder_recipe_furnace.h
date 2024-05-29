@@ -1,6 +1,5 @@
 #pragma once
 
-#include <map>
 #include <string>
 #include <variant>
 #include <vector>
@@ -12,11 +11,11 @@
 #include "utility/logger.h"
 
 namespace adk {
-	class ShapelessRecipeBuilder : public RecipeBuilder {
+	class FurnaceRecipeBuilder : public RecipeBuilder {
 	public:
-		ShapelessRecipeBuilder(std::string id) : RecipeBuilder(id) {}
+		FurnaceRecipeBuilder(std::string id) : RecipeBuilder(id) {}
 
-		ShapelessRecipeBuilder Shapeless(std::string result, int count = 1) {
+		FurnaceRecipeBuilder Furnace(std::string result) {
 			std::vector<std::string> key = GetIDs();
 
 			if (!(std::find(key.begin(), key.end(), result) != key.end())) {
@@ -26,45 +25,44 @@ namespace adk {
 			}
 
 			this->result_ = result;
-			this->count_ = count;
 
 			return *this;
 		}
 
-		ShapelessRecipeBuilder Ingredients(std::string item, int count = 1) {
+		FurnaceRecipeBuilder Input(std::string input) {
 			std::vector<std::string> key = GetIDs();
 
-			if (!(std::find(key.begin(), key.end(), item) != key.end())) {
-				log::error("{} is an invalid item", item);
+			if (!(std::find(key.begin(), key.end(), input) != key.end())) {
+				log::error("{} is an invalid item", input);
 
 				exit(EXIT_FAILURE);
 			}
 
-			this->ingredients_.insert({ item, count });
+			this->input_ = input;
 
 			return *this;
 		}
 
-		ShapelessRecipeBuilder Tags(std::vector<std::string> tags) {
+		FurnaceRecipeBuilder Tags(std::vector<std::string> tags) {
 			this->tags_ = tags;
 
 			return *this;
 		}
 
-		ShapelessRecipeBuilder Unlock(std::string item) {
+		FurnaceRecipeBuilder Unlock(std::string item) {
 			std::vector<std::string> temp{ item };
 			this->unlock_ = temp;
 
 			return *this;
 		}
 
-		ShapelessRecipeBuilder Unlock(std::vector<std::string> items) {
+		FurnaceRecipeBuilder Unlock(std::vector<std::string> items) {
 			this->unlock_ = items;
 
 			return *this;
 		}
 
-		ShapelessRecipeBuilder Unlock(RecipeUnlockContext context) {
+		FurnaceRecipeBuilder Unlock(RecipeUnlockContext context) {
 			this->unlock_ = GetRecipeUnlockContext(context);
 
 			return *this;
@@ -73,11 +71,9 @@ namespace adk {
 		nlohmann::json Build(std::string id) {
 			nlohmann::json result;
 			result["format_version"] = "1.20.80";
-			result["minecraft:recipe_shapeless"]["description"]["identifier"] = id;
-			result["minecraft:recipe_shapeless"]["result"] = { {"item", result_}, {"count", count_} };
-
-			for (const auto& [ingredient, count] : ingredients_)
-				result["minecraft:recipe_shapeless"]["ingredients"].push_back({ {"item", ingredient}, {"count", count} });
+			result["minecraft:recipe_furnace"]["description"]["identifier"] = mod_id + ":" + id;
+			result["minecraft:recipe_furnace"]["input"] = input_;
+			result["minecraft:recipe_furnace"]["output"] = result_;
 
 			if (tags_.empty()) {
 				log::error("No tags are defined for shaped recipe - {}.json", id);
@@ -85,13 +81,13 @@ namespace adk {
 				exit(EXIT_FAILURE);
 			}
 
-			result["minecraft:recipe_shapeless"]["tags"] = tags_;
+			result["minecraft:recipe_furnace"]["tags"] = tags_;
 
 			if (std::holds_alternative<std::vector<std::string>>(unlock_))
 				for (const auto& item : std::get<std::vector<std::string>>(unlock_))
-					result["minecraft:recipe_shapeless"]["unlock"].push_back({ {"item", item} });
+					result["minecraft:recipe_furnace"]["unlock"].push_back({ {"item", item} });
 			else
-				result["minecraft:recipe_shapeless"]["unlock"]["context"] = std::get<std::string>(unlock_);
+				result["minecraft:recipe_furnace"]["unlock"]["context"] = std::get<std::string>(unlock_);
 
 			BuildRecipe(id, result);
 
@@ -99,9 +95,8 @@ namespace adk {
 		}
 	private:
 		std::string result_;
-		int count_;
-		std::map<std::string, int> ingredients_;
+		std::string input_;
 		std::vector<std::string> tags_;
 		std::variant<std::vector<std::string>, std::string> unlock_;
 	};
-} // namespace adk
+}  // namespace adk

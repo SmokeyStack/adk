@@ -35,7 +35,7 @@ namespace adk {
 		ShapedRecipeBuilder Pattern(std::string pattern) {
 			if (!rows_.empty() && pattern.length() != rows_.at(0).length()) exit(EXIT_FAILURE);
 
-			rows_.push_back(pattern);
+			this->rows_.push_back(pattern);
 
 			return *this;
 		}
@@ -60,32 +60,32 @@ namespace adk {
 				exit(EXIT_FAILURE);
 			}
 
-			key_[symbol] = item;
+			this->key_[symbol] = item;
 
 			return *this;
 		}
 
 		ShapedRecipeBuilder Tags(std::vector<std::string> tags) {
-			tags_ = tags;
+			this->tags_ = tags;
 
 			return *this;
 		}
 
 		ShapedRecipeBuilder Unlock(std::string item) {
 			std::vector<std::string> temp{ item };
-			unlock_ = temp;
+			this->unlock_ = temp;
 
 			return *this;
 		}
 
 		ShapedRecipeBuilder Unlock(std::vector<std::string> items) {
-			unlock_ = items;
+			this->unlock_ = items;
 
 			return *this;
 		}
 
 		ShapedRecipeBuilder Unlock(RecipeUnlockContext context) {
-			unlock_ = GetRecipeUnlockContext(context);
+			this->unlock_ = GetRecipeUnlockContext(context);
 
 			return *this;
 		}
@@ -97,6 +97,7 @@ namespace adk {
 			result["format_version"] = "1.20.80";
 			result["minecraft:recipe_shaped"]["description"]["identifier"] = mod_id + ":" + id;
 			result["minecraft:recipe_shaped"]["pattern"] = rows_;
+			result["minecraft:recipe_shaped"]["result"] = { {"item", result_}, {"count", count_} };
 
 			for (auto const& [key, value] : key_) {
 				std::string str{ key };
@@ -116,8 +117,6 @@ namespace adk {
 					result["minecraft:recipe_shaped"]["unlock"].push_back({ {"item", item} });
 			else
 				result["minecraft:recipe_shaped"]["unlock"]["context"] = std::get<std::string>(unlock_);
-
-			result["minecraft:recipe_shaped"]["result"] = { {"item", result_}, {"count", count_} };
 
 			BuildRecipe(id, result);
 
