@@ -1,12 +1,9 @@
 #pragma once
 
-#include <string>
-
-#include "builder_language.h"
 namespace adk {
-	class Language : public LanguageBuilder {
+	class Language {
 	public:
-		Language(std::string id, std::string locale);
+		Language();
 
 		void init();
 	};

@@ -1,12 +1,11 @@
 #include "language.h"
 
-#include "registry_global.h"
+#include "builder_language.h"
 
 namespace adk {
-	Language::Language(std::string id, std::string locale) {
-		mod_id = id;
-		this->locale = locale;
-	}
+	Language::Language() {}
 
-	void Language::init() { createLangFile(); }
+	void Language::init() {
+		BuilderLanguage("en_US").Add("adk:adk", "ADK").Build();
+	}
 } // namespace adk

@@ -12,10 +12,9 @@
 namespace adk {
 	class BuilderCreativeMenu {
 	public:
-		BuilderCreativeMenu(std::string id) { id_ = id; }
+		BuilderCreativeMenu(std::string id) { mod_id_ = id; }
 
 		void AddItem(std::string id, std::string group = "") {
-			auto registry = GetIDs();
 			std::variant<Block*, Item*>* entry = NULL;
 
 			for (const auto& entries : registry_global) {
@@ -41,7 +40,7 @@ namespace adk {
 						TempFile >> output;
 					}
 
-					output["minecraft:" + content->GetType()]["description"]["menu_category"]["category"] = id_;
+					output["minecraft:" + content->GetType()]["description"]["menu_category"]["category"] = mod_id_;
 
 					if (!group.empty())
 						output["minecraft:" + content->GetType()]["description"]["menu_category"]["group"] = group;
@@ -54,6 +53,6 @@ namespace adk {
 				*entry);
 		}
 	private:
-		std::string id_;
+		std::string mod_id_;
 	};
 } // namespace adk
