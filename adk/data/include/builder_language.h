@@ -8,62 +8,54 @@
 #include "registry_global.h"
 #include "registry.h"
 #include "json.hpp"
+#include "utility/logger.h"
 
 namespace adk {
-	class LanguageBuilder {
-	protected:
-		std::string mod_id;
-		std::string locale;
-		std::vector<std::string> entries;
+	class BuilderLanguage {
+	public:
+		BuilderLanguage(std::string locale) { locale_ = locale; };
 
-		void add(std::string id, std::string value) {
-			for (auto const entry : registry_global) {
-				std::map<std::string, std::variant<Block*, Item*>> registry_check;
-				registry_check = entry->GetRegistry();
+		BuilderLanguage Add(std::string id, std::string value) {
+			std::variant<Block*, Item*>* entry = NULL;
 
-				for (std::map<std::string, std::variant<Block*, Item*>>::iterator
-					it = registry_check.begin();
-					it != registry_check.end(); ++it) {
-					if (it->first == (mod_id + ":" + id)) {
-						if (std::get_if<Block*>(&it->second))
-							entries.push_back("tile." + mod_id + ":" + id +
-								".name=" + value);
-						else if (std::get_if<Item*>(&it->second))
-							entries.push_back("tile." + mod_id + ":" + id +
-								".name=" + value);
-
-						break;
-					}
-				}
+			for (const auto& entries : registry_global) {
+				entry = entries->Get(id);
+				if (std::get_if<Block*>(entry)) break;
+				else if (std::get_if<Item*>(entry)) break;
 			}
+
+			if (entry == NULL) return *this;
+
+			std::visit(
+				[=](auto&& content) {
+					if (content->GetType() == "block")
+						this->entries_.push_back("tile." + id + ".name=" + value);
+					else if (content->GetType() == "item")
+						this->entries_.push_back("item." + id + "=" + value);
+				},
+				*entry);
+
+			return *this;
 		}
 
-		void createLangFile() {
+		void Build() {
 			if (!std::filesystem::exists("./RP/texts/")) std::filesystem::create_directory("./RP/texts/");
 
-			if (!std::filesystem::exists("./RP/texts/" + locale + ".lang")) {
-				std::ofstream MyLang("./RP/texts/" + locale + ".lang");
-
-				for (auto const entry : entries) {
-					MyLang << entry << '\n';
+			if (!std::filesystem::exists("./RP/texts/" + locale_ + ".lang")) {
+				{
+					std::ofstream OutputFile("./RP/texts/" + locale_ + ".lang");
+					for (const auto& entry : entries_) OutputFile << entry << '\n';
 				}
-
-				MyLang.close();
-
 			}
 			else {
-				std::ofstream MyLang("./RP/texts/" + locale + ".lang",
-					std::ios::app);
-
-				for (auto const entry : entries) {
-					MyLang << '\n' << entry;
+				{
+					std::ofstream OutputFile("./RP/texts/" + locale_ + ".lang", std::ios::app);
+					for (const auto& entry : entries_) OutputFile << entry << '\n';
 				}
-
-				MyLang.close();
 			}
 		}
-
-	public:
-		LanguageBuilder() {};
+	private:
+		std::string locale_;
+		std::vector<std::string> entries_;
 	};
 }  // namespace adk
