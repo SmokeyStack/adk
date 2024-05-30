@@ -17,5 +17,6 @@ var searchData=
   ['blocktnt_14',['BlockTnt',['../classadk_1_1_block_tnt.html',1,'adk']]],
   ['blocktorch_15',['BlockTorch',['../classadk_1_1_block_torch.html',1,'adk']]],
   ['buildercreativemenu_16',['BuilderCreativeMenu',['../classadk_1_1_builder_creative_menu.html',1,'adk']]],
-  ['builderloot_17',['BuilderLoot',['../classadk_1_1_builder_loot.html',1,'adk']]]
+  ['builderlanguage_17',['BuilderLanguage',['../classadk_1_1_builder_language.html',1,'adk']]],
+  ['builderloot_18',['BuilderLoot',['../classadk_1_1_builder_loot.html',1,'adk']]]
 ];

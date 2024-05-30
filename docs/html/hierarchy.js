@@ -22,6 +22,7 @@ var hierarchy =
     [ "adk::BlockProperty", "classadk_1_1_block_property.html", null ],
     [ "adk::BlockTextures", "structadk_1_1_block_textures.html", null ],
     [ "adk::BuilderCreativeMenu", "classadk_1_1_builder_creative_menu.html", null ],
+    [ "adk::BuilderLanguage", "classadk_1_1_builder_language.html", null ],
     [ "adk::BuilderLoot", "classadk_1_1_builder_loot.html", null ],
     [ "adk::Data", "classadk_1_1_data.html", null ],
     [ "adk::FoodComponents", "classadk_1_1_food_components.html", null ],
@@ -68,9 +69,7 @@ var hierarchy =
     ] ],
     [ "adk::ItemComponent", "classadk_1_1_item_component.html", null ],
     [ "adk::ItemProperty", "classadk_1_1_item_property.html", null ],
-    [ "adk::LanguageBuilder", "classadk_1_1_language_builder.html", [
-      [ "adk::Language", "classadk_1_1_language.html", null ]
-    ] ],
+    [ "adk::Language", "classadk_1_1_language.html", null ],
     [ "adk::Loot", "classadk_1_1_loot.html", null ],
     [ "adk::LootEntry", "classadk_1_1_loot_entry.html", null ],
     [ "adk::LootFunction", "classadk_1_1_loot_function.html", [
@@ -83,7 +82,7 @@ var hierarchy =
     [ "adk::Object", "classadk_1_1_object.html", null ],
     [ "adk::Recipe", "classadk_1_1_recipe.html", null ],
     [ "adk::RecipeBuilder", "classadk_1_1_recipe_builder.html", [
-      [ "adk::CookingRecipeBuilder", "classadk_1_1_cooking_recipe_builder.html", null ],
+      [ "adk::FurnaceRecipeBuilder", "classadk_1_1_furnace_recipe_builder.html", null ],
       [ "adk::ShapedRecipeBuilder", "classadk_1_1_shaped_recipe_builder.html", null ],
       [ "adk::ShapelessRecipeBuilder", "classadk_1_1_shapeless_recipe_builder.html", null ]
     ] ],

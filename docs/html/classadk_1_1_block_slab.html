@@ -114,9 +114,9 @@ Inheritance diagram for adk::BlockSlab:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a0d1f2762b17b5f351ed17c5cc02868ac" id="r_a0d1f2762b17b5f351ed17c5cc02868ac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0d1f2762b17b5f351ed17c5cc02868ac">BlockSlab</a> (<a class="el" href="classadk_1_1_block_property.html">BlockProperty</a> property)</td></tr>
-<tr class="memdesc:a0d1f2762b17b5f351ed17c5cc02868ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Slab <a class="el" href="classadk_1_1_block.html" title="Represents a Block.">Block</a> object.  <br /></td></tr>
-<tr class="separator:a0d1f2762b17b5f351ed17c5cc02868ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae00c847988b1b852714e7addfb162898" id="r_ae00c847988b1b852714e7addfb162898"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae00c847988b1b852714e7addfb162898">BlockSlab</a> (<a class="el" href="classadk_1_1_block_property.html">BlockProperty</a> property, std::string is_double_loot)</td></tr>
+<tr class="memdesc:ae00c847988b1b852714e7addfb162898"><td class="mdescLeft">&#160;</td><td class="mdescRight">Construct a new Slab <a class="el" href="classadk_1_1_block.html" title="Represents a Block.">Block</a> object.  <br /></td></tr>
+<tr class="separator:ae00c847988b1b852714e7addfb162898"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a54c34a297f04a5a73a9c37dc57e3d6bf" id="r_a54c34a297f04a5a73a9c37dc57e3d6bf"><td class="memItemLeft" align="right" valign="top">nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a54c34a297f04a5a73a9c37dc57e3d6bf">Generate</a> (std::string mod_id, std::string id)</td></tr>
 <tr class="memdesc:a54c34a297f04a5a73a9c37dc57e3d6bf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the json object.  <br /></td></tr>
 <tr class="separator:a54c34a297f04a5a73a9c37dc57e3d6bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -144,8 +144,8 @@ nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><b>output_</b>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Represents a Slab <a class="el" href="classadk_1_1_block.html" title="Represents a Block.">Block</a>. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a0d1f2762b17b5f351ed17c5cc02868ac" name="a0d1f2762b17b5f351ed17c5cc02868ac"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0d1f2762b17b5f351ed17c5cc02868ac">&#9670;&#160;</a></span>BlockSlab()</h2>
+<a id="ae00c847988b1b852714e7addfb162898" name="ae00c847988b1b852714e7addfb162898"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae00c847988b1b852714e7addfb162898">&#9670;&#160;</a></span>BlockSlab()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -156,8 +156,12 @@ nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><b>output_</b>
         <tr>
           <td class="memname">adk::BlockSlab::BlockSlab </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classadk_1_1_block_property.html">BlockProperty</a></td>          <td class="paramname"><span class="paramname"><em>property</em></span></td><td>)</td>
+          <td class="paramtype"><a class="el" href="classadk_1_1_block_property.html">BlockProperty</a></td>          <td class="paramname"><span class="paramname"><em>property</em>, </span></td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>is_double_loot</em></span>&#160;)</td>
         </tr>
       </table>
   </td>
@@ -170,7 +174,8 @@ nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><b>output_</b>
 <p>Construct a new Slab <a class="el" href="classadk_1_1_block.html" title="Represents a Block.">Block</a> object. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">property</td><td><a class="el" href="classadk_1_1_block_property.html" title="Represents block properties such as destroy speed, loot, etc.">BlockProperty</a> </td></tr>
+    <tr><td class="paramname">property</td><td><a class="el" href="classadk_1_1_block_property.html" title="Represents block properties such as destroy speed, loot, etc.">BlockProperty</a></td></tr>
+    <tr><td class="paramname">is_double_loot</td><td>Identifier for the loot table. This is used to determine what to drop when the slab is in the double state. </td></tr>
   </table>
   </dd>
 </dl>
