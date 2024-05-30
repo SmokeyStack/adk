@@ -3,7 +3,7 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.stairs_north",
+				"identifier": "geometry.stairs_north_adk",
 				"texture_width": 16,
 				"texture_height": 16,
 				"visible_bounds_width": 4,
@@ -325,7 +325,7 @@
 		},
 		{
 			"description": {
-				"identifier": "geometry.stairs_east",
+				"identifier": "geometry.stairs_east_adk",
 				"texture_width": 16,
 				"texture_height": 16,
 				"visible_bounds_width": 4,
@@ -664,7 +664,7 @@
 		},
 		{
 			"description": {
-				"identifier": "geometry.stairs_south",
+				"identifier": "geometry.stairs_south_adk",
 				"texture_width": 16,
 				"texture_height": 16,
 				"visible_bounds_width": 4,
@@ -1003,7 +1003,7 @@
 		},
 		{
 			"description": {
-				"identifier": "geometry.stairs_west",
+				"identifier": "geometry.stairs_west_adk",
 				"texture_width": 16,
 				"texture_height": 16,
 				"visible_bounds_width": 4,

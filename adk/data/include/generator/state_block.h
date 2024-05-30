@@ -42,7 +42,50 @@ namespace adk {
 			j.update({ {"face_dimming", p.face_dimming} });
 		}
 	}
+}
 
+nlohmann::json::object_t TranslateMaterialInstances(adk::BlockTextures textures) {
+	nlohmann::json temp, output;
+	temp = textures.all;
+	if (!temp.is_null())
+		output["minecraft:material_instances"]["*"] = temp;
+	temp = textures.ends;
+	if (!temp.is_null()) {
+		output["minecraft:material_instances"]["ends"] = temp;
+		output["minecraft:material_instances"]["up"] = "ends";
+		output["minecraft:material_instances"]["down"] = "ends";
+	}
+	temp = textures.sides;
+	if (!temp.is_null()) {
+		output["minecraft:material_instances"]["sides"] = temp;
+		output["minecraft:material_instances"]["north"] = "sides";
+		output["minecraft:material_instances"]["east"] = "sides";
+		output["minecraft:material_instances"]["south"] = "sides";
+		output["minecraft:material_instances"]["west"] = "sides";
+	}
+	temp = textures.up;
+	if (!temp.is_null())
+		output["minecraft:material_instances"]["up"] = temp;
+	temp = textures.down;
+	if (!temp.is_null())
+		output["minecraft:material_instances"]["down"] = temp;
+	temp = textures.north;
+	if (!temp.is_null())
+		output["minecraft:material_instances"]["north"] = temp;
+	temp = textures.east;
+	if (!temp.is_null())
+		output["minecraft:material_instances"]["east"] = temp;
+	temp = textures.south;
+	if (!temp.is_null())
+		output["minecraft:material_instances"]["up"] = temp;
+	temp = textures.west;
+	if (!temp.is_null())
+		output["minecraft:material_instances"]["west"] = temp;
+
+	return output;
+}
+
+namespace adk {
 	/**
 	 * @brief Creates a one texture block
 	 *
@@ -67,42 +110,7 @@ namespace adk {
 			TempFile >> output;
 		}
 
-		nlohmann::json temp;
-		temp = textures.all;
-		if (!temp.is_null())
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["*"] = temp;
-		temp = textures.ends;
-		if (!temp.is_null()) {
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["ends"] = temp;
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = "ends";
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["down"] = "ends";
-		}
-		temp = textures.sides;
-		if (!temp.is_null()) {
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["sides"] = temp;
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["north"] = "sides";
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["east"] = "sides";
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["south"] = "sides";
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["west"] = "sides";
-		}
-		temp = textures.up;
-		if (!temp.is_null())
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = temp;
-		temp = textures.down;
-		if (!temp.is_null())
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["down"] = temp;
-		temp = textures.north;
-		if (!temp.is_null())
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["north"] = temp;
-		temp = textures.east;
-		if (!temp.is_null())
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["east"] = temp;
-		temp = textures.south;
-		if (!temp.is_null())
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = temp;
-		temp = textures.west;
-		if (!temp.is_null())
-			output["minecraft:block"]["components"]["minecraft:material_instances"]["west"] = temp;
+		output["minecraft:block"]["components"] = TranslateMaterialInstances(textures);
 		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "minecraft:geometry.full_block";
 
 		{
@@ -141,7 +149,7 @@ namespace adk {
 			output["minecraft:block"]["components"]["minecraft:material_instances"]["up"] = "ends";
 			output["minecraft:block"]["components"]["minecraft:material_instances"]["down"] = "ends";
 		}
-		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.slab";
+		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.slab_adk";
 		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["top"] = "q.block_state('minecraft:vertical_half') == 'top' || q.block_state('" + id + ":is_double')";
 		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["bottom"] = "q.block_state('minecraft:vertical_half') == 'bottom' || q.block_state('" + id + ":is_double')";
 		{
@@ -150,10 +158,10 @@ namespace adk {
 		}
 
 		const std::string sourcePath = "./data/adk/assets/slab.geo.json";
-		const std::string targetPath = "./RP/models/blocks/slab.geo.json";
+		const std::string targetPath = "./RP/models/blocks/adk/slab.geo.json";
 
 		if (!std::filesystem::exists(targetPath)) {
-			std::filesystem::create_directories("./RP/models/blocks");
+			std::filesystem::create_directories("./RP/models/blocks/adk");
 			std::filesystem::copy(sourcePath, targetPath);
 		}
 	}
@@ -186,17 +194,17 @@ namespace adk {
 		output["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["render_method"] = "alpha_test";
 		output["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["face_dimming"] = false;
 		output["minecraft:block"]["components"]["minecraft:material_instances"]["*"]["ambient_occlusion"] = false;
-		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.ladder";
+		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.ladder_adk";
 		{
 			std::ofstream OutputFile(filePath);
 			OutputFile << output.dump();
 		}
 
 		const std::string sourcePath = "./data/adk/assets/ladder.geo.json";
-		const std::string targetPath = "./RP/models/blocks/ladder.geo.json";
+		const std::string targetPath = "./RP/models/blocks/adk/ladder.geo.json";
 
 		if (!std::filesystem::exists(targetPath)) {
-			std::filesystem::create_directories("./RP/models/blocks");
+			std::filesystem::create_directories("./RP/models/blocks/adk");
 			std::filesystem::copy(sourcePath, targetPath);
 		}
 	}
@@ -236,7 +244,7 @@ namespace adk {
 		}
 
 		const std::string sourcePath = "./data/adk/assets/ladder.geo.json";
-		const std::string targetPath = "./RP/models/blocks/ladder.geo.json";
+		const std::string targetPath = "./RP/models/blocks/adk/ladder.geo.json";
 	}
 
 	/**
@@ -296,7 +304,7 @@ namespace adk {
 			"q.block_state('{namespace}:shape') == 'inner_right' || q.block_state('minecraft:vertical_half') == 'bottom'",
 			fmt::arg("namespace", id)
 		);
-		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_north";
+		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_north_adk";
 		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
 		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
 		output["minecraft:block"]["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
@@ -308,7 +316,7 @@ namespace adk {
 		nlohmann::json::object_t temp = {
 			{"condition",
 			 "q.block_state('minecraft:cardinal_direction') == 'east'"} };
-		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_east";
+		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_east_adk";
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
@@ -321,7 +329,7 @@ namespace adk {
 		temp = {
 			{"condition",
 			 "q.block_state('minecraft:cardinal_direction') == 'west'"} };
-		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_west";
+		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_west_adk";
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
@@ -334,7 +342,7 @@ namespace adk {
 		temp = {
 			{"condition",
 			 "q.block_state('" + id + ":south')"} };
-		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_south";
+		temp["components"]["minecraft:geometry"]["identifier"] = "geometry.stairs_south_adk";
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_east"] = upper_north_east;
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_north_west"] = upper_north_west;
 		temp["components"]["minecraft:geometry"]["bone_visibility"]["upper_south_east"] = upper_south_east;
@@ -350,10 +358,10 @@ namespace adk {
 		}
 
 		const std::string sourcePath = "./data/adk/assets/stairs.geo.json";
-		const std::string targetPath = "./RP/models/blocks/stairs.geo.json";
+		const std::string targetPath = "./RP/models/blocks/adk/stairs.geo.json";
 
 		if (!std::filesystem::exists(targetPath)) {
-			std::filesystem::create_directories("./RP/models/blocks");
+			std::filesystem::create_directories("./RP/models/blocks/adk");
 			std::filesystem::copy(sourcePath, targetPath);
 		}
 	}
@@ -419,13 +427,13 @@ namespace adk {
 		textures_json = textures.west;
 		if (!textures_json.is_null())
 			output["minecraft:block"]["components"]["minecraft:material_instances"]["west"] = textures_json;
-		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.torch";
+		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "geometry.torch_adk";
 		std::string condition = fmt::format(
 			"q.block_state('{state}') == 'north' || q.block_state('{state}') == 'east' || q.block_state('{state}') == 'south' || q.block_state('{state}') == 'west'",
 			fmt::arg("state", "minecraft:block_face")
 		);
 		nlohmann::json::object_t geo_json = { {"condition",condition} };
-		geo_json["components"]["minecraft:geometry"]["identifier"] = "geometry.torch_wall";
+		geo_json["components"]["minecraft:geometry"]["identifier"] = "geometry.torch_wall_adk";
 		output["minecraft:block"]["permutations"].push_back(geo_json);
 		{
 			std::ofstream OutputFile(filePath);
@@ -433,10 +441,10 @@ namespace adk {
 		}
 
 		const std::string sourcePath = "./data/adk/assets/torch.geo.json";
-		const std::string targetPath = "./RP/models/blocks/torch.geo.json";
+		const std::string targetPath = "./RP/models/blocks/adk/torch.geo.json";
 
 		if (!std::filesystem::exists(targetPath)) {
-			std::filesystem::create_directories("./RP/models/blocks");
+			std::filesystem::create_directories("./RP/models/blocks/adk");
 			std::filesystem::copy(sourcePath, targetPath);
 		}
 	}
