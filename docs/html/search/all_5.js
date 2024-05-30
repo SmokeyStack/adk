@@ -5,5 +5,6 @@ var searchData=
   ['foodcomponents_2',['FoodComponents',['../classadk_1_1_food_components.html',1,'adk']]],
   ['friction_3',['Friction',['../classadk_1_1_block_component.html#af53f3a8f4113fdca0ee7399e15c24542',1,'adk::BlockComponent']]],
   ['fuel_4',['Fuel',['../classadk_1_1_item_component.html#a26d3761172c1e9baa33a40f05455047e',1,'adk::ItemComponent']]],
-  ['functionsetcount_5',['FunctionSetCount',['../classadk_1_1_function_set_count.html',1,'adk']]]
+  ['functionsetcount_5',['FunctionSetCount',['../classadk_1_1_function_set_count.html',1,'adk']]],
+  ['furnacerecipebuilder_6',['FurnaceRecipeBuilder',['../classadk_1_1_furnace_recipe_builder.html',1,'adk']]]
 ];

@@ -92,7 +92,9 @@ $(function(){initNavTree('classadk_1_1_recipe_builder.html',''); initResizable()
 
 <div class="header">
   <div class="summary">
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pro-methods">Protected Member Functions</a> &#124;
+<a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classadk_1_1_recipe_builder-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">adk::RecipeBuilder Class Reference</div></div>
 </div><!--header-->
@@ -108,23 +110,35 @@ Inheritance diagram for adk::RecipeBuilder:</div>
  <div class="center">
   <img src="classadk_1_1_recipe_builder.png" usemap="#adk::RecipeBuilder_map" alt=""/>
   <map id="adk::RecipeBuilder_map" name="adk::RecipeBuilder_map">
-<area href="classadk_1_1_cooking_recipe_builder.html" alt="adk::CookingRecipeBuilder" shape="rect" coords="0,56,175,80"/>
+<area href="classadk_1_1_furnace_recipe_builder.html" alt="adk::FurnaceRecipeBuilder" shape="rect" coords="0,56,175,80"/>
 <area href="classadk_1_1_shaped_recipe_builder.html" alt="adk::ShapedRecipeBuilder" shape="rect" coords="185,56,360,80"/>
 <area href="classadk_1_1_shapeless_recipe_builder.html" alt="adk::ShapelessRecipeBuilder" shape="rect" coords="370,56,545,80"/>
   </map>
 </div></div>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aef6183389735246cde1df7eeb3b848a5" id="r_aef6183389735246cde1df7eeb3b848a5"><td class="memItemLeft" align="right" valign="top"><a id="aef6183389735246cde1df7eeb3b848a5" name="aef6183389735246cde1df7eeb3b848a5"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>RecipeBuilder</b> (std::string id)</td></tr>
+<tr class="separator:aef6183389735246cde1df7eeb3b848a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
-<tr class="memitem:ae1cb671a81b03c8bb7f921e694173af1" id="r_ae1cb671a81b03c8bb7f921e694173af1"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae1cb671a81b03c8bb7f921e694173af1">createRecipe</a> (std::string id, nlohmann::json result)</td></tr>
-<tr class="memdesc:ae1cb671a81b03c8bb7f921e694173af1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the recipe.  <br /></td></tr>
-<tr class="separator:ae1cb671a81b03c8bb7f921e694173af1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a492e4d8999dd296553a83bfb6426c71e" id="r_a492e4d8999dd296553a83bfb6426c71e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a492e4d8999dd296553a83bfb6426c71e">BuildRecipe</a> (std::string id, nlohmann::json result)</td></tr>
+<tr class="memdesc:a492e4d8999dd296553a83bfb6426c71e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the recipe.  <br /></td></tr>
+<tr class="separator:a492e4d8999dd296553a83bfb6426c71e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
+Protected Attributes</h2></td></tr>
+<tr class="memitem:ab9cee29b4651564b9db529d6f4f8832c" id="r_ab9cee29b4651564b9db529d6f4f8832c"><td class="memItemLeft" align="right" valign="top"><a id="ab9cee29b4651564b9db529d6f4f8832c" name="ab9cee29b4651564b9db529d6f4f8832c"></a>
+std::string&#160;</td><td class="memItemRight" valign="bottom"><b>mod_id</b></td></tr>
+<tr class="separator:ab9cee29b4651564b9db529d6f4f8832c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Builds the recipe. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ae1cb671a81b03c8bb7f921e694173af1" name="ae1cb671a81b03c8bb7f921e694173af1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae1cb671a81b03c8bb7f921e694173af1">&#9670;&#160;</a></span>createRecipe()</h2>
+<a id="a492e4d8999dd296553a83bfb6426c71e" name="a492e4d8999dd296553a83bfb6426c71e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a492e4d8999dd296553a83bfb6426c71e">&#9670;&#160;</a></span>BuildRecipe()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +147,7 @@ Protected Member Functions</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void adk::RecipeBuilder::createRecipe </td>
+          <td class="memname">void adk::RecipeBuilder::BuildRecipe </td>
           <td>(</td>
           <td class="paramtype">std::string</td>          <td class="paramname"><span class="paramname"><em>id</em>, </span></td>
         </tr>
@@ -153,7 +167,7 @@ Protected Member Functions</h2></td></tr>
 <p>Create the recipe. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">id</td><td><a class="el" href="classadk_1_1_recipe.html">Recipe</a> Identifier </td></tr>
+    <tr><td class="paramname">id</td><td><a class="el" href="classadk_1_1_recipe.html">Recipe</a> Identifier</td></tr>
     <tr><td class="paramname">result</td><td>The resulting JSON </td></tr>
   </table>
   </dd>
@@ -162,7 +176,7 @@ Protected Member Functions</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/<a class="el" href="builder__recipe_8h_source.html">builder_recipe.h</a></li>
+<li>include/recipe/<a class="el" href="builder__recipe_8h_source.html">builder_recipe.h</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

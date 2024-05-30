@@ -10,7 +10,7 @@ var searchData=
   ['blockpillar_7',['BlockPillar',['../classadk_1_1_block_pillar.html',1,'adk::BlockPillar'],['../classadk_1_1_block_pillar.html#a28531b88c4e13a3e6ac37a6ad6b9fb45',1,'adk::BlockPillar::BlockPillar()']]],
   ['blockplant_8',['BlockPlant',['../classadk_1_1_block_plant.html',1,'adk::BlockPlant'],['../classadk_1_1_block_plant.html#ac4960e5aea13f270ab8c1422fb4cc7a9',1,'adk::BlockPlant::BlockPlant()']]],
   ['blockproperty_9',['BlockProperty',['../classadk_1_1_block_property.html',1,'adk']]],
-  ['blockslab_10',['BlockSlab',['../classadk_1_1_block_slab.html',1,'adk::BlockSlab'],['../classadk_1_1_block_slab.html#a0d1f2762b17b5f351ed17c5cc02868ac',1,'adk::BlockSlab::BlockSlab()']]],
+  ['blockslab_10',['BlockSlab',['../classadk_1_1_block_slab.html',1,'adk::BlockSlab'],['../classadk_1_1_block_slab.html#ae00c847988b1b852714e7addfb162898',1,'adk::BlockSlab::BlockSlab()']]],
   ['blockstairs_11',['BlockStairs',['../classadk_1_1_block_stairs.html',1,'adk::BlockStairs'],['../classadk_1_1_block_stairs.html#a27c662a80dc58111031b03eeae483bdf',1,'adk::BlockStairs::BlockStairs()']]],
   ['blocksugarcane_12',['BlockSugarCane',['../classadk_1_1_block_sugar_cane.html',1,'adk::BlockSugarCane'],['../classadk_1_1_block_sugar_cane.html#aa67b680738e97dd2a388ed2d509e532c',1,'adk::BlockSugarCane::BlockSugarCane()']]],
   ['blocktextures_13',['BlockTextures',['../structadk_1_1_block_textures.html',1,'adk']]],
@@ -19,5 +19,7 @@ var searchData=
   ['boxcollision_16',['BoxCollision',['../classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c',1,'adk::BlockComponent::BoxCollision(bool value)'],['../classadk_1_1_block_component.html#aefa1dd7d3336d15ec4f10f28677395af',1,'adk::BlockComponent::BoxCollision(std::vector&lt; int &gt; origin, std::vector&lt; int &gt; size, std::string id)']]],
   ['boxselection_17',['BoxSelection',['../classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75',1,'adk::BlockComponent::BoxSelection(bool value)'],['../classadk_1_1_block_component.html#a05fdbfa581e3a68169660b716920d194',1,'adk::BlockComponent::BoxSelection(std::vector&lt; int &gt; origin, std::vector&lt; int &gt; size, std::string id)']]],
   ['buildercreativemenu_18',['BuilderCreativeMenu',['../classadk_1_1_builder_creative_menu.html',1,'adk']]],
-  ['builderloot_19',['BuilderLoot',['../classadk_1_1_builder_loot.html',1,'adk']]]
+  ['builderlanguage_19',['BuilderLanguage',['../classadk_1_1_builder_language.html',1,'adk']]],
+  ['builderloot_20',['BuilderLoot',['../classadk_1_1_builder_loot.html',1,'adk']]],
+  ['buildrecipe_21',['BuildRecipe',['../classadk_1_1_recipe_builder.html#a492e4d8999dd296553a83bfb6426c71e',1,'adk::RecipeBuilder']]]
 ];

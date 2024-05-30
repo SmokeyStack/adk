@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['shapedrecipebuilder_0',['ShapedRecipeBuilder',['../classadk_1_1_shaped_recipe_builder.html',1,'adk']]],
-  ['shapelessrecipebuilder_1',['ShapelessRecipeBuilder',['../classadk_1_1_shapeless_recipe_builder.html',1,'adk']]]
+  ['toolmaterial_0',['ToolMaterial',['../classadk_1_1_tool_material.html',1,'adk']]],
+  ['toolmaterials_1',['ToolMaterials',['../classadk_1_1_tool_materials.html',1,'adk']]]
 ];
