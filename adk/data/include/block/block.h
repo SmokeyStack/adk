@@ -38,7 +38,7 @@ namespace adk {
 		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_["format_version"] = "1.20.80";
+			output_["format_version"] = "1.21.10";
 			output_["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
 			nlohmann::json temp;
 
@@ -199,9 +199,9 @@ namespace adk {
 				output_["minecraft:block"]["components"].update(helper_.CustomComponents(internal_.GetCustomComponents()));
 
 			if (internal_.GetTick().has_value()) {
-				const auto& [first, second, third] = internal_.GetTick().value();
+				const auto& [minimum_tick, maximum_tick, should_loop] = internal_.GetTick().value();
 				output_["minecraft:block"]["components"].update(
-					helper_.Tick(first, second, third)
+					helper_.Tick(minimum_tick, maximum_tick, should_loop)
 				);
 			}
 
@@ -211,5 +211,15 @@ namespace adk {
 		BlockProperty internal_;
 		BlockComponent helper_;
 		nlohmann::json output_;
+
+		nlohmann::json UpdateCustomComponents(nlohmann::json json, std::vector<std::string> custom_components) {
+			if (json.contains("minecraft:custom_components")) {
+				for(const auto& component : custom_components)
+				json["minecraft:custom_components"].push_back(component);
+			}
+			else json.update(helper_.CustomComponents(custom_components));
+
+			return json;
+		};
 	};
 } // namespace adk
