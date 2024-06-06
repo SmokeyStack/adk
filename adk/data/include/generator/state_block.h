@@ -91,7 +91,7 @@ namespace adk {
 	 *
 	 * @param block Identifier of the block, include namespace
 	 *
-	 * @param texture Name of the texture defined in `terrain_texture.json`
+	 * @param textures A BlockTextures configuration for the block
 	 */
 	void SimpleBlock(std::string block, BlockTextures textures) {
 		auto registry = GetIDs();
@@ -122,7 +122,7 @@ namespace adk {
 	/**
 	 * @brief Creates a slab block
 	 *
-	 * @param block Identifier of the block, omit namespace
+	 * @param block Identifier of the block, include namespace
 	 *
 	 * @param texture Name of the texture defined in `terrain_texture.json`
 	 */
@@ -169,7 +169,7 @@ namespace adk {
 	/**
 	 * @brief Creates a ladder block
 	 *
-	 * @param block Identifier of the block, omit namespace
+	 * @param block Identifier of the block, include namespace
 	 *
 	 * @param texture Name of the texture defined in `terrain_texture.json`
 	 */
@@ -212,7 +212,7 @@ namespace adk {
 	/**
 	 * @brief Creates a cross block
 	 *
-	 * @param block Identifier of the block, omit namespace
+	 * @param block Identifier of the block, include namespace
 	 *
 	 * @param texture Name of the texture defined in `terrain_texture.json`
 	 */
@@ -250,7 +250,7 @@ namespace adk {
 	/**
 	 * @brief Creates a stair block
 	 *
-	 * @param block Identifier of the block, omit namespace
+	 * @param block Identifier of the block, include namespace
 	 *
 	 * @param texture Name of the texture defined in `terrain_texture.json`
 	 */
@@ -369,7 +369,7 @@ namespace adk {
 	/**
 	 * @brief Creates a stair block
 	 *
-	 * @param block Identifier of the block, omit namespace
+	 * @param block Identifier of the block, include namespace
 	 *
 	 * @param texture Name of the texture defined in `terrain_texture.json`
 	 */
@@ -450,292 +450,60 @@ namespace adk {
 	}
 
 	/**
-	 * @brief Creates a log like block, sides are one texture, ends are one texture
-	 *
-	 * @param block Identifier of the block, omit namespace
-	 * @param sides Texture name for the sides of the block
-	 * @param ends Texture name for the ends of the block
-	 */
-	void axisBlock(std::string block, std::string sides, std::string ends) {
-		std::string my_text, temp_text;
-
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
-			exit(EXIT_FAILURE);
-		}
-
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
-
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["texture"] = sides;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["ends"]
-			["texture"] = ends;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["texture"] = "ends";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
-			["texture"] = "ends";
-		j["minecraft:block"]["components"]["minecraft:unit_cube"] =
-			nlohmann::json::object();
-
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
-	}
-
-	/**
-	 * @brief Creates a custom geometry block
-	 *
-	 * @param block Identifier of the block, omit namespace
-	 * @param model Identifier of the geometry
-	 * @param texture Texture name for the block
-	 */
-	void customBlock(std::string block, std::string model, std::string texture) {
-		std::string my_text, temp_text;
-
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
-			exit(EXIT_FAILURE);
-		}
-
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
-
-		j["minecraft:block"]["components"]["minecraft:geometry"] = model;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["texture"] = texture;
-
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
-	}
-
-	void tintedGlass(std::string block, std::string texture) {
-		std::string my_text, temp_text;
-
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
-			exit(EXIT_FAILURE);
-		}
-
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
-
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["texture"] = texture;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:unit_cube"] =
-			nlohmann::json::object();
-
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
-	}
-
-	/**
-	 * @brief Creates a skull block
-	 *
-	 * @param block Identifier of the block, omit namespace
-	 * @param texture Texture for the block
-	 */
-	void headBlock(std::string block, std::string texture) {
-		std::string my_text, temp_text;
-
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
-			exit(EXIT_FAILURE);
-		}
-
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
-
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["texture"] = texture;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["render_method"] = "blend";
-
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
-
-		if (!std::filesystem::exists("./RP/models/entity/head.geo.json")) {
-			if (!std::filesystem::exists("./RP/models/entity")) {
-				std::filesystem::create_directory("./RP/models/");
-				std::filesystem::create_directory("./RP/models/entity/");
-			}
-
-			std::filesystem::copy("./data/adk/assets/head.geo.json", "./RP/models/entity");
-		}
-	}
-
-	/**
-	 * @brief Creates a skull block, sides are one texture, ends are one texture
-	 *
-	 * @param block Identifier of the block, omit namespace
-	 * @param sides Texture name for the sides of the block
-	 * @param ends Texture name for the ends of the block
-	 */
-	void headBlock(std::string block, std::string sides, std::string ends) {
-		std::string my_text, temp_text;
-
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
-			exit(EXIT_FAILURE);
-		}
-
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
-
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["texture"] = sides;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["texture"] = ends;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["texture"] = ends;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["render_method"] = "blend";
-
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
-
-		if (!std::filesystem::exists("./RP/models/entity/head.geo.json")) {
-			if (!std::filesystem::exists("./RP/models/entity")) {
-				std::filesystem::create_directory("./RP/models/");
-				std::filesystem::create_directory("./RP/models/entity/");
-			}
-
-			std::filesystem::copy("./data/adk/assets/head.geo.json", "./RP/models/entity");
-		}
-	}
-
-	/**
-	 * @brief Creates a skull block. Sides can have different textures
-	 *
-	 * @param block Identifier of the block, omit namespace
-	 * @param north Texture for the north face
-	 * @param east Texture for the east face
-	 * @param south Texture for the south face
-	 * @param west Texture for the west face
-	 * @param up Texture for the up face
-	 * @param down Texture for the down face
-	 */
-	void headBlock(std::string block, std::string north, std::string east,
-		std::string south, std::string west, std::string up,
-		std::string down) {
-		std::string my_text, temp_text;
-
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
-			exit(EXIT_FAILURE);
-		}
-
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
-
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["north"]
-			["texture"] = north;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["east"]
-			["texture"] = east;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["south"]
-			["texture"] = south;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["west"]
-			["texture"] = west;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["texture"] = up;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
-			["texture"] = down;
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["north"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["east"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["south"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["west"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["up"]
-			["render_method"] = "blend";
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["down"]
-			["render_method"] = "blend";
-
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
-
-		if (!std::filesystem::exists("./RP/models/entity/head.geo.json")) {
-			if (!std::filesystem::exists("./RP/models/entity")) {
-				std::filesystem::create_directory("./RP/models/");
-				std::filesystem::create_directory("./RP/models/entity/");
-			}
-
-			std::filesystem::copy("./data/adk/assets/head.geo.json", "./RP/models/entity");
-		}
-	}
-
-	/**
 	 * @brief Creates a candle block
 	 *
-	 * @param block Identifier of the block, omit namespace
-	 * @param texture Name of the texture defined in `terrain_texture.json`
+	 * @param block Identifier of the block, include namespace
+	 *
+	 * @param textures A BlockTextures configuration for the block
 	 */
-	void candleBlock(std::string block, std::string texture) {
-		std::string my_text, temp_text;
+	void CandleBlock(std::string block, BlockTextures textures) {
+		auto registry = GetIDs();
 
-		if (!std::filesystem::exists("./BP/blocks/" + block + ".json")) {
-			log
-				::error(
-					"No block found: {}.json - Please check if this block exists",
-					block);
+		if (!(std::find(registry.begin(), registry.end(), block) != registry.end())) {
+			log::error("No block found: {} - Please check if this block exists", block);
 			exit(EXIT_FAILURE);
 		}
 
-		std::ifstream TempFile("./BP/blocks/" + block + ".json");
-		nlohmann::json j = nlohmann::json::parse(TempFile);
+		std::string id = block;
+		block = block.substr(block.find(":") + 1);
+		id = id.substr(0, id.find(":"));
+		const std::string filePath = "./BP/blocks/" + block + ".json";
+		nlohmann::json output;
 
-		j["minecraft:block"]["components"]["minecraft:material_instances"]["*"]
-			["texture"] = texture;
+		{
+			std::ifstream TempFile(filePath);
+			TempFile >> output;
+		}
 
-		TempFile.close();
-		std::ofstream MyFile("./BP/blocks/" + block + ".json");
-		MyFile << j.dump();
-		MyFile.close();
-
-		if (!std::filesystem::exists("./RP/models/entity/candle.geo.json")) {
-			if (!std::filesystem::exists("./RP/models/entity")) {
-				std::filesystem::create_directory("./RP/models/");
-				std::filesystem::create_directory("./RP/models/entity/");
+		output["minecraft:block"]["components"].update(TranslateMaterialInstances(textures));
+		/*output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "minecraft:geometry.full_block";*/
+		for (const auto& [key, value] : output["minecraft:block"]["permutations"].items()) {
+			if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:candles') == 1\"", fmt::arg("namespace", id)))
+				value["components"]["minecraft:geometry"]["identifier"] = "geometry.candle_one_adk";
+			if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:candles') == 2\"", fmt::arg("namespace", id)))
+				value["components"]["minecraft:geometry"]["identifier"] = "geometry.candle_two_adk";
+			if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:candles') == 3\"", fmt::arg("namespace", id)))
+				value["components"]["minecraft:geometry"]["identifier"] = "geometry.candle_three_adk";
+			if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:candles') == 4\"", fmt::arg("namespace", id)))
+				value["components"]["minecraft:geometry"]["identifier"] = "geometry.candle_four_adk";
+			if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:lit')\"", fmt::arg("namespace", id))) {
+				auto& new_textures = textures;
+				new_textures.all.face_dimming = false;
+				value["components"].update(TranslateMaterialInstances(new_textures));
 			}
+		}
 
-			std::filesystem::copy("./data/adk/assets/candle.geo.json", "./RP/models/entity");
+		{
+			std::ofstream OutputFile(filePath);
+			OutputFile << output.dump();
+		}
+
+		const std::string sourcePath = "./data/adk/assets/candle.geo.json";
+		const std::string targetPath = "./RP/models/blocks/adk/candle.geo.json";
+
+		if (!std::filesystem::exists(targetPath)) {
+			std::filesystem::create_directories("./RP/models/blocks/adk");
+			std::filesystem::copy(sourcePath, targetPath);
 		}
 	}
 } // namespace adk

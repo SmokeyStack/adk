@@ -39,7 +39,7 @@ namespace adk {
 		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_["format_version"] = "1.20.80";
+			output_["format_version"] = "1.21.10";
 			output_["minecraft:item"]["description"]["identifier"] = mod_id + ":" + id;
 			nlohmann::json temp;
 
