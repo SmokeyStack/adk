@@ -1,6 +1,8 @@
 var dir_8ea1912b9dcef29fc3569cc3a5093bc8 =
 [
     [ "block.h", "block_8h_source.html", null ],
+    [ "block_abstract_candle.h", "block__abstract__candle_8h_source.html", null ],
+    [ "block_candle.h", "block__candle_8h_source.html", null ],
     [ "block_component.h", "block__component_8h_source.html", null ],
     [ "block_experience_dropping.h", "block__experience__dropping_8h_source.html", null ],
     [ "block_flower.h", "block__flower_8h_source.html", null ],

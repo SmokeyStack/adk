@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.10.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ADK: include/block_candle.h Source File</title>
+<title>ADK: include/block/block_candle.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -99,114 +99,124 @@ $(function(){initNavTree('block__candle_8h_source.html',''); initResizable(); })
   <div class="headertitle"><div class="title">block_candle.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef CANDLEBLOCK_H</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define CANDLEBLOCK_H</span></div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;block/block.h&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;block_property.h&quot;</span></div>
+<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;block/block_abstract_candle.h&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;block/block_component.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;block/block_property.h&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;json.hpp&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>adk {</div>
 <div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="class_candle_block.html">   12</a></span><span class="keyword">class </span><a class="code hl_class" href="class_candle_block.html">CandleBlock</a> : <span class="keyword">public</span> Block {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <a class="code hl_class" href="class_candle_block.html">CandleBlock</a>() {}</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="class_candle_block.html#adfec52066634e6dac93c8c99a14da71e">   20</a></span>    <a class="code hl_function" href="class_candle_block.html#adfec52066634e6dac93c8c99a14da71e">CandleBlock</a>(BlockProperty property) { _internal = property; }</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="foldopen" id="foldopen00029" data-start="{" data-end="}">
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="class_candle_block.html#a5e0f395c8f32e15b188718bb5edddab9">   29</a></span>    json <a class="code hl_function" href="class_candle_block.html#a5e0f395c8f32e15b188718bb5edddab9">output</a>(std::string mod_id, std::string <span class="keywordtype">id</span>) {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        j = Block::output(mod_id, <span class="keywordtype">id</span>);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="comment">// Properties</span></div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;description&quot;</span>][<span class="stringliteral">&quot;states&quot;</span>][mod_id + <span class="stringliteral">&quot;:count&quot;</span>]</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>         [<span class="stringliteral">&quot;values&quot;</span>] = {{<span class="stringliteral">&quot;min&quot;</span>, 1}, {<span class="stringliteral">&quot;max&quot;</span>, 4}};</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="comment">// Components</span></div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">if</span> (j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].contains(</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                <span class="stringliteral">&quot;minecraft:collision_box&quot;</span>))</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].erase(<span class="stringliteral">&quot;minecraft:collision_box&quot;</span>);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            helper.collision(std::make_pair(std::vector&lt;int&gt;{-1, 0, -1},</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                                            std::vector&lt;int&gt;{2, 6, 2}),</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            helper.selection(std::make_pair(std::vector&lt;int&gt;{-1, 0, -1},</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                                            std::vector&lt;int&gt;{2, 6, 2}),</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>][<span class="stringliteral">&quot;minecraft:geometry&quot;</span>][<span class="stringliteral">&quot;identifier&quot;</span>] =</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="stringliteral">&quot;geometry.candle&quot;</span>;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>][<span class="stringliteral">&quot;minecraft:geometry&quot;</span>]</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>         [<span class="stringliteral">&quot;bone_visibility&quot;</span>] = {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>             {<span class="stringliteral">&quot;one&quot;</span>, <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) == 1&quot;</span>},</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>             {<span class="stringliteral">&quot;two&quot;</span>, <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) == 2&quot;</span>},</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>             {<span class="stringliteral">&quot;three&quot;</span>, <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) == 3&quot;</span>},</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>             {<span class="stringliteral">&quot;four&quot;</span>, <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) == 4&quot;</span>}};</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>][<span class="stringliteral">&quot;minecraft:on_interact&quot;</span>]</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>         [<span class="stringliteral">&quot;condition&quot;</span>] =</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>             <span class="stringliteral">&quot;q.is_item_name_any(&#39;slot.weapon.mainhand&#39;, &#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:&quot;</span> +</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>             <span class="keywordtype">id</span> + <span class="stringliteral">&quot;&#39;) &amp;&amp; q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) != 4&quot;</span>;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>][<span class="stringliteral">&quot;minecraft:on_interact&quot;</span>][<span class="stringliteral">&quot;event&quot;</span>] =</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            mod_id + <span class="stringliteral">&quot;:add_candle&quot;</span>;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// Events</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;events&quot;</span>][mod_id + <span class="stringliteral">&quot;:add_candle&quot;</span>]</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>         [<span class="stringliteral">&quot;set_block_state&quot;</span>][mod_id + <span class="stringliteral">&quot;:count&quot;</span>] =</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>             <span class="stringliteral">&quot;(q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) &lt; 4) ? q.block_state(&#39;&quot;</span> +</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>             mod_id + <span class="stringliteral">&quot;:count&#39;) + 1 : 4&quot;</span>;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;events&quot;</span>][mod_id + <span class="stringliteral">&quot;:add_candle&quot;</span>]</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>         [<span class="stringliteral">&quot;decrement_stack&quot;</span>] = json::object();</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="comment">// Permutations</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        json::object_t temp = {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            {<span class="stringliteral">&quot;condition&quot;</span>, <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) == 2&quot;</span>}};</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            helper.collision(std::make_pair(std::vector&lt;int&gt;{-3, 0, -1},</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                                            std::vector&lt;int&gt;{5, 6, 3}),</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            helper.selection(std::make_pair(std::vector&lt;int&gt;{-3, 0, -1},</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                                            std::vector&lt;int&gt;{5, 6, 3}),</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].push_back(temp);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        temp = {{<span class="stringliteral">&quot;condition&quot;</span>, <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) == 3&quot;</span>}};</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            helper.collision(std::make_pair(std::vector&lt;int&gt;{-2, 0, -2},</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                                            std::vector&lt;int&gt;{5, 6, 5}),</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            helper.selection(std::make_pair(std::vector&lt;int&gt;{-2, 0, -2},</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                                            std::vector&lt;int&gt;{5, 6, 5}),</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].push_back(temp);</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        temp = {{<span class="stringliteral">&quot;condition&quot;</span>, <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:count&#39;) == 4&quot;</span>}};</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            helper.collision(std::make_pair(std::vector&lt;int&gt;{-3, 0, -3},</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                                            std::vector&lt;int&gt;{6, 6, 5}),</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            helper.selection(std::make_pair(std::vector&lt;int&gt;{-3, 0, -3},</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                                            std::vector&lt;int&gt;{6, 6, 5}),</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                             <span class="keywordtype">id</span>));</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        j[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].push_back(temp);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">return</span> j;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    };</div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classadk_1_1_block_candle.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classadk_1_1_block_candle.html">BlockCandle</a> : <span class="keyword">public</span> <a class="code hl_class" href="classadk_1_1_block_candle_abstract.html">BlockCandleAbstract</a> {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classadk_1_1_block_candle.html#ae43453c62df65bb1b3f1bbbbea342af3">   19</a></span>        <a class="code hl_function" href="classadk_1_1_block_candle.html#ae43453c62df65bb1b3f1bbbbea342af3">BlockCandle</a>(<a class="code hl_class" href="classadk_1_1_block_property.html">BlockProperty</a> property) : <a class="code hl_class" href="classadk_1_1_block_candle_abstract.html">BlockCandleAbstract</a>(property) { internal_ = property; }</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="}">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classadk_1_1_block_candle.html#a740231e6627d8954e096392277d351c7">   30</a></span>        nlohmann::json <a class="code hl_function" href="classadk_1_1_block_candle.html#a740231e6627d8954e096392277d351c7">Generate</a>(std::string mod_id, std::string <span class="keywordtype">id</span>) {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            output_ = <a class="code hl_function" href="classadk_1_1_block_candle_abstract.html#ab3642439921e15d2ba5cb0d2b7ec094c">BlockCandleAbstract::Generate</a>(mod_id, <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;description&quot;</span>][<span class="stringliteral">&quot;states&quot;</span>][mod_id + <span class="stringliteral">&quot;:candles&quot;</span>][<span class="stringliteral">&quot;values&quot;</span>][<span class="stringliteral">&quot;min&quot;</span>] = 1;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;description&quot;</span>][<span class="stringliteral">&quot;states&quot;</span>][mod_id + <span class="stringliteral">&quot;:candles&quot;</span>][<span class="stringliteral">&quot;values&quot;</span>][<span class="stringliteral">&quot;max&quot;</span>] = 4;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            nlohmann::json::object_t temp = {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            {<span class="stringliteral">&quot;condition&quot;</span>,</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>             <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:candles&#39;) == 1&quot;</span>} };</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">BoxCollision</a>(</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                    std::vector&lt;int&gt;{-1, 0, -1},</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                    std::vector&lt;int&gt;{2, 6, 2},</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                )</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            );</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">BoxSelection</a>(</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                    std::vector&lt;int&gt;{-1, 0, -1},</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                    std::vector&lt;int&gt;{2, 6, 2},</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                )</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            );</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].push_back(temp);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            temp = {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            {<span class="stringliteral">&quot;condition&quot;</span>,</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>             <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:candles&#39;) == 2&quot;</span>} };</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">BoxCollision</a>(</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                    std::vector&lt;int&gt;{-3, 0, -1},</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                    std::vector&lt;int&gt;{6, 6, 3},</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                )</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            );</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">BoxSelection</a>(</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                    std::vector&lt;int&gt;{-3, 0, -1},</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                    std::vector&lt;int&gt;{6, 6, 3},</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                )</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            );</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].push_back(temp);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            temp = {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            {<span class="stringliteral">&quot;condition&quot;</span>,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>             <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:candles&#39;) == 3&quot;</span>} };</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">BoxCollision</a>(</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                    std::vector&lt;int&gt;{-2, 0, -2},</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                    std::vector&lt;int&gt;{5, 6, 5},</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                )</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            );</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">BoxSelection</a>(</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                    std::vector&lt;int&gt;{-2, 0, -2},</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                    std::vector&lt;int&gt;{5, 6, 5},</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                )</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            );</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].push_back(temp);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            temp = {</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            {<span class="stringliteral">&quot;condition&quot;</span>,</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>             <span class="stringliteral">&quot;q.block_state(&#39;&quot;</span> + mod_id + <span class="stringliteral">&quot;:candles&#39;) == 4&quot;</span>} };</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">BoxCollision</a>(</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>                    std::vector&lt;int&gt;{-3, 0, -3},</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                    std::vector&lt;int&gt;{6, 6, 5},</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                )</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            );</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            temp[<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">BoxSelection</a>(</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                    std::vector&lt;int&gt;{-3, 0, -3},</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>                    std::vector&lt;int&gt;{6, 6, 5},</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                )</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            );</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].push_back(temp);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="keywordflow">for</span> (<span class="keyword">const</span> <span class="keyword">auto</span>&amp; [key, value] : output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;permutations&quot;</span>].items()) {</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <span class="keywordflow">if</span> (value.contains(<span class="stringliteral">&quot;condition&quot;</span>) &amp;&amp; value[<span class="stringliteral">&quot;condition&quot;</span>].dump() == fmt::format(<span class="stringliteral">&quot;\&quot;q.block_state(&#39;{namespace}:lit&#39;)\&quot;&quot;</span>, fmt::arg(<span class="stringliteral">&quot;namespace&quot;</span>, mod_id))) {</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                    value[<span class="stringliteral">&quot;components&quot;</span>] = UpdateCustomComponents(value[<span class="stringliteral">&quot;components&quot;</span>], { <span class="stringliteral">&quot;adk-lib:on_player_interact_candle&quot;</span> });</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                }</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>] = UpdateCustomComponents(output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>], { <span class="stringliteral">&quot;adk-lib:on_player_interact_candle&quot;</span> });</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <span class="keywordflow">return</span> output_;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        }</div>
 </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>};</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    };</div>
 </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_candle_block_html"><div class="ttname"><a href="class_candle_block.html">CandleBlock</a></div><div class="ttdoc">Represents a Candle Block.</div><div class="ttdef"><b>Definition</b> block_candle.h:12</div></div>
-<div class="ttc" id="aclass_candle_block_html_a5e0f395c8f32e15b188718bb5edddab9"><div class="ttname"><a href="class_candle_block.html#a5e0f395c8f32e15b188718bb5edddab9">CandleBlock::output</a></div><div class="ttdeci">json output(std::string mod_id, std::string id)</div><div class="ttdoc">Generates the json object.</div><div class="ttdef"><b>Definition</b> block_candle.h:29</div></div>
-<div class="ttc" id="aclass_candle_block_html_adfec52066634e6dac93c8c99a14da71e"><div class="ttname"><a href="class_candle_block.html#adfec52066634e6dac93c8c99a14da71e">CandleBlock::CandleBlock</a></div><div class="ttdeci">CandleBlock(BlockProperty property)</div><div class="ttdoc">Construct a new Candle Block object.</div><div class="ttdef"><b>Definition</b> block_candle.h:20</div></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>} <span class="comment">// namespace adk</span></div>
+<div class="ttc" id="aclassadk_1_1_block_candle_abstract_html"><div class="ttname"><a href="classadk_1_1_block_candle_abstract.html">adk::BlockCandleAbstract</a></div><div class="ttdoc">Represents an Abstract Candle Block.</div><div class="ttdef"><b>Definition</b> block_abstract_candle.h:12</div></div>
+<div class="ttc" id="aclassadk_1_1_block_candle_abstract_html_ab3642439921e15d2ba5cb0d2b7ec094c"><div class="ttname"><a href="classadk_1_1_block_candle_abstract.html#ab3642439921e15d2ba5cb0d2b7ec094c">adk::BlockCandleAbstract::Generate</a></div><div class="ttdeci">nlohmann::json Generate(std::string mod_id, std::string id)</div><div class="ttdoc">Generates the json object.</div><div class="ttdef"><b>Definition</b> block_abstract_candle.h:31</div></div>
+<div class="ttc" id="aclassadk_1_1_block_candle_html"><div class="ttname"><a href="classadk_1_1_block_candle.html">adk::BlockCandle</a></div><div class="ttdoc">Represents a Candle Block.</div><div class="ttdef"><b>Definition</b> block_candle.h:12</div></div>
+<div class="ttc" id="aclassadk_1_1_block_candle_html_a740231e6627d8954e096392277d351c7"><div class="ttname"><a href="classadk_1_1_block_candle.html#a740231e6627d8954e096392277d351c7">adk::BlockCandle::Generate</a></div><div class="ttdeci">nlohmann::json Generate(std::string mod_id, std::string id)</div><div class="ttdoc">Generates the json object.</div><div class="ttdef"><b>Definition</b> block_candle.h:30</div></div>
+<div class="ttc" id="aclassadk_1_1_block_candle_html_ae43453c62df65bb1b3f1bbbbea342af3"><div class="ttname"><a href="classadk_1_1_block_candle.html#ae43453c62df65bb1b3f1bbbbea342af3">adk::BlockCandle::BlockCandle</a></div><div class="ttdeci">BlockCandle(BlockProperty property)</div><div class="ttdoc">Construct a new Plant Block object.</div><div class="ttdef"><b>Definition</b> block_candle.h:19</div></div>
+<div class="ttc" id="aclassadk_1_1_block_component_html_a2351befb708949467c10153bf4dfa09c"><div class="ttname"><a href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">adk::BlockComponent::BoxCollision</a></div><div class="ttdeci">nlohmann::json::object_t BoxCollision(bool value)</div><div class="ttdoc">Creates the &quot;collision_box&quot; component.</div><div class="ttdef"><b>Definition</b> block_component.h:307</div></div>
+<div class="ttc" id="aclassadk_1_1_block_component_html_ade5e70daf06503511ec03e69b3ab7f75"><div class="ttname"><a href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">adk::BlockComponent::BoxSelection</a></div><div class="ttdeci">nlohmann::json::object_t BoxSelection(bool value)</div><div class="ttdoc">Creates the &quot;selection_box&quot; component.</div><div class="ttdef"><b>Definition</b> block_component.h:345</div></div>
+<div class="ttc" id="aclassadk_1_1_block_property_html"><div class="ttname"><a href="classadk_1_1_block_property.html">adk::BlockProperty</a></div><div class="ttdoc">Represents block properties such as destroy speed, loot, etc.</div><div class="ttdef"><b>Definition</b> block_property.h:114</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><b>block_candle.h</b></li>
+    <li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_8ea1912b9dcef29fc3569cc3a5093bc8.html">block</a></li><li class="navelem"><b>block_candle.h</b></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.10.0 </li>
   </ul>
 </div>

@@ -3,8 +3,6 @@ var classadk_1_1_block_property =
     [ "GetBoxCollision", "classadk_1_1_block_property.html#acf74dfcf24d6eff69390aac9bffada1b", null ],
     [ "GetBoxSelection", "classadk_1_1_block_property.html#aa87da048be0bac1b3ffaad0e932b6548", null ],
     [ "GetCrafting", "classadk_1_1_block_property.html#a2a89280a7de6b272883c768e85956e8d", null ],
-    [ "GetCreativeCategory", "classadk_1_1_block_property.html#a0406a66bc6716ecc6fb2589126e69452", null ],
-    [ "GetCreativeGroup", "classadk_1_1_block_property.html#ad3181f73f212642375a02adb484c29c5", null ],
     [ "GetCustomComponents", "classadk_1_1_block_property.html#ae5994ac687b3079e2198e5f8deccf9c2", null ],
     [ "GetDestructibleByExplosion", "classadk_1_1_block_property.html#a2fd68806f35954010a72680cf211bc42", null ],
     [ "GetDestructibleByMining", "classadk_1_1_block_property.html#abcb6cf7b357c8006fe2516e70d037cd4", null ],
@@ -27,7 +25,6 @@ var classadk_1_1_block_property =
     [ "SetBoxSelection", "classadk_1_1_block_property.html#aa741eff1a2be511e65eade4e7a64acdd", null ],
     [ "SetBoxSelection", "classadk_1_1_block_property.html#ae3d3d35402d282dc82d654162d94fbc2", null ],
     [ "SetCrafting", "classadk_1_1_block_property.html#af803f6d91551fd2a81b7826e3e18b4c1", null ],
-    [ "SetCreativeCategory", "classadk_1_1_block_property.html#a4c65a746b7452a208435d29a570651b4", null ],
     [ "SetCustomComponents", "classadk_1_1_block_property.html#a24f1d377f05270c9c8bff5c4c433eb50", null ],
     [ "SetDestructibleByExplosion", "classadk_1_1_block_property.html#a6b8976e96a87e902fdf970ba422a4355", null ],
     [ "SetDestructibleByMining", "classadk_1_1_block_property.html#ab2d33d10d39c7d7d3e152ceddf1e420d", null ],
@@ -43,6 +40,6 @@ var classadk_1_1_block_property =
     [ "SetRotation", "classadk_1_1_block_property.html#ae37fcdcde55ea7037b4e63d70736bf4f", null ],
     [ "SetScale", "classadk_1_1_block_property.html#ade378943bf1197385a941c4a0d309052", null ],
     [ "SetTags", "classadk_1_1_block_property.html#aa78421a118dcaebddbb85c8ba3b2a478", null ],
-    [ "SetTick", "classadk_1_1_block_property.html#a7c5fffa1a8fc5035e85c9d356d3e7d74", null ],
+    [ "SetTick", "classadk_1_1_block_property.html#a7be1b9cbc809422f70d9ed705833d32f", null ],
     [ "SetTranslation", "classadk_1_1_block_property.html#a307da0e2fe8000b769142646d03d7695", null ]
 ];
