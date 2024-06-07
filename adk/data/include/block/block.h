@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "block_component.h"
-#include "block_property.h"
+#include "block/block_component.h"
+#include "block/block_property.h"
 #include "json.hpp"
 
 namespace adk {

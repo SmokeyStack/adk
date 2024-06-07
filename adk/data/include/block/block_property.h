@@ -9,303 +9,6 @@
 #include "shared_construct.h"
 
 namespace adk {
-	/**
-	 * @brief Represents the category in Creative Menu
-	 */
-	enum class CreativeCategory {
-		COMMANDS,
-		CONSTRUCTION,
-		EQUIPMENT,
-		ITEMS,
-		NATURE,
-		NONE
-	};
-	/**
-	 * @brief Represents the groups in Creative Menu
-	 */
-	enum class CreativeGroup {
-		ANVIL,
-		ARROW,
-		AXE,
-		BANNER,
-		BANNERPATTERN,
-		BED,
-		BOAT,
-		BOOTS,
-		BUTTONS,
-		CANDLES,
-		CHALKBOARD,
-		CHEST,
-		CHESTBOAT,
-		CHESTPLATE,
-		CONCRETE,
-		CONCRETEPOWDER,
-		COOKEDFOOD,
-		COPPER,
-		CORAL,
-		CORALDECORATIONS,
-		CROP,
-		DOOR,
-		DYE,
-		ENCHANTEDBOOK,
-		FENCE,
-		FENCEGATE,
-		FIREWORK,
-		FIREWORKSTARS,
-		FLOWER,
-		GLASS,
-		GLASSPANE,
-		GLAZEDTERRACOTTA,
-		GOATHORN,
-		GRASS,
-		HANGINGSIGN,
-		HELMET,
-		HOE,
-		HORSEARMOR,
-		LEAVES,
-		LEGGINGS,
-		LINGERINGPOTION,
-		LOG,
-		MINECART,
-		MISCFOOD,
-		MOBEGG,
-		MONSTERSTONEEGG,
-		MUSHROOM,
-		NETHERWARTBLOCK,
-		ORE,
-		PERMISSION,
-		PICKAXE,
-		PLANKS,
-		POTION,
-		POTTERYSHERDS,
-		PRESSUREPLATE,
-		RAIL,
-		RAWFOOD,
-		RECORD,
-		SANDSTONE,
-		SAPLING,
-		SCULK,
-		SEED,
-		SHOVEL,
-		SHULKERBOX,
-		SIGN,
-		SKULL,
-		SLAB,
-		SMITHINGTEMPLATES,
-		SPLASHPOTION,
-		STAINEDCLAY,
-		STAIRS,
-		STONE,
-		STONEBRICK,
-		SWORD,
-		TRAPDOOR,
-		WALLS,
-		WOOD,
-		WOOL,
-		WOOLCARPET,
-		NONE
-	};
-
-	/**
-	 * @brief Get the Creative Category object
-	 *
-	 * @param category enum CreativeCategory
-	 *
-	 * @return std::string
-	 */
-	inline std::string GetCreativeCategory(adk::CreativeCategory category) {
-		switch (category) {
-		case adk::CreativeCategory::COMMANDS:
-			return "commands";
-		case adk::CreativeCategory::CONSTRUCTION:
-			return "construction";
-		case adk::CreativeCategory::EQUIPMENT:
-			return "equipment";
-		case adk::CreativeCategory::ITEMS:
-			return "items";
-		case adk::CreativeCategory::NATURE:
-			return "nature";
-		case adk::CreativeCategory::NONE:
-			return "none";
-		default:
-			return "Error";
-		}
-	}
-
-	/**
-	 * @brief Get the Creative Group object
-	 *
-	 * @param group enum CreativeGroup
-	 *
-	 * @return std::string
-	 */
-	inline std::string GetCreativeGroup(adk::CreativeGroup group) {
-		switch (group) {
-		case adk::CreativeGroup::ANVIL:
-			return "itemGroup.name.anvil";
-		case adk::CreativeGroup::ARROW:
-			return "itemGroup.name.arrow";
-		case adk::CreativeGroup::AXE:
-			return "itemGroup.name.axe";
-		case adk::CreativeGroup::BANNER:
-			return "itemGroup.name.banner";
-		case adk::CreativeGroup::BANNERPATTERN:
-			return "itemGroup.name.banner_pattern";
-		case adk::CreativeGroup::BED:
-			return "itemGroup.name.bed";
-		case adk::CreativeGroup::BOAT:
-			return "itemGroup.name.boat";
-		case adk::CreativeGroup::BOOTS:
-			return "itemGroup.name.boots";
-		case adk::CreativeGroup::BUTTONS:
-			return "itemGroup.name.buttons";
-		case adk::CreativeGroup::CANDLES:
-			return "itemGroup.name.candles";
-		case adk::CreativeGroup::CHALKBOARD:
-			return "itemGroup.name.chalkboard";
-		case adk::CreativeGroup::CHEST:
-			return "itemGroup.name.chest";
-		case adk::CreativeGroup::CHESTBOAT:
-			return "itemGroup.name.chestboat";
-		case adk::CreativeGroup::CHESTPLATE:
-			return "itemGroup.name.chestplate";
-		case adk::CreativeGroup::CONCRETE:
-			return "itemGroup.name.concrete";
-		case adk::CreativeGroup::CONCRETEPOWDER:
-			return "itemGroup.name.concretePowder";
-		case adk::CreativeGroup::COOKEDFOOD:
-			return "itemGroup.name.cookedFood";
-		case adk::CreativeGroup::COPPER:
-			return "itemGroup.name.copper";
-		case adk::CreativeGroup::CORAL:
-			return "itemGroup.name.coral";
-		case adk::CreativeGroup::CORALDECORATIONS:
-			return "itemGroup.name.coralDecorations";
-		case adk::CreativeGroup::CROP:
-			return "itemGroup.name.crop";
-		case adk::CreativeGroup::DOOR:
-			return "itemGroup.name.door";
-		case adk::CreativeGroup::DYE:
-			return "itemGroup.name.dye";
-		case adk::CreativeGroup::ENCHANTEDBOOK:
-			return "itemGroup.name.enchantedBook";
-		case adk::CreativeGroup::FENCE:
-			return "itemGroup.name.fence";
-		case adk::CreativeGroup::FENCEGATE:
-			return "itemGroup.name.fenceGate";
-		case adk::CreativeGroup::FIREWORK:
-			return "itemGroup.name.firework";
-		case adk::CreativeGroup::FIREWORKSTARS:
-			return "itemGroup.name.fireworkStars";
-		case adk::CreativeGroup::FLOWER:
-			return "itemGroup.name.flower";
-		case adk::CreativeGroup::GLASS:
-			return "itemGroup.name.glass";
-		case adk::CreativeGroup::GLASSPANE:
-			return "itemGroup.name.glassPane";
-		case adk::CreativeGroup::GLAZEDTERRACOTTA:
-			return "itemGroup.name.glazedTerracotta";
-		case adk::CreativeGroup::GOATHORN:
-			return "itemGroup.name.goatHorn";
-		case adk::CreativeGroup::GRASS:
-			return "itemGroup.name.grass";
-		case adk::CreativeGroup::HELMET:
-			return "itemGroup.name.helmet";
-		case adk::CreativeGroup::HOE:
-			return "itemGroup.name.hoe";
-		case adk::CreativeGroup::HORSEARMOR:
-			return "itemGroup.name.horseArmor";
-		case adk::CreativeGroup::LEAVES:
-			return "itemGroup.name.leaves";
-		case adk::CreativeGroup::LEGGINGS:
-			return "itemGroup.name.leggings";
-		case adk::CreativeGroup::LINGERINGPOTION:
-			return "itemGroup.name.lingeringPotion";
-		case adk::CreativeGroup::LOG:
-			return "itemGroup.name.log";
-		case adk::CreativeGroup::MINECART:
-			return "itemGroup.name.minecart";
-		case adk::CreativeGroup::MISCFOOD:
-			return "itemGroup.name.miscFood";
-		case adk::CreativeGroup::MOBEGG:
-			return "itemGroup.name.mobEgg";
-		case adk::CreativeGroup::MONSTERSTONEEGG:
-			return "itemGroup.name.monsterStoneEgg";
-		case adk::CreativeGroup::MUSHROOM:
-			return "itemGroup.name.mushroom";
-		case adk::CreativeGroup::NETHERWARTBLOCK:
-			return "itemGroup.name.netherWartBlock";
-		case adk::CreativeGroup::ORE:
-			return "itemGroup.name.ore";
-		case adk::CreativeGroup::PERMISSION:
-			return "itemGroup.name.permission";
-		case adk::CreativeGroup::PICKAXE:
-			return "itemGroup.name.pickaxe";
-		case adk::CreativeGroup::PLANKS:
-			return "itemGroup.name.planks";
-		case adk::CreativeGroup::POTION:
-			return "itemGroup.name.potion";
-		case adk::CreativeGroup::PRESSUREPLATE:
-			return "itemGroup.name.pressurePlate";
-		case adk::CreativeGroup::RAIL:
-			return "itemGroup.name.rail";
-		case adk::CreativeGroup::RAWFOOD:
-			return "itemGroup.name.rawFood";
-		case adk::CreativeGroup::RECORD:
-			return "itemGroup.name.record";
-		case adk::CreativeGroup::SANDSTONE:
-			return "itemGroup.name.sandstone";
-		case adk::CreativeGroup::SAPLING:
-			return "itemGroup.name.sapling";
-		case adk::CreativeGroup::SCULK:
-			return "itemGroup.name.sculk";
-		case adk::CreativeGroup::SEED:
-			return "itemGroup.name.seed";
-		case adk::CreativeGroup::SHOVEL:
-			return "itemGroup.name.shovel";
-		case adk::CreativeGroup::SHULKERBOX:
-			return "itemGroup.name.shulkerBox";
-		case adk::CreativeGroup::SIGN:
-			return "itemGroup.name.sign";
-		case adk::CreativeGroup::SKULL:
-			return "itemGroup.name.skull";
-		case adk::CreativeGroup::SLAB:
-			return "itemGroup.name.slab";
-		case adk::CreativeGroup::SPLASHPOTION:
-			return "itemGroup.name.splashPotion";
-		case adk::CreativeGroup::STAINEDCLAY:
-			return "itemGroup.name.stainedClat";
-		case adk::CreativeGroup::STAIRS:
-			return "itemGroup.name.stairs";
-		case adk::CreativeGroup::STONE:
-			return "itemGroup.name.stone";
-		case adk::CreativeGroup::STONEBRICK:
-			return "itemGroup.name.stoneBrick";
-		case adk::CreativeGroup::SWORD:
-			return "itemGroup.name.sword";
-		case adk::CreativeGroup::TRAPDOOR:
-			return "itemGroup.name.trapdoor";
-		case adk::CreativeGroup::WALLS:
-			return "itemGroup.name.walls";
-		case adk::CreativeGroup::WOOD:
-			return "itemGroup.name.wood";
-		case adk::CreativeGroup::WOOL:
-			return "itemGroup.name.wool";
-		case adk::CreativeGroup::WOOLCARPET:
-			return "itemGroup.name.woolCarpet";
-		case adk::CreativeGroup::HANGINGSIGN:
-			return "itemGroup.name.hanging_sign";
-		case adk::CreativeGroup::POTTERYSHERDS:
-			return "itemGroup.name.potterySherds";
-		case adk::CreativeGroup::SMITHINGTEMPLATES:
-			return "itemGroup.name.smithing_templates";
-		case adk::CreativeGroup::NONE:
-			return "";
-		default:
-			return "Error";
-		}
-	}
-
 	enum class BlockAllowedFaces {
 		UP,
 		DOWN,
@@ -348,6 +51,18 @@ namespace adk {
 	}
 
 	namespace {
+		/**
+		 * @brief Makes your block into a custom crafting table which enables the crafting table UI and the ability to craft recipes.
+		 *
+		 * @param crafting_tags Defines the tags recipes should define to be crafted on this table.
+		 * Limited to 64 tags.
+		 * Each tag is limited to 64 characters.
+		 *
+		 * @param table_name Specifies the language file key that maps to what text will be displayed in the UI of this table.
+		 * If the string given can not be resolved as a loc string, the raw string given will be displayed.
+		 * If this field is omitted, the name displayed will default to the name specified in the "display_name" component.
+		 * If this block has no "display_name" component, the name displayed will default to the name of the block.
+		 */
 		struct BlockCraftingTable {
 			std::vector<std::string> crafting_tags;
 			std::string table_name;
@@ -359,6 +74,16 @@ namespace adk {
 			if (!p.table_name.empty()) j.update({ {"table_name", p.table_name} });
 		}
 
+		/**
+		 * @brief Sets rules for under what conditions the block can be placed or survive.
+		 *
+		 * @param allowed_faces List of any of the following strings describing which face(s) this block can be placed on: up, down, north, south, east, west, side, all.
+		 * Limited to 6 faces.
+		 *
+		 * @param block_filter List of blocks that this block can be placed against in the allowed_faces direction.
+		 * Limited to 64 blocks.
+		 * Each block in this list can either be specified as a String (block name) or as a BlockDescriptor.
+		 */
 		struct BlockPlacementFilter {
 			std::vector<BlockAllowedFaces> allowed_faces;
 			std::vector<std::variant<std::string, BlockDescriptor>> block_filter;
@@ -397,7 +122,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetLightDampening(int value) {
-			this->light_dampening = value;
+			this->light_dampening_ = value;
 
 			return *this;
 		}
@@ -428,12 +153,12 @@ namespace adk {
 		BlockProperty SetDestructibleByExplosion(
 			std::variant<bool, double> value) {
 			if (std::get_if<bool>(&value)) {
-				this->explosion = std::get<bool>(value);
+				this->explosion_ = std::get<bool>(value);
 
 				return *this;
 			}
 
-			this->explosion = std::get<double>(value);
+			this->explosion_ = std::get<double>(value);
 
 			return *this;
 		}
@@ -448,12 +173,12 @@ namespace adk {
 		 */
 		BlockProperty SetDestructibleByMining(std::variant<bool, double> value) {
 			if (std::get_if<bool>(&value)) {
-				this->mining = std::get<bool>(value);
+				this->mining_ = std::get<bool>(value);
 
 				return *this;
 			}
 
-			this->mining = std::get<double>(value);
+			this->mining_ = std::get<double>(value);
 
 			return *this;
 		}
@@ -468,7 +193,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetDisplayName(std::string value) {
-			this->display_name = value;
+			this->display_name_ = value;
 
 			return *this;
 		}
@@ -483,7 +208,7 @@ namespace adk {
 		 * @return BlockProperty
 		*/
 		BlockProperty SetFlammable(bool value) {
-			this->flammable = value;
+			this->flammable_ = value;
 
 			return *this;
 		}
@@ -505,7 +230,7 @@ namespace adk {
 		 * @return nlohmann::json::object_t
 		*/
 		BlockProperty SetFlammable(int catch_chance, int destroy_chance) {
-			this->flammable = std::make_pair(catch_chance, destroy_chance);
+			this->flammable_ = std::make_pair(catch_chance, destroy_chance);
 
 			return *this;
 		}
@@ -520,7 +245,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetFriction(double value) {
-			this->friction = value;
+			this->friction_ = value;
 
 			return *this;
 		}
@@ -534,7 +259,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetLightEmission(int value) {
-			this->light_emission = value;
+			this->light_emission_ = value;
 
 			return *this;
 		}
@@ -548,7 +273,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetLoot(std::string value) {
-			this->loot = value;
+			this->loot_ = value;
 
 			return *this;
 		}
@@ -564,7 +289,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetMapColor(std::string value) {
-			this->map_color = value;
+			this->map_color_ = value;
 
 			return *this;
 		}
@@ -580,7 +305,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetMapColor(std::vector<int> value) {
-			this->map_color = value;
+			this->map_color_ = value;
 
 			return *this;
 		}
@@ -594,7 +319,7 @@ namespace adk {
 		 * @return BlockProperty
 		*/
 		BlockProperty SetTranslation(std::vector<double> value) {
-			this->translation = translation;
+			this->translation_ = translation_;
 
 			return *this;
 		}
@@ -608,7 +333,7 @@ namespace adk {
 		 * @return BlockProperty
 		*/
 		BlockProperty SetScale(std::vector<double> value) {
-			this->scale = scale;
+			this->scale_ = scale_;
 
 			return *this;
 		}
@@ -624,7 +349,7 @@ namespace adk {
 		 * @return BlockProperty
 		*/
 		BlockProperty SetRotation(std::vector<int> rotation) {
-			this->rotation = rotation;
+			this->rotation_ = rotation;
 			return *this;
 		}
 
@@ -673,7 +398,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetBoxSelection(bool value) {
-			this->box_selection = value;
+			this->box_selection_ = value;
 
 			return *this;
 		}
@@ -691,22 +416,7 @@ namespace adk {
 		 * @return BlockProperty
 		 */
 		BlockProperty SetBoxSelection(std::vector<int> origin, std::vector<int> size) {
-			this->box_selection = std::make_pair(origin, size);;
-
-			return *this;
-		}
-
-		/**
-		 * @brief Registers the block to a tab in the creative menu
-		 *
-		 * @param category Tab the block is placed under
-		 * @param group Optional - Group the block is placed into
-		 *
-		 * @return BlockProperty
-		*/
-		BlockProperty SetCreativeCategory(adk::CreativeCategory category, adk::CreativeGroup group = adk::CreativeGroup::NONE) {
-			this->creative_category = category;
-			this->creative_group = group;
+			this->box_selection_ = std::make_pair(origin, size);;
 
 			return *this;
 		}
@@ -719,7 +429,7 @@ namespace adk {
 		 * @return BlockProperty
 		*/
 		BlockProperty SetBlockPlacementFilter(BlockPlacementFilter value) {
-			this->placement_filter = value;
+			this->placement_filter_ = value;
 
 			return *this;
 		}
@@ -729,7 +439,7 @@ namespace adk {
 		 *
 		 * @return int
 		 */
-		int GetLightDampening() const { return light_dampening; }
+		int GetLightDampening() const { return light_dampening_; }
 
 		/**
 		 * @brief Gets the "crafting_table" component
@@ -743,77 +453,77 @@ namespace adk {
 		 *
 		 * @return std::variant<bool, double>
 		 */
-		std::variant<bool, double> GetDestructibleByExplosion() const { return explosion; }
+		std::variant<bool, double> GetDestructibleByExplosion() const { return explosion_; }
 
 		/**
 		 * @brief Gets the "destructible_by_mining" component
 		 *
 		 * @return std::variant<bool, double>
 		 */
-		std::variant<bool, double> GetDestructibleByMining() const { return mining; }
+		std::variant<bool, double> GetDestructibleByMining() const { return mining_; }
 
 		/**
 		 * @brief Gets the "display_name" component
 		 *
 		 * @return std::string
 		 */
-		std::string GetDisplayName() const { return display_name; }
+		std::string GetDisplayName() const { return display_name_; }
 
 		/**
 		 * @brief Gets the "flamamble" component
 		 *
 		 * @return std::variant<bool, std::pair<int, int>>
 		 */
-		std::variant<bool, std::pair<int, int>> GetFlamamble() const { return flammable; }
+		std::variant<bool, std::pair<int, int>> GetFlamamble() const { return flammable_; }
 
 		/**
 		 * @brief Gets the "friction" component
 		 *
 		 * @return double
 		 */
-		double GetFriction() const { return friction; }
+		double GetFriction() const { return friction_; }
 
 		/**
 		 * @brief Gets the "light_emission" component
 		 *
 		 * @return int
 		 */
-		int GetLightEmission() const { return light_emission; }
+		int GetLightEmission() const { return light_emission_; }
 
 		/**
 		 * @brief Gets the "loot" component
 		 *
 		 * @return std::string
 		 */
-		std::string GetLoot() const { return loot; }
+		std::string GetLoot() const { return loot_; }
 
 		/**
 		 * @brief Gets the "map_color" component
 		 *
 		 * @return std::string
 		 */
-		std::variant<std::string, std::vector<int>> GetMapColor() const { return map_color; }
+		std::variant<std::string, std::vector<int>> GetMapColor() const { return map_color_; }
 
 		/**
 		 * @brief Gets the "translation" field of "transformation" component
 		 *
 		 * @return std::vector<int>
 		 */
-		std::vector<double> GetTranslation() const { return translation; }
+		std::vector<double> GetTranslation() const { return translation_; }
 
 		/**
 		 * @brief Gets the "scale" field of "transformation" component
 		 *
 		 * @return std::vector<int>
 		 */
-		std::vector<double> GetScale() const { return scale; }
+		std::vector<double> GetScale() const { return scale_; }
 
 		/**
 		 * @brief Gets the "rotation" field of "transformation" component
 		 *
 		 * @return std::vector<int>
 		 */
-		std::vector<int> GetRotation() const { return rotation; }
+		std::vector<int> GetRotation() const { return rotation_; }
 
 		/**
 		 * @brief Gets the "collision_box" component
@@ -830,25 +540,7 @@ namespace adk {
 		 * @return std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
 		 */
 		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>> GetBoxSelection() const {
-			return box_selection;
-		}
-
-		/**
-		 * @brief Gets the Creative Category component
-		 *
-		 * @return adk::CreativeCategory
-		 */
-		adk::CreativeCategory GetCreativeCategory() const {
-			return creative_category;
-		}
-
-		/**
-		 * @brief Gets the Creative Group component
-		 *
-		 * @return adk::CreativeGroup
-		 */
-		adk::CreativeGroup GetCreativeGroup() const {
-			return creative_group;
+			return box_selection_;
 		}
 
 		/**
@@ -857,7 +549,7 @@ namespace adk {
 		 * @return std::variant<BlockPlacementFilterStates, BlockPlacementFilterTags>
 		 */
 		BlockPlacementFilter GetPlacementFilter() const {
-			return placement_filter;
+			return placement_filter_;
 		}
 
 		/**
@@ -911,8 +603,8 @@ namespace adk {
 		 *
 		 * @return BlockProperty
 		 */
-		BlockProperty SetTick(std::vector<std::string> value) {
-			this->custom_components_ = value;
+		BlockProperty SetTick(int minimum_tick, int maximum_tick, bool loop = true) {
+			this->tick_ = std::make_tuple(minimum_tick, maximum_tick, loop);
 
 			return *this;
 		}
@@ -924,26 +616,24 @@ namespace adk {
 		 */
 		std::optional<std::tuple<int, int, bool>> GetTick() const { return tick_; }
 	private:
-		int light_dampening = 15;
+		int light_dampening_ = 15;
 		BlockCraftingTable crafting_;
-		std::variant<bool, double> explosion = true;
-		std::variant<bool, double> mining = true;
-		std::string display_name;
-		std::variant<bool, std::pair<int, int>> flammable = true;
-		double friction = 0.4;
-		int light_emission;
-		std::string loot;
-		std::variant<std::string, std::vector<int>> map_color;
-		std::vector<int> rotation{ 0, 0, 0 };
-		std::vector<double> scale{ 0, 0, 0 };
-		std::vector<double> translation{ 0, 0, 0 };
+		std::variant<bool, double> explosion_ = true;
+		std::variant<bool, double> mining_ = true;
+		std::string display_name_;
+		std::variant<bool, std::pair<int, int>> flammable_ = true;
+		double friction_ = 0.4;
+		int light_emission_;
+		std::string loot_;
+		std::variant<std::string, std::vector<int>> map_color_;
+		std::vector<int> rotation_{ 0, 0, 0 };
+		std::vector<double> scale_{ 0, 0, 0 };
+		std::vector<double> translation_{ 0, 0, 0 };
 		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
 			box_collision_ = true;
 		std::variant<bool, std::pair<std::vector<int>, std::vector<int>>>
-			box_selection = true;
-		adk::CreativeCategory creative_category = adk::CreativeCategory::NONE;
-		adk::CreativeGroup creative_group = adk::CreativeGroup::NONE;
-		BlockPlacementFilter placement_filter;
+			box_selection_ = true;
+		BlockPlacementFilter placement_filter_;
 		std::vector<std::string> tags_;
 		std::vector<std::string> custom_components_;
 		std::optional<std::tuple<int, int, bool>> tick_;

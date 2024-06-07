@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
-
-#include "block_component.h"
-#include "block_plant.h"
-#include "block_property.h"
+#include "block/block_component.h"
+#include "block/block_plant.h"
+#include "block/block_property.h"
 #include "json.hpp"
 
 namespace adk {
@@ -18,7 +16,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockMushroom(BlockProperty property) : BlockPlant(property) { internal_ = property; }
+		BlockMushroom(BlockProperty property) : BlockPlant(property) {}
 
 		/**
 		 * @brief Generates the json object

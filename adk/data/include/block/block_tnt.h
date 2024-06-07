@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
-
-#include "block.h"
-#include "block_component.h"
-#include "block_property.h"
+#include "block/block.h"
+#include "block/block_component.h"
+#include "block/block_property.h"
 #include "json.hpp"
 
 namespace adk {
@@ -18,7 +16,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockTnt(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockTnt(BlockProperty property) : Block(property) {}
 
 		/**
 		 * @brief Generates the json object
@@ -32,12 +30,7 @@ namespace adk {
 		nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_ = Block::Generate(mod_id, id);
 
-			if (output_["minecraft:block"]["components"].contains("minecraft:custom_components"))
-				output_["minecraft:block"]["components"]["minecraft:custom_components"].push_back({ "adk-lib:on_player_interact_prime_tnt"});
-			else
-				output_["minecraft:block"]["components"].update(
-					helper_.CustomComponents(std::vector<std::string>{"adk-lib:on_player_interact_prime_tnt"})
-				);
+			output_["minecraft:block"]["components"] = UpdateCustomComponents(output_["minecraft:block"]["components"], { "adk-lib:on_player_interact_prime_tnt" });
 
 			return output_;
 		}
