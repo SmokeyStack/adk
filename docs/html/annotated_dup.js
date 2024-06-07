@@ -4,6 +4,8 @@ var annotated_dup =
       [ "ArmorMaterial", "classadk_1_1_armor_material.html", "classadk_1_1_armor_material" ],
       [ "ArmorMaterials", "classadk_1_1_armor_materials.html", "classadk_1_1_armor_materials" ],
       [ "Block", "classadk_1_1_block.html", "classadk_1_1_block" ],
+      [ "BlockCandle", "classadk_1_1_block_candle.html", "classadk_1_1_block_candle" ],
+      [ "BlockCandleAbstract", "classadk_1_1_block_candle_abstract.html", "classadk_1_1_block_candle_abstract" ],
       [ "BlockComponent", "classadk_1_1_block_component.html", "classadk_1_1_block_component" ],
       [ "BlockDescriptor", "structadk_1_1_block_descriptor.html", null ],
       [ "BlockExperienceDropping", "classadk_1_1_block_experience_dropping.html", "classadk_1_1_block_experience_dropping" ],

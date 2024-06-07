@@ -93,6 +93,7 @@ $(function(){initNavTree('classadk_1_1_block.html',''); initResizable(); });
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pro-methods">Protected Member Functions</a> &#124;
 <a href="#pro-attribs">Protected Attributes</a> &#124;
 <a href="classadk_1_1_block-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">adk::Block Class Reference</div></div>
@@ -109,15 +110,16 @@ Inheritance diagram for adk::Block:</div>
  <div class="center">
   <img src="classadk_1_1_block.png" usemap="#adk::Block_map" alt=""/>
   <map id="adk::Block_map" name="adk::Block_map">
-<area href="classadk_1_1_block_experience_dropping.html" title="Represents an Experience Dropping Block." alt="adk::BlockExperienceDropping" shape="rect" coords="195,56,380,80"/>
-<area href="classadk_1_1_block_ladder.html" title="Represents a Ladder Block." alt="adk::BlockLadder" shape="rect" coords="195,112,380,136"/>
-<area href="classadk_1_1_block_pillar.html" title="Represents a Pillar Block." alt="adk::BlockPillar" shape="rect" coords="195,168,380,192"/>
-<area href="classadk_1_1_block_plant.html" title="Represents a Plant Block." alt="adk::BlockPlant" shape="rect" coords="195,224,380,248"/>
-<area href="classadk_1_1_block_slab.html" title="Represents a Slab Block." alt="adk::BlockSlab" shape="rect" coords="195,280,380,304"/>
-<area href="classadk_1_1_block_stairs.html" title="Represents a Stairs Block." alt="adk::BlockStairs" shape="rect" coords="195,336,380,360"/>
-<area href="classadk_1_1_block_sugar_cane.html" title="Represents a Sugar Cane Block." alt="adk::BlockSugarCane" shape="rect" coords="195,392,380,416"/>
-<area href="classadk_1_1_block_tnt.html" title="Represents a TnT Block." alt="adk::BlockTnt" shape="rect" coords="195,448,380,472"/>
-<area href="classadk_1_1_block_torch.html" title="Represents a Torch Block." alt="adk::BlockTorch" shape="rect" coords="195,504,380,528"/>
+<area href="classadk_1_1_block_candle_abstract.html" title="Represents an Abstract Candle Block." alt="adk::BlockCandleAbstract" shape="rect" coords="195,56,380,80"/>
+<area href="classadk_1_1_block_experience_dropping.html" title="Represents an Experience Dropping Block." alt="adk::BlockExperienceDropping" shape="rect" coords="195,112,380,136"/>
+<area href="classadk_1_1_block_ladder.html" title="Represents a Ladder Block." alt="adk::BlockLadder" shape="rect" coords="195,168,380,192"/>
+<area href="classadk_1_1_block_pillar.html" title="Represents a Pillar Block." alt="adk::BlockPillar" shape="rect" coords="195,224,380,248"/>
+<area href="classadk_1_1_block_plant.html" title="Represents a Plant Block." alt="adk::BlockPlant" shape="rect" coords="195,280,380,304"/>
+<area href="classadk_1_1_block_slab.html" title="Represents a Slab Block." alt="adk::BlockSlab" shape="rect" coords="195,336,380,360"/>
+<area href="classadk_1_1_block_stairs.html" title="Represents a Stairs Block." alt="adk::BlockStairs" shape="rect" coords="195,392,380,416"/>
+<area href="classadk_1_1_block_sugar_cane.html" title="Represents a Sugar Cane Block." alt="adk::BlockSugarCane" shape="rect" coords="195,448,380,472"/>
+<area href="classadk_1_1_block_tnt.html" title="Represents a TnT Block." alt="adk::BlockTnt" shape="rect" coords="195,504,380,528"/>
+<area href="classadk_1_1_block_torch.html" title="Represents a Torch Block." alt="adk::BlockTorch" shape="rect" coords="195,560,380,584"/>
   </map>
 </div></div>
 <table class="memberdecls">
@@ -132,6 +134,12 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9a247476352c0003e0d41c3db4e0c5ec" id="r_a9a247476352c0003e0d41c3db4e0c5ec"><td class="memItemLeft" align="right" valign="top">virtual nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a9a247476352c0003e0d41c3db4e0c5ec">Generate</a> (std::string mod_id, std::string id)</td></tr>
 <tr class="memdesc:a9a247476352c0003e0d41c3db4e0c5ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the json object.  <br /></td></tr>
 <tr class="separator:a9a247476352c0003e0d41c3db4e0c5ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
+Protected Member Functions</h2></td></tr>
+<tr class="memitem:a33960bac65ce914721d0fc64bf420755" id="r_a33960bac65ce914721d0fc64bf420755"><td class="memItemLeft" align="right" valign="top"><a id="a33960bac65ce914721d0fc64bf420755" name="a33960bac65ce914721d0fc64bf420755"></a>
+nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><b>UpdateCustomComponents</b> (nlohmann::json json, std::vector&lt; std::string &gt; custom_components)</td></tr>
+<tr class="separator:a33960bac65ce914721d0fc64bf420755"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-attribs" name="pro-attribs"></a>
 Protected Attributes</h2></td></tr>
@@ -219,7 +227,7 @@ nlohmann::json&#160;</td><td class="memItemRight" valign="bottom"><b>output_</b>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>nlohmann::json </dd></dl>
 
-<p>Reimplemented in <a class="el" href="classadk_1_1_block_experience_dropping.html#acc379b964278bf2ffcbe17d291b0c48b">adk::BlockExperienceDropping</a>, <a class="el" href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">adk::BlockFlower</a>, <a class="el" href="classadk_1_1_block_ladder.html#a0da0fc5cff49d68fd68a6efdaea241ce">adk::BlockLadder</a>, <a class="el" href="classadk_1_1_block_mushroom.html#a7396c9c8dfdebbe8111d8fcd8fe3f58e">adk::BlockMushroom</a>, <a class="el" href="classadk_1_1_block_pillar.html#a90d5493e063b4437c3cb6bacd657770d">adk::BlockPillar</a>, <a class="el" href="classadk_1_1_block_plant.html#a67dc9b83a807f4d49600e4d8fbf3b66e">adk::BlockPlant</a>, <a class="el" href="classadk_1_1_block_slab.html#a54c34a297f04a5a73a9c37dc57e3d6bf">adk::BlockSlab</a>, <a class="el" href="classadk_1_1_block_stairs.html#abfbf9f489e92f72d3266f438567f1d4a">adk::BlockStairs</a>, <a class="el" href="classadk_1_1_block_sugar_cane.html#ab70b35fe4a59c9dfbf06118fb9261830">adk::BlockSugarCane</a>, <a class="el" href="classadk_1_1_block_tnt.html#aea4d0f1610c4536205d6682b5145c7ec">adk::BlockTnt</a>, and <a class="el" href="classadk_1_1_block_torch.html#a3e0680cc47ae7030a98ccf5fcddaa3af">adk::BlockTorch</a>.</p>
+<p>Reimplemented in <a class="el" href="classadk_1_1_block_candle_abstract.html#ab3642439921e15d2ba5cb0d2b7ec094c">adk::BlockCandleAbstract</a>, <a class="el" href="classadk_1_1_block_candle.html#a740231e6627d8954e096392277d351c7">adk::BlockCandle</a>, <a class="el" href="classadk_1_1_block_experience_dropping.html#acc379b964278bf2ffcbe17d291b0c48b">adk::BlockExperienceDropping</a>, <a class="el" href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">adk::BlockFlower</a>, <a class="el" href="classadk_1_1_block_ladder.html#a0da0fc5cff49d68fd68a6efdaea241ce">adk::BlockLadder</a>, <a class="el" href="classadk_1_1_block_mushroom.html#a7396c9c8dfdebbe8111d8fcd8fe3f58e">adk::BlockMushroom</a>, <a class="el" href="classadk_1_1_block_pillar.html#a90d5493e063b4437c3cb6bacd657770d">adk::BlockPillar</a>, <a class="el" href="classadk_1_1_block_plant.html#a67dc9b83a807f4d49600e4d8fbf3b66e">adk::BlockPlant</a>, <a class="el" href="classadk_1_1_block_slab.html#a54c34a297f04a5a73a9c37dc57e3d6bf">adk::BlockSlab</a>, <a class="el" href="classadk_1_1_block_stairs.html#abfbf9f489e92f72d3266f438567f1d4a">adk::BlockStairs</a>, <a class="el" href="classadk_1_1_block_sugar_cane.html#ab70b35fe4a59c9dfbf06118fb9261830">adk::BlockSugarCane</a>, <a class="el" href="classadk_1_1_block_tnt.html#aea4d0f1610c4536205d6682b5145c7ec">adk::BlockTnt</a>, and <a class="el" href="classadk_1_1_block_torch.html#a3e0680cc47ae7030a98ccf5fcddaa3af">adk::BlockTorch</a>.</p>
 
 </div>
 </div>

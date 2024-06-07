@@ -101,52 +101,50 @@ $(function(){initNavTree('block__flower_8h_source.html',''); initResizable(); })
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &lt;string&gt;</span></div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;block_component.h&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;block_plant.h&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;block_property.h&quot;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;json.hpp&quot;</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>adk {</div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classadk_1_1_block_flower.html">   14</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classadk_1_1_block_flower.html">BlockFlower</a> : <span class="keyword">public</span> <a class="code hl_class" href="classadk_1_1_block_plant.html">BlockPlant</a> {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classadk_1_1_block_flower.html#a6cdea6417dc9508bf73bfc29d70e9ada">   21</a></span>        <a class="code hl_function" href="classadk_1_1_block_flower.html#a6cdea6417dc9508bf73bfc29d70e9ada">BlockFlower</a>(<a class="code hl_class" href="classadk_1_1_block_property.html">BlockProperty</a> property) : <a class="code hl_class" href="classadk_1_1_block_plant.html">BlockPlant</a>(property) { internal_ = property; }</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="foldopen" id="foldopen00032" data-start="{" data-end="}">
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno"><a class="line" href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">   32</a></span>        nlohmann::json <a class="code hl_function" href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">Generate</a>(std::string mod_id, std::string <span class="keywordtype">id</span>) {</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            output_ = <a class="code hl_function" href="classadk_1_1_block_plant.html#a67dc9b83a807f4d49600e4d8fbf3b66e">BlockPlant::Generate</a>(mod_id, <span class="keywordtype">id</span>);</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a1746dbc3b2b7f26410fbb629dd2fe157">Translation</a>(std::vector&lt;double&gt;{0.0, -0.0625, 0.0})</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            );</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">BoxCollision</a>(<span class="keyword">false</span>)</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            );</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">BoxSelection</a>(</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                    std::vector&lt;int&gt;{-3, 0, -3}, </div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                    std::vector&lt;int&gt;{6, 10, 6},</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                    <span class="keywordtype">id</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                )</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            );</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <span class="keywordflow">return</span> output_;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        }</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="preprocessor">#include &quot;block/block_component.h&quot;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;block/block_plant.h&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;block/block_property.h&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;json.hpp&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>adk {</div>
+<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classadk_1_1_block_flower.html">   12</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classadk_1_1_block_flower.html">BlockFlower</a> : <span class="keyword">public</span> <a class="code hl_class" href="classadk_1_1_block_plant.html">BlockPlant</a> {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="classadk_1_1_block_flower.html#a6cdea6417dc9508bf73bfc29d70e9ada">   19</a></span>        <a class="code hl_function" href="classadk_1_1_block_flower.html#a6cdea6417dc9508bf73bfc29d70e9ada">BlockFlower</a>(<a class="code hl_class" href="classadk_1_1_block_property.html">BlockProperty</a> property) : <a class="code hl_class" href="classadk_1_1_block_plant.html">BlockPlant</a>(property) {}</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
+<div class="foldopen" id="foldopen00030" data-start="{" data-end="}">
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">   30</a></span>        nlohmann::json <a class="code hl_function" href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">Generate</a>(std::string mod_id, std::string <span class="keywordtype">id</span>) {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            output_ = <a class="code hl_function" href="classadk_1_1_block_plant.html#a67dc9b83a807f4d49600e4d8fbf3b66e">BlockPlant::Generate</a>(mod_id, <span class="keywordtype">id</span>);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a1746dbc3b2b7f26410fbb629dd2fe157">Translation</a>(std::vector&lt;double&gt;{0.0, -0.0625, 0.0})</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            );</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">BoxCollision</a>(<span class="keyword">false</span>)</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            );</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            output_[<span class="stringliteral">&quot;minecraft:block&quot;</span>][<span class="stringliteral">&quot;components&quot;</span>].update(</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                helper_.<a class="code hl_function" href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">BoxSelection</a>(</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                    std::vector&lt;int&gt;{-3, 0, -3},</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                    std::vector&lt;int&gt;{6, 10, 6},</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                    <span class="keywordtype">id</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                )</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            );</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keywordflow">return</span> output_;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        }</div>
 </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    };</div>
 </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>} <span class="comment">// namespace adk</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>} <span class="comment">// namespace adk</span></div>
 <div class="ttc" id="aclassadk_1_1_block_component_html_a1746dbc3b2b7f26410fbb629dd2fe157"><div class="ttname"><a href="classadk_1_1_block_component.html#a1746dbc3b2b7f26410fbb629dd2fe157">adk::BlockComponent::Translation</a></div><div class="ttdeci">nlohmann::json::object_t Translation(std::vector&lt; double &gt; value)</div><div class="ttdoc">Creates the &quot;translation&quot; key for the &quot;transformation&quot; component Transformed geometries still have th...</div><div class="ttdef"><b>Definition</b> block_component.h:275</div></div>
 <div class="ttc" id="aclassadk_1_1_block_component_html_a2351befb708949467c10153bf4dfa09c"><div class="ttname"><a href="classadk_1_1_block_component.html#a2351befb708949467c10153bf4dfa09c">adk::BlockComponent::BoxCollision</a></div><div class="ttdeci">nlohmann::json::object_t BoxCollision(bool value)</div><div class="ttdoc">Creates the &quot;collision_box&quot; component.</div><div class="ttdef"><b>Definition</b> block_component.h:307</div></div>
 <div class="ttc" id="aclassadk_1_1_block_component_html_ade5e70daf06503511ec03e69b3ab7f75"><div class="ttname"><a href="classadk_1_1_block_component.html#ade5e70daf06503511ec03e69b3ab7f75">adk::BlockComponent::BoxSelection</a></div><div class="ttdeci">nlohmann::json::object_t BoxSelection(bool value)</div><div class="ttdoc">Creates the &quot;selection_box&quot; component.</div><div class="ttdef"><b>Definition</b> block_component.h:345</div></div>
-<div class="ttc" id="aclassadk_1_1_block_flower_html"><div class="ttname"><a href="classadk_1_1_block_flower.html">adk::BlockFlower</a></div><div class="ttdoc">Represents a Flower Block.</div><div class="ttdef"><b>Definition</b> block_flower.h:14</div></div>
-<div class="ttc" id="aclassadk_1_1_block_flower_html_a6cdea6417dc9508bf73bfc29d70e9ada"><div class="ttname"><a href="classadk_1_1_block_flower.html#a6cdea6417dc9508bf73bfc29d70e9ada">adk::BlockFlower::BlockFlower</a></div><div class="ttdeci">BlockFlower(BlockProperty property)</div><div class="ttdoc">Construct a new Flower Block object.</div><div class="ttdef"><b>Definition</b> block_flower.h:21</div></div>
-<div class="ttc" id="aclassadk_1_1_block_flower_html_ac8b3a3b6223a1103d2066cb8628f4d16"><div class="ttname"><a href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">adk::BlockFlower::Generate</a></div><div class="ttdeci">nlohmann::json Generate(std::string mod_id, std::string id)</div><div class="ttdoc">Generates the json object.</div><div class="ttdef"><b>Definition</b> block_flower.h:32</div></div>
-<div class="ttc" id="aclassadk_1_1_block_plant_html"><div class="ttname"><a href="classadk_1_1_block_plant.html">adk::BlockPlant</a></div><div class="ttdoc">Represents a Plant Block.</div><div class="ttdef"><b>Definition</b> block_plant.h:15</div></div>
-<div class="ttc" id="aclassadk_1_1_block_plant_html_a67dc9b83a807f4d49600e4d8fbf3b66e"><div class="ttname"><a href="classadk_1_1_block_plant.html#a67dc9b83a807f4d49600e4d8fbf3b66e">adk::BlockPlant::Generate</a></div><div class="ttdeci">nlohmann::json Generate(std::string mod_id, std::string id)</div><div class="ttdoc">Generates the json object.</div><div class="ttdef"><b>Definition</b> block_plant.h:34</div></div>
-<div class="ttc" id="aclassadk_1_1_block_property_html"><div class="ttname"><a href="classadk_1_1_block_property.html">adk::BlockProperty</a></div><div class="ttdoc">Represents block properties such as destroy speed, loot, etc.</div><div class="ttdef"><b>Definition</b> block_property.h:389</div></div>
+<div class="ttc" id="aclassadk_1_1_block_flower_html"><div class="ttname"><a href="classadk_1_1_block_flower.html">adk::BlockFlower</a></div><div class="ttdoc">Represents a Flower Block.</div><div class="ttdef"><b>Definition</b> block_flower.h:12</div></div>
+<div class="ttc" id="aclassadk_1_1_block_flower_html_a6cdea6417dc9508bf73bfc29d70e9ada"><div class="ttname"><a href="classadk_1_1_block_flower.html#a6cdea6417dc9508bf73bfc29d70e9ada">adk::BlockFlower::BlockFlower</a></div><div class="ttdeci">BlockFlower(BlockProperty property)</div><div class="ttdoc">Construct a new Flower Block object.</div><div class="ttdef"><b>Definition</b> block_flower.h:19</div></div>
+<div class="ttc" id="aclassadk_1_1_block_flower_html_ac8b3a3b6223a1103d2066cb8628f4d16"><div class="ttname"><a href="classadk_1_1_block_flower.html#ac8b3a3b6223a1103d2066cb8628f4d16">adk::BlockFlower::Generate</a></div><div class="ttdeci">nlohmann::json Generate(std::string mod_id, std::string id)</div><div class="ttdoc">Generates the json object.</div><div class="ttdef"><b>Definition</b> block_flower.h:30</div></div>
+<div class="ttc" id="aclassadk_1_1_block_plant_html"><div class="ttname"><a href="classadk_1_1_block_plant.html">adk::BlockPlant</a></div><div class="ttdoc">Represents a Plant Block.</div><div class="ttdef"><b>Definition</b> block_plant.h:13</div></div>
+<div class="ttc" id="aclassadk_1_1_block_plant_html_a67dc9b83a807f4d49600e4d8fbf3b66e"><div class="ttname"><a href="classadk_1_1_block_plant.html#a67dc9b83a807f4d49600e4d8fbf3b66e">adk::BlockPlant::Generate</a></div><div class="ttdeci">nlohmann::json Generate(std::string mod_id, std::string id)</div><div class="ttdoc">Generates the json object.</div><div class="ttdef"><b>Definition</b> block_plant.h:32</div></div>
+<div class="ttc" id="aclassadk_1_1_block_property_html"><div class="ttname"><a href="classadk_1_1_block_property.html">adk::BlockProperty</a></div><div class="ttdoc">Represents block properties such as destroy speed, loot, etc.</div><div class="ttdef"><b>Definition</b> block_property.h:114</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

@@ -4,6 +4,9 @@ var hierarchy =
       [ "adk::ArmorMaterials", "classadk_1_1_armor_materials.html", null ]
     ] ],
     [ "adk::Block", "classadk_1_1_block.html", [
+      [ "adk::BlockCandleAbstract", "classadk_1_1_block_candle_abstract.html", [
+        [ "adk::BlockCandle", "classadk_1_1_block_candle.html", null ]
+      ] ],
       [ "adk::BlockExperienceDropping", "classadk_1_1_block_experience_dropping.html", null ],
       [ "adk::BlockLadder", "classadk_1_1_block_ladder.html", null ],
       [ "adk::BlockPillar", "classadk_1_1_block_pillar.html", null ],
