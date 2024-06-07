@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
-
-#include "block.h"
-#include "block_component.h"
-#include "block_property.h"
+#include "block/block.h"
+#include "block/block_component.h"
+#include "block/block_property.h"
 #include "json.hpp"
 
 namespace adk {
@@ -18,7 +16,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockStairs(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockStairs(BlockProperty property) : Block(property) {}
 
 		/**
 		 * @brief Generates the json object
@@ -36,13 +34,7 @@ namespace adk {
 			output_["minecraft:block"]["description"]["traits"]["minecraft:placement_direction"]["enabled_states"] = { "minecraft:cardinal_direction" };
 			output_["minecraft:block"]["description"]["states"][mod_id + ":shape"] = { "straight", "inner_left","inner_right","outer_left","outer_right" };
 			output_["minecraft:block"]["description"]["states"][mod_id + ":south"] = { false, true };
-
-			if (output_["minecraft:block"]["components"].contains("minecraft:custom_components"))
-				output_["minecraft:block"]["components"]["minecraft:custom_components"].push_back({ "adk-lib:before_on_player_place_stairs" });
-			else
-				output_["minecraft:block"]["components"].update(
-					helper_.CustomComponents(std::vector<std::string>{"adk-lib:before_on_player_place_stairs"})
-				);
+			output_["minecraft:block"]["components"] = UpdateCustomComponents(output_["minecraft:block"]["components"], { "adk-lib:before_on_player_place_stairs" });
 
 			return output_;
 		}

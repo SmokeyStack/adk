@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
-
-#include "block.h"
-#include "block_component.h"
-#include "block_property.h"
+#include "block/block.h"
+#include "block/block_component.h"
+#include "block/block_property.h"
 #include "json.hpp"
 
 namespace adk {
@@ -18,7 +16,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockTorch(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockTorch(BlockProperty property) : Block(property) {}
 
 		/**
 		 * @brief Generates the json object
@@ -100,15 +98,7 @@ namespace adk {
 			output_["minecraft:block"]["components"].update(
 				helper_.Tick(20, 20, true)
 			);
-			
-			if (output_["minecraft:block"]["components"].contains("minecraft:custom_components"))
-				output_["minecraft:block"]["components"].update(
-					helper_.CustomComponents({ "adk-lib:on_tick_torch_particles" })
-				);
-			else
-				output_["minecraft:block"]["components"].update(
-					helper_.CustomComponents({ "adk-lib:on_tick_torch_particles" })
-				);
+			output_["minecraft:block"]["components"] = UpdateCustomComponents(output_["minecraft:block"]["components"], { "adk-lib:on_tick_torch_particles" });
 
 			return output_;
 		}

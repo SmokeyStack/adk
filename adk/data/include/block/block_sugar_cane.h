@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
-
-#include "block.h"
-#include "block_component.h"
-#include "block_property.h"
+#include "block/block.h"
+#include "block/block_component.h"
+#include "block/block_property.h"
 #include "json.hpp"
 #include "shared_construct.h"
 
@@ -19,7 +17,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockSugarCane(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockSugarCane(BlockProperty property) : Block(property) {}
 
 		/**
 		 * @brief Generates the json object
@@ -46,12 +44,7 @@ namespace adk {
 			output_["minecraft:block"]["components"].update(
 				helper_.PlacementFilter(filter)
 			);
-			if (output_["minecraft:block"]["components"].contains("minecraft:custom_components"))
-				output_["minecraft:block"]["components"]["minecraft:custom_components"].push_back({ "adk-lib:before_on_player_place_sugar_cane","adk-lib:on_random_tick_sugar_cane" });
-			else
-				output_["minecraft:block"]["components"].update(
-					helper_.CustomComponents(std::vector<std::string>{"adk-lib:before_on_player_place_sugar_cane", "adk-lib:on_random_tick_sugar_cane"})
-				);
+			output_["minecraft:block"]["components"] = UpdateCustomComponents(output_["minecraft:block"]["components"], { "adk-lib:before_on_player_place_sugar_cane","adk-lib:on_random_tick_sugar_cane" });
 
 			return output_;
 		}

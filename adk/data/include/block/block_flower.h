@@ -1,10 +1,8 @@
 #pragma once
 
-#include <string>
-
-#include "block_component.h"
-#include "block_plant.h"
-#include "block_property.h"
+#include "block/block_component.h"
+#include "block/block_plant.h"
+#include "block/block_property.h"
 #include "json.hpp"
 
 namespace adk {
@@ -18,7 +16,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockFlower(BlockProperty property) : BlockPlant(property) { internal_ = property; }
+		BlockFlower(BlockProperty property) : BlockPlant(property) {}
 
 		/**
 		 * @brief Generates the json object
@@ -40,7 +38,7 @@ namespace adk {
 			);
 			output_["minecraft:block"]["components"].update(
 				helper_.BoxSelection(
-					std::vector<int>{-3, 0, -3}, 
+					std::vector<int>{-3, 0, -3},
 					std::vector<int>{6, 10, 6},
 					id
 				)

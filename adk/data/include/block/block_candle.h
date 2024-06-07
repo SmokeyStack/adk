@@ -1,19 +1,15 @@
 #pragma once
 
-#include <string>
-
-#include "block.h"
 #include "block/block_abstract_candle.h"
-#include "block_component.h"
-#include "block_property.h"
+#include "block/block_component.h"
+#include "block/block_property.h"
 #include "json.hpp"
-#include "shared_construct.h"
 
 namespace adk {
 	/**
 	 * @brief Represents a Candle Block
 	 */
-	class BlockCandle: public BlockCandleAbstract {
+	class BlockCandle : public BlockCandleAbstract {
 	public:
 		/**
 		 * @brief Construct a new Plant Block object
@@ -110,10 +106,6 @@ namespace adk {
 			output_["minecraft:block"]["permutations"].push_back(temp);
 			for (const auto& [key, value] : output_["minecraft:block"]["permutations"].items()) {
 				if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:lit')\"", fmt::arg("namespace", mod_id))) {
-					/*value["components"].update(
-						helper_.CustomComponents({ "adk-lib:on_player_interact_candle" })
-					);*/
-
 					value["components"] = UpdateCustomComponents(value["components"], { "adk-lib:on_player_interact_candle" });
 				}
 			}
