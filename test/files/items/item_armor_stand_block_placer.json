@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:block_placer":{"block":"minecraft:bedrock"},"minecraft:entity_placer":{"entity":"minecraft:armor_stand"}},"description":{"identifier":"custom_namespace:item_armor_stand_block_placer"}}}
+{"format_version":"1.21.10","minecraft:item":{"components":{"minecraft:block_placer":{"block":"minecraft:bedrock"},"minecraft:entity_placer":{"entity":"minecraft:armor_stand"}},"description":{"identifier":"custom_namespace:item_armor_stand_block_placer"}}}

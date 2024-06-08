@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:enchantable":{"slot":"sword","value":255}},"description":{"identifier":"custom_namespace:item_basic_enchantable"}}}
+{"format_version":"1.21.10","minecraft:item":{"components":{"minecraft:enchantable":{"slot":"sword","value":255}},"description":{"identifier":"custom_namespace:item_basic_enchantable"}}}

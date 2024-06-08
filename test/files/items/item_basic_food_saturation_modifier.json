@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:food":{"saturation_modifier":1.0}},"description":{"identifier":"custom_namespace:item_basic_food_saturation_modifier"}}}
+{"format_version":"1.21.10","minecraft:item":{"components":{"minecraft:food":{"saturation_modifier":1.0}},"description":{"identifier":"custom_namespace:item_basic_food_saturation_modifier"}}}
