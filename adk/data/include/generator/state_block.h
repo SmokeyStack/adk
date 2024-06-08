@@ -476,7 +476,6 @@ namespace adk {
 		}
 
 		output["minecraft:block"]["components"].update(TranslateMaterialInstances(textures));
-		/*output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "minecraft:geometry.full_block";*/
 		for (const auto& [key, value] : output["minecraft:block"]["permutations"].items()) {
 			if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:candles') == 1\"", fmt::arg("namespace", id)))
 				value["components"]["minecraft:geometry"]["identifier"] = "geometry.candle_one_adk";
