@@ -104,6 +104,13 @@ namespace adk {
 				)
 			);
 			output_["minecraft:block"]["permutations"].push_back(temp);
+			for (int a = 1; a < 5; a++) {
+				temp = { {"condition",fmt::format("q.block_state('{namespace}:lit') && q.block_state('{namespace}:candles') == {amount}", fmt::arg("namespace", mod_id), fmt::arg("amount", a)) } };
+				temp["components"].update(
+					helper_.LightEmission(3 * a, id)
+				);
+				output_["minecraft:block"]["permutations"].push_back(temp);
+			}
 			for (const auto& [key, value] : output_["minecraft:block"]["permutations"].items()) {
 				if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:lit')\"", fmt::arg("namespace", mod_id))) {
 					value["components"] = UpdateCustomComponents(value["components"], { "adk-lib:on_player_interact_candle" });
