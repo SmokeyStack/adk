@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "block/block.h"
 #include "block/block_component.h"
 #include "block/block_property.h"
@@ -18,7 +20,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockPlant(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockPlant(BlockProperty property) : Block(property) {}
 
 		/**
 		 * @brief Generates the json object
