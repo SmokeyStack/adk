@@ -17,7 +17,7 @@ namespace adk {
 	static void to_json(nlohmann::json& j, const BlockDescriptor& p) {
 		if (!p.tags.empty()) {
 			std::string query;
-			for each (std::string var in p.tags) {
+			for (std::string var : p.tags) {
 				query.append("'" + var + "',");
 			}
 			query.pop_back();
@@ -30,7 +30,7 @@ namespace adk {
 
 		for (auto const& [key, val] : p.states) {
 			if (std::holds_alternative<std::string>(val)) {
-				j["states"].update({{key, std::get<std::string>(val)}});
+				j["states"].update({ {key, std::get<std::string>(val)} });
 			}
 			else if (std::holds_alternative<int>(val)) {
 				j["states"].update({ { key, std::get<int>(val)} });
