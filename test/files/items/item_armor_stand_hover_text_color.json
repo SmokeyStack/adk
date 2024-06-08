@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand"},"minecraft:hover_text_color":{"value":"green"}},"description":{"identifier":"custom_namespace:item_armor_stand_hover_text_color"}}}
+{"format_version":"1.21.10","minecraft:item":{"components":{"minecraft:entity_placer":{"entity":"minecraft:armor_stand"},"minecraft:hover_text_color":{"value":"green"}},"description":{"identifier":"custom_namespace:item_armor_stand_hover_text_color"}}}

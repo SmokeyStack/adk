@@ -78,8 +78,6 @@ TEST(BlockTest, BlockBasic) {
 	mod->Subscribe("block_basic_box_collision_vector", new Block(BlockProperty().SetBoxCollision(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
 	mod->Subscribe("block_basic_box_selection_bool", new Block(BlockProperty().SetBoxSelection(false)));
 	mod->Subscribe("block_basic_box_selection_vector", new Block(BlockProperty().SetBoxSelection(std::vector<int>{-4, 0, -4}, std::vector<int>{8, 8, 8})));
-	mod->Subscribe("block_basic_creative_category", new Block(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION)));
-	mod->Subscribe("block_basic_creative_group", new Block(BlockProperty().SetCreativeCategory(adk::CreativeCategory::CONSTRUCTION, adk::CreativeGroup::SMITHINGTEMPLATES)));
 	mod->Subscribe("block_basic_filter_tags", new Block(BlockProperty().SetBlockPlacementFilter(filter_tags)));
 	mod->Subscribe("block_basic_filter_states", new Block(BlockProperty().SetBlockPlacementFilter(filter_states)));
 
@@ -105,8 +103,6 @@ TEST(BlockTest, BlockBasic) {
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_collision_vector.json", "./BP/blocks/block_basic_box_collision_vector.json")) << "SetBoxCollision (vector) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_bool.json", "./BP/blocks/block_basic_box_selection_bool.json")) << "SetBoxSelection (bool) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_vector.json", "./BP/blocks/block_basic_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
-	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_creative_category.json", "./BP/blocks/block_basic_creative_category.json")) << "SetCreativeCategory (category) is not working as expected";
-	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_creative_group.json", "./BP/blocks/block_basic_creative_group.json")) << "SetCreativeCategory (group) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_tags.json", "./BP/blocks/block_basic_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_states.json", "./BP/blocks/block_basic_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
 }

@@ -1,1 +1,1 @@
-{"format_version":"1.20.80","minecraft:item":{"components":{"minecraft:food":{"can_always_eat":true}},"description":{"identifier":"custom_namespace:item_basic_food_can_always_eat"}}}
+{"format_version":"1.21.10","minecraft:item":{"components":{"minecraft:food":{"can_always_eat":true}},"description":{"identifier":"custom_namespace:item_basic_food_can_always_eat"}}}
