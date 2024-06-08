@@ -1,10 +1,10 @@
 #include <gtest/gtest.h>
 
+#include <algorithm>
 #include <filesystem>
 #include <iostream>
 #include <string>
 #include <vector>
-#include <algorithm>
 
 #include "CheckFile.h"
 #include "item/armor_materials.h"
@@ -12,8 +12,8 @@
 #include "item/item_armor.h"
 #include "item/item_armor_stand.h"
 #include "item/item_pickaxe.h"
-#include "item/tool_materials.h"
 #include "item/item_property.h"
+#include "item/tool_materials.h"
 #include "registry.h"
 #include "registry_global.h"
 #include "shared_construct.h"
