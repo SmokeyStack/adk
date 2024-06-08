@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "block/block.h"
 #include "block/block_component.h"
 #include "block/block_property.h"
@@ -13,11 +15,11 @@ namespace adk {
 	public:
 		BlockCandleAbstract() {};
 		/**
-		 * @brief Construct a new Plant Block object
+		 * @brief Construct a new Abstract Candle Block object
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockCandleAbstract(BlockProperty property) : Block(property) { internal_ = property; }
+		BlockCandleAbstract(BlockProperty property) : Block(property) {}
 
 		/**
 		 * @brief Generates the json object

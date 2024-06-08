@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 #include "block/block_component.h"
 #include "block/block_plant.h"
 #include "block/block_property.h"
