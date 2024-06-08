@@ -16,17 +16,17 @@ namespace adk {
 		ItemToolMining() {};
 		/**
 		 * @brief Construct a new Mining Tool Item object
-		 * 
+		 *
 		 * @param attack_damage Attack damage of the Item.
 		 *
 		 * @param material ToolMaterial of the Item.
-		 * 
+		 *
 		 * @param effective_blocks List of blocks that the tool can mine.
 		 *
 		 * @param property ItemProperty.
 		 */
 		ItemToolMining(float attack_damage, ToolMaterial* material, std::vector<std::string> effective_blocks, ItemProperty property)
-		:ItemTool(material, property) {
+			:ItemTool(material, property) {
 			effective_blocks_ = effective_blocks;
 			attack_damage_ = attack_damage;
 		}
@@ -46,7 +46,7 @@ namespace adk {
 			ItemDigger digger;
 			ItemDiggerDestroySpeeds destroy_speeds;
 
-			for each (std::string block in effective_blocks_){
+			for (std::string block : effective_blocks_) {
 				destroy_speeds.block = block;
 				destroy_speeds.speed = material_->GetMiningSpeed();
 				digger.destroy_speeds.push_back(destroy_speeds);

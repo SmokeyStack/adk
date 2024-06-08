@@ -32,7 +32,7 @@ namespace adk {
 		nlohmann::json Generate(std::string mod_id, std::string id) {
 			output_ = Item::Generate(mod_id, id);
 			ItemShooter shooter;
-			for each (std::string projectile in PROJECTILES_CROSSBOW) {
+			for (std::string projectile : PROJECTILES_CROSSBOW) {
 				ItemShooterAmmunition ammunition;
 				ammunition.item = projectile;
 				ammunition.search_inventory = true;

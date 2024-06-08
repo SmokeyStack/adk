@@ -91,11 +91,11 @@ namespace adk {
 
 		void to_json(nlohmann::json& j, const BlockPlacementFilter& p) {
 			std::vector<std::string> allowed_faces;
-			for each (BlockAllowedFaces var in p.allowed_faces) {
+			for (BlockAllowedFaces var : p.allowed_faces) {
 				allowed_faces.push_back(GetBlockAllowedFaces(var));
 			}
 			nlohmann::json j2 = nlohmann::json::array();
-			for each (auto entries in p.block_filter) {
+			for (auto& entries : p.block_filter) {
 				if (std::holds_alternative<std::string>(entries)) {
 					j2.push_back(std::get<std::string>(entries));
 				}
