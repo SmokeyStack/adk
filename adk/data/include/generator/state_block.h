@@ -110,7 +110,7 @@ namespace adk {
 			TempFile >> output;
 		}
 
-		output["minecraft:block"]["components"] = TranslateMaterialInstances(textures);
+		output["minecraft:block"]["components"].update(TranslateMaterialInstances(textures));
 		output["minecraft:block"]["components"]["minecraft:geometry"]["identifier"] = "minecraft:geometry.full_block";
 
 		{
