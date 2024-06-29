@@ -2,8 +2,8 @@
 
 #include <string>
 
-#include "block/block_component.h"
-#include "block/block_property.h"
+#include "block/component/property.h"
+#include "block/component/base.h"
 #include "json.hpp"
 
 namespace adk {
@@ -12,13 +12,6 @@ namespace adk {
 	 */
 	class Block {
 	public:
-		/**
-		 * @brief Returns the type of the object
-		 *
-		 * @return std::string
-		 */
-		std::string GetType() { return "block"; };
-
 		Block() {};
 
 		/**
@@ -26,7 +19,14 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		Block(BlockProperty property) { internal_ = property; }
+		Block(Property property);
+
+		/**
+		 * @brief Returns the type of the object
+		 *
+		 * @return std::string
+		 */
+		std::string GetType();
 
 		/**
 		 * @brief Generates the json object
@@ -37,7 +37,8 @@ namespace adk {
 		 *
 		 * @return nlohmann::json
 		 */
-		virtual nlohmann::json Generate(std::string mod_id, std::string id) {
+		virtual nlohmann::json Generate(std::string mod_id, std::string id);
+			/*
 			output_["format_version"] = "1.21.10";
 			output_["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
 			nlohmann::json temp;
@@ -206,20 +207,20 @@ namespace adk {
 			}
 
 			return output_;
-		}
+			*/
 	protected:
-		BlockProperty internal_;
-		BlockComponent helper_;
+		Property internal_;
+		std::vector<Component*> components_;
 		nlohmann::json output_;
 
-		nlohmann::json UpdateCustomComponents(nlohmann::json json, std::vector<std::string> custom_components) {
+		/*nlohmann::json UpdateCustomComponents(nlohmann::json json, std::vector<std::string> custom_components) {
 			if (json.contains("minecraft:custom_components")) {
-				for(const auto& component : custom_components)
-				json["minecraft:custom_components"].push_back(component);
+				for (const auto& component : custom_components)
+					json["minecraft:custom_components"].push_back(component);
 			}
 			else json.update(helper_.CustomComponents(custom_components));
 
 			return json;
-		};
+		};*/
 	};
 } // namespace adk
