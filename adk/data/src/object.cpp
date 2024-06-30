@@ -17,7 +17,7 @@ namespace adk {
 		registry_global.push_back(blocks);
 		registry_global.push_back(items);
 
-		blocks->Subscribe("custom_block", new Block(BlockProperty()));
+		//blocks->Subscribe("custom_block", new Block(BlockProperty()));
 		items->Subscribe("custom_item", new Item(ItemProperty()));
 	}
 } // namespace adk

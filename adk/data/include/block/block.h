@@ -2,7 +2,6 @@
 
 #include <string>
 
-#include "block/component/property.h"
 #include "block/component/base.h"
 #include "json.hpp"
 
@@ -13,13 +12,6 @@ namespace adk {
 	class Block {
 	public:
 		Block() {};
-
-		/**
-		 * @brief Construct a new Block object
-		 *
-		 * @param property BlockProperty
-		 */
-		Block(Property property);
 
 		/**
 		 * @brief Returns the type of the object
@@ -38,6 +30,8 @@ namespace adk {
 		 * @return nlohmann::json
 		 */
 		virtual nlohmann::json Generate(std::string mod_id, std::string id);
+
+		Block& AddComponent(std::unique_ptr<Component> component);
 			/*
 			output_["format_version"] = "1.21.10";
 			output_["minecraft:block"]["description"]["identifier"] = mod_id + ":" + id;
@@ -209,8 +203,7 @@ namespace adk {
 			return output_;
 			*/
 	protected:
-		Property internal_;
-		std::vector<Component*> components_;
+		std::vector<std::unique_ptr<Component>> components_;
 		nlohmann::json output_;
 
 		/*nlohmann::json UpdateCustomComponents(nlohmann::json json, std::vector<std::string> custom_components) {

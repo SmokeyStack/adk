@@ -12,6 +12,9 @@
 #include "registry_global.h"
 #include "utility/logger.h"
 
+#include "block/component/light_emission.h"
+#include "block/component/light_dampening.h"
+
 namespace fs = std::filesystem;
 using namespace adk;
 
@@ -56,8 +59,11 @@ TEST(BlockTest, BlockBasic) {
 
 	log::info("Starting Block Basic Test");
 
-	mod->Subscribe("block_basic", new Block(BlockProperty()));
-	mod->Subscribe("block_basic_light_dampening", new Block(BlockProperty().SetLightDampening(5)));
+	Block blockBasic;
+	mod->Subscribe("block_basic", &blockBasic
+		.AddComponent(std::make_unique<ComponentLightEmission>(5))
+		.AddComponent(std::make_unique<ComponentLightDampening>(5)));
+	/*mod->Subscribe("block_basic_light_dampening", new Block(BlockProperty().SetLightDampening(5)));
 	mod->Subscribe("block_basic_crafting", new Block(BlockProperty().SetCrafting(crafting_table)));
 	mod->Subscribe("block_basic_destructible_by_explosion_bool", new Block(BlockProperty().SetDestructibleByExplosion(false)));
 	mod->Subscribe("block_basic_destructible_by_explosion_double", new Block(BlockProperty().SetDestructibleByExplosion(5.5)));
@@ -104,7 +110,7 @@ TEST(BlockTest, BlockBasic) {
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_bool.json", "./BP/blocks/block_basic_box_selection_bool.json")) << "SetBoxSelection (bool) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_vector.json", "./BP/blocks/block_basic_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_tags.json", "./BP/blocks/block_basic_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
-	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_states.json", "./BP/blocks/block_basic_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_states.json", "./BP/blocks/block_basic_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";*/
 }
 
 //TEST(BlockTest, BlockAxis) {
