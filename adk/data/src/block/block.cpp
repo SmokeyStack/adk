@@ -14,7 +14,7 @@ namespace adk {
 		block["components"] = nlohmann::json::object();
 
 		for (const auto& component : internal_.GetComponents()) {
-			log::info("Generating '{}' component", component->GetType());
+			//log::info("\tApplying '{}' component", component->GetType());
 			block["components"].update(component->Generate());
 		}
 
