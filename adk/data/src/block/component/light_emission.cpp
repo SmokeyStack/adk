@@ -4,10 +4,11 @@
 
 namespace adk {
 	nlohmann::json::object_t ComponentLightEmission::Generate() {
-		if (value_ > 15 || value_ < 0) {
-			log::error("\t'minecraft:light_emission' can only be in range(0 - 15). Current value provided: {}", value_);
-			exit(EXIT_FAILURE);
-		}
+		if (value_ > 15 || value_ < 0)
+			throw std::runtime_error(fmt::format(
+				"'minecraft:light_emission' can only be in range(0 - 15). Current value provided: {}",
+				value_
+			));
 
 		nlohmann::json::object_t output = { {"minecraft:light_emission", value_} };
 

@@ -12,8 +12,13 @@ namespace adk {
 		block["components"] = nlohmann::json::object();
 
 		for (const auto& component : components_) {
-			//log::info("\tApplying '{}' component", component->GetType());
-			block["components"].update(component->Generate());
+			try {
+				block["components"].update(component->Generate());
+			}
+			catch (const std::exception& error) {
+				log::error("    {}", error.what());
+				exit(EXIT_FAILURE);
+			}
 		}
 
 		return output_;
