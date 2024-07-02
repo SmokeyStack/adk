@@ -1,16 +1,15 @@
 #pragma once
 
-#include "block/component/base.h"
-#include "json.hpp"
+#include "component.h"
 
 namespace adk {
-	class ComponentLightDampening : public Component {
+	class ComponentBlockLightDampening : public Component {
 	public:
-		ComponentLightDampening(int value) { value_ = value; }
-		~ComponentLightDampening() {}
+		ComponentBlockLightDampening(int light_dampening) : light_dampening_(light_dampening) {}
+		~ComponentBlockLightDampening() {}
 		nlohmann::json::object_t Generate() override;
 		std::string GetType() override;
 	private:
-		int value_ = 15;
+		int light_dampening_ = 15;
 	};
 } // namespace adk

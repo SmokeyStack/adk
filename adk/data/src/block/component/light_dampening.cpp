@@ -3,16 +3,16 @@
 #include "utility/logger.h"
 
 namespace adk {
-	nlohmann::json::object_t ComponentLightDampening::Generate() {
-		if (value_ > 15 || value_ < 0)
+	nlohmann::json::object_t ComponentBlockLightDampening::Generate() {
+		if (light_dampening_ > 15 || light_dampening_ < 0)
 			throw std::runtime_error(fmt::format(
 				"'minecraft:light_dampening' can only be in range(0 - 15). Current value provided: {}",
-				value_
+				light_dampening_
 			));
 
-		nlohmann::json::object_t output = { {"minecraft:light_dampening", value_} };
+		nlohmann::json::object_t output = { {"minecraft:light_dampening", light_dampening_} };
 
 		return output;
 	}
-	std::string ComponentLightDampening::GetType() { return "minecraft:light_dampening"; }
+	std::string ComponentBlockLightDampening::GetType() { return "minecraft:light_dampening"; }
 } // namespace adk

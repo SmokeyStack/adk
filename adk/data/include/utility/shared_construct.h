@@ -40,4 +40,38 @@ namespace adk {
 			}
 		}
 	}
+
+	enum class BlockFaces {
+		UP,
+		DOWN,
+		NORTH,
+		EAST,
+		SOUTH,
+		WEST,
+		SIDE,
+		ALL
+	};
+
+	inline std::string BlockFacesToString(BlockFaces face) {
+		switch (face) {
+		case BlockFaces::UP:
+			return "up";
+		case BlockFaces::DOWN:
+			return "down";
+		case BlockFaces::NORTH:
+			return "north";
+		case BlockFaces::EAST:
+			return "east";
+		case BlockFaces::SOUTH:
+			return "south";
+		case BlockFaces::WEST:
+			return "west";
+		case BlockFaces::SIDE:
+			return "side";
+		case BlockFaces::ALL:
+			return "all";
+		default:
+			throw std::runtime_error(fmt::format("Invalid BlockFaces value provided: {}", static_cast<int>(face)));
+		}
+	}
 } // namespace adk

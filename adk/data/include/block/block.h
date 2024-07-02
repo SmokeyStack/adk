@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "block/component/base.h"
+#include "component.h"
 #include "json.hpp"
 
 namespace adk {
