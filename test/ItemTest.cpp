@@ -16,7 +16,7 @@
 #include "item/tool_materials.h"
 #include "registry.h"
 #include "registry_global.h"
-#include "shared_construct.h"
+#include "utility/shared_construct.h"
 #include "utility/logger.h"
 
 namespace fs = std::filesystem;
