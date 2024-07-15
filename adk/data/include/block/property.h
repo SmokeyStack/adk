@@ -44,7 +44,6 @@ namespace adk {
 
 	class PropertyState {
 	public:
-		PropertyState() {}
 		PropertyState(std::string name) : name_(name) {}
 		~PropertyState() {}
 		virtual nlohmann::json::object_t Generate() = 0;

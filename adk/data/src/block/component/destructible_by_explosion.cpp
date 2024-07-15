@@ -13,7 +13,6 @@ namespace adk {
 			}} };
 		}
 	};
-
 	nlohmann::json::object_t ComponentBlockDestructibleByExplosion::Generate() {
 		nlohmann::json::object_t output;
 		std::visit(VisitDestructibleByExplosion{ output }, explosion_resistance_);

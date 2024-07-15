@@ -1,6 +1,6 @@
 #include "block/component/light_dampening.h"
 
-#include "utility/logger.h"
+#include <spdlog/fmt/fmt.h>
 
 namespace adk {
 	nlohmann::json::object_t ComponentBlockLightDampening::Generate() {

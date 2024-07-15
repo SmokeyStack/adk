@@ -15,12 +15,14 @@ namespace adk {
 	class Block {
 	public:
 		Block() {};
+
 		/**
 		 * @brief Returns the type of the object
 		 *
 		 * @return std::string
 		 */
 		std::string GetType();
+
 		/**
 		 * @brief Generates the json object
 		 *

@@ -9,4 +9,15 @@ namespace adk {
 		return output;
 	}
 	std::string ComponentBlockTick::GetType() { return "minecraft:tick"; }
+	ComponentBlockTick& ComponentBlockTick::SetIntervalRange(int min, int max) {
+		interval_range_min_ = min;
+		interval_range_max_ = max;
+
+		return *this;
+	}
+	ComponentBlockTick& ComponentBlockTick::SetLooping(bool loop) {
+		looping_ = loop;
+
+		return *this;
+	}
 } // namespace adk

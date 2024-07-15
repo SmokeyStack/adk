@@ -9,26 +9,26 @@ namespace adk {
 		if (allowed_faces_.empty() && block_filter_.empty())
 			throw std::runtime_error("ComponentPlacementFilterCondition - At least one condition must be provided.");
 
+		auto& allowed_faces = output["allowed_faces"];
+		auto& block_filter = output["block_filter"];
+
 		if (!allowed_faces_.empty()) {
 			nlohmann::json temp;
 			for (const auto& face : allowed_faces_)
-				output["allowed_faces"].push_back(BlockFacesToString(face));
+				allowed_faces.push_back(BlockFacesToString(face));
 		}
-
 		if (!block_filter_.empty()) {
 			nlohmann::json temp;
 			for (const auto& block : block_filter_) {
 				if (std::holds_alternative<std::string>(block))
-					output["block_filter"].push_back(std::get<std::string>(block));
+					block_filter.push_back(std::get<std::string>(block));
 				else
-					output["block_filter"].push_back(std::get<BlockDescriptor>(block));
+					block_filter.push_back(std::get<BlockDescriptor>(block));
 			}
-
 		}
 
 		return output;
 	}
-
 	ComponentBlockPlacementFilterCondition& ComponentBlockPlacementFilterCondition::AddAllowedFaces(BlockFaces face) {
 		allowed_faces_.push_back(face);
 
@@ -52,7 +52,7 @@ namespace adk {
 
 		return output;
 	}
-	std::string ComponentBlockPlacementFilter::GetType() { return "minecraft:light_emission"; }
+	std::string ComponentBlockPlacementFilter::GetType() { return "minecraft:placement_filter"; }
 	ComponentBlockPlacementFilter& ComponentBlockPlacementFilter::AddCondition(ComponentBlockPlacementFilterCondition condition) {
 		value_.push_back(condition);
 

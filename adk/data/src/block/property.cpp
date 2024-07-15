@@ -54,14 +54,12 @@ namespace adk {
 
 	nlohmann::json Property::Generate() {
 		nlohmann::json output;
-		auto& traits = output["traits"];
-		auto& states = output["states"];
 
 		for (const auto& trait : traits_)
-			traits.update(trait->Generate());
+			output["traits"].update(trait->Generate());
 
 		for (const auto& state : states_)
-			states.update(state->Generate());
+			output["states"].update(state->Generate());
 
 		return output;
 	}
