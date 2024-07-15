@@ -1,6 +1,7 @@
 #include "block/component/box_selection.h"
 
 #include <spdlog/fmt/fmt.h>
+#include <spdlog/fmt/ranges.h>
 
 namespace adk {
 	struct VisitBoxSelection {

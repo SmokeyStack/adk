@@ -1,6 +1,7 @@
 #include "block/component/box_collision.h"
 
 #include <spdlog/fmt/fmt.h>
+#include <spdlog/fmt/ranges.h>
 
 namespace adk {
 	struct VisitBoxCollision {
