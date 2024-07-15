@@ -1,24 +1,17 @@
 #pragma once
 
-#include <string>
-
-#include "block/block_component.h"
 #include "block/block_plant.h"
-#include "block/block_property.h"
-#include "json.hpp"
 
 namespace adk {
 	/**
 	 * @brief Represents a Mushroom Block
 	 */
-	class BlockMushroom: public BlockPlant {
+	class BlockMushroom : public BlockPlant {
 	public:
 		/**
 		 * @brief Construct a new Mushroom Block object
-		 *
-		 * @param property BlockProperty
 		 */
-		BlockMushroom(BlockProperty property) : BlockPlant(property) {}
+		BlockMushroom() {}
 
 		/**
 		 * @brief Generates the json object
@@ -29,21 +22,6 @@ namespace adk {
 		 *
 		 * @return nlohmann::json
 		 */
-		nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_ = BlockPlant::Generate(mod_id, id);
-
-			output_["minecraft:block"]["components"].update(
-				helper_.BoxCollision(false)
-			);
-			output_["minecraft:block"]["components"].update(
-				helper_.BoxSelection(
-					std::vector<int>{-3, 0, -3}, 
-					std::vector<int>{6, 6, 6},
-					id
-				)
-			);
-
-			return output_;
-		}
+		nlohmann::json Generate(std::string mod_id, std::string id) override;
 	};
 } // namespace adk

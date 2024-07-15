@@ -1,12 +1,6 @@
 #pragma once
 
-#include <string>
-
 #include "block/block.h"
-#include "block/block_component.h"
-#include "block/block_property.h"
-#include "json.hpp"
-#include "shared_construct.h"
 
 namespace adk {
 	/**
@@ -14,13 +8,10 @@ namespace adk {
 	 */
 	class BlockPlant : public Block {
 	public:
-		BlockPlant() {};
 		/**
 		 * @brief Construct a new Plant Block object
-		 *
-		 * @param property BlockProperty
 		 */
-		BlockPlant(BlockProperty property) : Block(property) {}
+		BlockPlant() {}
 
 		/**
 		 * @brief Generates the json object
@@ -31,20 +22,6 @@ namespace adk {
 		 *
 		 * @return nlohmann::json
 		 */
-		nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_ = Block::Generate(mod_id, id);
-
-			BlockPlacementFilter filter;
-			filter.allowed_faces.push_back(BlockAllowedFaces::UP);
-			BlockDescriptor block_descriptor;
-			block_descriptor.tags = { "dirt", "farmland" };
-			filter.block_filter.push_back(block_descriptor);
-
-			output_["minecraft:block"]["components"].update(
-				helper_.PlacementFilter(filter)
-			);
-
-			return output_;
-		}
+		nlohmann::json Generate(std::string mod_id, std::string id) override;
 	};
 } // namespace adk
