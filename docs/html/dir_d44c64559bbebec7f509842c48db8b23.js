@@ -8,6 +8,7 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "utility", "dir_3a4d35156996fb70540e167b84a39bd1.html", "dir_3a4d35156996fb70540e167b84a39bd1" ],
     [ "builder_creative_menu.h", "builder__creative__menu_8h_source.html", null ],
     [ "builder_language.h", "builder__language_8h_source.html", null ],
+    [ "component.h", "component_8h_source.html", null ],
     [ "data.h", "data_8h_source.html", null ],
     [ "language.h", "language_8h_source.html", null ],
     [ "loot.h", "loot_8h_source.html", null ],
@@ -15,6 +16,5 @@ var dir_d44c64559bbebec7f509842c48db8b23 =
     [ "recipe.h", "recipe_8h_source.html", null ],
     [ "registry.h", "registry_8h_source.html", null ],
     [ "registry_global.h", "registry__global_8h_source.html", null ],
-    [ "shared_construct.h", "shared__construct_8h_source.html", null ],
     [ "tag.h", "tag_8h_source.html", null ]
 ];

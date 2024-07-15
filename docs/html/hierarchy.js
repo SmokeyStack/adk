@@ -20,13 +20,32 @@ var hierarchy =
       [ "adk::BlockTnt", "classadk_1_1_block_tnt.html", null ],
       [ "adk::BlockTorch", "classadk_1_1_block_torch.html", null ]
     ] ],
-    [ "adk::BlockComponent", "classadk_1_1_block_component.html", null ],
     [ "adk::BlockDescriptor", "structadk_1_1_block_descriptor.html", null ],
-    [ "adk::BlockProperty", "classadk_1_1_block_property.html", null ],
     [ "adk::BlockTextures", "structadk_1_1_block_textures.html", null ],
     [ "adk::BuilderCreativeMenu", "classadk_1_1_builder_creative_menu.html", null ],
     [ "adk::BuilderLanguage", "classadk_1_1_builder_language.html", null ],
     [ "adk::BuilderLoot", "classadk_1_1_builder_loot.html", null ],
+    [ "adk::Component", "classadk_1_1_component.html", [
+      [ "adk::ComponentBlockBoxCollision", "classadk_1_1_component_block_box_collision.html", null ],
+      [ "adk::ComponentBlockBoxSelection", "classadk_1_1_component_block_box_selection.html", null ],
+      [ "adk::ComponentBlockCraftingTable", "classadk_1_1_component_block_crafting_table.html", null ],
+      [ "adk::ComponentBlockCustom", "classadk_1_1_component_block_custom.html", null ],
+      [ "adk::ComponentBlockDestructibleByExplosion", "classadk_1_1_component_block_destructible_by_explosion.html", null ],
+      [ "adk::ComponentBlockDestructibleByMining", "classadk_1_1_component_block_destructible_by_mining.html", null ],
+      [ "adk::ComponentBlockDisplayName", "classadk_1_1_component_block_display_name.html", null ],
+      [ "adk::ComponentBlockEntityFallOn", "classadk_1_1_component_block_entity_fall_on.html", null ],
+      [ "adk::ComponentBlockFlammable", "classadk_1_1_component_block_flammable.html", null ],
+      [ "adk::ComponentBlockFriction", "classadk_1_1_component_block_friction.html", null ],
+      [ "adk::ComponentBlockLightDampening", "classadk_1_1_component_block_light_dampening.html", null ],
+      [ "adk::ComponentBlockLightEmission", "classadk_1_1_component_block_light_emission.html", null ],
+      [ "adk::ComponentBlockLoot", "classadk_1_1_component_block_loot.html", null ],
+      [ "adk::ComponentBlockMapColor", "classadk_1_1_component_block_map_color.html", null ],
+      [ "adk::ComponentBlockPlacementFilter", "classadk_1_1_component_block_placement_filter.html", null ],
+      [ "adk::ComponentBlockTag", "classadk_1_1_component_block_tag.html", null ],
+      [ "adk::ComponentBlockTick", "classadk_1_1_component_block_tick.html", null ],
+      [ "adk::ComponentBlockTransformation", "classadk_1_1_component_block_transformation.html", null ]
+    ] ],
+    [ "adk::ComponentBlockPlacementFilterCondition", "classadk_1_1_component_block_placement_filter_condition.html", null ],
     [ "adk::Data", "classadk_1_1_data.html", null ],
     [ "adk::FoodComponents", "classadk_1_1_food_components.html", null ],
     [ "adk::Item", "classadk_1_1_item.html", [
@@ -83,6 +102,18 @@ var hierarchy =
     [ "adk::MapColor", "classadk_1_1_map_color.html", null ],
     [ "adk::MaterialInstances", "structadk_1_1_material_instances.html", null ],
     [ "adk::Object", "classadk_1_1_object.html", null ],
+    [ "adk::Permutation", "classadk_1_1_permutation.html", null ],
+    [ "adk::Property", "classadk_1_1_property.html", null ],
+    [ "adk::PropertyState", "classadk_1_1_property_state.html", [
+      [ "adk::StateBoolean", "classadk_1_1_state_boolean.html", null ],
+      [ "adk::StateInt", "classadk_1_1_state_int.html", null ],
+      [ "adk::StateIntRange", "classadk_1_1_state_int_range.html", null ],
+      [ "adk::StateString", "classadk_1_1_state_string.html", null ]
+    ] ],
+    [ "adk::PropertyTrait", "classadk_1_1_property_trait.html", [
+      [ "adk::PlacementDirection", "classadk_1_1_placement_direction.html", null ],
+      [ "adk::PlacementPosition", "classadk_1_1_placement_position.html", null ]
+    ] ],
     [ "adk::Recipe", "classadk_1_1_recipe.html", null ],
     [ "adk::RecipeBuilder", "classadk_1_1_recipe_builder.html", [
       [ "adk::FurnaceRecipeBuilder", "classadk_1_1_furnace_recipe_builder.html", null ],
@@ -94,5 +125,11 @@ var hierarchy =
     ] ],
     [ "adk::ToolMaterial", "classadk_1_1_tool_material.html", [
       [ "adk::ToolMaterials", "classadk_1_1_tool_materials.html", null ]
-    ] ]
+    ] ],
+    [ "adk::Vector3", "classadk_1_1_vector3.html", null ],
+    [ "adk::VisitBoxCollision", "structadk_1_1_visit_box_collision.html", null ],
+    [ "adk::VisitBoxSelection", "structadk_1_1_visit_box_selection.html", null ],
+    [ "adk::VisitDestructibleByExplosion", "structadk_1_1_visit_destructible_by_explosion.html", null ],
+    [ "adk::VisitDestructibleByMining", "structadk_1_1_visit_destructible_by_mining.html", null ],
+    [ "adk::VisitMapColor", "structadk_1_1_visit_map_color.html", null ]
 ];

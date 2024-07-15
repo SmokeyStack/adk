@@ -1,5 +1,5 @@
 var classadk_1_1_block_stairs =
 [
-    [ "BlockStairs", "classadk_1_1_block_stairs.html#a27c662a80dc58111031b03eeae483bdf", null ],
-    [ "Generate", "classadk_1_1_block_stairs.html#abfbf9f489e92f72d3266f438567f1d4a", null ]
+    [ "BlockStairs", "classadk_1_1_block_stairs.html#a636797beac66603cb1cc82bea9ee6aa1", null ],
+    [ "Generate", "classadk_1_1_block_stairs.html#adb45c1cf2619bdac65c495bc9335abcf", null ]
 ];
