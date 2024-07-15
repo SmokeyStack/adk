@@ -4,7 +4,7 @@
 #include <vector>
 
 #include "json.hpp"
-#include "shared_construct.h"
+#include "utility/shared_construct.h"
 
 namespace adk {
 	/**

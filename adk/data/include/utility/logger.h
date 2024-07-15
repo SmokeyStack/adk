@@ -1,6 +1,7 @@
 #pragma once
 
 #include <filesystem>
+#include <spdlog/fmt/ranges.h>
 #include <spdlog/spdlog.h>
 
 namespace adk {

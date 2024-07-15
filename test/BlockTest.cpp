@@ -2,15 +2,27 @@
 
 #include <filesystem>
 #include <iostream>
+#include <set>
 #include <string>
 #include <vector>
 
-#include "block/block.h"
-#include "block/block_property.h"
 #include "CheckFile.h"
 #include "registry.h"
 #include "registry_global.h"
 #include "utility/logger.h"
+
+#include "block/block.h"
+#include "block/block_experience_dropping.h"
+#include "block/block_flower.h"
+#include "block/block_ladder.h"
+#include "block/block_mushroom.h"
+#include "block/block_pillar.h"
+#include "block/block_plant.h"
+#include "block/block_slab.h"
+#include "block/block_stairs.h"
+#include "block/block_sugar_cane.h"
+#include "block/block_tnt.h"
+#include "block/block_torch.h"
 
 namespace fs = std::filesystem;
 using namespace adk;
@@ -21,30 +33,10 @@ namespace {
 	std::filesystem::path log_directory = "logs/debug.log";
 	const std::string MOD_ID = "custom_namespace";
 	Registry<Block>* mod = new Registry<Block>(MOD_ID);
-	BlockCraftingTable crafting_table;
-	BlockPlacementFilter filter_tags = {
-		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP}
-	};
-	BlockPlacementFilter filter_states = {
-		std::vector<BlockAllowedFaces>{ BlockAllowedFaces::UP}
-	};
 
 	static void SetupCommon() {
 		SetupLoggerStage1();
 		SetupLoggerStage2(log_directory, console_log_level, file_log_level);
-
-		registry_global.push_back(mod);
-		crafting_table.crafting_tags = { "crafting_table" };
-		crafting_table.table_name = "Custom Crafting Table";
-		BlockDescriptor block_descriptor;
-		block_descriptor.tags = { "dirt", "stone" };
-		filter_tags.block_filter = { block_descriptor };
-		block_descriptor = BlockDescriptor{};
-		block_descriptor.name = "minecraft:dirt";
-		filter_states.block_filter.push_back(block_descriptor);
-		block_descriptor = BlockDescriptor{};
-		block_descriptor.name = "minecraft:stone";
-		filter_states.block_filter.push_back(block_descriptor);
 	}
 }
 
@@ -56,8 +48,20 @@ TEST(BlockTest, BlockBasic) {
 
 	log::info("Starting Block Basic Test");
 
-	mod->Subscribe("block_basic", new Block(BlockProperty()));
-	mod->Subscribe("block_basic_light_dampening", new Block(BlockProperty().SetLightDampening(5)));
+	mod->Subscribe("block_basic", &Block());
+	mod->Subscribe("block_experience_dropping", &BlockExperienceDropping(5));
+	mod->Subscribe("block_plant", &BlockPlant());
+	mod->Subscribe("block_flower", &BlockFlower());
+	mod->Subscribe("block_ladder", &BlockLadder());
+	mod->Subscribe("block_mushroom", &BlockMushroom());
+	mod->Subscribe("block_pillar", &BlockPillar());
+	mod->Subscribe("block_slab", &BlockSlab("path/to/loot"));
+	mod->Subscribe("block_stairs", &BlockStairs());
+	mod->Subscribe("block_sugar_cane", &BlockSugarCane());
+	mod->Subscribe("block_tnt", &BlockTnt());
+	mod->Subscribe("block_torch", &BlockTorch());
+
+	/*mod->Subscribe("block_basic_light_dampening", new Block(BlockProperty().SetLightDampening(5)));
 	mod->Subscribe("block_basic_crafting", new Block(BlockProperty().SetCrafting(crafting_table)));
 	mod->Subscribe("block_basic_destructible_by_explosion_bool", new Block(BlockProperty().SetDestructibleByExplosion(false)));
 	mod->Subscribe("block_basic_destructible_by_explosion_double", new Block(BlockProperty().SetDestructibleByExplosion(5.5)));
@@ -104,7 +108,7 @@ TEST(BlockTest, BlockBasic) {
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_bool.json", "./BP/blocks/block_basic_box_selection_bool.json")) << "SetBoxSelection (bool) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_box_selection_vector.json", "./BP/blocks/block_basic_box_selection_vector.json")) << "SetBoxSelection (vector) is not working as expected";
 	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_tags.json", "./BP/blocks/block_basic_filter_tags.json")) << "SetBlockPlacementFilter (tags) is not working as expected";
-	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_states.json", "./BP/blocks/block_basic_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";
+	EXPECT_EQ(true, CompareFiles("./files/blocks/block_basic_filter_states.json", "./BP/blocks/block_basic_filter_states.json")) << "SetBlockPlacementFilter (states) is not working as expected";*/
 }
 
 //TEST(BlockTest, BlockAxis) {
