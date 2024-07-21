@@ -1,11 +1,6 @@
 #pragma once
 
-#include <string>
-
 #include "block/block_abstract_candle.h"
-#include "block/block_component.h"
-#include "block/block_property.h"
-#include "json.hpp"
 
 namespace adk {
 	/**
@@ -18,7 +13,7 @@ namespace adk {
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockCandle(BlockProperty property) : BlockCandleAbstract(property) {}
+		BlockCandle() {}
 
 		/**
 		 * @brief Generates the json object
@@ -29,98 +24,6 @@ namespace adk {
 		 *
 		 * @return nlohmann::json
 		 */
-		nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_ = BlockCandleAbstract::Generate(mod_id, id);
-
-			output_["minecraft:block"]["description"]["states"][mod_id + ":candles"]["values"]["min"] = 1;
-			output_["minecraft:block"]["description"]["states"][mod_id + ":candles"]["values"]["max"] = 4;
-			nlohmann::json::object_t temp = {
-			{"condition",
-			 "q.block_state('" + mod_id + ":candles') == 1"} };
-			temp["components"].update(
-				helper_.BoxCollision(
-					std::vector<int>{-1, 0, -1},
-					std::vector<int>{2, 6, 2},
-					id
-				)
-			);
-			temp["components"].update(
-				helper_.BoxSelection(
-					std::vector<int>{-1, 0, -1},
-					std::vector<int>{2, 6, 2},
-					id
-				)
-			);
-			output_["minecraft:block"]["permutations"].push_back(temp);
-			temp = {
-			{"condition",
-			 "q.block_state('" + mod_id + ":candles') == 2"} };
-			temp["components"].update(
-				helper_.BoxCollision(
-					std::vector<int>{-3, 0, -1},
-					std::vector<int>{6, 6, 3},
-					id
-				)
-			);
-			temp["components"].update(
-				helper_.BoxSelection(
-					std::vector<int>{-3, 0, -1},
-					std::vector<int>{6, 6, 3},
-					id
-				)
-			);
-			output_["minecraft:block"]["permutations"].push_back(temp);
-			temp = {
-			{"condition",
-			 "q.block_state('" + mod_id + ":candles') == 3"} };
-			temp["components"].update(
-				helper_.BoxCollision(
-					std::vector<int>{-2, 0, -2},
-					std::vector<int>{5, 6, 5},
-					id
-				)
-			);
-			temp["components"].update(
-				helper_.BoxSelection(
-					std::vector<int>{-2, 0, -2},
-					std::vector<int>{5, 6, 5},
-					id
-				)
-			);
-			output_["minecraft:block"]["permutations"].push_back(temp);
-			temp = {
-			{"condition",
-			 "q.block_state('" + mod_id + ":candles') == 4"} };
-			temp["components"].update(
-				helper_.BoxCollision(
-					std::vector<int>{-3, 0, -3},
-					std::vector<int>{6, 6, 5},
-					id
-				)
-			);
-			temp["components"].update(
-				helper_.BoxSelection(
-					std::vector<int>{-3, 0, -3},
-					std::vector<int>{6, 6, 5},
-					id
-				)
-			);
-			output_["minecraft:block"]["permutations"].push_back(temp);
-			for (int a = 1; a < 5; a++) {
-				temp = { {"condition",fmt::format("q.block_state('{namespace}:lit') && q.block_state('{namespace}:candles') == {amount}", fmt::arg("namespace", mod_id), fmt::arg("amount", a)) } };
-				temp["components"].update(
-					helper_.LightEmission(3 * a, id)
-				);
-				output_["minecraft:block"]["permutations"].push_back(temp);
-			}
-			for (const auto& [key, value] : output_["minecraft:block"]["permutations"].items()) {
-				if (value.contains("condition") && value["condition"].dump() == fmt::format("\"q.block_state('{namespace}:lit')\"", fmt::arg("namespace", mod_id))) {
-					value["components"] = UpdateCustomComponents(value["components"], { "adk-lib:on_player_interact_candle" });
-				}
-			}
-			output_["minecraft:block"]["components"] = UpdateCustomComponents(output_["minecraft:block"]["components"], { "adk-lib:on_player_interact_candle" });
-
-			return output_;
-		}
+		nlohmann::json Generate(std::string mod_id, std::string id) override;
 	};
 } // namespace adk

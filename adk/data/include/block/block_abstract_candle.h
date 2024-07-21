@@ -1,11 +1,6 @@
 #pragma once
 
-#include <string>
-
 #include "block/block.h"
-#include "block/block_component.h"
-#include "block/block_property.h"
-#include "json.hpp"
 
 namespace adk {
 	/**
@@ -13,13 +8,12 @@ namespace adk {
 	 */
 	class BlockCandleAbstract : public Block {
 	public:
-		BlockCandleAbstract() {};
 		/**
 		 * @brief Construct a new Abstract Candle Block object
 		 *
 		 * @param property BlockProperty
 		 */
-		BlockCandleAbstract(BlockProperty property) : Block(property) {}
+		BlockCandleAbstract() {}
 
 		/**
 		 * @brief Generates the json object
@@ -30,20 +24,6 @@ namespace adk {
 		 *
 		 * @return nlohmann::json
 		 */
-		nlohmann::json Generate(std::string mod_id, std::string id) {
-			output_ = Block::Generate(mod_id, id);
-
-			output_["minecraft:block"]["description"]["states"][mod_id + ":lit"] = { false, true };
-			nlohmann::json::object_t temp = {
-			{"condition",
-			 "q.block_state('" + mod_id + ":lit')"} };
-			temp["components"].update(
-				helper_.Tick(20, 100)
-			);
-			temp["components"] = UpdateCustomComponents(temp["components"], { "adk-lib:on_tick_candle_particles" });
-			output_["minecraft:block"]["permutations"].push_back(temp);
-
-			return output_;
-		}
+		nlohmann::json Generate(std::string mod_id, std::string id) override;
 	};
 } // namespace adk
