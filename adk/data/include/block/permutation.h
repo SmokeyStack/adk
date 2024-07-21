@@ -14,6 +14,7 @@ namespace adk {
 		nlohmann::json::object_t Generate();
 		std::string GetCondition();
 		Permutation& AddComponent(std::unique_ptr<Component> component);
+		std::set<std::unique_ptr<Component>>& GetComponents() { return components_; }
 	private:
 		std::string condition_;
 		std::set<std::unique_ptr<Component>> components_;
