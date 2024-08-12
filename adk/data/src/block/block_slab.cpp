@@ -19,15 +19,15 @@ namespace adk {
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxCollision>(Vector3(-8, 0, -8), Vector3(16, 8, 16)));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxSelection>(Vector3(-8, 0, -8), Vector3(16, 8, 16)));
 		permutation->AddComponent(std::make_unique<ComponentBlockCustom>(custom_component));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>("q.block_state('minecraft:vertical_half') == 'top' && !q.block_state('" + mod_id + ":is_double')");
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxCollision>(Vector3(-8, 8, -8), Vector3(16, 8, 16)));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxSelection>(Vector3(-8, 8, -8), Vector3(16, 8, 16)));
 		permutation->AddComponent(std::make_unique<ComponentBlockCustom>(custom_component));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>("q.block_state('" + mod_id + ":is_double')");
 		permutation->AddComponent(std::make_unique<ComponentBlockLoot>(is_double_loot_));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 
 		return Block::Generate(mod_id, id);
 	}

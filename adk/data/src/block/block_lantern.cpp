@@ -17,7 +17,7 @@ namespace adk {
 		ComponentBlockTransformation transformation;
 		transformation.SetTranslation(Vector3(0, 0.5, 0));
 		permutation->AddComponent(std::make_unique<ComponentBlockTransformation>(transformation));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 
 		auto& box_collision = std::find_if(std::begin(components_), std::end(components_), [](const auto& component) { return component->GetType() == "minecraft:collision_box"; });
 		if (box_collision == std::end(components_)) {

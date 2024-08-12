@@ -14,11 +14,11 @@ namespace adk {
 		ComponentBlockTransformation transformation;
 		transformation.SetRotation(Vector3(90, 0, 0));
 		permutation->AddComponent(std::make_unique<ComponentBlockTransformation>(transformation));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>("q.block_state('minecraft:block_face') == 'east' || q.block_state('minecraft:block_face') == 'west'");
 		transformation.SetRotation(Vector3(0, 0, 270));
 		permutation->AddComponent(std::make_unique<ComponentBlockTransformation>(transformation));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 
 		return Block::Generate(mod_id, id);
 	}

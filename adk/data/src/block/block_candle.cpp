@@ -17,31 +17,31 @@ namespace adk {
 		ComponentBlockBoxSelection selection(Vector3(-1, 0, -1), Vector3(2, 6, 2));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxCollision>(collision));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxSelection>(selection));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>(fmt::format("q.block_state('{mod_id}:candles') == 2", fmt::arg("mod_id", mod_id)));
 		collision.SetCollision(Vector3(-3, 0, -1), Vector3(6, 6, 3));
 		selection.SetSelection(Vector3(-3, 0, -1), Vector3(6, 6, 3));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxCollision>(collision));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxSelection>(selection));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>(fmt::format("q.block_state('{mod_id}:candles') == 3", fmt::arg("mod_id", mod_id)));
 		collision.SetCollision(Vector3(-2, 0, -2), Vector3(5, 6, 5));
 		selection.SetSelection(Vector3(-2, 0, -2), Vector3(5, 6, 5));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxCollision>(collision));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxSelection>(selection));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>(fmt::format("q.block_state('{mod_id}:candles') == 4", fmt::arg("mod_id", mod_id)));
 		collision.SetCollision(Vector3(-3, 0, -3), Vector3(6, 6, 5));
 		selection.SetSelection(Vector3(-3, 0, -3), Vector3(6, 6, 5));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxCollision>(collision));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxSelection>(selection));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 
 		for (int a = 1; a < 5; a++) {
 			permutation = std::make_unique<Permutation>(fmt::format("q.block_state('{mod_id}:lit') && q.block_state('{mod_id}:candles') == {a}", fmt::arg("mod_id", mod_id), fmt::arg("a", a)));
 			ComponentBlockLightEmission light_emission(3 * a);
 			permutation->AddComponent(std::make_unique<ComponentBlockLightEmission>(light_emission));
-			Block::AddPermutation(std::move(permutation));
+			AddPermutation(std::move(permutation));
 		}
 
 		const std::string condition = fmt::format("q.block_state('{mod_id}:lit')", fmt::arg("mod_id", mod_id));

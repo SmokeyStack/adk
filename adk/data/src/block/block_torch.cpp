@@ -18,25 +18,25 @@ namespace adk {
 		ComponentBlockTransformation transformation;
 		transformation.SetRotation(Vector3(0, 90, 0));
 		permutation->AddComponent(std::make_unique<ComponentBlockTransformation>(transformation));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>("q.block_state('minecraft:block_face') == 'east'");
 		transformation.SetRotation(Vector3(0, 0, 0));
 		permutation->AddComponent(std::make_unique<ComponentBlockTransformation>(transformation));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>("q.block_state('minecraft:block_face') == 'west'");
 		transformation.SetRotation(Vector3(0, 270, 0));
 		permutation->AddComponent(std::make_unique<ComponentBlockTransformation>(transformation));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>("q.block_state('minecraft:block_face') == 'south'");
 		transformation.SetRotation(Vector3(0, 180, 0));
 		permutation->AddComponent(std::make_unique<ComponentBlockTransformation>(transformation));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 		permutation = std::make_unique<Permutation>(fmt::format(
 			"q.block_state('{state}') == 'north' || q.block_state('{state}') == 'east' || q.block_state('{state}') == 'south' || q.block_state('{state}') == 'west'",
 			fmt::arg("state", "minecraft:block_face")
 		));
 		permutation->AddComponent(std::make_unique<ComponentBlockBoxSelection>(Vector3(2, 3, -3), Vector3(6, 10, 6)));
-		Block::AddPermutation(std::move(permutation));
+		AddPermutation(std::move(permutation));
 
 		auto& box_collision = std::find_if(std::begin(components_), std::end(components_), [](const auto& component) { return component->GetType() == "minecraft:collision_box"; });
 		if (box_collision == std::end(components_)) {
