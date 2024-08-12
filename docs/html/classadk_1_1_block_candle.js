@@ -1,5 +1,5 @@
 var classadk_1_1_block_candle =
 [
-    [ "BlockCandle", "classadk_1_1_block_candle.html#ae43453c62df65bb1b3f1bbbbea342af3", null ],
-    [ "Generate", "classadk_1_1_block_candle.html#a740231e6627d8954e096392277d351c7", null ]
+    [ "BlockCandle", "classadk_1_1_block_candle.html#ac7411c026393505b3453bce7973c6466", null ],
+    [ "Generate", "classadk_1_1_block_candle.html#a05cb60011900b1bdfb3c3499c67bed4b", null ]
 ];

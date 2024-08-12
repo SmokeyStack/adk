@@ -9,6 +9,7 @@ var hierarchy =
       ] ],
       [ "adk::BlockExperienceDropping", "classadk_1_1_block_experience_dropping.html", null ],
       [ "adk::BlockLadder", "classadk_1_1_block_ladder.html", null ],
+      [ "adk::BlockLantern", "classadk_1_1_block_lantern.html", null ],
       [ "adk::BlockPillar", "classadk_1_1_block_pillar.html", null ],
       [ "adk::BlockPlant", "classadk_1_1_block_plant.html", [
         [ "adk::BlockFlower", "classadk_1_1_block_flower.html", null ],
@@ -21,7 +22,7 @@ var hierarchy =
       [ "adk::BlockTorch", "classadk_1_1_block_torch.html", null ]
     ] ],
     [ "adk::BlockDescriptor", "structadk_1_1_block_descriptor.html", null ],
-    [ "adk::BlockTextures", "structadk_1_1_block_textures.html", null ],
+    [ "adk::BlockRenderer", "classadk_1_1_block_renderer.html", null ],
     [ "adk::BuilderCreativeMenu", "classadk_1_1_builder_creative_menu.html", null ],
     [ "adk::BuilderLanguage", "classadk_1_1_builder_language.html", null ],
     [ "adk::BuilderLoot", "classadk_1_1_builder_loot.html", null ],
@@ -100,19 +101,20 @@ var hierarchy =
     [ "adk::LootPool", "classadk_1_1_loot_pool.html", null ],
     [ "adk::LootType", "classadk_1_1_loot_type.html", null ],
     [ "adk::MapColor", "classadk_1_1_map_color.html", null ],
-    [ "adk::MaterialInstances", "structadk_1_1_material_instances.html", null ],
+    [ "adk::MaterialInstances", "classadk_1_1_material_instances.html", null ],
     [ "adk::Object", "classadk_1_1_object.html", null ],
     [ "adk::Permutation", "classadk_1_1_permutation.html", null ],
-    [ "adk::Property", "classadk_1_1_property.html", null ],
-    [ "adk::PropertyState", "classadk_1_1_property_state.html", [
-      [ "adk::StateBoolean", "classadk_1_1_state_boolean.html", null ],
-      [ "adk::StateInt", "classadk_1_1_state_int.html", null ],
-      [ "adk::StateIntRange", "classadk_1_1_state_int_range.html", null ],
-      [ "adk::StateString", "classadk_1_1_state_string.html", null ]
-    ] ],
-    [ "adk::PropertyTrait", "classadk_1_1_property_trait.html", [
-      [ "adk::PlacementDirection", "classadk_1_1_placement_direction.html", null ],
-      [ "adk::PlacementPosition", "classadk_1_1_placement_position.html", null ]
+    [ "adk::Property", "classadk_1_1_property.html", [
+      [ "adk::PropertyState", "classadk_1_1_property_state.html", [
+        [ "adk::StateBoolean", "classadk_1_1_state_boolean.html", null ],
+        [ "adk::StateInt", "classadk_1_1_state_int.html", null ],
+        [ "adk::StateIntRange", "classadk_1_1_state_int_range.html", null ],
+        [ "adk::StateString", "classadk_1_1_state_string.html", null ]
+      ] ],
+      [ "adk::PropertyTrait", "classadk_1_1_property_trait.html", [
+        [ "adk::PlacementDirection", "classadk_1_1_placement_direction.html", null ],
+        [ "adk::PlacementPosition", "classadk_1_1_placement_position.html", null ]
+      ] ]
     ] ],
     [ "adk::Recipe", "classadk_1_1_recipe.html", null ],
     [ "adk::RecipeBuilder", "classadk_1_1_recipe_builder.html", [

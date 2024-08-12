@@ -41,8 +41,13 @@ var searchData=
   ['setuseanimation_38',['SetUseAnimation',['../classadk_1_1_item_property.html#a62c43b1d3ae032f8630ee5f6a8ce6d91',1,'adk::ItemProperty']]],
   ['setusemodifiers_39',['SetUseModifiers',['../classadk_1_1_item_property.html#a2c6893e8423aa1a2fdf0cb852f8d0858',1,'adk::ItemProperty']]],
   ['setwearable_40',['SetWearable',['../classadk_1_1_item_property.html#a1c1f35e6ea1d64ece372d0cdfb24e355',1,'adk::ItemProperty']]],
-  ['shooter_41',['Shooter',['../classadk_1_1_item_component.html#a9c87ca73c068b3441c1070d97f91bef6',1,'adk::ItemComponent']]],
-  ['shoulddespawn_42',['ShouldDespawn',['../classadk_1_1_item_component.html#a09b6fc93ab77e7d778ebdf5e7b1b201c',1,'adk::ItemComponent']]],
-  ['stackedbydata_43',['StackedByData',['../classadk_1_1_item_component.html#a440ae164a2bc7b9608c7a7659fc6a2db',1,'adk::ItemComponent']]],
-  ['subscribe_44',['Subscribe',['../classadk_1_1_registry.html#ac7e9e2e6954a849318e39a2709229fc2',1,'adk::Registry']]]
+  ['setyrotationoffset_41',['SetYRotationOffset',['../classadk_1_1_placement_direction.html#a46f69f5d7a5a69b4f5a9f087e03e9b49',1,'adk::PlacementDirection']]],
+  ['shooter_42',['Shooter',['../classadk_1_1_item_component.html#a9c87ca73c068b3441c1070d97f91bef6',1,'adk::ItemComponent']]],
+  ['shoulddespawn_43',['ShouldDespawn',['../classadk_1_1_item_component.html#a09b6fc93ab77e7d778ebdf5e7b1b201c',1,'adk::ItemComponent']]],
+  ['stackedbydata_44',['StackedByData',['../classadk_1_1_item_component.html#a440ae164a2bc7b9608c7a7659fc6a2db',1,'adk::ItemComponent']]],
+  ['stateboolean_45',['StateBoolean',['../classadk_1_1_state_boolean.html#a77e89d0139fc1ac8531b9d88333b8655',1,'adk::StateBoolean']]],
+  ['stateint_46',['StateInt',['../classadk_1_1_state_int.html#a77b39fdca7f04b51ef39d7f914a0a7f1',1,'adk::StateInt']]],
+  ['stateintrange_47',['StateIntRange',['../classadk_1_1_state_int_range.html#a226812c5f3637da4eeb53f071f574765',1,'adk::StateIntRange']]],
+  ['statestring_48',['StateString',['../classadk_1_1_state_string.html#a25d39e73c4b92c93797171def8262151',1,'adk::StateString']]],
+  ['subscribe_49',['Subscribe',['../classadk_1_1_registry.html#ac7e9e2e6954a849318e39a2709229fc2',1,'adk::Registry']]]
 ];
