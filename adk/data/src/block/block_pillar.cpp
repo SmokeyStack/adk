@@ -6,11 +6,9 @@
 
 namespace adk {
 	nlohmann::json BlockPillar::Generate(std::string mod_id, std::string id) {
-		auto property = std::make_unique<Property>();
 		auto placement_position = std::make_unique<PlacementPosition>();
 		placement_position->AddEnabledState(PlacementPosition::EnabledStates::BLOCK_FACE);
-		property->AddTrait(std::move(placement_position));
-		Block::AddProperty(std::move(property));
+		AddProperty(std::move(placement_position));
 
 		auto& permutation = std::make_unique<Permutation>("q.block_state('minecraft:block_face') == 'north' || q.block_state('minecraft:block_face') == 'south'");
 		ComponentBlockTransformation transformation;

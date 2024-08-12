@@ -5,12 +5,12 @@
 #include "block/component/custom.h"
 #include "block/component/tick.h"
 
+#include "utility/logger.h"
+
 namespace adk {
 	nlohmann::json BlockCandleAbstract::Generate(std::string mod_id, std::string id) {
-		auto property = std::make_unique<Property>();
 		auto state_lit = std::make_unique<StateBoolean>(mod_id + ":lit", false);
-		property->AddState(std::move(state_lit));
-		Block::AddProperty(std::move(property));
+		AddProperty(std::move(state_lit));
 
 		auto& permutation = std::make_unique<Permutation>(fmt::format("q.block_state('{mod_id}:lit')", fmt::arg("mod_id", mod_id)));
 		ComponentBlockTick tick;

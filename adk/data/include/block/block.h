@@ -15,6 +15,7 @@ namespace adk {
 	class Block {
 	public:
 		Block() {};
+		~Block() {};
 
 		/**
 		 * @brief Returns the type of the object

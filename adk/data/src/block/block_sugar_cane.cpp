@@ -5,10 +5,8 @@
 
 namespace adk {
 	nlohmann::json BlockSugarCane::Generate(std::string mod_id, std::string id) {
-		auto property = std::make_unique<Property>();
 		auto state = std::make_unique<StateIntRange>(mod_id + ":age", 0, 15);
-		property->AddState(std::move(state));
-		Block::AddProperty(std::move(property));
+		AddProperty(std::move(state));
 
 		ComponentBlockPlacementFilterCondition condition;
 		BlockDescriptor block_descriptor;

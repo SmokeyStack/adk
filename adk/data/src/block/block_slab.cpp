@@ -7,13 +7,11 @@
 
 namespace adk {
 	nlohmann::json BlockSlab::Generate(std::string mod_id, std::string id) {
-		auto property = std::make_unique<Property>();
 		auto placement_position = std::make_unique<PlacementPosition>();
 		placement_position->AddEnabledState(PlacementPosition::EnabledStates::VERTICAL_HALF);
-		property->AddTrait(std::move(placement_position));
+		AddProperty(std::move(placement_position));
 		auto state = std::make_unique<StateBoolean>(mod_id + ":is_double", false);
-		property->AddState(std::move(state));
-		Block::AddProperty(std::move(property));
+		AddProperty(std::move(state));
 
 		auto& permutation = std::make_unique<Permutation>("q.block_state('minecraft:vertical_half') == 'bottom' && !q.block_state('" + mod_id + ":is_double')");
 		ComponentBlockCustom custom_component;

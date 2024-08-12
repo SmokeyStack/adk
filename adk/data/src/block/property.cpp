@@ -52,41 +52,21 @@ namespace adk {
 		return *this;
 	}
 
-	nlohmann::json Property::Generate() {
-		nlohmann::json output;
-
-		for (const auto& trait : traits_)
-			output["traits"].update(trait->Generate());
-
-		for (const auto& state : states_)
-			output["states"].update(state->Generate());
-
-		return output;
-	}
-	Property& Property::AddTrait(std::unique_ptr<PropertyTrait> trait) {
-		traits_.insert(std::move(trait));
-
-		return *this;
-	}
-	Property& Property::AddState(std::unique_ptr<PropertyState> state) {
-		states_.insert(std::move(state));
-
-		return *this;
-	}
-
 	nlohmann::json::object_t StateString::Generate() {
 		nlohmann::json::object_t output = { {name_, values_} };
 
 		return output;
 	}
 	StateString& StateString::AddValue(std::string value) {
-		values_.insert(value);
+		if (internal_values_.insert(value).second)
+			values_.push_back(value);
 
 		return *this;
 	}
-	StateString& StateString::AddValue(std::set<std::string> value) {
+	StateString& StateString::AddValue(std::unordered_set<std::string> value) {
 		for (const auto& val : value)
-			values_.insert(val);
+			if (internal_values_.insert(val).second)
+				values_.push_back(val);
 
 		return *this;
 	}
@@ -103,13 +83,15 @@ namespace adk {
 		return output;
 	}
 	StateInt& StateInt::AddValue(int value) {
-		values_.insert(value);
+		if (internal_values_.insert(value).second)
+			values_.push_back(value);
 
 		return *this;
 	}
-	StateInt& StateInt::AddValue(std::set<int> value) {
+	StateInt& StateInt::AddValue(std::unordered_set<int> value) {
 		for (const auto& val : value)
-			values_.insert(val);
+			if (internal_values_.insert(val).second)
+				values_.push_back(val);
 
 		return *this;
 	}

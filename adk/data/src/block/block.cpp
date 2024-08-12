@@ -21,7 +21,7 @@ namespace adk {
 				exit(EXIT_FAILURE);
 			}
 		}
-		for(const auto& permutation : permutations_) {
+		for (const auto& permutation : permutations_) {
 			try {
 				block["permutations"].push_back(permutation->Generate());
 			}
@@ -31,8 +31,17 @@ namespace adk {
 			}
 		}
 		for (const auto& property : properties_) {
+			log::info("Generating properties, {}", properties_.size());
 			try {
-				description.update(property->Generate());
+				if (typeid(*property) == typeid(StateBoolean) ||
+					typeid(*property) == typeid(StateInt) ||
+					typeid(*property) == typeid(StateIntRange) ||
+					typeid(*property) == typeid(StateString))
+					description["states"].update(property->Generate());
+
+				else
+					description["traits"].update(property->Generate());
+
 			}
 			catch (const std::exception& error) {
 				log::error("    {}", error.what());
