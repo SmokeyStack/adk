@@ -10,10 +10,8 @@
 
 namespace adk {
 	nlohmann::json BlockLantern::Generate(std::string mod_id, std::string id) {
-		auto property = std::make_unique<Property>();
 		auto state_hanging = std::make_unique<StateBoolean>(mod_id + ":hanging", false);
-		property->AddState(std::move(state_hanging));
-		Block::AddProperty(std::move(property));
+		AddProperty(std::move(state_hanging));
 
 		auto& permutation = std::make_unique<Permutation>(fmt::format("q.block_state('{mod_id}:hanging')", fmt::arg("mod_id", mod_id)));
 		ComponentBlockTransformation transformation;
